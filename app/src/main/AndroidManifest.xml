@@ -403,7 +403,11 @@
         <activity android:name=".vendor.Activity.OrderItemListActivity" />
         <activity android:name=".vendor.Activity.VendorListActivity" />
         <activity android:name=".vendor.Activity.BidItemListActivity" />
-        <activity android:name=".vendor.Activity.VendorItemListActivity"></activity>
+        <activity android:name=".vendor.Activity.VendorItemListActivity" />
+        <activity
+            android:name=".TempActivity"
+            android:label="@string/title_activity_temp"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

@@ -248,4 +248,5 @@
     <string name="save_pwd_text"><![CDATA[Save email & password]]></string>
     <string name="title_activity_add_new_coupon">AddNewCouponActivity</string>
     <string name="msg_no_internet">No internet connection</string>
+    <string name="title_activity_temp">TempActivity</string>
 </resources>
