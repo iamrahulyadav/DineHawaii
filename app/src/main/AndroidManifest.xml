@@ -395,11 +395,10 @@
             android:name=".Bussiness.Activity.AddNewCouponActivity"
             android:label="@string/title_activity_add_new_coupon"
             android:theme="@style/AppTheme" />
-        <activity android:name=".Bussiness.Activity.VendorFoodListActivity" />
-        <activity android:name=".Bussiness.Activity.VendorMasterFoodListActivity" />
         <activity android:name=".vendor.Activity.VendorLoginWebViewActivity" />
         <activity android:name=".vendor.Activity.AddNewVendorActivity" />
         <activity android:name=".vendor.Activity.VendorCartActivity" />
+        <activity android:name=".vendor.Activity.VendorBidCartActivity" />
         <activity android:name=".vendor.Activity.OrderItemListActivity" />
         <activity android:name=".vendor.Activity.VendorListActivity" />
         <activity android:name=".vendor.Activity.BidItemListActivity" />

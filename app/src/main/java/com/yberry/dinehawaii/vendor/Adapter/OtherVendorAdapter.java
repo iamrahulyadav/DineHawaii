@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.yberry.dinehawaii.R;
 import com.yberry.dinehawaii.customview.CustomTextView;
-import com.yberry.dinehawaii.vendor.Model.OtherVendorModel;
+import com.yberry.dinehawaii.vendor.Model.VendorBidItemModel;
 
 import java.util.ArrayList;
 
@@ -16,9 +16,9 @@ import java.util.ArrayList;
 public class OtherVendorAdapter extends RecyclerView.Adapter<OtherVendorAdapter.ViewHolder> {
     private static final String TAG = "ManageVendorAdapter";
     Context context;
-    ArrayList<OtherVendorModel> vendorModelArrayList;
+    ArrayList<VendorBidItemModel> vendorModelArrayList;
 
-    public OtherVendorAdapter(Context context, ArrayList<OtherVendorModel> reservList) {
+    public OtherVendorAdapter(Context context, ArrayList<VendorBidItemModel> reservList) {
         this.context = context;
         this.vendorModelArrayList = reservList;
     }
@@ -37,9 +37,9 @@ public class OtherVendorAdapter extends RecyclerView.Adapter<OtherVendorAdapter.
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        OtherVendorModel model = vendorModelArrayList.get(position);
-        holder.txtName.setText(model.getVendorName());
-        holder.txtprice.setText(model.getItemPrice());
+        VendorBidItemModel model = vendorModelArrayList.get(position);
+        holder.txtName.setText((position + 1) + ". " + model.getVendor_name());
+        holder.txtprice.setText("$" + model.getVendor_item_price());
     }
 
     @Override

@@ -1,10 +1,13 @@
 package com.yberry.dinehawaii.vendor.Activity;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.menu.MenuBuilder;
@@ -29,9 +32,9 @@ import com.yberry.dinehawaii.Util.AppPreferencesBuss;
 import com.yberry.dinehawaii.Util.ProgressHUD;
 import com.yberry.dinehawaii.Util.Util;
 import com.yberry.dinehawaii.customview.CustomTextView;
+import com.yberry.dinehawaii.database.VendorBidDBHandler;
 import com.yberry.dinehawaii.vendor.Adapter.BidItemListAdapter;
-import com.yberry.dinehawaii.vendor.Model.OtherVendorModel;
-import com.yberry.dinehawaii.vendor.Model.VendorMasterData;
+import com.yberry.dinehawaii.vendor.Model.VendorBidItemModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,18 +49,21 @@ import retrofit2.Response;
 public class BidItemListActivity extends AppCompatActivity {
     private static final String TAG = "VendorFoodList";
     Context context;
-    ArrayList<VendorMasterData> list;
+    ArrayList<VendorBidItemModel> list;
     String category_id;
     private RecyclerView recycler_view;
     private BidItemListAdapter adapter;
-    private CustomTextView counting;
+    private CustomTextView tvCountBadge;
+    private CartItemReciver reciver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vendor_item_list);
         setToolbar();
-        list = new ArrayList<VendorMasterData>();
+        reciver = new CartItemReciver();
+        LocalBroadcastManager.getInstance(this).registerReceiver(reciver, new IntentFilter("update_cart"));
+        list = new ArrayList<VendorBidItemModel>();
         if (getIntent().hasExtra("vendor_id"))
             category_id = getIntent().getStringExtra("vendor_id");
         init();
@@ -95,15 +101,35 @@ public class BidItemListActivity extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(context, VendorCartActivity.class));
+                startActivity(new Intent(context, VendorBidCartActivity.class));
             }
         });
-        counting = (CustomTextView) actionView.findViewById(R.id.counting);
+        tvCountBadge = (CustomTextView) actionView.findViewById(R.id.counting);
         if (menu instanceof MenuBuilder) {
             MenuBuilder m = (MenuBuilder) menu;
             m.setOptionalIconsVisible(true);
         }
+
+        getCounterData();
         return true;
+    }
+
+    private void getCounterData() {
+        if (tvCountBadge != null) ;
+        if (new VendorBidDBHandler(BidItemListActivity.this).hasCartData()) {
+            ArrayList<VendorBidItemModel> cartItems = new VendorBidDBHandler(BidItemListActivity.this).getOrderCartItems();
+            Log.e(TAG, "getCounterData: items >> " + String.valueOf(cartItems.size()));
+            tvCountBadge.setText(String.valueOf(cartItems.size()));
+        } else {
+            tvCountBadge.setText("0");
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (tvCountBadge != null)
+            getCounterData();
     }
 
     @Override
@@ -143,23 +169,33 @@ public class BidItemListActivity extends AppCompatActivity {
                         list.clear();
                         JSONArray jsonArray = jsonObject.getJSONArray("result");
                         for (int i = 0; i < jsonArray.length(); i++) {
-                            VendorMasterData model = new VendorMasterData();
+                            VendorBidItemModel model = new VendorBidItemModel();
                             JSONObject jsonObj = jsonArray.getJSONObject(i);
-                            model.setMaster_item_id(jsonObj.getString("item_id"));
-                            model.setMaster_item_name(jsonObj.getString("item_name"));
-                            model.setMaster_ven_prod_id(jsonObj.getString("vendor_product_id"));
-                            model.setMaster_item_price(jsonObj.getString("item_price"));
-                            model.setMaster_item_value(jsonObj.getString("item_value"));
-                            model.setMaster_item_vend_id(jsonObj.getString("vendor_id"));
-                            model.setMaster_item_vendor_name(jsonObj.getString("vendor_name"));
+                            model.setItem_id(jsonObj.getString("item_id"));
+                            model.setItem_name(jsonObj.getString("item_name"));
+                            model.setProduct_id(jsonObj.getString("vendor_product_id"));
+                            model.setVendor_item_price(jsonObj.getString("item_price"));
+                            model.setVendor_item_total_cost(jsonObj.getString("item_price"));
+                            model.setVendor_id(jsonObj.getString("vendor_id"));
+                            model.setVendor_name(jsonObj.getString("vendor_name"));
+                            model.setVendor_item_qty("1");
                             JSONArray jsonArrSubCat = jsonObj.getJSONArray("other_vendor");
-                            ArrayList<OtherVendorModel> other_vendors_list = new ArrayList<OtherVendorModel>();
+
+                            ArrayList<VendorBidItemModel> other_vendors_list = new ArrayList<VendorBidItemModel>();
                             for (int j = 0; j < jsonArrSubCat.length(); j++) {
                                 JSONObject jsonObj1 = jsonArrSubCat.getJSONObject(j);
-                                OtherVendorModel model1 = new OtherVendorModel();
-                                model1.setVendorName(jsonObj1.getString("vendor_name"));
-                                model1.setItemPrice(jsonObj1.getString("item_price"));
-                                other_vendors_list.add(model1);
+                                VendorBidItemModel model2 = new VendorBidItemModel();
+
+                                model2.setProduct_id(jsonObj1.getString("vendor_product_id"));
+                                model2.setItem_id(jsonObj.getString("item_id"));
+                                model2.setItem_name(jsonObj.getString("item_name"));
+                                model2.setVendor_item_price(jsonObj1.getString("item_price"));
+                                model2.setVendor_id(jsonObj1.getString("vendor_id"));
+                                model2.setVendor_name(jsonObj1.getString("vendor_name"));
+                                model2.setVendor_item_total_cost(jsonObj1.getString("item_price"));
+                                model2.setVendor_item_qty("1");
+
+                                other_vendors_list.add(model2);
                             }
                             model.setOther_vendors_list(other_vendors_list);
                             Log.e(TAG, "onResponse: model >> " + model.toString());
@@ -200,4 +236,12 @@ public class BidItemListActivity extends AppCompatActivity {
         recycler_view.setAdapter(adapter);
     }
 
+    class CartItemReciver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.e(TAG, "onReceive: cartItemReciever ");
+            getCounterData();
+        }
+    }
 }

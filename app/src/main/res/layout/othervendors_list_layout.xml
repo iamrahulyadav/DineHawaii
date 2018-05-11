@@ -1,30 +1,30 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
-    android:padding="@dimen/_3sdp">
+    android:orientation="horizontal">
 
 
     <com.yberry.dinehawaii.customview.CustomTextView
         android:id="@+id/vendorname"
-        android:layout_width="0dp"
-        android:gravity="center"
-        android:layout_weight="0.1"
-        app:edittextfont="Raleway-Bold.ttf"
-        android:layout_height="wrap_content"
         style="@style/TextAppearance.AppCompat.Small"
-        android:text="NA" />
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.8"
+        android:padding="3dp"
+        android:text="NA"
+        app:edittextfont="@string/raleway_regular" />
 
     <com.yberry.dinehawaii.customview.CustomTextView
-        style="@style/TextAppearance.AppCompat.Small"
         android:id="@+id/vendprice"
+        style="@style/TextAppearance.AppCompat.Small"
         android:layout_width="0dp"
-        android:layout_weight="0.1"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        app:edittextfont="Raleway-Bold.ttf"
-        android:text="$0" />
+        android:layout_weight="0.2"
+        android:gravity="right"
+        android:padding="3dp"
+        android:text="$0"
+        app:edittextfont="@string/raleway_regular" />
 
 
 </LinearLayout>
