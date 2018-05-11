@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.yberry.dinehawaii.R;
 import com.yberry.dinehawaii.customview.CustomButton;
 import com.yberry.dinehawaii.customview.CustomTextView;
-import com.yberry.dinehawaii.database.VendorDBHandler;
+import com.yberry.dinehawaii.database.VendorOrderDBHandler;
 import com.yberry.dinehawaii.vendor.Model.VendorOrderItemsDetailsModel;
 import com.yberry.dinehawaii.vendor.Model.VendorlistDataModel;
 
@@ -60,7 +60,7 @@ public class OrderItemListAdapter extends RecyclerView.Adapter<OrderItemListAdap
                 detailsModel.setItemQuan("1");
                 detailsModel.setVendorId(vendor_id);
                 detailsModel.setProductId(model.getProductId());
-                new VendorDBHandler(context).insertVendorOrderCartItem(detailsModel);
+                new VendorOrderDBHandler(context).insertVendorOrderCartItem(detailsModel);
                 Toast.makeText(context, model.getItemName() + " Added", Toast.LENGTH_SHORT).show();
                 LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent("update_counter"));
             }

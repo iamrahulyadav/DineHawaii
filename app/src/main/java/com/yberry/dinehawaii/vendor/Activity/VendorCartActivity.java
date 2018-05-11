@@ -38,7 +38,7 @@ import com.yberry.dinehawaii.Util.ProgressHUD;
 import com.yberry.dinehawaii.customview.CustomButton;
 import com.yberry.dinehawaii.customview.CustomTextView;
 import com.yberry.dinehawaii.database.DatabaseHandler;
-import com.yberry.dinehawaii.database.VendorDBHandler;
+import com.yberry.dinehawaii.database.VendorOrderDBHandler;
 import com.yberry.dinehawaii.vendor.Adapter.VendorCartItemAdapter;
 import com.yberry.dinehawaii.vendor.Model.VendorOrderItemsDetailsModel;
 
@@ -64,15 +64,15 @@ public class VendorCartActivity extends AppCompatActivity implements View.OnClic
     LinearLayout mainView;
     RecyclerView mRecyclerView;
     RelativeLayout mainView2;
-    private VendorDBHandler mydb;
+    private VendorOrderDBHandler mydb;
     private LinearLayoutManager mLayoutManager;
     private String vendor_id = "0";
     BroadcastReceiver updatePrice = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
 
-            amount = Double.parseDouble(new VendorDBHandler(context).getOrderCartTotal(vendor_id));
-            totalPrice = Double.parseDouble(new VendorDBHandler(context).getOrderCartTotal(vendor_id));
+            amount = Double.parseDouble(new VendorOrderDBHandler(context).getOrderCartTotal(vendor_id));
+            totalPrice = Double.parseDouble(new VendorOrderDBHandler(context).getOrderCartTotal(vendor_id));
             total_amount.setText("" + totalPrice);
             AppPreferences.setPrice(context, "" + totalPrice);
             Log.e(TAG, "onReceive: totalPrice >> " + totalPrice);
@@ -91,7 +91,7 @@ public class VendorCartActivity extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vendor_activity_cart);
         context = this;
-        mydb = new VendorDBHandler(context);
+        mydb = new VendorOrderDBHandler(context);
         setToolbar();
         initViews();
         if (getIntent().hasExtra("vendor_id"))
@@ -110,11 +110,11 @@ public class VendorCartActivity extends AppCompatActivity implements View.OnClic
         });
 
         if (mydb.hasCartData(vendor_id)) {
-            cartItems = new VendorDBHandler(context).getOrderCartItems(vendor_id);  //database data
+            cartItems = new VendorOrderDBHandler(context).getOrderCartItems(vendor_id);  //database data
             Log.e(TAG, "onCreate: cartItems >> " + cartItems);
             setCartAdapter();
-            amount = Double.parseDouble(new VendorDBHandler(context).getOrderCartTotal(vendor_id));
-            totalPrice = Double.parseDouble(new VendorDBHandler(context).getOrderCartTotal(vendor_id));
+            amount = Double.parseDouble(new VendorOrderDBHandler(context).getOrderCartTotal(vendor_id));
+            totalPrice = Double.parseDouble(new VendorOrderDBHandler(context).getOrderCartTotal(vendor_id));
             total_amount.setText("" + totalPrice);
             AppPreferences.setPrice(context, "" + totalPrice);
             Log.e(TAG, "onCreate: totalPrice >> " + totalPrice);
@@ -175,7 +175,7 @@ public class VendorCartActivity extends AppCompatActivity implements View.OnClic
         order_alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                updatedcartItems = new VendorDBHandler(context).getOrderCartItems(vendor_id);  //database data
+                updatedcartItems = new VendorOrderDBHandler(context).getOrderCartItems(vendor_id);  //database data
                 placeOrderData();
             }
         });
@@ -237,7 +237,7 @@ public class VendorCartActivity extends AppCompatActivity implements View.OnClic
                     if (jsonObject.getString("status").equalsIgnoreCase("200")) {
                         JSONArray jsonArray = jsonObject.getJSONArray("result");
                         JSONObject object = jsonArray.getJSONObject(0);
-                        mydb = new VendorDBHandler(context);
+                        mydb = new VendorOrderDBHandler(context);
                         mydb.deleteVendorCartTtem(vendor_id);
                         showThankYouAlert("Your order placed successfully and the order id is "+object.getString("order_id"));
                     } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {

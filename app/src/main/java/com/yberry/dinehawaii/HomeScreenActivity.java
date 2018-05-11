@@ -84,6 +84,7 @@ public class HomeScreenActivity extends AppCompatActivity implements View.OnClic
     public static String printKeyHash(Activity context) {
         PackageInfo packageInfo;
         String key = null;
+
         try {
             String packageName = context.getApplicationContext().getPackageName();
             packageInfo = context.getPackageManager().getPackageInfo(packageName, PackageManager.GET_SIGNATURES);

@@ -33,7 +33,7 @@ import com.yberry.dinehawaii.Util.AppPreferencesBuss;
 import com.yberry.dinehawaii.Util.ProgressHUD;
 import com.yberry.dinehawaii.Util.Util;
 import com.yberry.dinehawaii.customview.CustomTextView;
-import com.yberry.dinehawaii.database.VendorDBHandler;
+import com.yberry.dinehawaii.database.VendorOrderDBHandler;
 import com.yberry.dinehawaii.vendor.Adapter.OrderItemListAdapter;
 import com.yberry.dinehawaii.vendor.Model.VendorOrderItemsDetailsModel;
 import com.yberry.dinehawaii.vendor.Model.VendorlistDataModel;
@@ -130,8 +130,8 @@ public class OrderItemListActivity extends AppCompatActivity {
 
     private void getCounterData() {
         if (tvCountBadge != null) ;
-        if (new VendorDBHandler(OrderItemListActivity.this).hasCartData(vendor_id)) {
-            ArrayList<VendorOrderItemsDetailsModel> cartItems = new VendorDBHandler(OrderItemListActivity.this).getOrderCartItems(vendor_id);
+        if (new VendorOrderDBHandler(OrderItemListActivity.this).hasCartData(vendor_id)) {
+            ArrayList<VendorOrderItemsDetailsModel> cartItems = new VendorOrderDBHandler(OrderItemListActivity.this).getOrderCartItems(vendor_id);
             Log.e(TAG, "getCounterData: items >> " + String.valueOf(cartItems.size()));
             tvCountBadge.setText(String.valueOf(cartItems.size()));
         } else {

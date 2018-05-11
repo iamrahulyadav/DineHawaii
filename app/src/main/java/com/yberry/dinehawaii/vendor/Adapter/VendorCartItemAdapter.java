@@ -21,7 +21,7 @@ import android.widget.Toast;
 import com.yberry.dinehawaii.R;
 import com.yberry.dinehawaii.customview.CustomEditText;
 import com.yberry.dinehawaii.customview.CustomTextView;
-import com.yberry.dinehawaii.database.VendorDBHandler;
+import com.yberry.dinehawaii.database.VendorOrderDBHandler;
 import com.yberry.dinehawaii.vendor.Model.VendorOrderItemsDetailsModel;
 
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ public class VendorCartItemAdapter extends RecyclerView.Adapter<VendorCartItemAd
 
     private static final String TAG = "CartItemAdapter";
     ArrayList<VendorOrderItemsDetailsModel> orderItemsDetailsModels;
-    VendorDBHandler mydb;
+    VendorOrderDBHandler mydb;
     CustomTextView total_amount;
     //MenuCart menuCart = new MenuCart();
     private Context mContext;
@@ -88,7 +88,7 @@ public class VendorCartItemAdapter extends RecyclerView.Adapter<VendorCartItemAd
                     String price = itemsDetailsModel.getItemPrice();
                     int itemTotal = Integer.parseInt(qty) * Integer.parseInt(price);
                     Log.e(TAG, "onTextChanged: itemTotal >> " + itemTotal);
-                    new VendorDBHandler(mContext).updateOrderItemQty(qty, itemsDetailsModel.getItemId(), String.valueOf(itemTotal));
+                    new VendorOrderDBHandler(mContext).updateOrderItemQty(qty, itemsDetailsModel.getItemId(), String.valueOf(itemTotal));
                     myViewHolder.tvItemTotalPrice.setText(String.valueOf(itemTotal));
                     LocalBroadcastManager.getInstance(mContext).sendBroadcast(new Intent("updateTotalprice"));
 
@@ -111,7 +111,7 @@ public class VendorCartItemAdapter extends RecyclerView.Adapter<VendorCartItemAd
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                mydb = new VendorDBHandler(mContext);
+                mydb = new VendorOrderDBHandler(mContext);
                 mydb.deleteCartOrderTtem(itemsDetailsModel.getItemId());
                 orderItemsDetailsModels.remove(pos);
                 notifyDataSetChanged();

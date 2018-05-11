@@ -14,7 +14,7 @@ import android.widget.Toast;
 import com.yberry.dinehawaii.R;
 import com.yberry.dinehawaii.customview.CustomButton;
 import com.yberry.dinehawaii.customview.CustomTextView;
-import com.yberry.dinehawaii.database.VendorDBHandler;
+import com.yberry.dinehawaii.database.VendorOrderDBHandler;
 import com.yberry.dinehawaii.vendor.Model.VendorMasterData;
 import com.yberry.dinehawaii.vendor.Model.VendorOrderItemsDetailsModel;
 
@@ -79,8 +79,8 @@ public class BidItemListAdapter extends RecyclerView.Adapter<BidItemListAdapter.
                 detailsModel.setItemTotalCost("0");
                 detailsModel.setItemQuan("1");
                 detailsModel.setVendorId(vendor_id);
-                new VendorDBHandler(context).insertVendorOrderCartItem(detailsModel);
-                new VendorDBHandler(context).insertVendorOrderCartItem(detailsModel);
+                new VendorOrderDBHandler(context).insertVendorOrderCartItem(detailsModel);
+                new VendorOrderDBHandler(context).insertVendorOrderCartItem(detailsModel);
                 Toast.makeText(context, model.getMaster_item_name() + " Added", Toast.LENGTH_SHORT).show();
             }
         });
