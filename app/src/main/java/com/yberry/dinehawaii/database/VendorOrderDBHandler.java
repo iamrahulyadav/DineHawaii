@@ -12,8 +12,10 @@ import com.yberry.dinehawaii.vendor.Model.VendorOrderItemsDetailsModel;
 import java.util.ArrayList;
 
 
-public class VendorDBHandler extends SQLiteOpenHelper {
-    public static final String TAG = "VendorDBHandler";
+public class VendorOrderDBHandler extends SQLiteOpenHelper {
+
+    //new db
+    public static final String TAG = "VendorOrderDBHandler";
 
     public static final String KEYID = "id";
     public static final String KEY_ITEMID = "item_id";
@@ -49,7 +51,7 @@ public class VendorDBHandler extends SQLiteOpenHelper {
             + ")";
 
 
-    public VendorDBHandler(Context context) {
+    public VendorOrderDBHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
