@@ -430,6 +430,7 @@
                     android:padding="@dimen/_5sdp"
                     android:text="Lead Time"
                     app:edittextfont="Raleway-Regular.ttf" />
+
                 <com.yberry.dinehawaii.customview.CustomTextView
                     android:id="@+id/tvDelivery"
                     style="@style/TextAppearance.AppCompat.Subhead"
@@ -473,6 +474,7 @@
 
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -518,6 +520,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/_1sdp"
                 android:background="@color/green"></View>
+
             <LinearLayout
                 android:id="@+id/vendors_tab"
                 android:layout_width="match_parent"
@@ -550,6 +553,7 @@
                     android:padding="@dimen/_5sdp"
                     android:text="Order History"
                     app:edittextfont="Raleway-Regular.ttf" />
+
                 <com.yberry.dinehawaii.customview.CustomTextView
                     android:id="@+id/vendor_bid_hist"
                     style="@style/TextAppearance.AppCompat.Subhead"
@@ -563,6 +567,7 @@
                     app:edittextfont="Raleway-Regular.ttf" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

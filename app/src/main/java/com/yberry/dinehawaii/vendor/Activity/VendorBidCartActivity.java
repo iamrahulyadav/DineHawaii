@@ -47,24 +47,19 @@ public class VendorBidCartActivity extends AppCompatActivity implements View.OnC
     LinearLayout mainView;
     RecyclerView mRecyclerView;
     RelativeLayout mainView2;
+    private VendorBidDBHandler mydb;
+    private LinearLayoutManager mLayoutManager;
     BroadcastReceiver updatePrice = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-
-            amount = Double.parseDouble(new VendorBidDBHandler(context).getOrderCartTotal());
-            totalPrice = Double.parseDouble(new VendorBidDBHandler(context).getOrderCartTotal());
-            total_amount.setText("" + totalPrice);
-            AppPreferences.setPrice(context, "" + totalPrice);
-            Log.e(TAG, "onReceive: totalPrice >> " + totalPrice);
-            if (amount == 0.0 || amount == 0) {
-                mainView.setVisibility(View.GONE);
-                mainView2.setVisibility(View.GONE);
-                noItems.setVisibility(View.VISIBLE);
+            if (cartItems != null) {
+                cartItems.clear();
             }
+            getCartData();
+
+
         }
     };
-    private VendorBidDBHandler mydb;
-    private LinearLayoutManager mLayoutManager;
     private String vendor_id = "0";
     private ArrayList<VendorBidItemModel> updatedcartItems;
 
@@ -90,6 +85,20 @@ public class VendorBidCartActivity extends AppCompatActivity implements View.OnC
             }
         });
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (cartItems != null) {
+            cartItems.clear();
+        }
+        getCartData();
+
+
+    }
+
+    private void getCartData() {
         if (mydb.hasCartData()) {
             cartItems = new VendorBidDBHandler(context).getOrderCartItems();  //database data
             Log.e(TAG, "onCreate: cartItems >> " + cartItems);
