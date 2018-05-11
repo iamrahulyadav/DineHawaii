@@ -3,6 +3,9 @@ package com.yberry.dinehawaii.vendor.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -16,6 +19,7 @@ public class DeliveryVendorDetailActivity extends AppCompatActivity implements V
     CustomEditText etDeliveryArea, etDriverArrivalTime, etFlatamt, etPercent;
     LinearLayout llRange;
     RadioGroup rgDeliveryCost, rgDriverTip;
+    String selectedCostType,selectedTip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,19 +55,47 @@ public class DeliveryVendorDetailActivity extends AppCompatActivity implements V
         setRadioGrpListners();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.right_icon_menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_filter:
+                checkData();
+                break;
+                default:
+                    break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void checkData() {
+        if (TextUtils.isEmpty(etDeliveryArea.getText().toString()))
+            etDeliveryArea.setError("Enter Area");
+        else if (TextUtils.isEmpty(etDriverArrivalTime.getText().toString()))
+            etDriverArrivalTime.getText().toString();
+    }
+
     private void setRadioGrpListners() {
         rgDeliveryCost.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.rdFlatAmount) {
+                    selectedCostType = "0";
                     etFlatamt.setVisibility(View.VISIBLE);
                     etPercent.setVisibility(View.GONE);
                     llRange.setVisibility(View.GONE);
                 } else if (checkedId == R.id.rdPercent) {
+                    selectedCostType = "1";
                     etPercent.setVisibility(View.VISIBLE);
                     etFlatamt.setVisibility(View.GONE);
                     llRange.setVisibility(View.GONE);
                 } else if (checkedId == R.id.rdRange) {
+                    selectedCostType = "2";
                     llRange.setVisibility(View.VISIBLE);
                     etPercent.setVisibility(View.GONE);
                     etFlatamt.setVisibility(View.GONE);
@@ -74,9 +106,10 @@ public class DeliveryVendorDetailActivity extends AppCompatActivity implements V
         rgDriverTip.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-              /*  if (checkedId==R.id.tipYes)
-
-                else if (checkedId==R.id.tipNo)*/
+                if (checkedId==R.id.tipYes)
+                    selectedTip = "1";
+                else if (checkedId==R.id.tipNo)
+                    selectedTip = "0";
 
             }
         });
