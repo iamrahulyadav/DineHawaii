@@ -29,6 +29,7 @@ import com.yberry.dinehawaii.Util.AppPreferencesBuss;
 import com.yberry.dinehawaii.Util.FragmentIntraction;
 import com.yberry.dinehawaii.Util.Util;
 import com.yberry.dinehawaii.customview.CustomTextView;
+import com.yberry.dinehawaii.vendor.Activity.DeliveryVendorDetailActivity;
 import com.yberry.dinehawaii.vendor.Fragment.ManageVendorsFragment;
 
 import retrofit2.Call;
@@ -38,7 +39,7 @@ import retrofit2.Response;
 public class BusinessHomeFragment41 extends Fragment {
 
     private static final String TAG = "BusinessHomeFragment41";
-    CustomTextView reservation_btn, table_btn, order_btn, feed_btn, info_btn, packagebtn, maketingoption, staff, wholestaff, dinemsg,
+    CustomTextView reservation_btn, table_btn, order_btn, feed_btn, info_btn, packagebtn, maketingoption, staff, wholestaff, dinemsg, delivery_charge,
             service_btn, logo_btn, schedule_btn, manage_table, serviceChargesbtn, employlist, manage_service, tvVendors, vendor_orders_hist, vendor_bid_hist;
     FragmentIntraction intraction;
     private LinearLayout messageLinearLayout, business_setting_tab, other_setting_tab, manage_operation_tab, security_tab, vendors_tab;
@@ -480,6 +481,12 @@ public class BusinessHomeFragment41 extends Fragment {
                 startActivity(new Intent(getActivity(), ManageServiceTypeActivity.class));
             }
         });
+        delivery_charge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), DeliveryVendorDetailActivity.class));
+            }
+        });
     }
 
     private void init(View view) {
@@ -523,6 +530,7 @@ public class BusinessHomeFragment41 extends Fragment {
         vendor_orders_hist = (CustomTextView) view.findViewById(R.id.vendor_orders_hist);
         vendor_bid_hist = (CustomTextView) view.findViewById(R.id.vendor_bid_hist);
         tvVendors = (CustomTextView) view.findViewById(R.id.tvVendors);
+        delivery_charge = (CustomTextView) view.findViewById(R.id.tvDelivery);
         vendors_tab = (LinearLayout) view.findViewById(R.id.vendors_tab);
     }
 }

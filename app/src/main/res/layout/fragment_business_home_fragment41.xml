@@ -430,6 +430,17 @@
                     android:padding="@dimen/_5sdp"
                     android:text="Lead Time"
                     app:edittextfont="Raleway-Regular.ttf" />
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    android:id="@+id/tvDelivery"
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/blue"
+                    android:drawableLeft="@drawable/drawable_green_dot"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:padding="@dimen/_5sdp"
+                    android:text="Delivery Charges"
+                    app:edittextfont="Raleway-Regular.ttf" />
 
 
                 <com.yberry.dinehawaii.customview.CustomTextView
