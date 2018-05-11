@@ -1,0 +1,26 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/cartLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/_5sdp"
+        android:layout_marginTop="6dp"
+        android:clickable="true"
+        android:src="@drawable/ic_shopping_cart_black_24dp" />
+
+    <com.yberry.dinehawaii.customview.CustomTextView
+        android:id="@+id/counting"
+        style="@style/TextAppearance.AppCompat.Notification.Time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="@dimen/_5sdp"
+        android:background="@drawable/cart_circle_red"
+        android:text="0"
+        android:textAlignment="center"
+        android:textColor="@color/white" />
+
+</RelativeLayout>

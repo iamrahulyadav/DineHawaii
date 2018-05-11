@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_reservation"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/frame_pakgae"
+    ></FrameLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scV_pakage"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/mainView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="right"
+                android:background="@color/transparent_full"
+                android:text="Screen No:50"
+                android:textColor="#000"
+                android:textSize="@dimen/_15sdp"
+                app:edittextfont="Raleway-Regular.ttf" />
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/tvDrivername"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/toolbar_actionbar"
+                android:layout_marginLeft="@dimen/_14sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:drawableLeft="@drawable/graysq"
+                android:drawablePadding="@dimen/layout_padding_4"
+                android:drawableRight="@drawable/help"
+                android:gravity="center_vertical"
+                android:text="Do you want to reinstate a No-Show Cancellation "
+                android:textColor="@color/gray"
+                android:textSize="@dimen/_10sdp"
+                app:edittextfont="Raleway-Regular.ttf" />
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/tvPrioity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvDrivername"
+                android:layout_marginLeft="@dimen/_28sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:drawableLeft="@drawable/drawable_green_dot"
+                android:drawablePadding="@dimen/_6sdp"
+                android:drawableTint="@color/transparent_black_color"
+                android:gravity="center"
+                android:padding="@dimen/_8sdp"
+                android:text="As a Priority Walk-in? "
+                android:textColor="@color/gray"
+                android:textSize="@dimen/_10sdp"
+                app:edittextfont="Raleway-Regular.ttf" />
+
+            <LinearLayout
+                android:id="@+id/linear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvPrioity"
+                android:layout_marginLeft="20dp"
+                android:orientation="horizontal">
+
+                <RadioGroup
+                    android:id="@+id/radioGrpWalkin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/radio1_yes"
+                        android:checked="false"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_23sdp"
+                        android:buttonTint="@color/colorPrimary"
+                        android:text="Yes"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_10sdp" />
+
+                    <RadioButton
+                        android:id="@+id/radio1_no"
+                        android:layout_width="wrap_content"
+                        android:checked="false"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_24sdp"
+                        android:buttonTint="@color/colorPrimary"
+                        android:text="No"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_10sdp" />
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/tvPrioity2"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linear"
+                android:layout_marginLeft="@dimen/_28sdp"
+                android:drawableLeft="@drawable/drawable_green_dot"
+                android:drawablePadding="@dimen/_6sdp"
+                android:drawableTint="@color/transparent_black_color"
+                android:gravity="center"
+                android:padding="@dimen/_8sdp"
+                android:text="Refund any Forfeited Reservation Deposit?"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/_10sdp"
+                app:edittextfont="Raleway-Regular.ttf" />
+
+            <LinearLayout
+                android:id="@+id/linear_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvPrioity2"
+                android:layout_marginLeft="@dimen/_18sdp"
+                android:orientation="horizontal">
+
+                <RadioGroup
+                    android:id="@+id/radioGrpRefund"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/radio2_yes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_23sdp"
+                        android:buttonTint="@color/colorPrimary"
+                        android:text="Yes"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_10sdp" />
+
+                    <RadioButton
+                        android:id="@+id/radio2_no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_23sdp"
+                        android:buttonTint="@color/colorPrimary"
+                        android:text="No"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_10sdp" />
+                </RadioGroup>
+
+            </LinearLayout>
+
+
+            <!--<com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/Wait_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linear_2"
+                android:layout_margin="10dp"
+                android:drawableLeft="@drawable/square"
+                android:drawablePadding="@dimen/layout_padding_4"
+                android:drawableRight="@drawable/help"
+                android:text="Allow Walk-in Customers to Add Name to WaitList"
+                android:textColor="@color/gray"
+                android:textSize="12sp"
+
+                />-->
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/Wait_list"
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linear_2"
+                android:layout_marginLeft="@dimen/_13sdp"
+                android:layout_marginTop="@dimen/_13sdp"
+                android:drawableLeft="@drawable/graysq"
+                android:drawablePadding="@dimen/_4sdp"
+                android:drawableRight="@drawable/help"
+                android:gravity="center_vertical"
+                android:text="Allow Walk-in Customers to Add Name to WaitList"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/_10sdp"
+                app:edittextfont="Raleway-Regular.ttf" />
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/Arrival"
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/Wait_list"
+                android:layout_marginLeft="@dimen/_28sdp"
+                android:layout_marginTop="@dimen/_1sdp"
+                android:text="via DINE Hawaii Prior to Arrival"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/_10sdp"
+                app:edittextfont="Raleway-Regular.ttf"
+
+                />
+
+            <LinearLayout
+                android:id="@+id/linear_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/Arrival"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <RadioGroup
+                    android:id="@+id/radioGrpWaitList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/radio3_yes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_23sdp"
+                        android:buttonTint="@color/colorPrimary"
+                        android:text="Yes"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_10sdp" />
+
+                    <RadioButton
+                        android:id="@+id/radio3_no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="25dp"
+                        android:buttonTint="@color/colorPrimary"
+                        android:text="No"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_10sdp" />
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linear_3"
+                android:layout_marginLeft="@dimen/_13sdp"
+                android:drawableLeft="@drawable/graysq"
+                android:drawablePadding="@dimen/_4sdp"
+                android:drawableRight="@drawable/help"
+                android:gravity="center"
+                android:padding="@dimen/_2sdp"
+                android:text="To Make a Large Group Reservation,who Should "
+                android:textColor="@color/gray"
+                android:textSize="@dimen/_10sdp"
+                app:edittextfont="Raleway-Regular.ttf" />
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/request1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/group"
+                android:layout_marginLeft="@dimen/_33sdp"
+                android:gravity="center"
+                android:padding="@dimen/_2sdp"
+                android:text="be request direct to?"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/_10sdp"
+                app:edittextfont="Raleway-Regular.ttf" />
+
+            <com.yberry.dinehawaii.customview.CustomEditText
+                android:id="@+id/et_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/request1"
+                android:layout_marginLeft="@dimen/_18sdp"
+                android:layout_marginRight="@dimen/_18sdp"
+                android:hint="Name"
+                android:inputType="textCapWords|textPersonName"
+                android:padding="@dimen/_15sdp"
+                android:textColorHint="@color/gray"
+                android:textSize="@dimen/_10sdp"
+                app:edittextfont="Raleway-Regular.ttf" />
+
+            <com.yberry.dinehawaii.customview.CustomEditText
+                android:id="@+id/dine_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/et_name"
+                android:layout_marginLeft="@dimen/_18sdp"
+                android:layout_marginRight="@dimen/_18sdp"
+                android:hint="DINE-ID"
+                android:inputType="textEmailAddress"
+                android:padding="@dimen/_15sdp"
+                android:textColorHint="@color/gray"
+                android:textSize="@dimen/_10sdp"
+                app:edittextfont="Raleway-Regular.ttf" />
+
+            <RelativeLayout
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/llBussiness"
+                android:layout_gravity="right"
+                android:gravity="center"
+                android:padding="@dimen/_10sdp">
+
+                <ImageView
+                    android:id="@+id/imageview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/cont" />
+
+            </RelativeLayout>
+
+            <!--    <ImageView
+                    android:id="@+id/imageview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_18sdp"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="@dimen/_28sdp"
+                    android:src="@drawable/cont"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    />-->
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

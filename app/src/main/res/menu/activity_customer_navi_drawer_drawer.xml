@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/drawer_icon"
+            android:title="Home" />
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/drawer_icon"
+
+            android:title="My Profile" />
+        <item
+            android:id="@+id/nav_orderhistory"
+            android:icon="@drawable/drawer_icon"
+
+            android:title="Orders" />
+        <item
+            android:id="@+id/nav_edit_reservation"
+            android:icon="@drawable/drawer_icon"
+
+            android:title="Reservations" />
+
+        <item
+            android:id="@+id/nav_notifications"
+            android:icon="@drawable/drawer_icon"
+            android:title="Notifications" />
+
+        <item
+            android:id="@+id/nav_loyalityprogram"
+            android:icon="@drawable/drawer_icon"
+
+            android:title="Loyality Points" />
+
+        <item
+            android:id="@+id/nav_myreview"
+            android:icon="@drawable/drawer_icon"
+
+            android:title="My Reviews" />
+        <item
+            android:id="@+id/nav_neworder"
+            android:icon="@drawable/drawer_icon"
+
+            android:title="New Order"
+            android:visible="false" />
+        <item
+            android:id="@+id/nav_repeatorder"
+            android:title="Repeat Order"
+            android:visible="false" />
+        <item
+            android:id="@+id/nav_e_gift"
+            android:icon="@drawable/drawer_icon"
+            android:title="E-Gift"
+            android:visible="false" />
+        <item
+            android:id="@+id/nav_coupons"
+            android:icon="@drawable/drawer_icon"
+            android:title="E-Gift Cards" />
+        <item
+            android:id="@+id/nav_mycoupons"
+            android:icon="@drawable/drawer_icon"
+            android:title="Coupons" />
+        <item
+            android:id="@+id/nav_setting"
+            android:icon="@drawable/drawer_icon"
+            android:title="Logout" />
+    </group>
+</menu>

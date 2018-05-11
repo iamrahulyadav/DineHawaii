@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_egift_approved"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context="com.yberry.dinehawaii.Customer.Activity.EGiftApproved">
+
+    <include layout="@layout/toolbar"
+        android:id="@+id/toolbar_bar"/>
+
+    <LinearLayout
+        android:id="@+id/linearprogress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_marginTop="@dimen/_50sdp"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_100sdp"
+            android:background="@drawable/gift" />
+
+        <com.yberry.dinehawaii.customview.CustomTextView
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:padding="10dp"
+            app:edittextfont="Raleway-Bold.ttf"
+            android:textColor="@color/edit_text_color"
+            style="@style/TextAppearance.AppCompat.Subhead"
+            android:text="Thank you for sending the e-gift " />
+
+        <com.yberry.dinehawaii.customview.CustomTextView
+            android:id="@+id/emailTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginLeft="@dimen/_40sdp"
+            android:layout_marginRight="@dimen/_40sdp"
+            android:background="@drawable/bootomline_gray_back_trans"
+            android:gravity="center_horizontal"
+            app:edittextfont="Raleway-Regular.ttf"
+            android:padding="10dp"
+            android:text="" />
+
+        <com.yberry.dinehawaii.customview.CustomTextView
+            android:layout_width="match_parent"
+            app:edittextfont="@string/raleway_regular"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:padding="10dp"
+            android:textColor="@color/edit_text_color"
+            style="@style/TextAppearance.AppCompat.Subhead"
+            android:text="The User will receive notice of the eGift shortly." />
+    </LinearLayout>
+</LinearLayout>

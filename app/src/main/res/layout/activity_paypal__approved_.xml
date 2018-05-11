@@ -1,0 +1,76 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    >
+
+    <include
+        android:id="@+id/toolbar_bar"
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+   <!-- <com.yberry.dinehawaii.customview.CustomTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/_14sdp"
+        android:id="@+id/authorize"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/_50sdp"
+        android:gravity="center"
+        app:edittextfont="Raleway-Regular.ttf"
+        android:layout_below="@+id/toolbar_bar"
+        android:text="Authorize Monthly Payment"
+        />-->
+
+
+  <!--  <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_below="@+id/authorize"
+        android:id="@+id/linearprogress"
+        android:layout_marginTop="@dimen/_20sdp"
+        >
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressbar"
+            android:layout_centerInParent="true"/>
+    </LinearLayout>-->
+    <com.yberry.dinehawaii.customview.CustomTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/TextAppearance.AppCompat.Subhead"
+        android:id="@+id/paypal"
+        android:padding="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:gravity="center"
+        android:textStyle="bold"
+        app:edittextfont="Raleway-Bold.ttf"
+        android:layout_below="@+id/authorize"
+        android:textColor="@color/green"
+        android:text="Paypal Payment Approved"
+        />
+    <com.yberry.dinehawaii.customview.CustomTextView
+        android:layout_below="@+id/paypal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/TextAppearance.AppCompat.Subhead"
+        android:id="@+id/paypalReg"
+        android:padding="@dimen/_12sdp"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:gravity="center"
+        app:edittextfont="Raleway-Bold.ttf"
+        android:layout_gravity="center"
+        android:background="@drawable/button_allow"
+        android:text="CONTINUE"
+        />
+
+
+</LinearLayout>

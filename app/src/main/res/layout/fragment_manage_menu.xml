@@ -1,0 +1,120 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/activityBackground"
+    tools:context="com.yberry.dinehawaii.Bussiness.Fragment.ManageMenuFragment">
+
+
+    <RelativeLayout
+        android:background="@color/white"
+        android:id="@+id/top"
+        android:layout_width="match_parent"
+        android:elevation="1dp"
+        android:layout_height="wrap_content">
+    <com.yberry.dinehawaii.customview.CustomTextView
+        android:id="@+id/tvFoodType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_5sdp"
+        android:padding="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:drawableLeft="@drawable/drawable_green_dot"
+        android:drawablePadding="@dimen/_5sdp"
+        android:gravity="center"
+        android:text="Select Food Type"
+        android:textColor="@color/colorGreen"
+        style="@style/TextAppearance.AppCompat.Subhead"
+        app:edittextfont="Raleway-Bold.ttf" />
+
+
+    <com.yberry.dinehawaii.customview.CustomTextView
+        android:id="@+id/spinSelectFoodType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvFoodType"
+        android:layout_marginLeft="@dimen/_15sdp"
+        android:layout_marginRight="@dimen/_15sdp"
+        android:clickable="true"
+        android:editable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:hint="Select Food Type"
+        android:padding="@dimen/_5sdp"
+        android:textColor="@color/blue"
+        style="@style/TextAppearance.AppCompat.Subhead"
+        app:edittextfont="Raleway-Regular.ttf"></com.yberry.dinehawaii.customview.CustomTextView>
+
+    <View
+        android:layout_marginLeft="@dimen/_15sdp"
+        android:layout_marginRight="@dimen/_15sdp"
+        android:id="@+id/view1"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:layout_below="@+id/spinSelectFoodType"
+        android:background="@color/colorDivider"
+        android:layout_marginBottom="@dimen/_10sdp"
+        ></View>
+    </RelativeLayout>
+    <ScrollView
+        android:id="@+id/scrollrecycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/top"
+        android:layout_marginBottom="?attr/actionBarSize"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
+    </ScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:id="@+id/foodLayout"
+        android:layout_alignParentBottom="true">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <com.yberry.dinehawaii.customview.CustomButton
+                android:id="@+id/addNewfood"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:layout_height="match_parent"
+                android:text="Add New Food"
+                android:textAllCaps="true"
+                app:edittextfont="@string/raleway_regular"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:textColor="@color/white"
+                />
+            <View
+                android:layout_width="1dp"
+                android:background="@android:color/transparent"
+                android:layout_height="match_parent"></View>
+            <com.yberry.dinehawaii.customview.CustomButton
+                android:id="@+id/addfoodtype"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimary"
+                android:text="Add Food Type"
+                android:textColor="@color/white"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                app:edittextfont="@string/raleway_regular" />
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

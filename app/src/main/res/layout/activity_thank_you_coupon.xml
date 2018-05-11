@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_thank_you_screen"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="com.yberry.dinehawaii.Customer.Activity.ThankYouScreenActivity">
+    <include
+        android:id="@+id/toolbar_bar"
+        layout="@layout/toolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        android:layout_margin="@dimen/_10sdp">
+
+        <LinearLayout
+            android:layout_marginTop="@dimen/_80sdp"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="THANK YOU !!"
+                app:edittextfont="@string/raleway_bold"
+                android:textColor="@color/green"
+                style="@style/TextAppearance.AppCompat.Display1"
+                android:layout_gravity="center_horizontal"/>
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_10sdp"
+                android:text="Your reciept will be emailed to you"
+                app:edittextfont="@string/raleway_regular"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:textColor="@color/edit_text_color"
+                android:layout_gravity="center_horizontal"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:layout_height="@dimen/_100sdp"
+                android:src="@drawable/thanks"
+                />
+
+            <Button
+                android:id="@+id/done"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Done"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:textColor="@color/white"
+                android:layout_gravity="center"
+                android:padding="@dimen/_10sdp"
+                android:textAllCaps="true"
+                android:background="@drawable/greenborder"/>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

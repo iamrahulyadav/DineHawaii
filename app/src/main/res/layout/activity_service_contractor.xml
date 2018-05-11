@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_food_service"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:scrollbars="none">
+
+        <RelativeLayout
+            android:id="@+id/mainView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="right"
+                android:background="@color/transparent_full"
+                android:padding="@dimen/_9sdp"
+                android:text="Screen No:48"
+                android:textColor="#000"
+                android:textSize="@dimen/_14sdp"
+                app:edittextfont="Raleway-Regular.ttf" />
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/tvServiceTypr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_9sdp"
+                android:drawableLeft="@drawable/greendot"
+                android:drawablePadding="@dimen/_10sdp"
+                android:drawableRight="@drawable/help"
+                android:gravity="center"
+                android:text="Service Type :"
+                android:textColor="@color/colorGreen"
+                android:textSize="@dimen/_13sdp"
+                app:edittextfont="Roboto-Bold.ttf" />
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/spinSelectService"
+                style="@style/EditTextCustomHolo1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/tvServiceTypr"
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:layout_marginRight="10dp"
+                android:backgroundTint="@color/blue"
+                android:drawableRight="@drawable/ic_keyboard_arrow_down_black_16dp"
+                android:hint="Select Service Type"
+                android:paddingTop="@dimen/_5sdp"
+                android:textColorHint="@color/gray"
+                android:textSize="@dimen/_11sdp"
+                app:edittextfont="Roboto-Regular.ttf"></com.yberry.dinehawaii.customview.CustomTextView>
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/tvUploadFile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/spinSelectService"
+                android:layout_marginTop="@dimen/_9sdp"
+                android:drawableLeft="@drawable/greendot"
+                android:drawablePadding="@dimen/_7sdp"
+                android:gravity="center"
+                android:text="Upload Rate Schedule"
+                android:textColor="@color/colorGreen"
+                android:textSize="@dimen/_13sdp"
+                app:edittextfont="Roboto-Bold.ttf" />
+
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/tvMenuMain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvUploadFile"
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:padding="@dimen/_9sdp"
+                android:text="- Rate Schedule Maintainance"
+                android:textSize="@dimen/_13sdp"
+                android:textStyle="bold"
+                app:edittextfont="Roboto-Regular.ttf" />
+
+            <LinearLayout
+                android:id="@+id/llRate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvMenuMain"
+                android:layout_marginLeft="@dimen/_30sdp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/llDownload"
+                    android:layout_width="wrap_content"
+
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <Button
+                        android:id="@+id/btnUpload"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_25sdp"
+                        android:background="@drawable/button_allow"
+                        android:padding="@dimen/_5sdp"
+                        android:text="UPLAOD RATE SCHEDULE FORMAT FILE"
+                        android:textColor="@color/offwhite"
+                        android:textSize="@dimen/_10sdp" />
+
+                    <ImageView
+                        android:id="@+id/help_uploadRateSchedule"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_9sdp"
+                        android:layout_toRightOf="@id/btnDownload"
+                        android:background="@drawable/help" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llModify"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_below="@+id/llDownload"
+                    android:layout_marginTop="@dimen/_14sdp"
+                    android:gravity="center">
+
+                    <Button
+                        android:id="@+id/btnDownload"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_25sdp"
+                        android:background="@drawable/button_allow"
+                        android:padding="@dimen/_5sdp"
+                        android:text="DOWNLOAD RATE SCHEDULE FORMAT FILE"
+                        android:textColor="@color/offwhite"
+                        android:textSize="@dimen/_10sdp" />
+
+                    <ImageView
+                        android:id="@+id/help_downloadRateSchedule"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_3sdp"
+                        android:layout_toRightOf="@id/btnModify"
+                        android:background="@drawable/help" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llUploadMenu"
+                    android:layout_width="wrap_content"
+
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/llModify"
+                    android:layout_marginTop="@dimen/_14sdp"
+                    android:gravity="center">
+
+                    <Button
+                        android:id="@+id/btnViewMenu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_25sdp"
+                        android:background="@drawable/button_allow"
+                        android:padding="@dimen/_5sdp"
+                        android:text="VIEW RATE SCHEDULE "
+                        android:textColor="@color/offwhite"
+                        android:textSize="@dimen/_10sdp" />
+
+                    <ImageView
+                        android:id="@+id/help_viewRate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_9sdp"
+                        android:layout_toRightOf="@+id/btnUploadMenu"
+                        android:background="@drawable/help" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llViewMenu"
+                    android:layout_width="wrap_content"
+
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/llUploadMenu"
+                    android:layout_marginTop="@dimen/_14sdp"
+                    android:gravity="center">
+
+                    <Button
+                        android:id="@+id/btnModifyMenu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_25sdp"
+                        android:background="@drawable/button_allow"
+                        android:padding="@dimen/_5sdp"
+                        android:text="MODIFY RATE SCHEDULE"
+                        android:textColor="@color/offwhite"
+                        android:textSize="@dimen/_10sdp" />
+
+                    <ImageView
+                        android:id="@+id/help_modifyRate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_9sdp"
+                        android:layout_toRightOf="@id/btnViewMenu"
+                        android:background="@drawable/help" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/tvGraphicsMai"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/llRate"
+                android:layout_marginLeft="@dimen/_29sdp"
+                android:layout_marginTop="@dimen/_9sdp"
+                android:padding="@dimen/_4sdp"
+                android:text="- Graphics Maintenance"
+                android:textSize="@dimen/_13sdp"
+                android:textStyle="bold"
+                app:edittextfont="Roboto-Regular.ttf" />
+
+            <LinearLayout
+                android:id="@+id/llGraphic"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/tvGraphicsMai"
+                android:layout_marginLeft="@dimen/_30sdp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/llBussinessPhoto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_39sdp"
+
+                    android:gravity="center">
+
+                    <Button
+                        android:id="@+id/btnBussinessPhoto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_25sdp"
+                        android:background="@drawable/button_allow"
+                        android:padding="@dimen/_5sdp"
+                        android:text="Business Photo"
+                        android:textColor="@color/offwhite"
+                        android:textSize="@dimen/_10sdp" />
+
+                    <ImageView
+                        android:id="@+id/help_imageView_bussPhoto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_2sdp"
+                        android:layout_toRightOf="@id/btnDownload"
+                        android:background="@drawable/help" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llLogo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_39sdp"
+                    android:layout_below="@+id/llBussinessPhoto"
+                    android:gravity="center">
+
+                    <Button
+                        android:id="@+id/btnLogo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_25sdp"
+                        android:background="@drawable/button_allow"
+                        android:padding="@dimen/_5sdp"
+                        android:text="Logo"
+                        android:textColor="@color/offwhite"
+                        android:textSize="@dimen/_10sdp" />
+
+                    <ImageView
+                        android:id="@+id/help_imageView_bussLogo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_2sdp"
+                        android:layout_toRightOf="@id/btnDownload"
+                        android:background="@drawable/help" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llPhoto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_39sdp"
+                    android:layout_below="@+id/llLogo"
+                    android:gravity="center">
+
+                    <Button
+                        android:id="@+id/btnVideo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_25sdp"
+                        android:background="@drawable/button_allow"
+                        android:padding="@dimen/_5sdp"
+                        android:text="VIDEO"
+                        android:textColor="@color/offwhite"
+                        android:textSize="@dimen/_10sdp" />
+
+                    <ImageView
+                        android:id="@+id/help_imageView_bussvideo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_2sdp"
+                        android:layout_toRightOf="@+id/btnDownload"
+                        android:background="@drawable/help" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/ViewID"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_below="@+id/llGraphic"
+                android:layout_marginTop="@dimen/_19sdp"
+                android:background="@color/gray" />
+
+            <RelativeLayout
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/llBussiness"
+                android:layout_gravity="right"
+                android:gravity="center"
+                android:padding="@dimen/_10sdp">
+
+                <ImageView
+                    android:id="@+id/imageview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/cont" />
+
+            </RelativeLayout>
+
+            <!--
+                        <ImageView
+                            android:id="@+id/imageview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_below="@+id/ViewID"
+                            android:layout_marginBottom="@dimen/_9sdp"
+                            android:layout_marginLeft="@dimen/_9sdp"
+                            android:layout_marginRight="@dimen/_19sdp"
+                            android:layout_marginTop="@dimen/_9sdp"
+                            android:background="@drawable/cont" />
+            -->
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

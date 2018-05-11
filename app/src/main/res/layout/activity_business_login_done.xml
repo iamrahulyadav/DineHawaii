@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background2"
+    android:orientation="vertical"
+    tools:context="com.yberry.dinehawaii.Bussiness.Activity.BusinessLoginError">
+
+
+    <include
+        android:id="@+id/toolbar_bar"
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+
+    <com.yberry.dinehawaii.customview.CustomTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_18sdp"
+        android:gravity="center"
+        android:text="@string/business_login_firsttext"
+        android:textColor="@color/white"
+        style="@style/TextAppearance.AppCompat.Subhead"
+        app:edittextfont="Raleway-Regular.ttf" />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_3sdp"
+        android:layout_marginLeft="@dimen/_100sdp"
+        android:layout_marginRight="@dimen/_100sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:background="#ffff"></View>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:gravity="center"
+        android:text="@string/business_login_secondtext"
+        android:textColor="@color/white"
+        style="@style/TextAppearance.AppCompat.Subhead" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:gravity="center"
+        android:text="@string/business_login_thirdtext"
+        android:textColor="@color/white"
+        style="@style/TextAppearance.AppCompat.Subhead"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:gravity="center"
+        android:text="@string/business_login_fourthtext"
+        android:textColor="@color/white"
+        style="@style/TextAppearance.AppCompat.Subhead"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:gravity="center"
+        android:text="@string/business_login_fifthtext"
+        android:textColor="@color/white"
+        style="@style/TextAppearance.AppCompat.Subhead"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:gravity="center"
+        android:text="@string/business_login_sixthtext"
+        android:textColor="@color/white"
+        style="@style/TextAppearance.AppCompat.Subhead"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:gravity="center"
+        android:text="@string/business_login_seventhtext"
+        android:textColor="@color/white"
+        style="@style/TextAppearance.AppCompat.Subhead"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:gravity="center"
+        android:text="@string/business_login_eigthtext"
+        android:textColor="@color/white"
+        style="@style/TextAppearance.AppCompat.Subhead"/>
+
+
+    <Button
+        android:id="@+id/btnContinue"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_35sdp"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/_10sdp"
+        android:background="@drawable/greenborder"
+        android:drawableLeft="@drawable/stickicon"
+        android:drawablePadding="@dimen/_5sdp"
+        android:gravity="center"
+        android:paddingLeft="@dimen/_5sdp"
+        android:paddingRight="@dimen/_15sdp"
+        android:text="Continue"
+        android:textAlignment="gravity"
+        android:textColor="#fff"
+        style="@style/TextAppearance.AppCompat.Subhead"/>
+
+
+</LinearLayout>

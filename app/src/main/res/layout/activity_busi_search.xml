@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background2">
+    <include
+        android:id="@+id/toolbar_bar"
+        layout="@layout/toolbar" />
+    <ScrollView
+        android:id="@+id/mainView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar_bar"
+        android:scrollbars="none">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginLeft="@dimen/_10sdp">
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:id="@+id/text_heading"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="@dimen/_5sdp"
+                    android:text="Enter your business name to search"
+                    android:textColor="@color/offwhite"
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    app:edittextfont="@string/raleway_regular" />
+
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:id="@+id/tvSeachByName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/drawable_green_dot"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:gravity="center"
+                    android:padding="@dimen/_3sdp"
+                    android:text="@string/business_name"
+                    android:textColor="@color/colorGreen"
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    app:edittextfont="@string/raleway_bold" />
+
+                <LinearLayout
+                    android:id="@+id/llayoutSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvSeachByName"
+                    android:orientation="vertical">
+                    <com.yberry.dinehawaii.customview.CustomAutoCompleteTextView
+                        android:id="@+id/spinSelectBusiness"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:hint="@string/selectBussinessName"
+                        android:imeOptions="actionDone"
+                        android:inputType="textCapWords"
+                        android:paddingBottom="@dimen/_8sdp"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:textColor="@color/white"
+                        android:layout_marginLeft="@dimen/_12sdp"
+                        android:textColorHint="@color/offwhite"
+                        style="@style/TextAppearance.AppCompat.Subhead"
+                        app:edittextfont="@string/raleway_regular"
+                        tools:ignore="MissingPrefix" />
+
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/lines" />
+
+
+                </LinearLayout>
+
+
+
+
+
+                <com.yberry.dinehawaii.customview.CustomButton
+                    android:id="@+id/submitButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/greenborder"
+                    android:drawableLeft="@drawable/stickicon"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:paddingLeft="@dimen/_5sdp"
+                    android:paddingRight="@dimen/_15sdp"
+                    android:text="Search"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:textAlignment="center"
+                    android:textColorHint="@color/offwhite"
+                    android:textColor="#fff"
+                    app:edittextfont="@string/raleway_bold" />
+            </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

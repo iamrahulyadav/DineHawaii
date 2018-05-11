@@ -1,0 +1,352 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+
+    <!-- LoginIn-->
+
+    <dimen name="login_btn">18dp</dimen>
+    <dimen name="txt_size">15dp</dimen>
+    <dimen name="activity_horizontal_margin1">16dp</dimen>
+    <dimen name="activity_vertical_margin1">16dp</dimen>
+    <dimen name="user_post_margin">10dp</dimen>
+    <dimen name="user_post_padding">10dp</dimen>
+    <dimen name="user_img_size">55dp</dimen>
+    <dimen name="tab_txt_size">8sp</dimen>
+    <dimen name="tab_no_size">10sp</dimen>
+    <dimen name="user_img_size1">80dp</dimen>
+    <dimen name="btn_left_pading">20dp</dimen>
+    <dimen name="btn_vertical_padding">10dp</dimen>
+    <dimen name="btn_txt_size">16sp</dimen>
+    <dimen name="app_bar_height">180dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
+    <dimen name="login_margin_left">20dp</dimen>
+    <dimen name="login_margin_right">20dp</dimen>
+    <dimen name="login_margin_bottom">20dp</dimen>
+    <dimen name="login_margin_left3">60dp</dimen>
+    <dimen name="login_margin_right3">60dp</dimen>
+    <dimen name="login_margin_top">60dp</dimen>
+    <dimen name="login_margin_top2">20dp</dimen>
+    <dimen name="login_margintop">30dp</dimen>
+    <dimen name="login_margin_top1">10dp</dimen>
+    <dimen name="linear_layout_padding">20dp</dimen>
+    <dimen name="login_drawble_padding">10dp</dimen>
+    <dimen name="login_textsize">12sp</dimen>
+    <dimen name="login_textsize1">15sp</dimen>
+    <dimen name="login_layout_height">1dp</dimen>
+
+
+    <!--MY PROFILE-->
+    <dimen name="activity_horizontal_margin_profile">16dp</dimen>
+    <dimen name="activity_vertical_margin_profile">16dp</dimen>
+
+    <dimen name="profile_back_textsize_title">15dp</dimen>
+    <dimen name="profile_back_textview_height">25dp</dimen>
+    <dimen name="profile_back_sub_textview_height">15dp</dimen>
+    <dimen name="back_title_padding_Top">10dp</dimen>
+    <dimen name="back_sub_title_padding_bottom">10dp</dimen>
+
+    <dimen name="bio_sub_title_padding_bottom">5dp</dimen>
+    <dimen name="bio_title_padding_Top">5dp</dimen>
+
+    <dimen name="header_view_start_margin_left">16dp</dimen>
+    <dimen name="header_view_end_margin_left">40dp</dimen>
+    <dimen name="header_view_end_margin_right">14dp</dimen>
+    <dimen name="header_view_start_margin_bottom">14dp</dimen>
+    <dimen name="header_view_start_text_size">32sp</dimen>
+    <dimen name="header_view_end_text_size">18sp</dimen>
+
+
+    <dimen name="detail_backdrop_height">256dp</dimen>
+    <dimen name="card_margin">16dp</dimen>
+    <dimen name="list_item_avatar_size">40dp</dimen>
+
+
+    <!--layout_height-->
+    <dimen name="layout_height_1">1dp</dimen>
+    <dimen name="layout_height_2">2dp</dimen>
+    <dimen name="layout_height_4">4dp</dimen>
+    <dimen name="layout_height_6">6dp</dimen>
+    <dimen name="layout_height_8">8dp</dimen>
+    <dimen name="layout_height_10">10dp</dimen>
+    <dimen name="layout_height_12">12dp</dimen>
+    <dimen name="layout_height_14">14dp</dimen>
+    <dimen name="layout_height_16">16dp</dimen>
+    <dimen name="layout_height_18">18dp</dimen>
+    <dimen name="layout_height_20">20dp</dimen>
+    <dimen name="layout_height_22">22dp</dimen>
+    <dimen name="layout_height_24">24dp</dimen>
+    <dimen name="layout_height_26">26dp</dimen>
+    <dimen name="layout_height_28">28dp</dimen>
+    <dimen name="layout_height_30">30dp</dimen>
+    <dimen name="layout_height_32">32dp</dimen>
+    <dimen name="layout_height_34">34dp</dimen>
+    <dimen name="layout_height_36">36dp</dimen>
+    <dimen name="layout_height_38">38dp</dimen>
+    <dimen name="layout_height_40">40dp</dimen>
+    <dimen name="layout_height_42">42dp</dimen>
+    <dimen name="layout_height_44">44dp</dimen>
+    <dimen name="layout_height_46">46dp</dimen>
+    <dimen name="layout_height_48">48dp</dimen>
+    <dimen name="layout_height_50">50dp</dimen>
+    <dimen name="layout_height_52">52dp</dimen>
+    <dimen name="layout_height_54">54dp</dimen>
+    <dimen name="layout_height_56">56dp</dimen>
+    <dimen name="layout_height_58">58dp</dimen>
+    <dimen name="layout_height_60">60dp</dimen>
+    <dimen name="layout_height_62">62dp</dimen>
+    <dimen name="layout_height_64">64dp</dimen>
+    <dimen name="layout_height_66">66dp</dimen>
+    <dimen name="layout_height_68">68dp</dimen>
+    <dimen name="layout_height_70">70dp</dimen>
+    <dimen name="layout_height_72">72dp</dimen>
+    <dimen name="layout_height_74">74dp</dimen>
+    <dimen name="layout_height_76">76dp</dimen>
+    <dimen name="layout_height_78">78dp</dimen>
+    <dimen name="layout_height_80">80dp</dimen>
+    <dimen name="layout_height_82">82dp</dimen>
+    <dimen name="layout_height_84">84dp</dimen>
+    <dimen name="layout_height_86">86dp</dimen>
+    <dimen name="layout_height_88">88dp</dimen>
+    <dimen name="layout_height_90">90dp</dimen>
+    <dimen name="layout_height_92">92dp</dimen>
+    <dimen name="layout_height_94">94dp</dimen>
+    <dimen name="layout_height_96">96dp</dimen>
+    <dimen name="layout_height_98">98dp</dimen>
+    <dimen name="layout_height_100">100dp</dimen>
+
+    <!--layout_width-->
+    <dimen name="layout_width_2">2dp</dimen>
+    <dimen name="layout_width_4">4dp</dimen>
+    <dimen name="layout_width_6">6dp</dimen>
+    <dimen name="layout_width_8">8dp</dimen>
+    <dimen name="layout_width_10">10dp</dimen>
+    <dimen name="layout_width_12">12dp</dimen>
+    <dimen name="layout_width_14">14dp</dimen>
+    <dimen name="layout_width_16">16dp</dimen>
+    <dimen name="layout_width_18">18dp</dimen>
+    <dimen name="layout_width_20">20dp</dimen>
+    <dimen name="layout_width_22">22dp</dimen>
+    <dimen name="layout_width_24">24dp</dimen>
+    <dimen name="layout_width_26">26dp</dimen>
+    <dimen name="layout_width_28">28dp</dimen>
+    <dimen name="layout_width_30">30dp</dimen>
+    <dimen name="layout_width_32">32dp</dimen>
+    <dimen name="layout_width_34">34dp</dimen>
+    <dimen name="layout_width_36">36dp</dimen>
+    <dimen name="layout_width_38">38dp</dimen>
+    <dimen name="layout_width_40">40dp</dimen>
+    <dimen name="layout_width_42">42dp</dimen>
+    <dimen name="layout_width_44">44dp</dimen>
+    <dimen name="layout_width_46">46dp</dimen>
+    <dimen name="layout_width_48">48dp</dimen>
+    <dimen name="layout_width_50">50dp</dimen>
+    <dimen name="layout_width_52">52dp</dimen>
+    <dimen name="layout_width_54">54dp</dimen>
+    <dimen name="layout_width_56">56dp</dimen>
+    <dimen name="layout_width_58">58dp</dimen>
+    <dimen name="layout_width_60">60dp</dimen>
+    <dimen name="layout_width_62">62dp</dimen>
+    <dimen name="layout_width_64">64dp</dimen>
+    <dimen name="layout_width_66">66dp</dimen>
+    <dimen name="layout_width_68">68dp</dimen>
+    <dimen name="layout_width_70">70dp</dimen>
+    <dimen name="layout_width_72">72dp</dimen>
+    <dimen name="layout_width_74">74dp</dimen>
+    <dimen name="layout_width_76">76dp</dimen>
+    <dimen name="layout_width_78">78dp</dimen>
+    <dimen name="layout_width_80">80dp</dimen>
+    <dimen name="layout_width_82">82dp</dimen>
+    <dimen name="layout_width_84">84dp</dimen>
+    <dimen name="layout_width_86">86dp</dimen>
+    <dimen name="layout_width_88">88dp</dimen>
+    <dimen name="layout_width_90">90dp</dimen>
+    <dimen name="layout_width_92">92dp</dimen>
+    <dimen name="layout_width_94">94dp</dimen>
+    <dimen name="layout_width_96">96dp</dimen>
+    <dimen name="layout_width_98">98dp</dimen>
+    <dimen name="layout_width_100">100dp</dimen>
+    <dimen name="layout_width_130">130dp</dimen>
+
+
+    <!---->
+    <!--layout_margin_top-->
+    <dimen name="layout_margin_top_2">2dp</dimen>
+    <dimen name="layout_margin_top_4">4dp</dimen>
+    <dimen name="layout_margin_top_6">6dp</dimen>
+    <dimen name="layout_margin_top_8">8dp</dimen>
+    <dimen name="layout_margin_top_10">10dp</dimen>
+    <dimen name="layout_margin_top_12">12dp</dimen>
+    <dimen name="layout_margin_top_14">14dp</dimen>
+    <dimen name="layout_margin_top_16">16dp</dimen>
+    <dimen name="layout_margin_top_18">18dp</dimen>
+    <dimen name="layout_margin_top_20">20dp</dimen>
+    <dimen name="layout_margin_top_22">22dp</dimen>
+    <dimen name="layout_margin_top_24">24dp</dimen>
+    <dimen name="layout_margin_top_26">26dp</dimen>
+    <dimen name="layout_margin_top_28">28dp</dimen>
+    <dimen name="layout_margin_top_30">30dp</dimen>
+    <dimen name="layout_margin_top_32">32dp</dimen>
+    <dimen name="layout_margin_top_34">34dp</dimen>
+    <dimen name="layout_margin_top_36">36dp</dimen>
+    <dimen name="layout_margin_top_38">38dp</dimen>
+    <dimen name="layout_margin_top_40">40dp</dimen>
+    <dimen name="layout_margin_top_42">42dp</dimen>
+    <dimen name="layout_margin_top_44">44dp</dimen>
+    <dimen name="layout_margin_top_46">46dp</dimen>
+    <dimen name="layout_margin_top_48">48dp</dimen>
+    <dimen name="layout_margin_top_50">50dp</dimen>
+    <!---->
+    <!--layout_margin_bottom-->
+    <dimen name="layout_margin_bottom_2">2dp</dimen>
+    <dimen name="layout_margin_bottom_4">4dp</dimen>
+    <dimen name="layout_margin_bottom_6">6dp</dimen>
+    <dimen name="layout_margin_bottom_8">8dp</dimen>
+    <dimen name="layout_margin_bottom_10">10dp</dimen>
+    <dimen name="layout_margin_bottom_12">12dp</dimen>
+    <dimen name="layout_margin_bottom_14">14dp</dimen>
+    <dimen name="layout_margin_bottom_16">16dp</dimen>
+    <dimen name="layout_margin_bottom_18">18dp</dimen>
+    <dimen name="layout_margin_bottom_20">20dp</dimen>
+    <dimen name="layout_margin_bottom_22">22dp</dimen>
+    <dimen name="layout_margin_bottom_24">24dp</dimen>
+    <dimen name="layout_margin_bottom_26">26dp</dimen>
+    <dimen name="layout_margin_bottom_28">28dp</dimen>
+    <dimen name="layout_margin_bottom_30">30dp</dimen>
+    <dimen name="layout_margin_bottom_32">32dp</dimen>
+    <dimen name="layout_margin_bottom_34">34dp</dimen>
+    <dimen name="layout_margin_bottom_36">36dp</dimen>
+    <dimen name="layout_margin_bottom_38">38dp</dimen>
+    <dimen name="layout_margin_bottom_40">40dp</dimen>
+    <dimen name="layout_margin_bottom_42">42dp</dimen>
+    <dimen name="layout_margin_bottom_44">44dp</dimen>
+    <dimen name="layout_margin_bottom_46">46dp</dimen>
+    <dimen name="layout_margin_bottom_48">48dp</dimen>
+    <dimen name="layout_margin_bottom_50">50dp</dimen>
+    <!---->
+    <!--layout_margin_left-->
+    <dimen name="layout_margin_left_2">2dp</dimen>
+    <dimen name="layout_margin_left_4">4dp</dimen>
+    <dimen name="layout_margin_left_6">6dp</dimen>
+    <dimen name="layout_margin_left_8">8dp</dimen>
+    <dimen name="layout_margin_left_10">10dp</dimen>
+    <dimen name="layout_margin_left_12">12dp</dimen>
+    <dimen name="layout_margin_left_14">14dp</dimen>
+    <dimen name="layout_margin_left_16">16dp</dimen>
+    <dimen name="layout_margin_left_18">18dp</dimen>
+    <dimen name="layout_margin_left_20">20dp</dimen>
+    <dimen name="layout_margin_left_22">22dp</dimen>
+    <dimen name="layout_margin_left_24">24dp</dimen>
+    <dimen name="layout_margin_left_26">26dp</dimen>
+    <dimen name="layout_margin_left_28">28dp</dimen>
+    <dimen name="layout_margin_left_30">30dp</dimen>
+    <dimen name="layout_margin_left_32">32dp</dimen>
+    <dimen name="layout_margin_left_34">34dp</dimen>
+    <dimen name="layout_margin_left_36">36dp</dimen>
+    <dimen name="layout_margin_left_38">38dp</dimen>
+    <dimen name="layout_margin_left_40">40dp</dimen>
+    <dimen name="layout_margin_left_42">42dp</dimen>
+    <dimen name="layout_margin_left_44">44dp</dimen>
+    <dimen name="layout_margin_left_46">46dp</dimen>
+    <dimen name="layout_margin_left_48">48dp</dimen>
+    <dimen name="layout_margin_left_50">50dp</dimen>
+    <dimen name="layout_margin_left_110">110dp</dimen>
+    <dimen name="layout_margin_left_200">200dp</dimen>
+    <!---->
+    <!--layout_margin_right-->
+    <dimen name="layout_margin_right_2">2dp</dimen>
+    <dimen name="layout_margin_right_4">4dp</dimen>
+    <dimen name="layout_margin_right_6">6dp</dimen>
+    <dimen name="layout_margin_right_8">8dp</dimen>
+    <dimen name="layout_margin_right_10">10dp</dimen>
+    <dimen name="layout_margin_right_12">12dp</dimen>
+    <dimen name="layout_margin_right_14">14dp</dimen>
+    <dimen name="layout_margin_right_16">16dp</dimen>
+    <dimen name="layout_margin_right_18">18dp</dimen>
+    <dimen name="layout_margin_right_20">20dp</dimen>
+    <dimen name="layout_margin_right_22">22dp</dimen>
+    <dimen name="layout_margin_right_24">24dp</dimen>
+    <dimen name="layout_margin_right_26">26dp</dimen>
+    <dimen name="layout_margin_right_28">28dp</dimen>
+    <dimen name="layout_margin_right_30">30dp</dimen>
+    <dimen name="layout_margin_right_32">32dp</dimen>
+    <dimen name="layout_margin_right_34">34dp</dimen>
+    <dimen name="layout_margin_right_36">36dp</dimen>
+    <dimen name="layout_margin_right_38">38dp</dimen>
+    <dimen name="layout_margin_right_40">40dp</dimen>
+    <dimen name="layout_margin_right_42">42dp</dimen>
+    <dimen name="layout_margin_right_44">44dp</dimen>
+    <dimen name="layout_margin_lright_46">46dp</dimen>
+    <dimen name="layout_margin_right_48">48dp</dimen>
+    <dimen name="layout_margin_right_50">50dp</dimen>
+    <dimen name="layout_margin_right_110">110dp</dimen>
+    <dimen name="layout_margin_right_200">200dp</dimen>
+    <!---->
+
+    <!--layout_textsize-->
+    <dimen name="layout_textsize_2">2sp</dimen>
+    <dimen name="layout_textsize_4">4sp</dimen>
+    <dimen name="layout_textsize_6">6sp</dimen>
+    <dimen name="layout_textsize_8">8sp</dimen>
+    <dimen name="layout_textsize_10">10sp</dimen>
+    <dimen name="layout_textsize_11">11sp</dimen>
+    <dimen name="layout_textsize_12">12sp</dimen>
+    <dimen name="layout_textsize_13">13sp</dimen>
+    <dimen name="layout_textsize_14">14sp</dimen>
+    <dimen name="layout_textsize_16">16sp</dimen>
+    <dimen name="layout_textsize_18">18sp</dimen>
+    <dimen name="layout_textsize_20">20sp</dimen>
+    <dimen name="layout_textsize_22">22sp</dimen>
+    <dimen name="layout_textsize_24">24sp</dimen>
+    <dimen name="layout_textsize_26">26sp</dimen>
+    <dimen name="layout_textsize_28">28sp</dimen>
+    <dimen name="layout_textsize_30">30sp</dimen>
+    <dimen name="layout_textsize_32">32sp</dimen>
+    <dimen name="layout_textsize_34">34sp</dimen>
+    <dimen name="layout_textsize_36">36sp</dimen>
+    <dimen name="layout_textsize_38">38sp</dimen>
+    <dimen name="layout_textsize_40">40sp</dimen>
+    <dimen name="layout_textsize_42">42sp</dimen>
+    <dimen name="layout_textsize_44">44sp</dimen>
+    <dimen name="layout_textsize_46">46sp</dimen>
+    <dimen name="layout_textsize_48">48sp</dimen>
+    <dimen name="layout_textsize_50">50sp</dimen>
+    <!---->
+
+    <!--layout_padding-->
+    <dimen name="layout_padding_2">2dp</dimen>
+    <dimen name="layout_padding_4">4dp</dimen>
+    <dimen name="layout_padding_6">6dp</dimen>
+    <dimen name="layout_padding_8">8dp</dimen>
+    <dimen name="layout_padding_10">10dp</dimen>
+    <dimen name="layout_padding_12">12dp</dimen>
+    <dimen name="layout_padding_14">14dp</dimen>
+    <dimen name="layout_padding_16">16dp</dimen>
+    <dimen name="layout_padding_18">18dp</dimen>
+    <dimen name="layout_padding_20">20dp</dimen>
+    <dimen name="layout_padding_22">22dp</dimen>
+    <dimen name="layout_padding_24">24dp</dimen>
+    <dimen name="layout_padding_26">26dp</dimen>
+    <dimen name="layout_padding_28">28dp</dimen>
+    <dimen name="layout_padding_30">30dp</dimen>
+    <dimen name="layout_padding_32">32dp</dimen>
+    <dimen name="layout_padding_34">34dp</dimen>
+    <dimen name="layout_padding_36">36dp</dimen>
+    <dimen name="layout_padding_38">38dp</dimen>
+    <dimen name="layout_padding_40">40dp</dimen>
+    <dimen name="layout_padding_42">42dp</dimen>
+    <dimen name="layout_padding_44">44dp</dimen>
+    <dimen name="layout_padding_46">46dp</dimen>
+    <dimen name="layout_padding_48">48dp</dimen>
+    <dimen name="layout_padding_50">50dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="nav_header_vertical_spacing">16dp</dimen>
+    <dimen name="nav_header_height">160dp</dimen>
+
+
+    <!---->
+
+
+</resources>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <!--  <item
+        android:id="@+id/action_group"
+        android:orderInCategory="1"
+        android:title="notification"
+        app:showAsAction="always"
+        android:visible="true"
+        android:icon="@drawable/waitstaff"/>
+    <item
+        android:id="@+id/action_search"
+        android:orderInCategory="2"
+        android:title="search"
+        app:showAsAction="always"
+        android:visible="true"
+        android:icon="@drawable/document"/>-->
+
+    <item
+        android:id="@+id/action_notification"
+        android:orderInCategory="3"
+        android:title="notification"
+        app:showAsAction="always"
+        android:visible="false"
+        android:icon="@drawable/notification"/>
+
+    <item
+        android:id="@+id/action_submit"
+        android:orderInCategory="4"
+        android:title="notification"
+        app:showAsAction="always"
+        android:visible="false"
+        android:icon="@drawable/tick"/>
+</menu>

@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
+    android:focusable="true"
+    android:background="@color/activityBackground">
+    <include
+        android:id="@+id/toolbar_bar"
+        layout="@layout/toolbar" />
+
+
+    <com.yberry.dinehawaii.customview.CustomTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="right"
+        android:background="@color/transparent_full"
+        android:text="Screen No:52 A"
+        android:textColor="#000"
+        android:textSize="@dimen/_12sdp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:id="@+id/table_wallking_mange"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:orientation="vertical"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/toolbar_bar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/mainView"
+            android:orientation="vertical">
+
+
+
+           <!-- <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/gray_transparent"
+                android:padding="10dp"
+                android:weightSum="4">
+
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="TABLE No#"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_10sdp"
+                    app:edittextfont="Raleway-Regular.ttf" />
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="PARTY SIZE"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_10sdp"
+                    app:edittextfont="Raleway-Regular.ttf" />
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:text="START TIME"
+                    android:textSize="@dimen/_10sdp"
+                    app:edittextfont="Raleway-Regular.ttf" />
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_4sdp"
+                    android:layout_weight="1"
+                    android:textStyle="bold"
+                    android:text="UNTILL TIME"
+                    android:textSize="@dimen/_10sdp"
+                    app:edittextfont="Raleway-Regular.ttf" />
+
+
+            </LinearLayout>-->
+     <!--       <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+-->
+
+
+
+
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:orientation="vertical">
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    android:id="@+id/tvFoodType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:drawableLeft="@drawable/drawable_green_dot"
+                    android:gravity="center|left"
+                    android:text="Table and Customer Information"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:textColor="@color/colorGreen"
+                    android:textSize="@dimen/_12sdp"
+                    app:edittextfont="Raleway-Regular.ttf" />
+                <com.yberry.dinehawaii.customview.CustomEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Name"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:id="@+id/customerName"
+                    android:textColor="@color/blue"
+                    android:textColorHint="@color/blue"
+                    android:textSize="@dimen/_10sdp"
+                    android:inputType="textCapWords|textPersonName"
+                    app:edittextfont="Raleway-Regular.ttf" />
+
+                <com.yberry.dinehawaii.customview.CustomEditText
+                    android:id="@+id/dineEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Email-Id"
+                    android:textColor="@color/blue"
+                    android:textColorHint="@color/blue"
+                    android:inputType="textEmailAddress"
+                    android:textSize="@dimen/_10sdp"
+                    app:edittextfont="Raleway-Regular.ttf" />
+
+                <com.yberry.dinehawaii.customview.CustomEditText
+                    android:id="@+id/time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Time"
+                    android:textColor="@color/blue"
+                    android:textColorHint="@color/blue"
+                    android:textSize="@dimen/_10sdp"
+                    app:edittextfont="Raleway-Regular.ttf" />
+
+                <com.yberry.dinehawaii.customview.CustomEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Party Size"
+                    android:textColor="@color/blue"
+                    android:inputType="number"
+                    android:id="@+id/partySize"
+                    android:textColorHint="@color/blue"
+                    android:textSize="@dimen/_10sdp"
+                    app:edittextfont="Raleway-Regular.ttf" />
+
+                <com.yberry.dinehawaii.customview.CustomEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Date"
+                    android:id="@+id/date"
+                    android:textColor="@color/blue"
+                    android:inputType="textCapWords"
+                    android:textColorHint="@color/blue"
+                    android:textSize="@dimen/_10sdp"
+                    app:edittextfont="Raleway-Regular.ttf" />
+                <com.yberry.dinehawaii.customview.CustomEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Contact No."
+                    android:textColor="@color/blue"
+                    android:id="@+id/smartPhno"
+                    android:textColorHint="@color/blue"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:textSize="@dimen/_10sdp"
+                    app:edittextfont="Raleway-Regular.ttf" />
+
+                <com.yberry.dinehawaii.customview.CustomEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Table No."
+                    android:enabled="false"
+                    android:visibility="visible"
+                    android:textColor="@color/blue"
+                    android:id="@+id/table_no"
+                    android:textColorHint="@color/blue"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:textSize="@dimen/_10sdp"
+                    app:edittextfont="Raleway-Regular.ttf" />
+
+                <com.yberry.dinehawaii.customview.CustomButton
+                    android:id="@+id/tvSubmit"
+                    android:background="@color/colorPrimary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvrefundHour"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:gravity="center"
+                    android:text="@string/submit"
+                    android:textColor="@color/white"
+                    app:edittextfont="Raleway-Bold.ttf" />
+
+                <!--
+                                <com.yberry.dinehawaii.customview.CustomEditText
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:hint="PHONE NO."
+                                    android:textColor="@color/blue"
+                                    android:textColorHint="@color/blue"
+                                    android:inputType="number"
+                                    android:maxLength="10"
+                                    android:textSize="@dimen/_10sdp"
+                                    app:edittextfont="Raleway-Regular.ttf" />
+                -->
+
+                <!--
+                                <com.yberry.dinehawaii.customview.CustomEditText
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:hint="TABLE NO.(AUTO POPULATE FIELD)"
+                                    android:textColor="@color/blue"
+                                    android:textColorHint="@color/blue"
+                                    android:textSize="@dimen/_10sdp"
+                                    android:id="@+id/tableNo"
+                                    app:edittextfont="Raleway-Regular.ttf" />
+                -->
+
+              <!--  <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <com.yberry.dinehawaii.customview.CustomTextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1.5"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/_10sdp"
+                        android:text="SELECT TABLE NO."
+                        app:edittextfont="Raleway-Regular.ttf" />
+                    <Spinner
+                        android:id="@+id/spinnerC1table1"
+                        android:layout_width="0dp"
+                        android:layout_weight="1.5"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:textSize="@dimen/_10sdp"
+                        />
+
+                </LinearLayout>-->
+
+            </LinearLayout>
+
+            <!--
+                        <RelativeLayout
+                            android:layout_width="@dimen/_50sdp"
+                            android:layout_height="@dimen/_50sdp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_below="@+id/llBussiness"
+                            android:layout_gravity="right"
+                            android:gravity="center"
+                            android:padding="@dimen/_10sdp">
+
+                            <ImageView
+                                android:id="@+id/btn_imageview"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/cont" />
+
+                        </RelativeLayout>
+            -->
+
+            <!--<ImageView-->
+            <!--android:id="@+id/imageview"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="right"-->
+            <!--android:layout_marginBottom="@dimen/_10sdp"-->
+            <!--android:layout_marginRight="@dimen/_20sdp"-->
+            <!--android:layout_marginTop="@dimen/_20sdp"-->
+            <!--android:src="@drawable/cont" />-->
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+  <!--  <RelativeLayout
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_gravity="right"
+        android:gravity="center"
+        android:padding="@dimen/_10sdp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
+
+        <ImageView
+            android:id="@+id/imageview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/cont" />
+
+    </RelativeLayout>-->
+    <FrameLayout
+        android:id="@+id/table_frame"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="match_parent"></FrameLayout>
+</RelativeLayout>

@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    tools:context=".Bussiness.Activity.AddNewTableActivity">
+
+    <include
+        android:id="@+id/toolbar_bar"
+        layout="@layout/toolbar" />
+
+    <ScrollView
+        android:id="@+id/scroll_fragment45"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar_bar"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/mainViewTable"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:orientation="vertical">
+
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:drawableLeft="@drawable/drawable_green_dot"
+                android:drawablePadding="@dimen/_5sdp"
+                android:gravity="center"
+                android:text="Table Name"
+                android:textColor="@color/colorGreen"
+                app:edittextfont="@string/raleway_bold" />
+
+            <com.yberry.dinehawaii.customview.CustomEditText
+                android:id="@+id/edtableno"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter table name"
+                android:padding="@dimen/_10sdp"
+                app:edittextfont="@string/raleway_regular"></com.yberry.dinehawaii.customview.CustomEditText>
+
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:drawableLeft="@drawable/drawable_green_dot"
+                android:drawablePadding="@dimen/_5sdp"
+                android:gravity="center"
+                android:text="Table Description"
+                android:textColor="@color/colorGreen"
+                app:edittextfont="@string/raleway_bold" />
+
+            <com.yberry.dinehawaii.customview.CustomEditText
+                android:id="@+id/edtabledesc"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter description"
+                android:maxLines="2"
+                android:padding="@dimen/_10sdp"
+                app:edittextfont="@string/raleway_regular"></com.yberry.dinehawaii.customview.CustomEditText>
+
+
+            <LinearLayout
+                android:id="@+id/llCombineTable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:drawableLeft="@drawable/drawable_green_dot"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:gravity="center"
+                    android:text="Select Tables"
+                    android:textColor="@color/colorGreen"
+                    app:edittextfont="@string/raleway_bold" />
+                <com.yberry.dinehawaii.customview.CustomEditText
+                    android:id="@+id/etSelectTables"
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Select Tables"
+                    android:focusableInTouchMode="false"
+                    android:padding="@dimen/_10sdp"
+                    app:edittextfont="@string/raleway_regular"/>
+
+            </LinearLayout>
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:drawableLeft="@drawable/drawable_green_dot"
+                android:drawablePadding="@dimen/_5sdp"
+                android:gravity="center"
+                android:text="Table Capacity"
+                android:textColor="@color/colorGreen"
+                app:edittextfont="@string/raleway_bold" />
+
+            <com.yberry.dinehawaii.customview.CustomEditText
+                android:id="@+id/edtablecapacity"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter capacity"
+                android:inputType="number"
+                android:maxLength="3"
+                android:padding="@dimen/_10sdp"
+                android:singleLine="true"
+                app:edittextfont="@string/raleway_regular"></com.yberry.dinehawaii.customview.CustomEditText>
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:drawableLeft="@drawable/drawable_green_dot"
+                android:drawablePadding="@dimen/_5sdp"
+                android:gravity="center"
+                android:text="Select Reservation Priority"
+                android:textColor="@color/colorGreen"
+                app:edittextfont="@string/raleway_bold" />
+
+            <Spinner
+                android:id="@+id/reserveSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_5sdp"
+                android:spinnerMode="dialog"></Spinner>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/gray"></View>
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/tvServiceTypr"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:drawableLeft="@drawable/drawable_green_dot"
+                android:drawablePadding="@dimen/_5sdp"
+                android:gravity="center"
+                android:text="Service Type"
+                android:textColor="@color/colorGreen"
+                app:edittextfont="@string/raleway_bold" />
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/tvSelectService"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_5sdp"
+                android:clickable="true"
+                android:editable="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:hint="Select Service Type"
+                android:padding="@dimen/_5sdp"
+                app:edittextfont="@string/raleway_regular"></com.yberry.dinehawaii.customview.CustomTextView>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@color/gray"></View>
+
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:drawableLeft="@drawable/drawable_green_dot"
+                android:drawablePadding="@dimen/_5sdp"
+                android:gravity="center"
+                android:text="Reserve Allot Time (in minutes)"
+                android:textColor="@color/colorGreen"
+                app:edittextfont="@string/raleway_bold" />
+
+            <com.yberry.dinehawaii.customview.CustomEditText
+                android:id="@+id/etMinutes"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter minutes"
+                android:inputType="number"
+                android:maxLength="3"
+                android:padding="@dimen/_10sdp"
+                android:singleLine="true"
+                app:edittextfont="@string/raleway_regular"></com.yberry.dinehawaii.customview.CustomEditText>
+
+
+            <LinearLayout
+                android:id="@+id/llCombineRadios"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:drawableLeft="@drawable/drawable_green_dot"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:gravity="center"
+                    android:text="Combineable"
+                    android:textColor="@color/colorGreen"
+                    app:edittextfont="@string/raleway_bold" />
+
+                <RadioGroup
+                    android:id="@+id/rgCombine"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:layout_weight="2"
+                    android:orientation="horizontal">
+
+                    <com.yberry.dinehawaii.customview.CustomRadioButton
+                        android:id="@+id/rbCombineYes"
+                        style="@style/TextAppearance.AppCompat.Subhead"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Yes"
+                        app:edittextfont="@string/raleway_regular" />
+
+                    <com.yberry.dinehawaii.customview.CustomRadioButton
+                        android:id="@+id/rbCombineNo"
+                        style="@style/TextAppearance.AppCompat.Subhead"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:checked="true"
+                        android:text="No"
+                        app:edittextfont="@string/raleway_regular" />
+                </RadioGroup>
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:background="@color/gray"></View>
+            </LinearLayout>
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:drawableLeft="@drawable/drawable_green_dot"
+                android:drawablePadding="@dimen/_5sdp"
+                android:gravity="center"
+                android:text="Chair Type"
+                android:textColor="@color/colorGreen"
+                app:edittextfont="@string/raleway_bold" />
+
+            <RadioGroup
+                android:id="@+id/rgChairType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:orientation="horizontal">
+
+                <com.yberry.dinehawaii.customview.CustomRadioButton
+                    android:id="@+id/rbChairTypeNormal"
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="Normal"
+                    app:edittextfont="@string/raleway_regular" />
+
+                <com.yberry.dinehawaii.customview.CustomRadioButton
+                    android:id="@+id/rbChairHandicapped"
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:text="Handicapped"
+                    app:edittextfont="@string/raleway_regular" />
+            </RadioGroup>
+
+
+            <com.yberry.dinehawaii.customview.CustomEditText
+                android:id="@+id/edchairdescp"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:hint="Enter description"
+                android:maxLines="2"
+                android:padding="@dimen/_10sdp"
+                android:visibility="gone"
+                app:edittextfont="@string/raleway_regular" />
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

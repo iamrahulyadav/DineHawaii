@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/editmenulayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    tools:context="com.yberry.dinehawaii.activity.FoodService">
+
+    <include
+        android:id="@+id/toolbar_bar"
+        layout="@layout/toolbar" />
+
+    <ScrollView
+        android:id="@+id/scroll_fragment45"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar_bar"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/mainView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:orientation="vertical">
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/tvServiceTypr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_9sdp"
+                android:drawableLeft="@drawable/drawable_green_dot"
+                android:drawablePadding="@dimen/_5sdp"
+                android:gravity="center"
+                android:text="Service Type"
+                android:textColor="@color/colorGreen"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                app:edittextfont="Raleway-Bold.ttf" />
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/tvSelectService"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:clickable="true"
+                android:editable="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:hint="Select Service Type"
+                android:padding="@dimen/_5sdp"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:textColor="@color/edit_text_color"
+
+                app:edittextfont="Raleway-Regular.ttf"></com.yberry.dinehawaii.customview.CustomTextView>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:background="@color/colorDivider"></View>
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/tvFoodType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_9sdp"
+                android:drawableLeft="@drawable/drawable_green_dot"
+                android:drawablePadding="@dimen/_5sdp"
+                android:gravity="center"
+                android:text="Food Type"
+                android:textColor="@color/colorGreen"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                app:edittextfont="Raleway-Bold.ttf" />
+
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/spinSelectFoodType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvFoodType"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:clickable="true"
+                android:editable="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:hint="Select Food Type"
+                android:padding="@dimen/_5sdp"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:textColor="@color/edit_text_color"
+
+                app:edittextfont="Raleway-Regular.ttf"></com.yberry.dinehawaii.customview.CustomTextView>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:background="@color/colorDivider"></View>
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/tvFoodName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvSelectService"
+                android:layout_marginTop="@dimen/_9sdp"
+                android:drawableLeft="@drawable/drawable_green_dot"
+                android:drawablePadding="@dimen/_5sdp"
+                android:gravity="center"
+                android:text="Food Name"
+                android:textColor="@color/colorGreen"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                app:edittextfont="Raleway-Bold.ttf" />
+
+            <com.yberry.dinehawaii.customview.CustomEditText
+                android:id="@+id/edfoodname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:hint="Enter Food name"
+                android:padding="@dimen/_5sdp"
+                android:background="@null"
+                android:singleLine="true"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:textColor="@color/edit_text_color"
+                app:edittextfont="Raleway-Regular.ttf"></com.yberry.dinehawaii.customview.CustomEditText>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:background="@color/colorDivider"></View>
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_9sdp"
+                android:drawableLeft="@drawable/drawable_green_dot"
+                android:drawablePadding="@dimen/_5sdp"
+                android:gravity="center"
+                android:text="Food Image"
+                android:textColor="@color/colorGreen"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                app:edittextfont="Raleway-Bold.ttf" />
+            <ImageView
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="@dimen/_60sdp"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:id="@+id/food_image"
+                android:src="@drawable/ic_add_a_photo_black_24dp"/>
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/tvFoodquan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvSelectService"
+                android:layout_marginTop="@dimen/_9sdp"
+                android:drawableLeft="@drawable/drawable_green_dot"
+                android:drawablePadding="@dimen/_5sdp"
+                android:gravity="center"
+                android:text="Quantity"
+                android:textColor="@color/colorGreen"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                app:edittextfont="Raleway-Bold.ttf" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/_5sdp">
+
+                <com.yberry.dinehawaii.customview.CustomCheckBox
+                    android:id="@+id/rdhalf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/edit_text_color"
+                    android:text="Half"
+
+                    app:edittextfont="Raleway-Regular.ttf"/>
+
+                <com.yberry.dinehawaii.customview.CustomEditText
+                    android:id="@+id/edhalfprice"
+                    android:layout_width="@dimen/_60sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:hint="$ 000"
+                    android:inputType="number"
+                    android:padding="@dimen/_10sdp"
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    android:visibility="gone"
+                    android:maxLength="3"
+                    android:drawableTint="@color/colorDivider"
+                    android:textColor="@color/edit_text_color"
+                    app:edittextfont="Raleway-Regular.ttf"></com.yberry.dinehawaii.customview.CustomEditText>
+
+                <com.yberry.dinehawaii.customview.CustomCheckBox
+                    android:id="@+id/rdfull"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:checked="true"
+                    android:textColor="@color/edit_text_color"
+                    android:text="Full"
+
+                    app:edittextfont="Raleway-Regular.ttf"/>
+
+                <com.yberry.dinehawaii.customview.CustomEditText
+                    android:id="@+id/edfullprice"
+                    android:layout_width="@dimen/_60sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:hint="$ 000"
+                    android:inputType="number"
+                    android:padding="@dimen/_10sdp"
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    android:visibility="visible"
+                    android:maxLength="3"
+                    android:textColor="@color/edit_text_color"
+                    android:drawableTint="@color/colorDivider"
+                    app:edittextfont="Raleway-Regular.ttf"></com.yberry.dinehawaii.customview.CustomEditText>
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_below="@+id/spinSelectFoodType"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:background="@color/colorDivider"></View>
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/tvFoodprice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvSelectService"
+                android:layout_marginTop="@dimen/_9sdp"
+                android:drawableLeft="@drawable/drawable_green_dot"
+                android:drawablePadding="@dimen/_5sdp"
+                android:gravity="center"
+                android:text="Food Details"
+                android:textColor="@color/colorGreen"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                app:edittextfont="Raleway-Bold.ttf" />
+
+            <com.yberry.dinehawaii.customview.CustomEditText
+                android:id="@+id/edingredients"
+                android:hint="Key ingredients, callory etc.(max. 100)"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:padding="@dimen/_5sdp"
+                android:background="@null"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:textColor="@color/edit_text_color"
+                android:maxLength="100"
+                android:maxLines="3"
+                android:textAlignment="textStart"
+                app:edittextfont="Raleway-Regular.ttf"
+                android:gravity="start"></com.yberry.dinehawaii.customview.CustomEditText>
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_below="@+id/spinSelectFoodType"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:background="@color/colorDivider"></View>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

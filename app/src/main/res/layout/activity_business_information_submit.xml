@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mainView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="gone"
+    android:id="@+id/layout_frame1"
+    ></FrameLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/maineLayout"
+        android:orientation="vertical"
+        >
+
+    <com.yberry.dinehawaii.customview.CustomTextView
+        android:id="@+id/customTextView19"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:lineSpacingExtra="@dimen/_8sdp"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:text="To complete the first steps for registration, passcode will be sent to you, that you must enter below. Please identify how you would like the registration passcode sent : "
+        android:textAlignment="center"
+        style="@style/TextAppearance.AppCompat.Subhead"
+        app:edittextfont="Raleway-Regular.ttf" />
+
+    <LinearLayout
+        android:layout_marginRight="@dimen/_10sdp"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:weightSum="2">
+
+        <RadioGroup
+            android:layout_marginTop="@dimen/_5sdp"
+            android:id="@+id/radioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="@dimen/_1sdp">
+
+            <RadioButton
+                android:id="@+id/checkBusinessEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:checked="true"
+                android:buttonTint="@color/colorPrimary"
+                android:layout_marginBottom="@dimen/_2sdp"
+                android:text="Business Email"
+                android:textColor="@color/gray"
+                style="@style/TextAppearance.AppCompat.Subhead" />
+
+            <RadioButton
+                android:id="@+id/checkPrimaryContact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:layout_gravity="center"
+                android:buttonTint="@color/colorPrimary"
+                android:text="Primary Contact No"
+                android:textColor="@color/gray"
+                style="@style/TextAppearance.AppCompat.Subhead"/>
+        </RadioGroup>
+        <!-- <RadioGroup
+
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_gravity="center"
+             android:id="@+id/radioGroup"
+             android:padding="1dp"
+             android:layout_weight="1"
+             android:orientation="vertical">
+         <RadioButton
+             android:id="@+id/email"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_gravity="center"
+             android:hint="Business email address"
+             android:textSize="12sp" />
+
+         <RadioButton
+             android:id="@+id/phoneNo"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_gravity="center"
+             android:hint="Primary Contact Smartphone"
+             android:textSize="12sp" />
+
+         </RadioGroup>-->
+        <com.yberry.dinehawaii.customview.CustomTextView
+            android:id="@+id/passcode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/planborder"
+            android:layout_margin="@dimen/_5sdp"
+            android:padding="@dimen/_8sdp"
+            android:text="GENERATE PASSCODE"
+            android:textColor="@color/green"
+            style="@style/TextAppearance.AppCompat.Subhead"
+            app:edittextfont="Raleway-Regular.ttf" />
+
+    </LinearLayout>
+
+    <com.yberry.dinehawaii.customview.CustomTextView
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:id="@+id/customTextView5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/_5sdp"
+        android:text="Enter passcode to continue registration :"
+        style="@style/TextAppearance.AppCompat.Subhead"
+        android:textStyle="bold"
+        app:edittextfont="Raleway-Bold.ttf" />
+
+    <com.yberry.dinehawaii.customview.CustomEditText
+        android:id="@+id/passcodeValue"
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/_12sdp"
+        android:gravity="center"
+        android:paddingTop="@dimen/_15sdp"
+        android:paddingBottom="@dimen/_15sdp"
+        android:hint="Enter Passcode"
+        android:paddingLeft="@dimen/_4sdp"
+        android:textColorHint="@color/gray"
+        android:paddingRight="@dimen/_4sdp"
+        style="@style/TextAppearance.AppCompat.Subhead"
+        app:edittextfont="Raleway-Regular.ttf" />
+
+  <!--  <View
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_1sdp"
+        android:layout_marginLeft="@dimen/_30sdp"
+        android:layout_marginRight="@dimen/_30sdp"
+        android:background="@color/offwhite"></View>-->
+
+    <com.yberry.dinehawaii.customview.CustomButton
+        android:id="@+id/submit"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_35sdp"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:background="@drawable/greenborder"
+        android:paddingRight="@dimen/_30sdp"
+        android:paddingLeft="@dimen/_30sdp"
+        android:text="SUBMIT"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12sdp"
+        app:edittextfont="Raleway-Bold.ttf" />
+
+    </LinearLayout>
+</LinearLayout>

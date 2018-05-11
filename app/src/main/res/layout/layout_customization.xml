@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/_5sdp"
+    android:layout_marginLeft="@dimen/_3sdp"
+    android:layout_marginRight="@dimen/_3sdp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:weightSum="1">
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.4">
+        <com.yberry.dinehawaii.customview.CustomTextView
+            android:id="@+id/foodname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NA"
+            app:edittextfont="Raleway-Regular.ttf"
+            />
+        <com.yberry.dinehawaii.customview.CustomTextView
+            android:id="@+id/quantity"
+            android:layout_width="wrap_content"
+            android:layout_below="@+id/foodname"
+            android:layout_height="wrap_content"
+            app:edittextfont="Raleway-Regular.ttf"
+            android:text="NA"
+
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.4">
+        <com.yberry.dinehawaii.customview.CustomTextView
+            android:id="@+id/customization"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_height="wrap_content"
+            android:text="-"
+            app:edittextfont="Raleway-Regular.ttf"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.2">
+        <com.yberry.dinehawaii.customview.CustomTextView
+            android:id="@+id/itemPrice"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:edittextfont="Raleway-Regular.ttf"
+            android:text="00"
+
+            />
+    </RelativeLayout>
+
+</LinearLayout>

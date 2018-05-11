@@ -1,0 +1,1047 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_food_supply"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="com.yberry.dinehawaii.activity.DeliveryServicesNextActivity">
+
+    <com.yberry.dinehawaii.customview.CustomTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="right"
+        android:background="@color/transparent_full"
+        android:padding="@dimen/_9sdp"
+        android:text="Screen No:47 B"
+        android:textColor="@color/screen_no_text"
+        android:textSize="@dimen/_10sdp"
+        app:edittextfont="Raleway-Regular.ttf" />
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/linearOne"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:weightSum="3">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/toolbar_bar"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <!--<LinearLayout
+                        android:id="@+id/parentlinear"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvDrivername"
+                        android:layout_marginRight="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <TableLayout
+                            android:id="@+id/tableFirstName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
+
+                            <TableRow>
+
+                                <LinearLayout
+                                    android:id="@+id/linear1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/tvDrivername"
+                                    android:layout_marginLeft="@dimen/_20sdp"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <com.yberry.dinehawaii.customview.CustomEditText
+                                        android:id="@+id/tvfirstname"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/tvDrivername"
+                                        android:drawablePadding="@dimen/_8sdp"
+                                        android:hint="First Name"
+                                        android:paddingLeft="@dimen/_10sdp"
+                                        android:textColor="@color/gray"
+                                        android:textSize="@dimen/_10sdp"
+                                        app:edittextfont="ROBOTO-LIGHT.TTF" />
+
+                                </LinearLayout>
+
+                            </TableRow>
+
+                            <TableRow>
+
+                                <LinearLayout
+                                    android:id="@+id/linear4"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/tvDrivername"
+                                    android:layout_marginLeft="@dimen/_20sdp"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+
+                                    <com.yberry.dinehawaii.customview.CustomEditText
+                                        android:id="@+id/tvDineppId"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/tvDrivername"
+                                        android:hint="Dine Hawaii Id"
+                                        android:inputType="number"
+                                        android:paddingLeft="@dimen/_10sdp"
+                                        android:textColor="@color/gray"
+                                        android:textSize="@dimen/_10sdp"
+                                        app:edittextfont="ROBOTO-LIGHT.TTF" />
+
+                                </LinearLayout>
+
+                            </TableRow>
+                        </TableLayout>
+
+                        <TableLayout
+                            android:id="@+id/tableLastName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_25sdp"
+                            android:layout_weight="1">
+
+                            <TableRow>
+
+                                <LinearLayout
+                                    android:id="@+id/linear2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/tvDrivername"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+
+                                    <com.yberry.dinehawaii.customview.CustomEditText
+                                        android:id="@+id/tvlastname"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/tvDrivername"
+                                        android:hint="Last Name"
+                                        android:paddingLeft="@dimen/_10sdp"
+                                        android:textColor="@color/gray"
+                                        android:textSize="@dimen/_10sdp"
+                                        app:edittextfont="ROBOTO-LIGHT.TTF" />
+
+                                </LinearLayout>
+
+                            </TableRow>
+
+                            <TableRow>
+
+                                <LinearLayout
+                                    android:id="@+id/linear3"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/tvDrivername"
+
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+
+                                    <com.yberry.dinehawaii.customview.CustomEditText
+                                        android:id="@+id/tvSmartphNo"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/tvDrivername"
+                                        android:hint="Smartphone No."
+                                        android:inputType="number"
+                                        android:maxLength="10"
+                                        android:paddingLeft="@dimen/_10sdp"
+                                        android:textColor="@color/gray"
+                                        android:textSize="@dimen/_10sdp"
+                                        app:edittextfont="ROBOTO-LIGHT.TTF" />
+
+                                </LinearLayout>
+                            </TableRow>
+                        </TableLayout>
+
+                    </LinearLayout>-->
+
+                    <LinearLayout
+                        android:id="@+id/linearLyaout2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvDrivername"
+                        android:layout_marginLeft="@dimen/_20sdp"
+                        android:layout_marginRight="@dimen/_20sdp"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:orientation="horizontal">
+
+                            <com.yberry.dinehawaii.customview.CustomEditText
+                                android:id="@+id/tvfirstname"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/tvDrivername"
+                                android:hint="First Name"
+                                android:layout_weight="1"
+                                android:layout_marginRight="@dimen/_16sdp"
+                                android:paddingLeft="@dimen/_10sdp"
+                                android:textColor="@color/gray"
+                                android:textSize="@dimen/_10sdp"
+                                app:edittextfont="ROBOTO-LIGHT.TTF" />
+
+                            <com.yberry.dinehawaii.customview.CustomEditText
+                                android:id="@+id/tvlastname"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/tvDrivername"
+                                android:hint="Last Name"
+                                android:layout_weight="1"
+                                android:paddingLeft="@dimen/_10sdp"
+                                android:textColor="@color/gray"
+                                android:textSize="@dimen/_10sdp"
+                                app:edittextfont="ROBOTO-LIGHT.TTF"
+                                />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:orientation="horizontal">
+
+                            <com.yberry.dinehawaii.customview.CustomEditText
+                                android:id="@+id/tvDineppId"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/tvDrivername"
+                                android:hint="Dine Hawaii Id"
+                                android:layout_marginRight="@dimen/_16sdp"
+                                android:layout_weight="1"
+                                android:inputType="number"
+                                android:paddingLeft="@dimen/_10sdp"
+                                android:textColor="@color/gray"
+                                android:textSize="@dimen/_10sdp"
+                                app:edittextfont="ROBOTO-LIGHT.TTF" />
+
+                            <com.yberry.dinehawaii.customview.CustomEditText
+                                android:id="@+id/tvSmartphNo"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/tvDrivername"
+                                android:hint="Smartphone No."
+                                android:layout_weight="1"
+                                android:inputType="number"
+                                android:maxLength="10"
+                                android:paddingLeft="@dimen/_10sdp"
+                                android:textColor="@color/gray"
+                                android:textSize="@dimen/_10sdp"
+                                app:edittextfont="ROBOTO-LIGHT.TTF" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linearLyaout3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/linearLyaout2"
+                        android:layout_marginLeft="@dimen/_20sdp"
+                        android:layout_marginRight="@dimen/_20sdp"
+                        android:visibility="gone"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:orientation="horizontal">
+
+                            <com.yberry.dinehawaii.customview.CustomEditText
+                                android:id="@+id/tvfirstname2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/linearLyaout2"
+                                android:hint="First Name"
+                                android:layout_weight="1"
+                                android:layout_marginRight="@dimen/_16sdp"
+                                android:paddingLeft="@dimen/_10sdp"
+                                android:textColor="@color/gray"
+                                android:textSize="@dimen/_10sdp"
+                                app:edittextfont="ROBOTO-LIGHT.TTF" />
+                            <com.yberry.dinehawaii.customview.CustomEditText
+                                android:id="@+id/tvlastname2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/tvDrivername"
+                                android:hint="Last Name"
+                                android:layout_weight="1"
+                                android:paddingLeft="@dimen/_10sdp"
+                                android:textColor="@color/gray"
+                                android:textSize="@dimen/_10sdp"
+                                app:edittextfont="ROBOTO-LIGHT.TTF" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:orientation="horizontal">
+                            <com.yberry.dinehawaii.customview.CustomEditText
+                                android:id="@+id/tvDineppId2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/tvDrivername"
+                                android:hint="Dine Hawaii Id"
+                                android:layout_marginRight="@dimen/_16sdp"
+                                android:layout_weight="1"
+                                android:inputType="number"
+                                android:paddingLeft="@dimen/_10sdp"
+                                android:textColor="@color/gray"
+                                android:textSize="@dimen/_10sdp"
+                                app:edittextfont="ROBOTO-LIGHT.TTF" />
+
+                            <com.yberry.dinehawaii.customview.CustomEditText
+                                android:id="@+id/tvSmartphNo2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/tvDrivername"
+                                android:hint="Smartphone No."
+                                android:layout_weight="1"
+                                android:inputType="number"
+                                android:maxLength="10"
+                                android:paddingLeft="@dimen/_10sdp"
+                                android:textColor="@color/gray"
+                                android:textSize="@dimen/_10sdp"
+                                app:edittextfont="ROBOTO-LIGHT.TTF" />
+
+                        </LinearLayout>
+
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/addMoreButton2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/_25sdp"
+                            android:layout_below="@+id/linearLyaout3"
+                            android:layout_marginTop="@dimen/_15sdp"
+                            android:background="@drawable/button_rounded"
+                            android:drawableLeft="@drawable/plus"
+                            android:gravity="center"
+                            android:paddingBottom="2dp"
+                            android:paddingRight="@dimen/_10sdp"
+                            android:paddingTop="@dimen/_2sdp"
+                            android:text="Add more"
+                            android:textAllCaps="true"
+                            android:textColor="@color/colorGreen"
+                            android:textSize="@dimen/_12sdp"
+                            app:edittextfont="Roboto-Regular.ttf" />
+
+
+                    </LinearLayout>
+
+                    <com.yberry.dinehawaii.customview.CustomTextView
+                        android:id="@+id/addMoreButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_25sdp"
+                        android:layout_below="@+id/linearLyaout3"
+                        android:layout_marginBottom="@dimen/_15sdp"
+                        android:layout_marginLeft="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:background="@drawable/button_rounded"
+                        android:drawableLeft="@drawable/plus"
+                        android:gravity="center"
+                        android:paddingBottom="2dp"
+                        android:paddingRight="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_2sdp"
+                        android:text="Add more"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorGreen"
+                        android:textSize="@dimen/_12sdp"
+                        app:edittextfont="Roboto-Regular.ttf" />
+
+
+                    <View
+                        android:id="@+id/line1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="1dp"
+                        android:layout_below="@+id/addMoreButton"
+                        android:layout_marginLeft="@dimen/_20sdp"
+                        android:layout_marginRight="@dimen/_15sdp"
+                        android:background="@color/offwhite" />
+
+
+                    <com.yberry.dinehawaii.customview.CustomEditText
+                        android:id="@+id/tvMaximun"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvbusinessName"
+                        android:layout_marginLeft="@dimen/_15sdp"
+                        android:background="@null"
+                        android:hint="Maximum Allowed One Way Milage"
+                        android:inputType="number"
+                        android:padding="@dimen/_10sdp"
+                        android:textSize="@dimen/_10sdp"
+                        app:edittextfont="ROBOTO-LIGHT.TTF" />
+
+
+                    <View
+                        android:id="@+id/line3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_1sdp"
+                        android:layout_below="@+id/tvMaximun"
+                        android:layout_marginBottom="@dimen/_8sdp"
+                        android:layout_marginLeft="@dimen/_20sdp"
+                        android:layout_marginRight="@dimen/_15sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:background="@color/offwhite"
+                        android:paddingLeft="@dimen/_20sdp" />
+
+                    <com.yberry.dinehawaii.customview.CustomTextView
+                        android:id="@+id/tvDrivername"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="@dimen/_3sdp"
+                        android:drawableLeft="@drawable/greendot"
+
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:drawableRight="@drawable/help"
+                        android:gravity="left|center"
+                        android:paddingLeft="@dimen/_5sdp"
+                        android:text="Delivery Driver Names :"
+                        android:textColor="@color/colorGreen"
+                        android:textSize="@dimen/_12sdp"
+                        app:edittextfont="Raleway-Bold.ttf" />
+
+                    <com.yberry.dinehawaii.customview.CustomTextView
+                        android:id="@+id/tvDrivername1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/line1"
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:drawableLeft="@drawable/greendot"
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:drawableRight="@drawable/help"
+                        android:gravity="left|center"
+                        android:paddingTop="@dimen/_10sdp"
+                        android:text="Bussiness Customers Serviced :"
+                        android:textColor="@color/colorGreen"
+                        android:textSize="@dimen/_12sdp"
+                        app:edittextfont="Raleway-Bold.ttf" />
+
+                    <com.yberry.dinehawaii.customview.CustomEditText
+                        android:id="@+id/tvbusinessName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvDrivername1"
+                        android:layout_marginLeft="@dimen/_25sdp"
+                        android:layout_marginRight="@dimen/_10sdp"
+                        android:background="@null"
+                        android:hint="Business Name"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:textSize="@dimen/_10sdp"
+                        app:edittextfont="ROBOTO-LIGHT.TTF" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/secondlinear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:visibility="gone">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/toolbar_bar"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/parentlinear12"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvDrivername12"
+                        android:layout_marginRight="@dimen/_10sdp"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <TableLayout
+                            android:id="@+id/tableFirstName12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
+
+                            <TableRow>
+
+                                <LinearLayout
+                                    android:id="@+id/linear112"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/tvDrivername"
+                                    android:layout_marginLeft="@dimen/_20sdp"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <com.yberry.dinehawaii.customview.CustomEditText
+                                        android:id="@+id/tvfirstname12"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/tvDrivername"
+                                        android:drawablePadding="@dimen/_8sdp"
+                                        android:hint="First Name"
+                                        android:paddingLeft="@dimen/_10sdp"
+                                        android:textColor="@color/gray"
+                                        android:textSize="@dimen/_10sdp"
+                                        app:edittextfont="ROBOTO-LIGHT.TTF"
+
+
+                                        />
+
+                                </LinearLayout>
+
+                            </TableRow>
+
+                            <TableRow>
+
+                                <LinearLayout
+                                    android:id="@+id/linear412"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/tvDrivername"
+
+                                    android:layout_marginLeft="@dimen/_20sdp"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+
+                                    <com.yberry.dinehawaii.customview.CustomEditText
+                                        android:id="@+id/tvDineppId12"
+
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/tvDrivername"
+                                        android:drawablePadding="@dimen/_8sdp"
+                                        android:hint="Dine Hawaii Id"
+                                        android:inputType="number"
+                                        android:paddingLeft="@dimen/_10sdp"
+
+                                        android:paddingTop="@dimen/_30sdp"
+                                        android:textColor="@color/gray"
+                                        android:textSize="@dimen/_10sdp"
+                                        app:edittextfont="ROBOTO-LIGHT.TTF"
+
+
+                                        />
+
+                                </LinearLayout>
+
+                            </TableRow>
+                        </TableLayout>
+
+                        <TableLayout
+                            android:id="@+id/tableLastName12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_25sdp"
+                            android:layout_weight="1">
+
+                            <TableRow>
+
+                                <LinearLayout
+                                    android:id="@+id/linear212"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/tvDrivername"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+
+                                    <com.yberry.dinehawaii.customview.CustomEditText
+                                        android:id="@+id/tvlastname12"
+
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/tvDrivername"
+
+
+                                        android:hint="Last Name"
+                                        android:paddingLeft="@dimen/_10sdp"
+                                        android:textColor="@color/gray"
+                                        android:textSize="@dimen/_10sdp"
+                                        app:edittextfont="ROBOTO-LIGHT.TTF"
+
+
+                                        />
+
+                                </LinearLayout>
+
+                            </TableRow>
+
+                            <TableRow>
+
+                                <LinearLayout
+                                    android:id="@+id/linear312"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/tvDrivername"
+
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+
+                                    <com.yberry.dinehawaii.customview.CustomEditText
+                                        android:id="@+id/tvSmartphNo12"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/tvDrivername"
+                                        android:hint="Smartphone No."
+                                        android:inputType="number"
+                                        android:paddingLeft="@dimen/_10sdp"
+                                        android:paddingTop="@dimen/_30sdp"
+
+                                        android:textColor="@color/gray"
+                                        android:textSize="@dimen/_10sdp"
+                                        app:edittextfont="ROBOTO-LIGHT.TTF"
+
+
+                                        />
+
+                                </LinearLayout>
+
+                            </TableRow>
+                        </TableLayout>
+
+
+                    </LinearLayout>
+
+
+                    <View
+                        android:id="@+id/line112"
+                        android:layout_width="wrap_content"
+                        android:layout_height="1dp"
+                        android:layout_below="@+id/parentlinear12"
+                        android:layout_marginLeft="@dimen/_20sdp"
+                        android:layout_marginRight="@dimen/_15sdp"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:background="@color/offwhite" />
+
+                    <View
+                        android:id="@+id/line312"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_1sdp"
+                        android:layout_below="@+id/tvMaximun12"
+                        android:layout_marginBottom="@dimen/_8sdp"
+                        android:layout_marginLeft="@dimen/_20sdp"
+                        android:layout_marginRight="@dimen/_15sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:background="@color/offwhite"
+                        android:paddingLeft="@dimen/_20sdp" />
+
+                    <com.yberry.dinehawaii.customview.CustomEditText
+                        android:id="@+id/tvMaximun12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvbusinessName12"
+                        android:layout_marginLeft="@dimen/_15sdp"
+
+                        android:background="@null"
+                        android:hint="Maximum Allowed One Way Milage"
+                        android:inputType="number"
+                        android:padding="@dimen/_10sdp"
+                        android:textSize="@dimen/_10sdp"
+                        app:edittextfont="ROBOTO-LIGHT.TTF"
+
+                        />
+
+
+                    <com.yberry.dinehawaii.customview.CustomTextView
+                        android:id="@+id/tvDrivername12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="@dimen/_3sdp"
+                        android:drawableLeft="@drawable/greendot"
+
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:drawableRight="@drawable/help"
+                        android:gravity="left|center"
+                        android:paddingLeft="@dimen/_5sdp"
+                        android:text="Delivery Driver Names :"
+                        android:textColor="@color/colorGreen"
+                        android:textSize="@dimen/_12sdp"
+                        app:edittextfont="Raleway-Bold.ttf" />
+
+                    <com.yberry.dinehawaii.customview.CustomTextView
+                        android:id="@+id/tvDrivername112"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/line112"
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:drawableLeft="@drawable/greendot"
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:drawableRight="@drawable/help"
+                        android:gravity="left|center"
+                        android:paddingTop="@dimen/_10sdp"
+                        android:text="Bussiness Customers Serviced :"
+                        android:textColor="@color/colorGreen"
+                        android:textSize="@dimen/_12sdp"
+
+
+                        app:edittextfont="Raleway-Bold.ttf" />
+
+                    <com.yberry.dinehawaii.customview.CustomEditText
+                        android:id="@+id/tvbusinessName12"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvDrivername112"
+                        android:layout_marginLeft="@dimen/_25sdp"
+                        android:layout_marginRight="@dimen/_10sdp"
+                        android:background="@null"
+                        android:hint="Business Name"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:textSize="@dimen/_10sdp"
+                        app:edittextfont="ROBOTO-LIGHT.TTF" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/thirdLinear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:visibility="gone">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/toolbar_bar"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/parentlinear13"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvDrivername13"
+                        android:layout_marginRight="@dimen/_10sdp"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <TableLayout
+                            android:id="@+id/tableFirstName13"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
+
+                            <TableRow>
+
+                                <LinearLayout
+                                    android:id="@+id/linear11"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/tvDrivername"
+                                    android:layout_marginLeft="@dimen/_20sdp"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <com.yberry.dinehawaii.customview.CustomEditText
+                                        android:id="@+id/tvfirstname13"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/tvDrivername"
+                                        android:drawablePadding="@dimen/_8sdp"
+                                        android:hint="First Name"
+                                        android:paddingLeft="@dimen/_10sdp"
+                                        android:textColor="@color/gray"
+                                        android:textSize="@dimen/_10sdp"
+                                        app:edittextfont="ROBOTO-LIGHT.TTF"
+
+
+                                        />
+
+                                </LinearLayout>
+
+                            </TableRow>
+
+                            <TableRow>
+
+                                <LinearLayout
+                                    android:id="@+id/linear"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/tvDrivername"
+
+                                    android:layout_marginLeft="@dimen/_20sdp"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+
+                                    <com.yberry.dinehawaii.customview.CustomEditText
+                                        android:id="@+id/tvDineppId13"
+
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/tvDrivername"
+                                        android:drawablePadding="@dimen/_8sdp"
+                                        android:hint="Dine Hawaii Id"
+                                        android:inputType="number"
+                                        android:paddingLeft="@dimen/_10sdp"
+
+                                        android:paddingTop="@dimen/_30sdp"
+                                        android:textColor="@color/gray"
+                                        android:textSize="@dimen/_10sdp"
+                                        app:edittextfont="ROBOTO-LIGHT.TTF"
+
+
+                                        />
+
+                                </LinearLayout>
+
+                            </TableRow>
+                        </TableLayout>
+
+                        <TableLayout
+                            android:id="@+id/tableLastName13"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_25sdp"
+                            android:layout_weight="1">
+
+                            <TableRow>
+
+                                <LinearLayout
+                                    android:id="@+id/linear31"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/tvDrivername"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+
+                                    <com.yberry.dinehawaii.customview.CustomEditText
+                                        android:id="@+id/tvlastname13"
+
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/tvDrivername"
+
+
+                                        android:hint="Last Name"
+                                        android:paddingLeft="@dimen/_10sdp"
+                                        android:textColor="@color/gray"
+                                        android:textSize="@dimen/_10sdp"
+                                        app:edittextfont="ROBOTO-LIGHT.TTF"
+
+
+                                        />
+
+                                </LinearLayout>
+
+                            </TableRow>
+
+                            <TableRow>
+
+                                <LinearLayout
+                                    android:id="@+id/linear13"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/tvDrivername"
+
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+
+                                    <com.yberry.dinehawaii.customview.CustomEditText
+                                        android:id="@+id/tvSmartphNo13"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/tvDrivername"
+
+                                        android:hint="Smartphone No."
+                                        android:inputType="number"
+                                        android:paddingLeft="@dimen/_10sdp"
+                                        android:paddingTop="@dimen/_30sdp"
+                                        android:textColor="@color/gray"
+                                        android:textSize="@dimen/_10sdp"
+                                        app:edittextfont="ROBOTO-LIGHT.TTF"
+
+
+                                        />
+
+                                </LinearLayout>
+
+                            </TableRow>
+                        </TableLayout>
+
+
+                    </LinearLayout>
+
+
+                    <View
+                        android:id="@+id/line13"
+                        android:layout_width="wrap_content"
+                        android:layout_height="1dp"
+                        android:layout_below="@+id/parentlinear13"
+                        android:layout_marginLeft="@dimen/_20sdp"
+                        android:layout_marginRight="@dimen/_15sdp"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:background="@color/offwhite" />
+
+                    <View
+                        android:id="@+id/line31"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_1sdp"
+                        android:layout_below="@+id/tvMaximun13"
+                        android:layout_marginBottom="@dimen/_8sdp"
+                        android:layout_marginLeft="@dimen/_20sdp"
+                        android:layout_marginRight="@dimen/_15sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:background="@color/offwhite"
+                        android:paddingLeft="@dimen/_20sdp" />
+
+                    <com.yberry.dinehawaii.customview.CustomEditText
+                        android:id="@+id/tvMaximun13"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvbusinessName13"
+
+                        android:layout_marginLeft="@dimen/_15sdp"
+                        android:background="@null"
+                        android:hint="Maximum Allowed One Way Milage"
+                        android:inputType="number"
+                        android:padding="@dimen/_10sdp"
+                        android:textSize="@dimen/_10sdp"
+
+                        app:edittextfont="ROBOTO-LIGHT.TTF"
+
+                        />
+
+
+                    <com.yberry.dinehawaii.customview.CustomTextView
+                        android:id="@+id/tvDrivername13"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="@dimen/_3sdp"
+                        android:drawableLeft="@drawable/greendot"
+
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:drawableRight="@drawable/help"
+                        android:gravity="left|center"
+                        android:paddingLeft="@dimen/_5sdp"
+                        android:text="Delivery Driver Names :"
+                        android:textColor="@color/colorGreen"
+                        android:textSize="@dimen/_12sdp"
+                        app:edittextfont="Raleway-Bold.ttf" />
+
+                    <com.yberry.dinehawaii.customview.CustomTextView
+                        android:id="@+id/tvDrivername31"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/line13"
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:drawableLeft="@drawable/greendot"
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:drawableRight="@drawable/help"
+                        android:gravity="left|center"
+                        android:paddingTop="@dimen/_10sdp"
+                        android:text="Bussiness Customers Serviced :"
+                        android:textColor="@color/colorGreen"
+                        android:textSize="@dimen/_12sdp"
+
+
+                        app:edittextfont="Raleway-Bold.ttf" />
+
+                    <com.yberry.dinehawaii.customview.CustomEditText
+                        android:id="@+id/tvbusinessName13"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvDrivername31"
+                        android:layout_marginLeft="@dimen/_25sdp"
+                        android:layout_marginRight="@dimen/_10sdp"
+                        android:background="@null"
+                        android:hint="Business Name"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:textSize="@dimen/_10sdp"
+                        app:edittextfont="ROBOTO-LIGHT.TTF" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/tvAddmore1"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_25sdp"
+                android:layout_below="@+id/line3"
+                android:layout_marginBottom="@dimen/_15sdp"
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:background="@drawable/button_rounded"
+                android:drawableLeft="@drawable/plus"
+                android:gravity="center"
+                android:paddingBottom="2dp"
+                android:paddingRight="@dimen/_10sdp"
+                android:paddingTop="@dimen/_2sdp"
+                android:text="Add more"
+                android:textAllCaps="true"
+                android:textColor="@color/colorGreen"
+                android:textSize="@dimen/_12sdp"
+                app:edittextfont="Roboto-Regular.ttf" />
+
+            <RelativeLayout
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/llBussiness"
+                android:layout_gravity="right"
+                android:gravity="center"
+                android:padding="@dimen/_10sdp">
+
+                <ImageView
+                    android:id="@+id/imageview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/cont" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

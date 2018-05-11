@@ -1,0 +1,893 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <ScrollView
+        android:id="@+id/scrollViewBuss"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+        <RelativeLayout
+            android:id="@+id/mainView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/serviceHour"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:drawableLeft="@drawable/drawable_green_dot"
+                android:drawablePadding="@dimen/_5sdp"
+                android:drawableRight="@drawable/help"
+                android:gravity="fill_vertical"
+                android:text="@string/ServiceHour"
+                android:textColor="@color/green"
+                app:edittextfont="Raleway-Bold.ttf" />
+
+
+            <HorizontalScrollView
+                android:id="@+id/horizontalView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/serviceHour"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:scrollbarSize="2dp"
+                android:scrollbars="horizontal"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:id="@+id/hours"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="6">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            style="@style/TextAppearance.AppCompat.Notification.Time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:padding="@dimen/_5sdp"
+                            android:text="Day"
+                            app:edittextfont="Raleway-Bold.ttf" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            style="@style/TextAppearance.AppCompat.Notification.Time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:padding="@dimen/_5sdp"
+                            android:text="@string/sunday"
+                            app:edittextfont="Raleway-Bold.ttf" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            style="@style/TextAppearance.AppCompat.Notification.Time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/_5sdp"
+                            android:text="@string/monday"
+                            app:edittextfont="Raleway-Bold.ttf" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            style="@style/TextAppearance.AppCompat.Notification.Time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/_5sdp"
+                            android:text="@string/tuesday"
+                            app:edittextfont="Raleway-Bold.ttf" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            style="@style/TextAppearance.AppCompat.Notification.Time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/_5sdp"
+                            android:text="@string/wensday"
+                            app:edittextfont="Raleway-Bold.ttf" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            style="@style/TextAppearance.AppCompat.Notification.Time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/_5sdp"
+                            android:text="@string/thursday"
+                            app:edittextfont="Raleway-Bold.ttf" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            style="@style/TextAppearance.AppCompat.Notification.Time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/_5sdp"
+                            android:text="@string/friday"
+                            app:edittextfont="Raleway-Bold.ttf" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            style="@style/TextAppearance.AppCompat.Notification.Time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/_5sdp"
+                            android:text="@string/saturday"
+                            app:edittextfont="Raleway-Bold.ttf" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            style="@style/TextAppearance.AppCompat.Notification.Time"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:padding="@dimen/_5sdp"
+                            android:text="All Day"
+                            app:edittextfont="Raleway-Bold.ttf" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/txt_s1"
+                            style="@style/TextAppearance.AppCompat.Notification.Time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:hint="@string/to"
+                            android:padding="@dimen/_5sdp"
+                            app:edittextfont="Raleway-Regular.ttf" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/txt_m1"
+                            style="@style/TextAppearance.AppCompat.Notification.Time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:hint="@string/to"
+                            android:padding="@dimen/_5sdp"
+                            app:edittextfont="Raleway-Regular.ttf" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/txt_tue1"
+                            style="@style/TextAppearance.AppCompat.Notification.Time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:hint="@string/to"
+                            android:padding="@dimen/_5sdp"
+                            app:edittextfont="Raleway-Regular.ttf" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/txt_w1"
+                            style="@style/TextAppearance.AppCompat.Notification.Time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:hint="@string/to"
+                            android:padding="@dimen/_5sdp"
+                            app:edittextfont="Raleway-Regular.ttf" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/txt_th1"
+                            style="@style/TextAppearance.AppCompat.Notification.Time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:hint="@string/to"
+                            android:padding="@dimen/_5sdp"
+                            app:edittextfont="Raleway-Regular.ttf" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/txt_fri1"
+                            style="@style/TextAppearance.AppCompat.Notification.Time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:hint="@string/to"
+                            android:padding="@dimen/_5sdp"
+                            app:edittextfont="Raleway-Regular.ttf" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/txt_sat1"
+                            style="@style/TextAppearance.AppCompat.Notification.Time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:hint="@string/to"
+                            android:padding="@dimen/_5sdp"
+                            app:edittextfont="Raleway-Regular.ttf" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            style="@style/TextAppearance.AppCompat.Notification.Time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:padding="@dimen/_5sdp"
+                            android:text="Breakfast"
+                            app:edittextfont="Raleway-Bold.ttf" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/txt_s2"
+                            style="@style/TextAppearance.AppCompat.Notification.Time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:hint="@string/to"
+                            android:padding="@dimen/_5sdp"
+                            app:edittextfont="Raleway-Regular.ttf" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/txt_m2"
+                            style="@style/TextAppearance.AppCompat.Notification.Time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:hint="@string/to"
+                            android:padding="@dimen/_5sdp"
+                            app:edittextfont="Raleway-Regular.ttf" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/txt_tue2"
+                            style="@style/TextAppearance.AppCompat.Notification.Time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:hint="@string/to"
+                            android:padding="@dimen/_5sdp"
+                            app:edittextfont="Raleway-Regular.ttf" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/txt_w2"
+                            style="@style/TextAppearance.AppCompat.Notification.Time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:hint="@string/to"
+                            android:padding="@dimen/_5sdp"
+                            app:edittextfont="Raleway-Regular.ttf" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/txt_th2"
+                            style="@style/TextAppearance.AppCompat.Notification.Time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:hint="@string/to"
+                            android:padding="@dimen/_5sdp"
+                            app:edittextfont="Raleway-Regular.ttf" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/txt_fri2"
+                            style="@style/TextAppearance.AppCompat.Notification.Time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:hint="@string/to"
+                            android:padding="@dimen/_5sdp"
+                            app:edittextfont="Raleway-Regular.ttf" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/txt_sat2"
+                            style="@style/TextAppearance.AppCompat.Notification.Time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:hint="@string/to"
+                            android:padding="@dimen/_5sdp"
+                            app:edittextfont="Raleway-Regular.ttf" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            style="@style/TextAppearance.AppCompat.Notification.Time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:padding="@dimen/_5sdp"
+                            android:text="Lunch"
+                            app:edittextfont="Raleway-Bold.ttf" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/txt_s3"
+                            style="@style/TextAppearance.AppCompat.Notification.Time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:hint="@string/to"
+                            android:padding="@dimen/_5sdp"
+                            app:edittextfont="Raleway-Regular.ttf" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/txt_m3"
+                            style="@style/TextAppearance.AppCompat.Notification.Time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:hint="@string/to"
+                            android:padding="@dimen/_5sdp"
+                            app:edittextfont="Raleway-Regular.ttf" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/txt_tue3"
+                            style="@style/TextAppearance.AppCompat.Notification.Time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:hint="@string/to"
+                            android:padding="@dimen/_5sdp"
+                            app:edittextfont="Raleway-Regular.ttf" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/txt_w3"
+                            style="@style/TextAppearance.AppCompat.Notification.Time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:hint="@string/to"
+                            android:padding="@dimen/_5sdp"
+                            app:edittextfont="Raleway-Regular.ttf" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/txt_th3"
+                            style="@style/TextAppearance.AppCompat.Notification.Time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:hint="@string/to"
+                            android:padding="@dimen/_5sdp"
+                            app:edittextfont="Raleway-Regular.ttf" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/txt_fri3"
+                            style="@style/TextAppearance.AppCompat.Notification.Time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:hint="@string/to"
+                            android:padding="@dimen/_5sdp"
+                            app:edittextfont="Raleway-Regular.ttf" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/txt_sat3"
+                            style="@style/TextAppearance.AppCompat.Notification.Time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:hint="@string/to"
+                            android:padding="@dimen/_5sdp"
+                            app:edittextfont="Raleway-Regular.ttf" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            style="@style/TextAppearance.AppCompat.Notification.Time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:padding="@dimen/_5sdp"
+                            android:text="Dinner"
+                            app:edittextfont="Raleway-Bold.ttf" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/txt_s4"
+                            style="@style/TextAppearance.AppCompat.Notification.Time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:hint="@string/to"
+                            android:padding="@dimen/_5sdp"
+                            app:edittextfont="Raleway-Regular.ttf" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/txt_m4"
+                            style="@style/TextAppearance.AppCompat.Notification.Time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:hint="@string/to"
+                            android:padding="@dimen/_5sdp"
+                            app:edittextfont="Raleway-Regular.ttf" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/txt_tue4"
+                            style="@style/TextAppearance.AppCompat.Notification.Time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:hint="@string/to"
+                            android:padding="@dimen/_5sdp"
+                            app:edittextfont="Raleway-Regular.ttf" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/txt_w4"
+                            style="@style/TextAppearance.AppCompat.Notification.Time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:hint="@string/to"
+                            android:padding="@dimen/_5sdp"
+                            app:edittextfont="Raleway-Regular.ttf" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/txt_th4"
+                            style="@style/TextAppearance.AppCompat.Notification.Time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:hint="@string/to"
+                            android:padding="@dimen/_5sdp"
+                            app:edittextfont="Raleway-Regular.ttf" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/txt_fri4"
+                            style="@style/TextAppearance.AppCompat.Notification.Time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:hint="@string/to"
+                            android:padding="@dimen/_5sdp"
+                            app:edittextfont="Raleway-Regular.ttf" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/txt_sat4"
+                            style="@style/TextAppearance.AppCompat.Notification.Time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:hint="@string/to"
+                            android:padding="@dimen/_5sdp"
+                            app:edittextfont="Raleway-Regular.ttf" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            style="@style/TextAppearance.AppCompat.Notification.Time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:padding="@dimen/_5sdp"
+                            android:text="Other"
+                            app:edittextfont="Raleway-Bold.ttf" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/txt_s5"
+                            style="@style/TextAppearance.AppCompat.Notification.Time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:hint="@string/to"
+                            android:padding="@dimen/_5sdp"
+                            app:edittextfont="Raleway-Regular.ttf" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/txt_m5"
+                            style="@style/TextAppearance.AppCompat.Notification.Time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:hint="@string/to"
+                            android:padding="@dimen/_5sdp"
+                            app:edittextfont="Raleway-Regular.ttf" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/txt_tue5"
+                            style="@style/TextAppearance.AppCompat.Notification.Time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:hint="@string/to"
+                            android:padding="@dimen/_5sdp"
+                            app:edittextfont="Raleway-Regular.ttf" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/txt_w5"
+                            style="@style/TextAppearance.AppCompat.Notification.Time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:hint="@string/to"
+                            android:padding="@dimen/_5sdp"
+                            app:edittextfont="Raleway-Regular.ttf" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/txt_th5"
+                            style="@style/TextAppearance.AppCompat.Notification.Time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:hint="@string/to"
+                            android:padding="@dimen/_5sdp"
+                            app:edittextfont="Raleway-Regular.ttf" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/txt_fri5"
+                            style="@style/TextAppearance.AppCompat.Notification.Time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:hint="@string/to"
+                            android:padding="@dimen/_5sdp"
+                            app:edittextfont="Raleway-Regular.ttf" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/txt_sat5"
+                            style="@style/TextAppearance.AppCompat.Notification.Time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:hint="@string/to"
+                            android:padding="@dimen/_5sdp"
+                            app:edittextfont="Raleway-Regular.ttf" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+            </HorizontalScrollView>
+
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/tvLoyalProgram"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/horizontalView"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:drawableLeft="@drawable/drawable_green_dot"
+                android:drawablePadding="@dimen/_5sdp"
+                android:drawableRight="@drawable/help"
+                android:gravity="fill_vertical"
+                android:text="@string/LoyaltyProgram"
+                android:textColor="@color/green"
+                app:edittextfont="Raleway-Bold.ttf" />
+
+            <RadioGroup
+                android:id="@+id/radiogroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvLoyalProgram"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:orientation="horizontal">
+
+                <com.yberry.dinehawaii.customview.CustomRadioButton
+                    android:id="@+id/checkYes"
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/colorPrimary"
+                    android:checked="true"
+                    android:text="@string/yes"
+                    android:textColor="@color/gray"
+                    app:edittextfont="Raleway-Regular.ttf" />
+
+                <com.yberry.dinehawaii.customview.CustomRadioButton
+                    android:id="@+id/checkNo"
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:buttonTint="@color/colorPrimary"
+                    android:text="@string/no"
+                    android:textColor="@color/gray"
+                    app:edittextfont="Raleway-Regular.ttf" />
+            </RadioGroup>
+
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/tvPriceRange"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/radiogroup"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:drawableLeft="@drawable/drawable_green_dot"
+                android:drawablePadding="@dimen/_5sdp"
+                android:drawableRight="@drawable/help"
+                android:gravity="fill_vertical"
+                android:text="Price Range Per Customer"
+                android:textColor="@color/green"
+                app:edittextfont="Raleway-Bold.ttf" />
+
+
+            <Spinner
+                android:id="@+id/spinnerPriceRange"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvPriceRange"
+                android:enabled="false"></Spinner>
+
+            <com.yberry.dinehawaii.customview.CustomEditText
+                android:id="@+id/etAvgPrice"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvPriceRange"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_toRightOf="@id/spinnerPriceRange"
+                android:enabled="false"
+                android:hint="$"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingRight="@dimen/_8sdp"
+                android:textAlignment="center"
+                android:visibility="gone"
+                app:edittextfont="Raleway-Regular.ttf" />
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/tvReservation"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/spinnerPriceRange"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:drawableLeft="@drawable/drawable_green_dot"
+                android:drawablePadding="@dimen/_5sdp"
+                android:drawableRight="@drawable/help"
+                android:gravity="fill_vertical"
+                android:text="@string/ReservationDeposit"
+                android:textColor="@color/green"
+                app:edittextfont="Raleway-Bold.ttf" />
+
+            <RadioGroup
+                android:id="@+id/radio1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvReservation"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:orientation="horizontal">
+
+                <com.yberry.dinehawaii.customview.CustomRadioButton
+                    android:id="@+id/checkYes1"
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvReservation"
+                    android:buttonTint="@color/colorPrimary"
+                    android:checked="true"
+                    android:text="@string/yes"
+                    android:textColor="@color/gray"
+                    app:edittextfont="Raleway-Regular.ttf" />
+
+                <com.yberry.dinehawaii.customview.CustomRadioButton
+                    android:id="@+id/checkNo1"
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvReservation"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_toRightOf="@+id/checkYes"
+                    android:buttonTint="@color/colorPrimary"
+                    android:text="@string/no"
+                    android:textColor="@color/gray"
+                    app:edittextfont="Raleway-Regular.ttf"
+
+                    />
+
+            </RadioGroup>
+
+            <LinearLayout
+                android:id="@+id/llYesNo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/radio1"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/linear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/radio1"
+                    android:orientation="horizontal">
+
+                    <com.yberry.dinehawaii.customview.CustomTextView
+                        android:id="@+id/tvAmount"
+                        style="@style/TextAppearance.AppCompat.Subhead"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:drawableLeft="@drawable/drawable_grey_dot"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:gravity="fill_vertical"
+                        android:text="@string/Amountperguest"
+                        android:textColor="@color/gray"
+                        app:edittextfont="Raleway-Regular.ttf" />
+
+                    <com.yberry.dinehawaii.customview.CustomEditText
+                        android:id="@+id/amountEt"
+                        style="@style/TextAppearance.AppCompat.Subhead"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginLeft="@dimen/_3sdp"
+                        android:background="@drawable/qauntity_box"
+                        android:gravity="center"
+                        android:hint="00"
+                        android:inputType="numberDecimal"
+                        android:maxLength="3"
+                        android:paddingBottom="@dimen/_3sdp"
+                        android:paddingLeft="@dimen/_5sdp"
+                        android:paddingRight="@dimen/_5sdp"
+                        android:paddingTop="@dimen/_3sdp"
+                        android:textAlignment="center"
+                        android:textColor="@color/gray"
+                        app:edittextfont="Raleway-Regular.ttf" />
+
+                </LinearLayout>
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    android:id="@+id/tvrefundHour"
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:drawableLeft="@drawable/drawable_grey_dot"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:gravity="fill_vertical"
+                    android:text="@string/RefundWhat"
+                    android:textColor="@color/gray"
+                    app:edittextfont="Raleway-Regular.ttf" />
+
+                <LinearLayout
+                    android:id="@+id/layoutlinear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/linear"
+                    android:orientation="horizontal">
+
+                    <com.yberry.dinehawaii.customview.CustomEditText
+                        android:id="@+id/hoursEditTextValue"
+                        style="@style/TextAppearance.AppCompat.Subhead"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:background="@drawable/qauntity_box"
+                        android:hint="00"
+                        android:inputType="number"
+                        android:maxLength="2"
+                        android:paddingBottom="@dimen/_3sdp"
+                        android:paddingLeft="@dimen/_5sdp"
+                        android:paddingRight="@dimen/_5sdp"
+                        android:paddingTop="@dimen/_3sdp"
+                        android:textAlignment="center"
+                        android:textColor="@color/gray"
+                        app:edittextfont="Raleway-Regular.ttf" />
+
+                    <com.yberry.dinehawaii.customview.CustomTextView
+                        style="@style/TextAppearance.AppCompat.Subhead"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/linear"
+                        android:layout_marginLeft="@dimen/_3sdp"
+                        android:text="Minutes"
+                        android:textColor="@color/gray"
+                        app:edittextfont="Raleway-Regular.ttf" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/tvNoShow"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/llYesNo"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:drawableLeft="@drawable/drawable_green_dot"
+                android:drawablePadding="@dimen/_5sdp"
+                android:drawableRight="@drawable/help"
+                android:gravity="fill_vertical"
+                android:text="Set No-Show Processing"
+                android:textColor="@color/green"
+                app:edittextfont="Raleway-Bold.ttf" />
+
+            <RadioGroup
+                android:id="@+id/grpNoShow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvNoShow"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:orientation="horizontal">
+
+                <com.yberry.dinehawaii.customview.CustomRadioButton
+                    android:id="@+id/rbAuto"
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvReservation"
+                    android:buttonTint="@color/colorPrimary"
+                    android:text="Automatic"
+                    android:textColor="@color/gray"
+                    app:edittextfont="Raleway-Regular.ttf" />
+
+                <com.yberry.dinehawaii.customview.CustomRadioButton
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvReservation"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_toRightOf="@+id/rbAuto"
+                    android:buttonTint="@color/colorPrimary"
+                    android:checked="true"
+                    android:text="Manual"
+                    android:textColor="@color/gray"
+                    app:edittextfont="Raleway-Regular.ttf"
+
+                    />
+
+            </RadioGroup>
+
+
+            <Button
+                android:id="@+id/btn_submit_days"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_below="@id/grpNoShow"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="@dimen/_10sdp"
+                android:background="@drawable/greenborder"
+                android:paddingLeft="@dimen/_20sdp"
+                android:paddingRight="@dimen/_20sdp"
+                android:text="SUBMIT"
+                android:textAlignment="center"
+                android:textColor="@color/white" />
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

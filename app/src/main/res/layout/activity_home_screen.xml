@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background2">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/headet_text"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_gravity="center_horizontal"
+                android:background="#b4383838"
+                android:gravity="center"
+                android:visibility="visible"
+                android:padding="@dimen/_8sdp"
+                android:text="@string/advertisments"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_16sdp"
+                app:edittextfont="Raleway-Regular.ttf" />
+
+           <!-- <com.google.android.gms.ads.AdView
+                xmlns:ads="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/adView"
+                android:layout_width="wrap_content"
+                android:visibility="gone"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                ads:adSize="SMART_BANNER"
+                ads:adUnitId="ca-app-pub-6112310070932606/1369867782">
+            </com.google.android.gms.ads.AdView>-->
+            </RelativeLayout>
+            <ImageView
+                android:id="@+id/imgvLogo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:src="@drawable/ic_launcher_app" />
+
+            <LinearLayout
+                android:padding="@dimen/_5sdp"
+                android:id="@+id/linearLayoutWelcome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/imgvLogo"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/welcomeTo"
+                    android:textColor="#fff"
+                    android:textSize="@dimen/_20sdp"
+                    app:edittextfont="BerkshireSwash-Regular.ttf" />
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dineHawaii"
+                    android:layout_marginLeft="@dimen/_2sdp"
+                    android:textColor="@color/colorGreen"
+                    android:textSize="@dimen/_20sdp"
+                    app:edittextfont="BerkshireSwash-Regular.ttf" />
+
+                <ImageView
+                    android:id="@+id/helpdialog"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:src="@drawable/help" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/imgLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/login" />
+
+            <LinearLayout
+                android:id="@+id/llBussiness"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/imgLogin"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:id="@+id/llBussinessOrRestaurant"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imgvBusiness"
+                        android:layout_width="@dimen/_50sdp"
+                        android:layout_height="@dimen/_50sdp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/business"
+                        />
+
+                    <com.yberry.dinehawaii.customview.CustomTextView
+                        android:id="@+id/textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/businessOrRestaurant"
+                        android:textColor="@color/white"
+                        style="@style/TextAppearance.AppCompat.Subhead"
+                        app:edittextfont="Raleway-Regular.ttf" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/GuestOrCustomer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imgvGuest"
+                        android:layout_width="@dimen/_50sdp"
+                        android:layout_height="@dimen/_50sdp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/guest_icon"
+
+                        />
+
+                    <com.yberry.dinehawaii.customview.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/guestOrCustomer"
+                        android:textColor="@color/white"
+                        style="@style/TextAppearance.AppCompat.Subhead"
+                        app:edittextfont="Raleway-Regular.ttf" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_marginTop="@dimen/_10sdp"
+                android:id="@+id/imgRegister"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/llBussiness"
+                android:src="@drawable/register" />
+
+            <LinearLayout
+                android:id="@+id/llBussinessRegister"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imgRegister"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:id="@+id/llBussinessOrRestaurantRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imgvBusinessRegister"
+                        android:layout_width="@dimen/_50sdp"
+                        android:layout_height="@dimen/_50sdp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/business"
+                        />
+
+                    <com.yberry.dinehawaii.customview.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/businessOrRestaurant"
+                        android:textColor="@color/white"
+                        style="@style/TextAppearance.AppCompat.Subhead"
+                        app:edittextfont="Raleway-Regular.ttf" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/GuestOrCustomerRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imgvGuestRegister"
+                        android:layout_width="@dimen/_50sdp"
+                        android:layout_height="@dimen/_50sdp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/guest_icon"
+
+                        />
+
+                    <com.yberry.dinehawaii.customview.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/guestOrCustomer"
+                        android:textColor="@color/white"
+                        style="@style/TextAppearance.AppCompat.Subhead"
+                        app:edittextfont="Raleway-Regular.ttf" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_marginRight="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:id="@+id/llInvite"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bgrectangle"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <com.yberry.dinehawaii.customview.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="@dimen/_5sdp"
+                        android:text="Invite Friends via"
+                        android:textColor="@color/white"
+                        style="@style/TextAppearance.AppCompat.Small"
+                        app:edittextfont="Raleway-Regular.ttf" />
+
+                    <com.facebook.login.widget.LoginButton
+                        android:id="@+id/login_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:visibility="gone"
+                        />
+
+
+                    <ImageView
+                        android:id="@+id/btn_login_fb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_4sdp"
+                        android:background="@drawable/fb" />
+                    <ImageView
+                        android:id="@+id/tweeter_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_4sdp"
+                        android:background="@drawable/tw" />
+
+                    <ImageView
+                        android:id="@+id/instagram_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_4sdp"
+                        android:background="@drawable/insta" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_below="@id/llInvite"
+                    android:layout_alignParentBottom="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/_3sdp">
+
+                    <!-- <ImageView
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:layout_gravity="top"
+                         android:id="@+id/helpdialog"
+                         android:background="@drawable/help" />-->
+
+                    <com.yberry.dinehawaii.customview.CustomTextView
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/llInvite"
+                        android:gravity="center"
+                        android:text="@string/help"
+                        android:textColor="@color/offwhite"
+                        style="@style/TextAppearance.AppCompat.Small"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginRight="@dimen/_10sdp"
+                        app:edittextfont="Raleway-Regular.ttf" />
+                </LinearLayout>
+        </LinearLayout>
+</RelativeLayout>

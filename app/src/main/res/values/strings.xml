@@ -1,0 +1,251 @@
+<resources>
+    <string name="app_name">Dine Hawaii</string>
+
+    <string name="facebook_app_id">154332431817191</string>
+    <!-- HomeScreenActivity Screen-->
+    <string name="welcomeTo">Welcome to</string>
+    <string name="dineHawaii">Dine Hawaii</string>
+    <string name="businessOrRestaurant">Business/Restaurant</string>
+    <string name="guestOrCustomer">Guest/Customer</string>
+    <string name="inviteFriend">INVITE FRIENDS</string>
+    <string name="help">Tap the help button anytime to learn about the dine hawaii features</string>
+    <string name="advertisments">ADVERTISEMENT BANNER</string>
+    <string name="seachByName"> Search By Name</string>
+    <string name="federalIdNo">Federal ID Number (FEIN)</string>
+    <string name="selectBussinessName">Enter Business Name</string>
+    <string name="enterFeinHere">Enter fein here</string>
+    <string name="multisiteBusiness">Is this a Multi-Site Business under this FEIN</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="NewBussinessName">New Business Name</string>
+    <string name="federalIdNumber">Federal ID Number (FEIN):</string>
+    <string name="entrNewBusiness">Enter New Business Name</string>
+    <string name="enterFein">Enter FEIN No.</string>
+    <string name="isThisAMultiSiteBussinessUnderThisFEIN">Is there a multi-site business under this FEIN</string>
+    <string name="search">SEARCH</string>
+    <string name="submit">SUBMIT</string>
+    <string name="text_21B">Please click on the paypal link below to initiate the first monthly payment and set up recuring payments for future months by entering your credit card or Bank account information into Paypal.It is not neccessary for you have a paypal account to intiate the payment</string>
+
+    <string name="filterPrice">Filter Prices</string>
+
+    <string name="foodType">Food Type</string>
+
+    <string name="distance">Distance</string>
+
+    <string name="takeOut">Take Out</string>
+
+    <string name="other">Other</string>
+
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="business_login_string">Login with you Dine Hawaii Account</string>
+    <string name="business_login_string1"><![CDATA[Login with your dine hawaii account]]></string>
+
+    <string name="business_login_firsttext"> If Registration was not completed</string>
+    <string name="business_login_secondtext"> Your DINE Registration was not</string>
+    <string name="business_login_thirdtext">completed. Please continue registration and begin</string>
+    <string name="business_login_fourthtext"> using the many DINE Hawaii features </string>
+    <string name="business_login_fifthtext">to enhance the  service experience of</string>
+    <string name="business_login_sixthtext">your Customers and Guests, improve table turns, </string>
+    <string name="business_login_seventhtext">reduce operating costs increase sales and</string>
+    <string name="business_login_eigthtext">improve in-house productivity. </string>
+
+    <!--employee-42(B)-->
+
+    <string name="upldateMultiSite1">Update Multi-site Corporate Entity Level</string>
+    <string name="upldateEmploayeePostion2">Update Employee Postion Security Access</string>
+    <string name="upldateEmploayeeList3">Update Employee List and Contact Information</string>
+    <string name="upldateMenu4">Update Menu</string>
+    <string name="enterSpecialAndDis5">Enter Special and Discount Offers</string>
+    <string name="adimnisterReservation6">Administer Reservations</string>
+    <string name="terminateReservation7">Terminate Rservations</string>
+    <string name="makeReserNoShow8">Make a Reservation "No-Show"</string>
+    <string name="administerTableMagwe9">Administer table Management</string>
+
+    <string name="recivweImmediate10">Receive immediate Customer Feedback during meal</string>
+    <string name="correctPlace11">Correct placed order,change error before going to kitchen</string>
+    <string name="overrideOrder12">Override order charge,i.e. offer complementary dessert</string>
+    <string name="reciveandRespond13">Recevie and Respond to Customer Survey Reviews</string>
+    <string name="otherAlloMultiple14">Other allow multiple addtion Employee Duties,as needed</string>
+    <string name="SupendSoldOut15"><![CDATA[ Supsend Sold-out Menu Items for the day,click "Sold-out" button on Menu Maintenance screen item reinstates the next day to commence taking orders again ]]></string>
+    <string name="enterOtherEmployee">      Enter Other Employess Duty</string>
+    <string name="howWouldYoulike">How would you like to receive the code</string>
+
+    <string name="smartPhoneText">Mobile No.</string>
+    <string name="emailId">Email-Id</string>
+    <string name="verficatioPasscodeWillBe">Enter verification passcode here</string>
+    <string name="enterPasscodeHere">Enter PassCode Here</string>
+
+    <string name="whatIsYourPreffered">What is your Preffered Language ?</string>
+    <string name="selectPrefferdLangu">Select preffered languge</string>
+    <string name="password">Password</string>
+    <string name="enterPass">Enter Code</string>
+    <string name="confirmPass">Confirm Password</string>
+    <string name="enterPassAgin">Enter password Again</string>
+    <string name="ApproveTandC">Accept Terms &amp; Condition. Authorize app auto updates and gps tracking to recieve the most current information about your favourite information</string>
+    <string name="tittle">Setup your business/restaurant account</string>
+    <string name="food">Jimmy Foods and Restaurant</string>
+    <string name="id">Save user-id &amp; password</string>
+
+    <!--Business Information-->
+    <string name="ServiceHour">Service Hour</string>
+    <string name="LoyaltyProgram">Loyalty Program To Be Offered</string>
+
+    <string name="PriceRange">Price Range Per Customer</string>
+    <string name="ReservationDeposit">Reservation Deposit Required</string>
+    <string name="Amountperguest">Amount per guest : $</string>
+    <string name="RefundWhat">Refund - what is the cancellation lead time to issue refund to customer </string>
+    <string name="Over30">Over $30</string>
+    <string name="save" />
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="MakingResTxt1">This business requires deposit amount to be paid to complete the reservation</string>
+    <string name="MakingResTxt2">2.      The deposit will be refunded when </string>
+    <string name="MakingResTxt2a">a.The reservation is confimed one day prior and  </string>
+    <string name="MakingResTxt2b">b.The reservation is filled as scheduled</string>
+    <string name="MakingResTxt2c">c.If cancelled,a minimum of ____ hours lead-time is required</string>
+    <string name="MakingResTxt3">Forfeited deposit will be paid to Business by PayPal</string>
+    <string name="MakingResTxt4">This is to verify your Reservation at_______________on Saturday,December 15,2016,at 7:00 p.m.</string>
+    <string name="MakingResTxt5">PLEASE NOTE: You must confirm one day prior to the scheduled date to hold your reservation</string>
+    <string name="MakingResTxt6">OR</string>
+    <string name="MakingResTxt7">We are sorry,but your request table at__________on Saturday,December 15,2016,at 7:00 p.m. is unavailable.If you would like to consider alternatives,please select onr of the following:</string>
+    <string name="MakingResCheck1">Add Name to Waitlist to be notified if a table become avilable</string>
+    <string name="MakingResCheck2">Have DINE HAwaii propose alternative restaurants of a similar food type and location as your request</string>
+    <string name="MakingResCheck3">On the requested date,you may be able to obtain a table by adding your name to the Walk-in</string>
+    <string name="Feedback_96">During your visit with us,if you have any concerns with the Service,please send immediate feedback that will be addresses by the Management o Duty. 5:40p.m.</string>
+    <string name="Feedback_96IHave">I have the following Customer Service concerns:</string>
+    <string name="Reviews_97">Please help us imporve our Service to You and other Valued Customers. Please respond with your honest review of our Service: </string>
+
+    <string name="thanku">Our chefs will begin and it will be completed in approx </string>
+    <string name="thanku2"> delivery order will be take some additional time.If at any time,you have concerns with your order,please send us immediate feedback below.</string>
+    <string name="SendEgifttxt1">You may send an E-Gift to any DINE Hawaii\nUser that may be used at any registered DINE\nHawaii Business.</string>
+    <string name="SendEgifttxt2">Recipient\'s DINE Hawaii User Name/Email ID:</string>
+    <string name="SendEgifttxt3">Send e-gift with the following message:</string>
+    <string name="DineEGifttxt1">Your E-Gift Balance : $__ __</string>
+    <string name="DineEGifttxt2">Your balance may be applied when processing Online Payment at a participating DINE Hawaii Business.Cash disbursement of any E-Gift balance is not allowed. Search for DINE Hawaii participating bussinesses</string>
+    <string name="DineEGifttxt3">Send the E-Gift</string>
+    <string name="DineEGifttxt4">If you are unable to use the E-Gift balance to another DINE Hawaii Customer by entering the Recipient DINE Hawaii ID and Amount </string>
+    <string name="DineEGifttxt5">Recipents Dine Hawaii Id</string>
+    <string name="DineEGifttxt6">$ Balance to Give</string>
+    <string name="LoyalityPoint">If you are unable to use the Loyality Points at the DINE Participating Business,You may Transfer them to another DINE User by selecting the \'Transfer\' box on the appropriate record.</string>
+    <string name="LoyalityPointtxt1">Recipient\'s DINE Id</string>
+    <string name="LoyalityPointtxt2">Point to Transfer</string>
+    <string name="ReservationConfirmationtxt1">We are looking forword to having you dine with us.Since plans someting change,please cancle this reservation through DINE hawaii if you will not able to come.</string>
+    <string name="ReservationConfirmationtxt2">Also You need to verify this reservation ____________days prior to the reservation date by responding to a text message that will be sent tio your smartphone # if provided or email if a smartphone # is not available . If you do not availale.If you do not verify when requested,your reservations will be released to other guests.</string>
+    <string name="Reporttxt1">1. View all reports by individual Business,multi-site Business or for All Business</string>
+    <string name="Reporttxt2">2.Registrations</string>
+    <string name="Reporttxt3">a. Guests/Customers</string>
+    <string name="Reporttxt4">i.Total Registered and nuber by geographoic area,state,country</string>
+    <string name="Reporttxt5">ii.Activity Report-# with activity during past week,month,quater,year,number with no activity  during past year </string>
+    <string name="Reporttxt6">b.Businesses/Restaurants</string>
+    <string name="Reporttxt7">i.Total Registered and number by geographic area,state country</string>
+    <string name="Reporttxt8">ii.Total with current payments</string>
+    <string name="Reporttxt9">vi.Suspended # with delinquent payment</string>
+    <string name="Reporttxt10">1. Months since suspension occurred</string>
+    <string name="Reporttxt11">vi. Multi-site Businessess</string>
+    <string name="Reporttxt12">1.Volume of activity by Marketing Option</string>
+    <string name="Reporttxt13">vii.Multi-site Businesses</string>
+    <string name="Reporttxt14">1.All Businesses where FEIN is used by multiple business</string>
+    <string name="Reporttxt15">viii.Administrative Fee Payment History</string>
+    <string name="Reporttxt16">1.All Discounts offered,Discount percentages and $ recevied</string>
+
+    <string name="reservation_report">iii.Report Reservation</string>
+    <string name="order_report">iv.Order Report</string>
+    <string name="employee_report">v.Employee List</string>
+
+    <string-array name="countryCode">
+        <item>+0</item>
+        <item>+91</item>
+    </string-array>
+    <string-array name="language">
+        <item>Select Language</item>
+        <item>English</item>
+        <item>Chinese</item>
+        <item>Spanish</item>
+        <item>Hindi</item>
+        <item>Arabic</item>
+        <item>Portuguese</item>
+        <item>Russian</item>
+        <item>Japanese</item>
+        <item>Italian</item>
+        <item>German</item>
+    </string-array>
+    <string-array name="nav_item_activity_titles">
+        <item>Home</item>
+        <item>Photos</item>
+        <item>Movies</item>
+        <item>Notifications</item>
+        <item>Settings</item>
+    </string-array>
+    <string name="title_activity_customer_navi_drawer"></string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_maps">Map</string>
+
+
+    <!--timeset-->
+    <string name="to">-to-</string>
+    <!--All Days-->
+
+    <string name="sunday">Sun</string>
+    <string name="monday">Mon</string>
+    <string name="tuesday">Tue</string>
+    <string name="wensday">Wed</string>
+    <string name="thursday">Thu</string>
+    <string name="friday">Fri</string>
+    <string name="saturday">Sat</string>
+    <string name="title_activity_food_type_upload_menu">FoodTypeUploadMenu</string>
+    <string name="title_activity_upload_menu_list">UploadMenuList</string>
+    <string name="title_activity_demo">Demo</string>
+    <string-array name="ReserveTable">
+        <item>Reserve</item>
+        <item>Reserve First</item>
+        <item>Reserve Last</item>
+        <item>Hold – Do Not Reserve</item>
+    </string-array>
+    <string name="title_activity_multiple_service_type_52_b">MultipleServiceType_52B</string>
+    <string name="title_activity_main22">Main22Activity</string>
+    <string name="title_activity_select_job_title">SelectJobTitleActivity</string>
+    <string name="title_activity_main2">Main2Activity</string>
+
+    <string name="search_hint">Search...</string>
+    <string name="no_result_found">Results not found</string>
+    <string name="select_country">Select a country</string>
+    <string name="dummy">Lorem Ipsum.</string>
+    <string name="busi_not_found_title">Business Not Found</string>
+    <string name="register">Yes, Register</string>
+    <string name="cancel">Cancel</string>
+    <string name="business_name">Business Name</string>
+    <string name="business_registration">Business Registration</string>
+    <!-- <string name="dummy">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</string>
+-->
+
+
+    <!-- "January","February","March","April","May","June","July","August","September ","October ","November","December"-->
+    <string-array name="month">
+        <item>Select Month</item>
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+    </string-array>
+    <string name="title_activity_map_restaurant">Map</string>
+    <string name="title_activity_restaurants_map">Map</string>
+    <string name="title_activity_health_report">Health Report</string>
+    <string name="raleway_regular">Raleway-Regular.ttf</string>
+    <string name="raleway_bold">Raleway-Bold.ttf</string>
+    <string name="save_pwd_text"><![CDATA[Save email & password]]></string>
+    <string name="title_activity_add_new_coupon">AddNewCouponActivity</string>
+    <string name="msg_no_internet">No internet connection</string>
+</resources>

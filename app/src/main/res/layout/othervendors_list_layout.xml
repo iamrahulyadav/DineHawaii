@@ -1,0 +1,30 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:padding="@dimen/_3sdp">
+
+
+    <com.yberry.dinehawaii.customview.CustomTextView
+        android:id="@+id/vendorname"
+        android:layout_width="0dp"
+        android:gravity="center"
+        android:layout_weight="0.1"
+        app:edittextfont="Raleway-Bold.ttf"
+        android:layout_height="wrap_content"
+        style="@style/TextAppearance.AppCompat.Small"
+        android:text="NA" />
+
+    <com.yberry.dinehawaii.customview.CustomTextView
+        style="@style/TextAppearance.AppCompat.Small"
+        android:id="@+id/vendprice"
+        android:layout_width="0dp"
+        android:layout_weight="0.1"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        app:edittextfont="Raleway-Bold.ttf"
+        android:text="$0" />
+
+
+</LinearLayout>

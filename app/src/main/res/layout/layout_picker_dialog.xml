@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <com.yberry.dinehawaii.customview.CustomTextView
+        android:id="@+id/textView_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="@string/select_country"
+        style="@style/TextAppearance.AppCompat.Subhead"
+        app:edittextfont="@string/raleway_bold"
+        android:textAllCaps="true"
+
+         />
+
+    <com.yberry.dinehawaii.customview.CustomEditText
+        android:id="@+id/editText_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView_title"
+        android:hint="@string/search_hint"
+        android:imeOptions="flagNoExtractUi"
+        android:singleLine="true"
+        app:edittextfont="@string/raleway_regular"
+        style="@style/TextAppearance.AppCompat.Subhead"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_countryDialog"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/editText_search"
+        android:dividerHeight="2dp" />
+
+    <TextView
+        android:id="@+id/textView_noresult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editText_search"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="@string/no_result_found"
+        android:textColor="@android:color/primary_text_light"
+        android:visibility="gone"
+        />
+
+</RelativeLayout>

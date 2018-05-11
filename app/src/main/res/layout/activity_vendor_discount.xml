@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_bussiness_home"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="right"
+        android:background="@color/transparent_full"
+        android:padding="@dimen/_8sdp"
+        android:text="Screen No:54"
+        android:textColor="#000"
+        android:textSize="@dimen/_12sdp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/_8sdp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_1sdp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/greendot"
+                    android:drawablePadding="@dimen/_6sdp"
+                    android:gravity="fill_vertical"
+                    android:text="Delivery Available :"
+                    android:textSize="@dimen/_12sdp"
+                    app:edittextfont="Raleway-Bold.ttf" />
+
+                <RadioGroup
+                    android:id="@+id/radioDelivery"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/avail_yes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="@color/green"
+                        android:checked="false"
+                        android:text="Yes"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_10sdp" />
+
+                    <RadioButton
+                        android:id="@+id/avail_no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="@color/green"
+                        android:text="No"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_10sdp" />
+                </RadioGroup>
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/_8sdp"
+                    android:drawableLeft="@drawable/help"
+                    android:drawablePadding="@dimen/_6sdp"
+                    android:gravity="center_vertical"
+                    app:edittextfont="Raleway-Bold.ttf"
+
+                    />
+            </LinearLayout>
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:drawablePadding="@dimen/_6sdp"
+                android:gravity="fill_vertical"
+                android:padding="@dimen/_5sdp"
+                android:text="PAYMENT TERMS(SELECT ONE):"
+
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold"
+                app:edittextfont="Raleway-Bold.ttf" />
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:drawableLeft="@drawable/greendot"
+                android:drawablePadding="@dimen/_6sdp"
+                android:drawableRight="@drawable/help"
+                android:gravity="fill_vertical"
+                android:text="Customer Pre-Payment Required"
+                android:textSize="@dimen/_10sdp"
+                app:edittextfont="Raleway-Bold.ttf" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioGroup
+                    android:id="@+id/radioPrePayment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/pre_payment_yes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:buttonTint="@color/green"
+                        android:checked="false"
+                        android:text="Yes"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_10sdp" />
+
+                    <RadioButton
+                        android:id="@+id/pre_payment_no"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="@color/green"
+                        android:text="No"
+                        android:textColor="@color/green"
+                        android:textSize="@dimen/_10sdp" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:drawableLeft="@drawable/greendot"
+                android:drawablePadding="@dimen/_6sdp"
+                android:drawableRight="@drawable/help"
+                android:gravity="fill_vertical"
+                android:text="COD-Payment Delivery Option:"
+                android:textSize="@dimen/_10sdp"
+                app:edittextfont="Raleway-Bold.ttf" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioGroup
+                    android:id="@+id/radioCODPayment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/delivery_yes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:buttonTint="@color/green"
+                        android:text="Yes"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_10sdp" />
+
+                    <RadioButton
+                        android:id="@+id/delivery_no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="@color/green"
+                        android:checked="false"
+                        android:text="No"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_10sdp" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:drawableLeft="@drawable/greendot"
+                android:drawablePadding="@dimen/_6sdp"
+                android:drawableRight="@drawable/help"
+                android:gravity="fill_vertical"
+                android:text="Generate DINE Invoice for Customer"
+                android:textSize="@dimen/_10sdp"
+                app:edittextfont="Raleway-Bold.ttf" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioGroup
+                    android:id="@+id/radioInvoice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/invoice_yes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:buttonTint="@color/green"
+                        android:checked="false"
+                        android:text="Yes"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_10sdp" />
+
+                    <RadioButton
+                        android:id="@+id/invoice_no"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="@color/green"
+                        android:text="No"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_10sdp" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <!--
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            app:edittextfont="Raleway-Bold.ttf"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableLeft="@drawable/greendot"
+                            android:drawablePadding="@dimen/_6sdp"
+                            android:gravity="fill_vertical"
+                            android:text="Generate DINE Invoice for Customer"
+                            android:drawableRight="@drawable/help"
+                            android:layout_marginTop="@dimen/_3sdp"
+                            android:textSize="@dimen/_10sdp" />
+            -->
+            <!--
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <RadioButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/_10sdp"
+                                android:buttonTint="@color/green"
+                                android:text="Yes"
+                                android:textSize="@dimen/_10sdp"
+                                android:textColor="@color/gray"/>
+                            <RadioButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:buttonTint="@color/green"
+                                android:text="No"
+                                android:textSize="@dimen/_10sdp"
+                                android:textColor="@color/gray"/>
+                        </LinearLayout>
+            -->
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:drawableLeft="@drawable/greendot"
+                android:drawablePadding="@dimen/_6sdp"
+                android:drawableRight="@drawable/help"
+                android:gravity="fill_vertical"
+                android:text="Business will mail Invoice to Customer"
+                android:textSize="@dimen/_10sdp"
+                app:edittextfont="Raleway-Bold.ttf" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioGroup
+                    android:id="@+id/radioMailInvoice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/mail_invoce_yes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:buttonTint="@color/green"
+                        android:text="Yes"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_10sdp" />
+
+                    <RadioButton
+                        android:id="@+id/mail_invoce_no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="@color/green"
+                        android:checked="false"
+                        android:text="No"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_10sdp" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_alignParentBottom="true"
+                android:layout_below="@+id/llBussiness"
+                android:layout_gravity="right"
+                android:gravity="center"
+                android:padding="@dimen/_10sdp">
+
+                <ImageView
+                    android:id="@+id/imageview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/cont" />
+
+            </RelativeLayout>
+            <!--
+                        <ImageView
+                            android:id="@+id/imageview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_78sdp"
+                            android:layout_marginRight="@dimen/_18sdp"
+                            android:layout_gravity="right"
+                            android:layout_marginBottom="@dimen/_8sdp"
+                            android:src="@drawable/cont" />
+            -->
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

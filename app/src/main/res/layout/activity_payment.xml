@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_payment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="com.yberry.dinehawaii.activity.PaymentActivity">
+
+    <include
+        android:id="@+id/toolbar_bar"
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <com.yberry.dinehawaii.customview.CustomTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="right"
+        android:background="@color/transparent_full"
+        android:padding="@dimen/_10sdp"
+        android:text="Screen No:90"
+        android:textColor="#000"
+        android:textSize="@dimen/_10sdp" />
+
+    <View
+        android:id="@+id/line2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/tvTotalCost"
+        android:layout_marginLeft="@dimen/_30sdp"
+        android:layout_marginRight="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:background="@color/colorDivider" />
+
+    <LinearLayout
+        android:id="@+id/paypallinear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:paddingTop="@dimen/_10sdp"
+        android:layout_below="@+id/line2"
+        android:layout_centerHorizontal="true">
+
+        <CheckBox
+            android:id="@+id/paypalCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableRight="@drawable/paypal"
+            android:backgroundTint="@color/offwhite" />
+
+      <!--  <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/paypal" />-->
+
+    </LinearLayout>
+
+    <com.yberry.dinehawaii.customview.CustomTextView
+        android:id="@+id/makePayment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:background="@color/colorGreen"
+        android:padding="@dimen/_10sdp"
+        android:text="MAKE PAYMENT &amp; CONFIRM ORDER"
+        android:textColor="@color/white"
+        app:edittextfont="Raleway-Bold.ttf"
+        android:layout_below="@+id/paypallinear"
+        android:layout_centerHorizontal="true"
+        />
+
+    <com.yberry.dinehawaii.customview.CustomTextView
+        android:id="@+id/tvTotalCost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/toolbar_bar"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:gravity="center"
+        android:lineSpacingExtra="@dimen/_5sdp"
+        android:padding="@dimen/_10sdp"
+        android:text="Please select the paypal link below to initial paypal payment for your order grand total.you may log into your paypal account or make payment using your credit card or bank account."
+        style="@style/TextAppearance.AppCompat.Subhead"
+        app:edittextfont="Raleway-Regular.ttf" />
+</RelativeLayout>

@@ -1,0 +1,903 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_table"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+
+    >
+
+    <FrameLayout
+        android:id="@+id/table_fram"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:background="#ffffff"
+        android:layout_height="match_parent"></FrameLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="right"
+        android:background="@color/transparent_full"
+        android:padding="@dimen/_8sdp"
+        android:text="Screen No:52 C"
+        android:textColor="#000"
+        android:textSize="@dimen/_13sdp" />
+
+    <ScrollView
+        android:id="@+id/scrollViewBuss"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar_bar"
+        android:fillViewport="true"
+        android:scrollbarStyle="outsideInset"
+        android:scrollbars="horizontal|vertical">
+
+        <RelativeLayout
+            android:id="@+id/relativeMain"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/tvseating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:drawableRight="@drawable/help"
+
+                android:gravity="center"
+                android:text="Enter Average Seating Time per Table Size :"
+                android:textSize="@dimen/_12sdp"
+
+                app:edittextfont="Roboto-Bold.ttf" />
+
+            <LinearLayout
+                android:id="@+id/linearParty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvseating"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:background="@color/gray_transparent"
+                android:orientation="horizontal"
+                android:padding="@dimen/_3sdp"
+                android:weightSum="2">
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_8sdp"
+                    android:layout_weight="1"
+                    android:hint="Party"
+                    android:padding="@dimen/_8sdp"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/_10sdp"
+                    app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/_48sdp"
+                    android:layout_weight="1"
+                    android:hint="Average Seaing time (hours)"
+                    android:padding="@dimen/_8sdp"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/_10sdp"
+                    app:edittextfont="ROBOTO-REGULAR.TTF" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearSize"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/linearParty"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/_18sdp"
+                android:weightSum="5">
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="SIZE"
+
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/_10sdp"
+
+                    app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="BREAKFAST"
+
+                    android:padding="@dimen/_2sdp"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/_10sdp"
+                    app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="LUNCH"
+
+                    android:padding="@dimen/_8sdp"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/_10sdp"
+                    app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="DINNER"
+
+                    android:padding="@dimen/_8sdp"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/_10sdp"
+                    app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="OTHER"
+
+                    android:padding="@dimen/_8sdp"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/_10sdp"
+                    app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearNumber1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linearNumber2"
+                android:orientation="vertical"
+                android:weightSum="7">
+
+                <LinearLayout
+                    android:id="@+id/linearNumber3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/linearSize"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/_24sdp"
+                    android:visibility="gone"
+                    android:weightSum="5">
+
+                    <com.yberry.dinehawaii.customview.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.7"
+                        android:hint="3"
+
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_10sdp"
+                        app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                    <com.yberry.dinehawaii.customview.CustomEditText
+                        android:id="@+id/etbreakfast2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="number"
+                        android:maxLength="4"
+                        android:padding="@dimen/_8sdp"
+                        android:textAlignment="center"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_10sdp"
+                        app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                    <com.yberry.dinehawaii.customview.CustomEditText
+                        android:id="@+id/etlunch2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="number"
+                        android:maxLength="4"
+                        android:padding="@dimen/_8sdp"
+                        android:textAlignment="center"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_10sdp"
+                        app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                    <com.yberry.dinehawaii.customview.CustomEditText
+                        android:id="@+id/etdinner2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="number"
+                        android:maxLength="4"
+                        android:padding="10dp"
+                        android:textAlignment="center"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_10sdp"
+                        app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                    <com.yberry.dinehawaii.customview.CustomEditText
+                        android:id="@+id/etother2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="number"
+                        android:maxLength="4"
+                        android:padding="@dimen/_8sdp"
+                        android:textAlignment="center"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_10sdp"
+                        app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearNumber4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/linearSize"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/_24sdp"
+                    android:visibility="gone"
+                    android:weightSum="5">
+
+                    <com.yberry.dinehawaii.customview.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.7"
+                        android:hint="4"
+
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_10sdp"
+                        app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                    <com.yberry.dinehawaii.customview.CustomEditText
+                        android:id="@+id/etbreakfast3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="number"
+                        android:maxLength="4"
+                        android:padding="@dimen/_8sdp"
+                        android:textAlignment="center"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_10sdp"
+                        app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                    <com.yberry.dinehawaii.customview.CustomEditText
+                        android:id="@+id/etlunch3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="number"
+                        android:maxLength="4"
+                        android:padding="@dimen/_8sdp"
+                        android:textAlignment="center"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_10sdp"
+                        app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                    <com.yberry.dinehawaii.customview.CustomEditText
+                        android:id="@+id/etdinner3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="number"
+                        android:maxLength="4"
+                        android:padding="10dp"
+                        android:textAlignment="center"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_10sdp"
+                        app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                    <com.yberry.dinehawaii.customview.CustomEditText
+                        android:id="@+id/etother3"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="number"
+                        android:maxLength="4"
+                        android:padding="@dimen/_8sdp"
+                        android:textAlignment="center"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_10sdp"
+                        app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearNumber5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/linearSize"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/_24sdp"
+                    android:visibility="gone"
+                    android:weightSum="5">
+
+                    <com.yberry.dinehawaii.customview.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.7"
+                        android:hint="5"
+
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_10sdp"
+                        app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                    <com.yberry.dinehawaii.customview.CustomEditText
+                        android:id="@+id/etbreakfast4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="number"
+                        android:maxLength="4"
+                        android:padding="@dimen/_8sdp"
+                        android:textAlignment="center"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_10sdp"
+                        app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                    <com.yberry.dinehawaii.customview.CustomEditText
+                        android:id="@+id/etlunch4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="number"
+                        android:maxLength="4"
+                        android:padding="@dimen/_8sdp"
+                        android:textAlignment="center"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_10sdp"
+                        app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                    <com.yberry.dinehawaii.customview.CustomEditText
+                        android:id="@+id/etdinner4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="number"
+                        android:maxLength="4"
+                        android:padding="10dp"
+                        android:textAlignment="center"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_10sdp"
+                        app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                    <com.yberry.dinehawaii.customview.CustomEditText
+                        android:id="@+id/etother4"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="number"
+                        android:maxLength="4"
+                        android:padding="@dimen/_8sdp"
+                        android:textAlignment="center"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_10sdp"
+                        app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearNumber6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/linearSize"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/_24sdp"
+                    android:visibility="gone"
+                    android:weightSum="5">
+
+                    <com.yberry.dinehawaii.customview.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.7"
+                        android:hint="6"
+
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_10sdp"
+                        app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                    <com.yberry.dinehawaii.customview.CustomEditText
+                        android:id="@+id/etbreakfast5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="number"
+                        android:maxLength="4"
+                        android:padding="@dimen/_8sdp"
+                        android:textAlignment="center"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_10sdp"
+                        app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                    <com.yberry.dinehawaii.customview.CustomEditText
+                        android:id="@+id/etlunch5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="number"
+                        android:maxLength="4"
+                        android:padding="@dimen/_8sdp"
+                        android:textAlignment="center"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_10sdp"
+                        app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                    <com.yberry.dinehawaii.customview.CustomEditText
+                        android:id="@+id/etdinner5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="number"
+                        android:maxLength="4"
+                        android:padding="10dp"
+                        android:textAlignment="center"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_10sdp"
+                        app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                    <com.yberry.dinehawaii.customview.CustomEditText
+                        android:id="@+id/etother5"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="number"
+                        android:maxLength="4"
+                        android:padding="@dimen/_8sdp"
+                        android:textAlignment="center"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_10sdp"
+                        app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearNumber7"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/linearSize"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/_24sdp"
+                    android:visibility="gone"
+                    android:weightSum="5">
+
+                    <com.yberry.dinehawaii.customview.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.7"
+                        android:hint="7"
+
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_10sdp"
+                        app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                    <com.yberry.dinehawaii.customview.CustomEditText
+                        android:id="@+id/etbreakfast6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="number"
+                        android:maxLength="4"
+                        android:padding="@dimen/_8sdp"
+                        android:textAlignment="center"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_10sdp"
+                        app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                    <com.yberry.dinehawaii.customview.CustomEditText
+                        android:id="@+id/etlunch6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="number"
+                        android:maxLength="4"
+                        android:padding="@dimen/_8sdp"
+                        android:textAlignment="center"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_10sdp"
+                        app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                    <com.yberry.dinehawaii.customview.CustomEditText
+                        android:id="@+id/etdinner6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="number"
+                        android:maxLength="4"
+                        android:padding="10dp"
+                        android:textAlignment="center"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_10sdp"
+                        app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                    <com.yberry.dinehawaii.customview.CustomEditText
+                        android:id="@+id/etother6"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="number"
+                        android:maxLength="4"
+                        android:padding="@dimen/_8sdp"
+                        android:textAlignment="center"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_10sdp"
+                        app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearNumber8"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/linearSize"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/_24sdp"
+                    android:visibility="gone"
+                    android:weightSum="5">
+
+                    <com.yberry.dinehawaii.customview.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.7"
+                        android:hint="8"
+
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_10sdp"
+                        app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                    <com.yberry.dinehawaii.customview.CustomEditText
+                        android:id="@+id/etbreakfast7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="datetime"
+                        android:maxLength="4"
+                        android:padding="@dimen/_8sdp"
+                        android:textAlignment="center"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_10sdp"
+                        app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                    <com.yberry.dinehawaii.customview.CustomEditText
+                        android:id="@+id/etlunch7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="datetime"
+                        android:maxLength="4"
+                        android:padding="@dimen/_8sdp"
+                        android:textAlignment="center"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_10sdp"
+                        app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                    <com.yberry.dinehawaii.customview.CustomEditText
+                        android:id="@+id/etdinner7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="datetime"
+                        android:maxLength="4"
+                        android:padding="10dp"
+                        android:textAlignment="center"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_10sdp"
+                        app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                    <com.yberry.dinehawaii.customview.CustomEditText
+                        android:id="@+id/etother7"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="datetime"
+                        android:maxLength="4"
+                        android:padding="@dimen/_8sdp"
+                        android:textAlignment="center"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_10sdp"
+                        app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearNumber9"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/linearSize"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/_24sdp"
+                    android:visibility="gone"
+                    android:weightSum="5">
+
+                    <com.yberry.dinehawaii.customview.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.7"
+                        android:hint="9"
+
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_10sdp"
+                        app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                    <com.yberry.dinehawaii.customview.CustomEditText
+                        android:id="@+id/etbreakfast8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="datetime"
+                        android:maxLength="4"
+                        android:padding="@dimen/_8sdp"
+                        android:textAlignment="center"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_10sdp"
+                        app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                    <com.yberry.dinehawaii.customview.CustomEditText
+                        android:id="@+id/etlunch8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="datetime"
+                        android:maxLength="4"
+                        android:padding="@dimen/_8sdp"
+                        android:textAlignment="center"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_10sdp"
+                        app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                    <com.yberry.dinehawaii.customview.CustomEditText
+                        android:id="@+id/etdinner8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="datetime"
+                        android:maxLength="4"
+                        android:padding="10dp"
+                        android:textAlignment="center"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_10sdp"
+                        app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                    <com.yberry.dinehawaii.customview.CustomEditText
+                        android:id="@+id/etother8"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:inputType="datetime"
+                        android:maxLength="4"
+                        android:padding="@dimen/_8sdp"
+                        android:textAlignment="center"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/_10sdp"
+                        app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnAddmore"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_below="@+id/linearNumber1"
+                android:layout_marginLeft="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@drawable/button_rounded"
+                android:drawableLeft="@drawable/plus"
+                android:gravity="center"
+                android:paddingLeft="@dimen/_5sdp"
+                android:paddingRight="@dimen/_8sdp"
+                android:text="Add more"
+                android:textColor="@color/green" />
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/tvAllow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/btnAddmore"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:lineSpacingExtra="@dimen/_3sdp"
+                android:padding="@dimen/_8sdp"
+                android:text="Allow to add name to Wait list via DINE Hawaii prior to arrival :"
+                android:textSize="@dimen/_12sdp"
+                app:edittextfont="Roboto-Bold.ttf"
+
+
+                />
+
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvAllow"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:layout_marginLeft="@dimen/_15sdp">
+
+                <RadioButton
+                    android:id="@+id/radioYes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:text="@string/yes"
+                    android:buttonTint="@color/colorPrimary"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:textColor="@color/blue"
+                    android:textSize="@dimen/_10sdp" />
+
+                <RadioButton
+                    android:id="@+id/radioNo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:checked="false"
+                    android:buttonTint="@color/colorPrimary"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:text="@string/no"
+                    android:textColor="@color/blue"
+                    android:textSize="@dimen/_10sdp" />
+            </RadioGroup>
+
+
+            <!--
+                        <LinearLayout
+                            android:id="@+id/llallow"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tvAllow"
+                            android:layout_marginLeft="@dimen/_13sdp">
+
+                            <RadioButton
+                                android:id="@+id/rdioV_yes"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/tvAllow"
+
+
+                                android:buttonTint="@color/gray"
+                                android:hint="Yes"
+                                android:textSize="@dimen/_10sdp" />
+
+                            <RadioButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:buttonTint="@color/gray"
+                                android:hint="No"
+                                android:textSize="@dimen/_10sdp" />
+                        </LinearLayout>
+            -->
+
+            <RelativeLayout
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/llBussiness"
+                android:layout_gravity="right"
+                android:gravity="center"
+                android:padding="@dimen/_10sdp">
+
+                <ImageView
+                    android:id="@+id/ivContinue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/cont" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/linearNumber2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/linearSize"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/_24sdp"
+                android:weightSum="5">
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7"
+                    android:hint="2"
+
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/_10sdp"
+                    app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                <com.yberry.dinehawaii.customview.CustomEditText
+                    android:id="@+id/etbreakfast1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:inputType="datetime"
+                    android:maxLength="4"
+                    android:padding="@dimen/_8sdp"
+                    android:textAlignment="center"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/_10sdp"
+                    app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                <com.yberry.dinehawaii.customview.CustomEditText
+                    android:id="@+id/etlunch1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:inputType="datetime"
+                    android:maxLength="4"
+                    android:padding="@dimen/_8sdp"
+                    android:textAlignment="center"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/_10sdp"
+                    app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                <com.yberry.dinehawaii.customview.CustomEditText
+                    android:id="@+id/etdinner1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:inputType="datetime"
+                    android:maxLength="4"
+                    android:padding="10dp"
+                    android:textAlignment="center"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/_10sdp"
+                    app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                <com.yberry.dinehawaii.customview.CustomEditText
+                    android:id="@+id/etother1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:inputType="datetime"
+                    android:maxLength="4"
+                    android:padding="@dimen/_8sdp"
+                    android:textAlignment="center"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/_10sdp"
+                    app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

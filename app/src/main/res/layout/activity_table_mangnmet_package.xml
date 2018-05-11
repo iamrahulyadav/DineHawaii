@@ -1,0 +1,863 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        android:orientation="vertical"
+        android:scrollbars="none"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:text="Screen No:52 B"
+                android:textColor="@color/black" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/_18sdp"
+                android:orientation="vertical">
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    android:id="@+id/tvDrivername"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/toolbar_actionbar"
+                    android:drawablePadding="@dimen/_6sdp"
+                    android:drawableRight="@drawable/help"
+                    android:gravity="center"
+                    android:text="Table Layout;"
+                    android:textColor="#858282"
+                    android:textSize="@dimen/_12sdp"
+                    app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:drawablePadding="@dimen/_6sdp"
+                    android:text="Identify each table"
+                    android:textColor="#858282"
+                    android:textSize="@dimen/_12sdp"
+                    app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TableRow
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:background="@color/gray_transparent"
+                        android:layout_weight="7"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="6dp"
+                        >
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.8"
+                            android:gravity="center"
+                            android:text="Table"
+                            android:textColor="#858282"
+                            android:textSize="@dimen/_10sdp"
+                            app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:drawablePadding="@dimen/_6sdp"
+                            android:gravity="center"
+                            android:text="Capacity"
+                            android:textColor="#858282"
+                            android:textSize="@dimen/_10sdp"
+                            app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:drawablePadding="@dimen/_6sdp"
+                            android:gravity="center"
+                            android:text="Service Category"
+                            android:textColor="#858282"
+                            android:textSize="@dimen/_10sdp"
+                            app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:drawablePadding="@dimen/_6sdp"
+                            android:gravity="center"
+                            android:text="Res.Priority"
+                            android:textColor="#858282"
+                            android:textSize="@dimen/_10sdp"
+                            app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/tableRow1"
+                        android:weightSum="7"
+                        android:layout_marginLeft="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        >
+
+                        <com.yberry.dinehawaii.customview.CustomEditText
+                            android:id="@+id/etTableA1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:hint="A1"
+                            android:maxLength="2"
+                            android:textColor="#858282"
+                            android:textSize="@dimen/_10sdp"
+                            app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                        <com.yberry.dinehawaii.customview.CustomEditText
+                            android:id="@+id/etCapacity1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:inputType="number"
+                            android:maxLength="2"
+                            android:layout_weight="1"
+                            android:hint="5"
+                            android:textColor="#858282"
+                            android:textSize="@dimen/_10sdp"
+                            app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/tvService"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:gravity="center"
+                            android:text="Service"
+                            android:textColor="#858282"
+                            android:textSize="@dimen/_10sdp"
+                            app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                        <Spinner
+                            android:id="@+id/spinerReserv"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:drawableRight="@drawable/ic_keyboard_arrow_down_black_16dp"
+                            android:gravity="center"
+                            android:layout_weight="2"
+                            android:text="Reservs"
+                            android:textColor="#858282"
+                            android:textSize="6pt" />
+
+
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/tableRow2"
+                        android:weightSum="7"
+                        android:layout_marginLeft="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:visibility="gone"
+                        >
+
+                        <com.yberry.dinehawaii.customview.CustomEditText
+                            android:id="@+id/etTableA2"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:hint="A2"
+                            android:maxLength="2"
+                            android:textColor="#858282"
+                            android:textSize="@dimen/_10sdp"
+                            app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                        <com.yberry.dinehawaii.customview.CustomEditText
+                            android:id="@+id/etCapacity2"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:inputType="number"
+                            android:maxLength="2"
+                            android:layout_weight="1"
+                            android:hint="5"
+                            android:textColor="#858282"
+                            android:textSize="@dimen/_10sdp"
+                            app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/tvServiceA2"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:gravity="center"
+                            android:text="Service"
+                            android:textColor="#858282"
+                            android:textSize="@dimen/_10sdp"
+                            app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                        <Spinner
+                            android:id="@+id/spinerReservA2"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:drawableRight="@drawable/ic_keyboard_arrow_down_black_16dp"
+                            android:gravity="center"
+                            android:layout_weight="2"
+                            android:text="Reservs"
+                            android:textColor="#858282"
+                            android:textSize="6pt" />
+
+
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/tableRow3"
+                        android:weightSum="7"
+                        android:layout_marginLeft="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:visibility="gone"
+                        >
+
+                        <com.yberry.dinehawaii.customview.CustomEditText
+
+                            android:id="@+id/etTableA3"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:hint="A1"
+                            android:maxLength="2"
+                            android:textColor="#858282"
+                            android:textSize="@dimen/_10sdp"
+                            app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                        <com.yberry.dinehawaii.customview.CustomEditText
+                            android:id="@+id/etCapacity3"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:inputType="number"
+                            android:maxLength="2"
+                            android:layout_weight="1"
+                            android:hint="5"
+                            android:textColor="#858282"
+                            android:textSize="@dimen/_10sdp"
+                            app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/tvServiceA3"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:gravity="center"
+                            android:text="Service"
+                            android:textColor="#858282"
+                            android:textSize="@dimen/_10sdp"
+                            app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                        <Spinner
+                            android:id="@+id/spinerReservA3"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:drawableRight="@drawable/ic_keyboard_arrow_down_black_16dp"
+                            android:gravity="center"
+                            android:layout_weight="2"
+                            android:text="Reservs"
+                            android:textColor="#858282"
+                            android:textSize="6pt" />
+
+
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/tableRow4"
+                        android:weightSum="7"
+                        android:layout_marginLeft="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:visibility="gone"
+                        >
+
+                        <com.yberry.dinehawaii.customview.CustomEditText
+
+                            android:id="@+id/etTableA4"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:hint="A1"
+                            android:maxLength="2"
+                            android:textColor="#858282"
+                            android:textSize="@dimen/_10sdp"
+                            app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                        <com.yberry.dinehawaii.customview.CustomEditText
+                            android:id="@+id/etCapacity4"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:inputType="number"
+                            android:maxLength="2"
+                            android:layout_weight="1"
+                            android:hint="5"
+                            android:textColor="#858282"
+                            android:textSize="@dimen/_10sdp"
+                            app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/tvServiceA4"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:gravity="center"
+                            android:text="Service"
+                            android:textColor="#858282"
+                            android:textSize="@dimen/_10sdp"
+                            app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                        <Spinner
+                            android:id="@+id/spinerReservA4"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:drawableRight="@drawable/ic_keyboard_arrow_down_black_16dp"
+                            android:gravity="center"
+                            android:layout_weight="2"
+                            android:text="Reservs"
+                            android:textColor="#858282"
+                            android:textSize="6pt" />
+
+
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/tableRow5"
+                        android:weightSum="7"
+                        android:layout_marginLeft="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:visibility="gone"
+                        >
+
+                        <com.yberry.dinehawaii.customview.CustomEditText
+
+                            android:id="@+id/etTableA5"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:hint="A1"
+                            android:maxLength="2"
+                            android:textColor="#858282"
+                            android:textSize="@dimen/_10sdp"
+                            app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                        <com.yberry.dinehawaii.customview.CustomEditText
+                            android:id="@+id/etCapacity5"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:inputType="number"
+                            android:maxLength="2"
+                            android:layout_weight="1"
+                            android:hint="5"
+                            android:textColor="#858282"
+                            android:textSize="@dimen/_10sdp"
+                            app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/tvServiceA5"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:gravity="center"
+                            android:text="Service"
+                            android:textColor="#858282"
+                            android:textSize="@dimen/_10sdp"
+                            app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                        <Spinner
+                            android:id="@+id/spinerReservA5"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:drawableRight="@drawable/ic_keyboard_arrow_down_black_16dp"
+                            android:gravity="center"
+                            android:layout_weight="2"
+                            android:text="Reservs"
+                            android:textColor="#858282"
+                            android:textSize="6pt" />
+
+
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/tableRow6"
+                        android:weightSum="7"
+                        android:layout_marginLeft="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:visibility="gone"
+                        >
+
+                        <com.yberry.dinehawaii.customview.CustomEditText
+
+                            android:id="@+id/etTableA6"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:hint="A1"
+                            android:maxLength="2"
+                            android:textColor="#858282"
+                            android:textSize="@dimen/_10sdp"
+                            app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                        <com.yberry.dinehawaii.customview.CustomEditText
+                            android:id="@+id/etCapacityA6"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:inputType="number"
+                            android:maxLength="2"
+                            android:layout_weight="1"
+                            android:hint="5"
+                            android:textColor="#858282"
+                            android:textSize="@dimen/_10sdp"
+                            app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/tvServiceA6"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:gravity="center"
+                            android:text="Service"
+                            android:textColor="#858282"
+                            android:textSize="@dimen/_10sdp"
+                            app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                        <Spinner
+                            android:id="@+id/spinerReservA6"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:drawableRight="@drawable/ic_keyboard_arrow_down_black_16dp"
+                            android:gravity="center"
+                            android:layout_weight="2"
+                            android:text="Reservs"
+                            android:textColor="#858282"
+                            android:textSize="6pt" />
+
+
+                    </TableRow>
+
+                </TableLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <Button
+                        android:id="@+id/btnSubmit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_28sdp"
+                        android:layout_below="@+id/linearNumber1"
+                        android:layout_marginLeft="@dimen/_18sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:background="@drawable/button_rounded"
+                        android:drawableLeft="@drawable/plus"
+                        android:gravity="center"
+                        android:paddingLeft="@dimen/_8sdp"
+                        android:paddingRight="@dimen/_10sdp"
+                        android:text="Submit"
+                        android:textColor="@color/green" />
+
+                    <Button
+                        android:id="@+id/btnAddmore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_28sdp"
+                        android:layout_below="@+id/linearNumber1"
+                        android:layout_marginLeft="@dimen/_18sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:background="@drawable/button_rounded"
+                        android:drawableLeft="@drawable/plus"
+                        android:gravity="center"
+                        android:paddingLeft="@dimen/_8sdp"
+                        android:paddingRight="@dimen/_8sdp"
+                        android:text="Add more"
+                        android:textColor="@color/green" />
+
+                </LinearLayout>
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/_6sdp"
+                    android:padding="@dimen/_8sdp"
+                    android:text="Identify table combination"
+                    android:textColor="#858282"
+                    android:textSize="@dimen/_12sdp"
+                    app:edittextfont="ROBOTO-BOLD.TTF" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/gray_transparent"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/_6sdp"
+                    android:weightSum="3">
+
+                    <com.yberry.dinehawaii.customview.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawablePadding="@dimen/_6sdp"
+                        android:gravity="center"
+                        android:text="Combined Table#"
+                        android:textColor="#858282"
+                        android:textSize="@dimen/_10sdp"
+                        app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                    <com.yberry.dinehawaii.customview.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_12sdp"
+                        android:layout_weight="1"
+                        android:drawablePadding="@dimen/_6sdp"
+                        android:gravity="center"
+                        android:text="Table#"
+                        android:textColor="#858282"
+                        android:textSize="@dimen/_10sdp"
+                        app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                    <com.yberry.dinehawaii.customview.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawablePadding="@dimen/_6sdp"
+                        android:gravity="center"
+                        android:text="Combined Capacity"
+                        android:textColor="#858282"
+                        android:textSize="@dimen/_10sdp"
+                        app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_18sdp"
+                android:layout_marginRight="@dimen/_18sdp"
+                android:orientation="horizontal"
+                android:visibility="visible"
+                android:weightSum="3">
+                <com.yberry.dinehawaii.customview.CustomEditText
+                    android:id="@+id/etCobineTableC1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:hint="C2"
+                    android:maxLength="1"
+                    android:textColor="#858282"
+                    android:textSize="@dimen/_10sdp"
+                    app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:weightSum="2">
+
+                    <Spinner
+                        android:id="@+id/spinnerC1table1"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="A1"
+                        android:maxLength="2"
+                        android:textColor="#858282"
+                        android:textSize="@dimen/_10sdp" />
+
+                    <Spinner
+                        android:id="@+id/spinnerC1table2"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="A1"
+                        android:maxLength="2"
+                        android:textColor="#858282"
+                        android:textSize="@dimen/_10sdp" />
+
+                </LinearLayout>
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    android:id="@+id/textViewC1TotalCapacity"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="18"
+                    android:textColor="#858282"
+                    android:textSize="@dimen/_10sdp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lltableCombineC2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_18sdp"
+                android:layout_marginRight="@dimen/_18sdp"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                android:weightSum="3">
+
+                <com.yberry.dinehawaii.customview.CustomEditText
+                    android:id="@+id/etCobineTableC2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:hint="C2"
+                    android:maxLength="1"
+                    android:textColor="#858282"
+                    android:textSize="@dimen/_10sdp"
+                    app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:weightSum="2">
+
+                    <Spinner
+                        android:id="@+id/spinnerC2table3"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:hint="A1"
+                        android:maxLength="2"
+                        android:textColor="#858282"
+                        android:textSize="@dimen/_10sdp" />
+
+                    <Spinner
+                        android:id="@+id/spinnerC2table4"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:hint="A1"
+                        android:maxLength="2"
+                        android:textColor="#858282"
+                        android:textSize="@dimen/_10sdp" />
+
+                </LinearLayout>
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+
+                    android:id="@+id/textViewC2TotalCapacity"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="18"
+                    android:textColor="#858282"
+                    android:textSize="@dimen/_10sdp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lltableCombineC3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_18sdp"
+                android:layout_marginRight="@dimen/_18sdp"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                android:weightSum="3">
+
+                <com.yberry.dinehawaii.customview.CustomEditText
+                    android:id="@+id/etCobineTableC3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:hint="C2"
+                    android:maxLength="2"
+                    android:textColor="#858282"
+                    android:textSize="@dimen/_10sdp"
+                    app:edittextfont="ROBOTO-REGULAR.TTF" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:weightSum="2">
+
+
+                    <Spinner
+                        android:id="@+id/spinnerC3table5"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:hint="A1"
+                        android:maxLength="2"
+                        android:textColor="#858282"
+                        android:textSize="@dimen/_10sdp" />
+
+                    <Spinner
+                        android:id="@+id/spinnerC3table6"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:hint="A1"
+                        android:maxLength="2"
+                        android:textColor="#858282"
+                        android:textSize="@dimen/_10sdp" />
+
+                </LinearLayout>
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    android:id="@+id/textViewC3TotalCapacity"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="18"
+                    android:textColor="#858282"
+                    android:textSize="@dimen/_10sdp" />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="@dimen/_18sdp"
+                android:layout_marginRight="@dimen/_18sdp"
+                android:weightSum="2">
+                <Button
+                    android:id="@+id/btnSubmitCombineTable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_28sdp"
+                    android:layout_below="@+id/linearNumber1"
+                    android:layout_marginLeft="@dimen/_18sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:background="@drawable/button_rounded"
+                    android:drawableLeft="@drawable/plus"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/_8sdp"
+                    android:paddingRight="@dimen/_10sdp"
+                    android:text="Submit"
+                    android:textColor="@color/green" />
+
+
+                <Button
+                    android:id="@+id/btnAddMoreCombineTable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_28sdp"
+                    android:layout_below="@+id/linearNumber1"
+                    android:layout_marginLeft="@dimen/_18sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:background="@drawable/button_rounded"
+                    android:drawableLeft="@drawable/plus"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/_8sdp"
+                    android:paddingRight="@dimen/_8sdp"
+                    android:text="Add more"
+                    android:textColor="@color/green" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/llBussiness"
+                android:layout_gravity="right"
+                android:gravity="center"
+                android:padding="@dimen/_10sdp">
+
+                <ImageView
+                    android:id="@+id/imageview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/cont" />
+
+            </RelativeLayout>
+
+            <!--  <ImageView
+                  android:id="@+id/imageview"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="@dimen/_18sdp"
+                  android:layout_marginRight="@dimen/_18sdp"
+                  android:layout_gravity="right"
+                  android:layout_marginBottom="@dimen/_8sdp"
+                  android:src="@drawable/cont" />
+  -->
+
+        </LinearLayout>
+
+    </ScrollView>
+</RelativeLayout>

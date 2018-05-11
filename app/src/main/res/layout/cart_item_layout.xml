@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:background="#fff"
+        android:weightSum="4">
+
+        <LinearLayout
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_2sdp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    android:id="@+id/item_Name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.5"
+                    android:text="NA"
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    android:padding="@dimen/_3sdp"
+                    app:edittextfont="Raleway-Regular.ttf" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:gravity="right"
+                    android:layout_marginRight="@dimen/_2sdp"
+                    android:layout_weight="0.5"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:id="@+id/itemdelete"
+                        android:background="@drawable/ic_cancel_black_24dp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    android:id="@+id/item_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Price : $"
+                    android:padding="@dimen/_3sdp"
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    app:edittextfont="Raleway-Regular.ttf" />
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    android:id="@+id/item_baseprice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00"
+                    android:padding="@dimen/_3sdp"
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    app:edittextfont="Raleway-Regular.ttf" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/incQuanLayout"
+                android:orientation="horizontal"
+                android:layout_gravity="center_vertical">
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Qty "
+                    android:padding="@dimen/_3sdp"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical"
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    app:edittextfont="Raleway-Bold.ttf" />
+
+                <ImageView
+                    android:id="@+id/add_Quantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/ic_add_circle_green_24dp" />
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    android:id="@+id/item_Quantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:inputType="number"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/_3sdp"
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    app:edittextfont="Raleway-Bold.ttf"/>
+
+                <ImageView
+                    android:id="@+id/remove_Quantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/ic_remove_circle_red_24dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorDivider" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:orientation="vertical">
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/custom1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_3sdp"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                app:edittextfont="Raleway-Regular.ttf" />
+
+            <!--  <com.yberry.dinehawaii.customview.CustomTextView
+                  android:id="@+id/custom2"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  app:edittextfont="Raleway-Regular.ttf" />-->
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorDivider" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.9"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$ "
+                android:paddingTop="@dimen/_3sdp"
+                android:paddingBottom="@dimen/_3sdp"
+                android:paddingLeft="@dimen/_3sdp"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                app:edittextfont="Raleway-Regular.ttf" />
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/item_Price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:text="000"
+                android:paddingTop="@dimen/_3sdp"
+                android:paddingBottom="@dimen/_3sdp"
+                android:paddingRight="@dimen/_3sdp"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                app:edittextfont="Raleway-Regular.ttf" />
+
+            <!--  <ImageView
+                  android:id="@+id/item_remove"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+  android:visibility="gone"
+                  android:layout_gravity="center_horizontal"
+                  android:src="@drawable/ic_cancel_black_24dp"
+                  />-->
+        </LinearLayout>
+
+        <!--  <View
+              android:layout_width="1dp"
+              android:layout_height="match_parent"
+              android:background="@color/colorDivider" />-->
+
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorDivider"></View>
+</LinearLayout>
+
+    <!--  <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/customTextView14"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/bgrectangle"
+                android:gravity="top|center"
+                android:text="$35.00"
+                app:edittextfont="Raleway-Regular.ttf" />
+                -->

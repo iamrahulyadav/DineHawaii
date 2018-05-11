@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.yberry.dinehawaii.customview.CustomTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@android:id/text1"
+    android:singleLine="true"
+    android:ellipsize="marquee"
+    android:textColor="#717171"
+    android:padding="@dimen/_6sdp"
+    style="@style/TextAppearance.AppCompat.Subhead"
+    app:edittextfont="@string/raleway_regular" />

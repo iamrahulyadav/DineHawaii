@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.yberry.dinehawaii.customview.CustomEditText
+        android:layout_marginLeft="@dimen/_17sdp"
+        android:layout_marginRight="@dimen/_17sdp"
+        android:id="@+id/input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Contact No."
+        android:paddingBottom="@dimen/_12sdp"
+        android:maxLength="30"
+        style="@style/TextAppearance.AppCompat.Subhead"
+        android:imeOptions="actionDone"
+        android:inputType="time|textCapSentences|textCapWords"
+        app:edittextfont="@string/raleway_regular"/>
+
+</FrameLayout>

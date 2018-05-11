@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_package_and_markating_options"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="com.yberry.dinehawaii.activity.PackageAndMarkatingOptions">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+
+            android:orientation="vertical">
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:background="@color/transparent_full"
+                android:padding="@dimen/_8sdp"
+                android:text="Screen No:49"
+                android:textColor="#000"
+                android:textSize="@dimen/_12sdp"
+                app:edittextfont="Roboto-Regular.ttf" />
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/tvFederalIdNumb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/greendot"
+                android:drawablePadding="@dimen/_6sdp"
+                android:drawableRight="@drawable/help"
+                android:gravity="center"
+                android:text="Packages and markating options selected"
+                android:textColor="@color/colorGreen"
+                android:textSize="@dimen/_12sdp"
+                app:edittextfont="Raleway-Regular.ttf" />
+
+            <Button
+                android:id="@+id/btnEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_28sdp"
+                android:layout_below="@id/tvFederalIdNumb"
+                android:layout_marginLeft="@dimen/_29sdp"
+                android:background="@drawable/bgrectangle"
+                android:padding="@dimen/_3sdp"
+                android:text="EDIT"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/_10sdp" />
+
+            <View
+                android:id="@+id/View"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_below="@+id/btnEdit"
+                android:layout_margin="@dimen/_8sdp"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_8sdp"
+                android:background="@color/gray" />
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/tvFollowing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/View"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:text="The following information is needed according to your\npackage and information-"
+                android:textSize="@dimen/_10sdp"
+                app:edittextfont="Roboto-Regular.ttf" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/_20sdp"
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/packageRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </android.support.v7.widget.RecyclerView>'
+            </LinearLayout>
+
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/greendot"
+                android:drawablePadding="@dimen/_6sdp"
+                android:drawableRight="@drawable/help"
+                android:gravity="center"
+                android:text="Reservation Package-"
+                android:textColor="@color/colorGreen"
+                android:textSize="@dimen/_12sdp"
+                app:edittextfont="Raleway-Regular.ttf" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/_18sdp"
+                android:orientation="vertical">
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/graysq"
+                    android:drawablePadding="@dimen/_8sdp"
+                    android:text="Minimum Lead Time to accept a reservation request"
+                    android:textSize="@dimen/_10sdp"
+
+                    app:edittextfont="Roboto-Regular.ttf" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/min_LeadTime"
+                        android:layout_width="@dimen/_78sdp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:inputType="numberDecimal"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/_10sdp" />
+
+                    <com.yberry.dinehawaii.customview.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="@dimen/_8sdp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:drawableRight="@drawable/help"
+                        android:text="Hours"
+                        android:textSize="@dimen/_10sdp"
+                        app:edittextfont="Roboto-Regular.ttf" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.yberry.dinehawaii.customview.CustomTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/graysq"
+                        android:drawablePadding="@dimen/_8sdp"
+                        android:text="Maximum Lead Time to accept a reservation request"
+                        android:textSize="@dimen/_10sdp"
+                        app:edittextfont="Roboto-Regular.ttf" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/max_LeadTime"
+                            android:layout_width="@dimen/_78sdp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:inputType="numberDecimal"
+                            android:textSize="@dimen/_10sdp" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="@dimen/_8sdp"
+                            android:drawableRight="@drawable/help"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="months"
+                            android:textSize="@dimen/_10sdp"
+                            app:edittextfont="Roboto-Regular.ttf" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableLeft="@drawable/graysq"
+                            android:drawablePadding="@dimen/_8sdp"
+                            android:text="No-Show Time Allowance:"
+                            android:textSize="@dimen/_10sdp"
+                            app:edittextfont="Roboto-Regular.ttf" />
+
+                        <EditText
+                            android:id="@+id/noShow_time"
+                            android:layout_width="@dimen/_50sdp"
+                            android:gravity="center"
+                            android:inputType="number"
+                            android:textSize="@dimen/_10sdp"
+                            android:layout_height="wrap_content" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="@dimen/_8sdp"
+                            android:drawableRight="@drawable/help"
+                            android:gravity="center_vertical"
+                            android:text="minutes"
+                            android:textSize="@dimen/_10sdp"
+                            app:edittextfont="Roboto-Regular.ttf" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:gravity="center|center_horizontal"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/_8sdp"
+                            android:src="@drawable/drawable_green_dot" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Auto Cancle Reservation after No-Show Time Allowance has Expired?"
+                            android:textSize="@dimen/_10sdp"
+                            app:edittextfont="Roboto-Regular.ttf" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:orientation="horizontal">
+
+                        <RadioGroup
+                            android:id="@+id/radioGroup1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <RadioButton
+                                android:id="@+id/radioTrue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:buttonTint="@color/colorPrimary"
+                                android:text="@string/yes"
+                                android:textColor="@color/gray"
+                                android:textSize="@dimen/_10sdp" />
+
+                            <RadioButton
+                                android:id="@+id/radioF"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:buttonTint="@color/colorPrimary"
+                                android:text="@string/no"
+                                android:textColor="@color/gray"
+                                android:textSize="@dimen/_10sdp" />
+
+                        </RadioGroup>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_5sdp"
+
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginRight="@dimen/_8sdp"
+                            android:src="@drawable/drawable_green_dot" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Send No-Show Message to Customer:"
+                            android:textSize="@dimen/_10sdp"
+                            app:edittextfont="Roboto-Regular.ttf" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:orientation="horizontal">
+
+                        <RadioGroup
+                            android:id="@+id/radioGroup2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/radioYes"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:buttonTint="@color/colorPrimary"
+                                android:text="@string/yes"
+                                android:textColor="@color/gray"
+                                android:textSize="@dimen/_10sdp" />
+
+                            <RadioButton
+                                android:id="@+id/radioNo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:buttonTint="@color/colorPrimary"
+                                android:text="@string/no"
+                                android:textColor="@color/gray"
+                                android:textSize="@dimen/_10sdp" />
+                        </RadioGroup>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/llBussiness"
+                    android:layout_gravity="right"
+                    android:gravity="center"
+                    android:padding="@dimen/_10sdp">
+
+                    <ImageView
+                        android:id="@+id/imageview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/cont" />
+
+                </RelativeLayout>
+
+
+                <!--
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/cont"
+                                    android:id="@+id/imageview"
+                                    android:layout_gravity="right"/>
+                -->
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_third"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/activityBackground">
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.v4.widget.NestedScrollView
+                android:id="@+id/nn1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recyclerview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false" />
+                </RelativeLayout>
+
+            </android.support.v4.widget.NestedScrollView>
+
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/loadMore"
+                style="@style/TextAppearance.AppCompat.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="@dimen/_10sdp"
+                android:background="@drawable/loadmore_button_rounded"
+                android:elevation="2dp"
+                android:paddingBottom="@dimen/_3sdp"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingRight="@dimen/_8sdp"
+                android:paddingTop="@dimen/_3sdp"
+                android:text="Load More"
+                android:textColor="@color/blue"
+                android:visibility="gone"
+                app:edittextfont="@string/raleway_bold" />
+
+
+            <ImageView
+                android:id="@+id/progressBar"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="@dimen/_8sdp"
+                android:background="@drawable/spinner"
+                android:backgroundTint="#45b670" />
+
+            <!--  <ProgressBar
+                  android:id="@+id/progressBar"
+                  android:layout_width="32dp"
+                  android:layout_height="32dp"
+                  android:layout_gravity="center_horizontal"
+                  android:layout_margin="@dimen/_5sdp" />-->
+        </LinearLayout>
+    </ScrollView>
+
+    <com.yberry.dinehawaii.customview.CustomTextView
+        android:id="@+id/mNodata"
+        style="@style/TextAppearance.AppCompat.Subhead"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:gravity="center"
+        android:padding="@dimen/_20sdp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="@color/blue" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/mMap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/_15sdp"
+        android:src="@drawable/flaoting_map_icon"
+        app:backgroundTint="@color/colorPrimary" />
+
+    <FrameLayout
+        android:id="@+id/frameSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></FrameLayout>
+</RelativeLayout>
+

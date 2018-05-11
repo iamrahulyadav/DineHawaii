@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/_15sdp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.yberry.dinehawaii.customview.CustomCheckBox
+            android:id="@+id/checkbox"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="I Agree To Terms &amp; Condition and Authorize Monthly Payments."
+            app:edittextfont="@string/raleway_regular" />
+
+        <com.yberry.dinehawaii.Util.JustifiedTextView
+            android:id="@+id/justifytxt"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="@string/text_21B"
+            android:textAlignment="center"
+            app:edittextfont="@string/raleway_regular" />
+        <!--  <com.yberry.dinehawaii.customview.CustomTextView
+              android:id="@+id/justifytxt"
+              style="@style/TextAppearance.AppCompat.Small"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_margin="@dimen/_8sdp"
+              android:text="@string/text_21B"
+              android:textAlignment="center"
+              app:edittextfont="@string/raleway_regular" />-->
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/_10sdp"
+        android:src="@drawable/paypal" />
+
+    <com.yberry.dinehawaii.customview.CustomButton
+        android:id="@+id/pay"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_35sdp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/_3sdp"
+        android:background="@drawable/greenborder"
+        android:paddingLeft="@dimen/_20sdp"
+        android:paddingRight="@dimen/_20sdp"
+        android:text="PAY"
+        android:textColor="@color/white"
+        android:visibility="gone" />
+
+</LinearLayout>

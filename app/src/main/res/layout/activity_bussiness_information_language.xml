@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <include
+        android:id="@+id/toolbar_bar"
+        layout="@layout/toolbar" />
+    <LinearLayout
+        android:layout_below="@id/toolbar_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.yberry.dinehawaii.customview.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select Prefered Language"
+            android:textColor="#7f7e7e"
+            android:padding="@dimen/_10sdp"
+            android:layout_centerVertical="true"
+            style="@style/TextAppearance.AppCompat.Subhead"
+            app:edittextfont="Raleway-Bold.ttf" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorDivider" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none">
+            <RadioGroup
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:id="@+id/radioGroup"
+                android:layout_height="match_parent">
+
+                <com.yberry.dinehawaii.customview.CustomRadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:drawablePadding="10dp"
+                    android:imeOptions="actionDone"
+                    android:inputType="textEmailAddress"
+                    android:padding="2dp"
+                    android:singleLine="true"
+                    android:text="English"
+                    android:textColor="#7f7e7e"
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    app:edittextfont="@string/raleway_regular"
+                   
+                    />
+
+                <com.yberry.dinehawaii.customview.CustomRadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:drawablePadding="10dp"
+                    android:imeOptions="actionDone"
+                    android:inputType="textEmailAddress"
+                    android:padding="2dp"
+                    android:singleLine="true"
+                    android:text="Arabic"
+                    android:textColor="#7f7e7e"
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    app:edittextfont="@string/raleway_regular"
+
+                   
+                    />
+
+                <com.yberry.dinehawaii.customview.CustomRadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:drawablePadding="10dp"
+                    android:imeOptions="actionDone"
+                    android:inputType="textEmailAddress"
+                    android:padding="2dp"
+                    android:singleLine="true"
+                    android:text="America"
+                    android:textColor="#7f7e7e"
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    app:edittextfont="@string/raleway_regular"
+
+                   
+                    />
+
+                <com.yberry.dinehawaii.customview.CustomRadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:drawablePadding="10dp"
+                    android:imeOptions="actionDone"
+                    android:inputType="textEmailAddress"
+                    android:padding="2dp"
+                    android:singleLine="true"
+                    android:text="French"
+                    android:textColor="#7f7e7e"
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    app:edittextfont="@string/raleway_regular"
+
+                   
+                    />
+
+                <com.yberry.dinehawaii.customview.CustomRadioButton
+                    android:id="@+id/dm_msg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:drawablePadding="10dp"
+                    android:imeOptions="actionDone"
+                    android:inputType="textEmailAddress"
+                    android:padding="2dp"
+                    android:singleLine="true"
+                    android:text="German"
+                    android:textColor="#7f7e7e"
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    app:edittextfont="@string/raleway_regular"
+
+                   
+                    />
+
+
+                <com.yberry.dinehawaii.customview.CustomRadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:drawablePadding="10dp"
+                    android:imeOptions="actionDone"
+                    android:inputType="textEmailAddress"
+                    android:padding="2dp"
+                    android:singleLine="true"
+                    android:text="Greek"
+                    android:textColor="#7f7e7e"
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    app:edittextfont="@string/raleway_regular"
+
+                   
+                    />
+
+                <com.yberry.dinehawaii.customview.CustomRadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:drawablePadding="10dp"
+                    android:imeOptions="actionDone"
+                    android:inputType="textEmailAddress"
+                    android:padding="2dp"
+                    android:singleLine="true"
+                    android:text="Hmong"
+                    android:textColor="#7f7e7e"
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    app:edittextfont="@string/raleway_regular"
+
+                   
+                    />
+
+                <com.yberry.dinehawaii.customview.CustomRadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:drawablePadding="10dp"
+                    android:imeOptions="actionDone"
+                    android:inputType="textEmailAddress"
+                    android:padding="2dp"
+                    android:singleLine="true"
+                    android:text="Italian"
+                    android:textColor="#7f7e7e"
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    app:edittextfont="@string/raleway_regular"
+
+                   
+                    />
+
+                <com.yberry.dinehawaii.customview.CustomRadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:drawablePadding="10dp"
+                    android:imeOptions="actionDone"
+                    android:inputType="textEmailAddress"
+                    android:padding="2dp"
+                    android:singleLine="true"
+                    android:text="Japanese"
+                    android:textColor="#7f7e7e"
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    app:edittextfont="@string/raleway_regular"
+
+                   
+                    />
+
+                <com.yberry.dinehawaii.customview.CustomRadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:background="@android:color/transparent"
+                    android:drawablePadding="10dp"
+                    android:imeOptions="actionDone"
+                    android:inputType="textEmailAddress"
+                    android:padding="2dp"
+                    android:singleLine="true"
+                    android:text="Malay"
+                    android:textColor="#7f7e7e"
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    app:edittextfont="@string/raleway_regular"
+
+                   
+                    />
+            </RadioGroup>
+
+        </ScrollView>
+    </LinearLayout>
+
+</RelativeLayout>

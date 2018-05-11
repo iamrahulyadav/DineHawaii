@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/toolbar_bar"
+        layout="@layout/toolbar" />
+    <RelativeLayout
+        android:id="@+id/layoutLinear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <com.yberry.dinehawaii.customview.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select Food Type"
+            android:textColor="@color/edit_text_color"
+            android:padding="@dimen/_10sdp"
+            style="@style/TextAppearance.AppCompat.Subhead"
+            android:layout_centerVertical="true"
+            app:edittextfont="Raleway-Bold.ttf" />
+        <!-- <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_centerVertical="true"
+             android:background="@color/transparent_full"
+             android:padding="@dimen/_5sdp"
+             android:text="Screen No:45 A"
+             android:textColor="@color/screen_no_text"
+             android:textSize="@dimen/_12sdp"
+             android:layout_alignParentEnd="true"
+             android:layout_alignParentRight="true"/>
+-->
+
+        <!-- <com.yberry.dinehawaii.customview.CustomEditText
+             android:id="@+id/btn_login_fb"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginBottom="20dp"
+             android:layout_marginTop="20dp"
+             android:background="@drawable/background_hawii"
+             android:gravity="center"
+             android:hint="Search"
+             android:padding="10dp"
+             android:paddingLeft="20dp"
+             android:paddingRight="15dp"
+             android:singleLine="true"
+             android:textColor="@color/white"
+             android:textColorHint="@color/white"
+             app:edittextfont="Raleway-Bold.ttf" />
+-->
+
+
+
+
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorDivider" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar_bar"
+        android:background="#FFFFFF"
+        android:scrollbars="horizontal"
+        android:overScrollMode="never"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:id="@+id/chk_serviceId"
+                android:orientation="vertical"
+                android:padding="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_height="wrap_content"/>
+
+            <!--<CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:drawablePadding="10dp"
+                android:imeOptions="actionDone"
+                android:inputType="textEmailAddress"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:text="Pizza"
+                android:textColor="#7f7e7e"
+
+                android:textSize="12sp"
+                />
+
+            <CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:drawablePadding="10dp"
+                android:imeOptions="actionDone"
+                android:inputType="textEmailAddress"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:text="Continental"
+                android:textColor="#7f7e7e"
+
+                android:textSize="12sp"
+                />
+
+            <CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+
+                android:drawablePadding="10dp"
+                android:imeOptions="actionDone"
+                android:inputType="textEmailAddress"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:text="Chinies"
+                android:textColor="#7f7e7e"
+
+                android:textSize="12sp"
+                />
+
+            <CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:drawablePadding="10dp"
+                android:imeOptions="actionDone"
+                android:inputType="textEmailAddress"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:text="Sea"
+                android:textColor="#7f7e7e"
+
+                android:textSize="12sp"
+                />
+
+            <CheckBox
+                android:id="@+id/dm_msg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:drawablePadding="10dp"
+                android:imeOptions="actionDone"
+                android:inputType="textEmailAddress"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:text="FastFood"
+                android:textColor="#7f7e7e"
+
+                android:textSize="12sp"
+              />
+
+
+            <CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:drawablePadding="10dp"
+                android:imeOptions="actionDone"
+                android:inputType="textEmailAddress"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:text="South Indian"
+                android:textColor="#7f7e7e"
+
+                android:textSize="12sp"
+                />
+
+            <CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:drawablePadding="10dp"
+                android:imeOptions="actionDone"
+                android:inputType="textEmailAddress"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:text="North Indian
+"
+                android:textColor="#7f7e7e"
+
+                android:textSize="12sp"
+                 />
+-->
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

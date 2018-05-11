@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.yberry.dinehawaii.customview.CustomTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/row_spn_tv"
+    app:edittextfont="Raleway-Regular.ttf"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textColor="@color/edit_text_color"
+     style="@style/TextAppearance.AppCompat.Subhead"
+    android:padding="@dimen/_7sdp"
+    android:minHeight="@dimen/_20sdp"
+    android:text="Select Geographic Location"
+    android:layout_marginLeft="@dimen/_5sdp"
+    />
+

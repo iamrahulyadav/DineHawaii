@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/drawer_icon"
+            android:title="Home" />
+        <item
+            android:id="@+id/nav_e_gift"
+            android:icon="@drawable/drawer_icon"
+            android:title="Orders" />
+        <item
+            android:id="@+id/nav_neworder"
+            android:icon="@drawable/drawer_icon"
+            android:title="Reservations" />
+        <item
+            android:id="@+id/nav_edit_reservation"
+            android:icon="@drawable/drawer_icon"
+            android:title="Packages" />
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/drawer_icon"
+            android:title="My Profile" />
+        <item
+            android:id="@+id/notification"
+            android:icon="@drawable/drawer_icon"
+            android:title="Notifications" />
+
+        <item
+            android:id="@+id/nav_myreview"
+            android:icon="@drawable/drawer_icon"
+            android:title="Customer Feedbacks" />
+        <item
+            android:id="@+id/nav_orderhistory"
+            android:icon="@drawable/drawer_icon"
+            android:title="Reports" />
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/drawer_icon"
+            android:title="Logout" />
+    </group>
+</menu>

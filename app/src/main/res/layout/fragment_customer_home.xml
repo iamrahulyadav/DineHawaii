@@ -1,0 +1,275 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="com.yberry.dinehawaii.Customer.Fragment.CustomerHomeFragment">
+
+    <!--   <com.yberry.dinehawaii.customview.CustomTextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_alignParentRight="true"
+           android:layout_gravity="right"
+           android:padding="@dimen/_5sdp"
+           android:text="Screen No:81"
+           android:textColor="@color/screen_no_text"
+           android:textSize="@dimen/_10sdp" />-->
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar_bar1"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/_5sdp"
+            android:orientation="vertical">
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/tvSearchBuss"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/drawable_green_dot"
+                android:drawablePadding="@dimen/_5sdp"
+                android:gravity="center_vertical"
+                android:padding="@dimen/_10sdp"
+                android:text="Search Restaurants"
+                android:textColor="@color/colorPrimary"
+                app:edittextfont="Raleway-Bold.ttf" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_1sdp"
+                android:background="@drawable/bootomline_green_back_trans"></View>
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/viewNearest"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:drawableLeft="@drawable/drawable_green_dot"
+                android:drawablePadding="@dimen/_5sdp"
+                android:gravity="center_vertical"
+                android:padding="@dimen/_10sdp"
+                android:text="View Nearest Restaurants"
+                android:textColor="@color/colorPrimary"
+                app:edittextfont="Raleway-Bold.ttf" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="@drawable/bootomline_green_back_trans"></View>
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/placeOrder"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:drawableLeft="@drawable/drawable_green_dot"
+                android:drawablePadding="@dimen/_5sdp"
+
+                android:gravity="center_vertical"
+                android:padding="@dimen/_10sdp"
+                android:text="Place An Order"
+                android:textColor="@color/colorPrimary"
+                app:edittextfont="Raleway-Bold.ttf" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_1sdp"
+
+                android:background="@drawable/bootomline_green_back_trans"></View>
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/activity_making_reservation"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:drawableLeft="@drawable/drawable_green_dot"
+                android:drawablePadding="@dimen/_5sdp"
+                android:gravity="center_vertical"
+                android:padding="@dimen/_10sdp"
+
+                android:text="Make A Reservation"
+                android:textColor="@color/green"
+                app:edittextfont="Raleway-Bold.ttf" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_1sdp"
+
+                android:background="@drawable/bootomline_green_back_trans"></View>
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/order_history"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:drawableLeft="@drawable/drawable_green_dot"
+                android:drawablePadding="@dimen/_5sdp"
+                android:drawableRight="@drawable/ic_keyboard_arrow_right_green_24dp"
+                android:gravity="center_vertical"
+                android:padding="@dimen/_10sdp"
+
+                android:text="Order History"
+                android:textColor="@color/colorPrimary"
+                app:edittextfont="Raleway-Bold.ttf" />
+
+            <LinearLayout
+                android:id="@+id/orderHistLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    android:id="@+id/book_reservation"
+                    style="@style/TextAppearance.AppCompat.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:drawableLeft="@drawable/drawable_grey_dot"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:paddingLeft="@dimen/_5sdp"
+                    android:paddingRight="@dimen/_5sdp"
+                    android:text="Pending Orders"
+                    app:edittextfont="Raleway-Regular.ttf" />
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    android:id="@+id/completeOrder"
+                    style="@style/TextAppearance.AppCompat.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:drawableLeft="@drawable/drawable_grey_dot"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:padding="@dimen/_5sdp"
+                    android:text="Completed Orders"
+
+                    app:edittextfont="Raleway-Regular.ttf" />
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    android:id="@+id/fav_order"
+                    style="@style/TextAppearance.AppCompat.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:drawableLeft="@drawable/drawable_grey_dot"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:paddingBottom="@dimen/_15sdp"
+                    android:paddingLeft="@dimen/_5sdp"
+                    android:paddingRight="@dimen/_5sdp"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:text="Favourite Orders"
+                    app:edittextfont="Raleway-Regular.ttf" />
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_1sdp"
+                android:background="@drawable/bootomline_green_back_trans"></View>
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/loyality_point"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:drawableLeft="@drawable/drawable_green_dot"
+                android:drawablePadding="@dimen/_5sdp"
+                android:gravity="center_vertical"
+                android:padding="@dimen/_10sdp"
+                android:text="Loyalty Program"
+
+                android:textColor="@color/colorPrimary"
+                app:edittextfont="Raleway-Bold.ttf" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_1sdp"
+                android:background="@drawable/bootomline_green_back_trans"></View>
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/voucher"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:drawableLeft="@drawable/drawable_green_dot"
+                android:drawablePadding="@dimen/_5sdp"
+                android:gravity="center_vertical"
+                android:padding="@dimen/_10sdp"
+                android:text="E-Gift Cards"
+                android:textColor="@color/colorPrimary"
+                app:edittextfont="Raleway-Bold.ttf" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_1sdp"
+
+                android:background="@drawable/bootomline_green_back_trans"></View>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+
+                >
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    android:id="@+id/feedback"
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/drawable_green_dot"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/_10sdp"
+                    android:text="Feedback &amp; Review"
+                    android:textColor="@color/colorPrimary"
+                    app:edittextfont="Raleway-Bold.ttf" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_1sdp"
+                android:background="@drawable/bootomline_green_back_trans"></View>
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/reportClosed"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:drawableLeft="@drawable/drawable_green_dot"
+                android:drawablePadding="@dimen/_5sdp"
+                android:gravity="center_vertical"
+                android:padding="@dimen/_10sdp"
+                android:text="Report a Closed Restaurant"
+                android:textColor="@color/colorPrimary"
+                android:visibility="gone"
+                app:edittextfont="Raleway-Bold.ttf" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_1sdp"
+                android:background="@drawable/bootomline_green_back_trans"
+                android:visibility="gone"></View>
+        </LinearLayout>
+    </ScrollView>
+
+    <include layout="@layout/layout_home_floating_button" />
+</FrameLayout>

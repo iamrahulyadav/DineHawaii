@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <RadioButton
+        android:id="@+id/chk_bussineId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_3sdp"
+        android:layout_marginLeft="@dimen/_3sdp"
+        android:backgroundTint="@color/blue"
+        android:text="values"
+        android:checked="true"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/_12sdp" />
+
+    </RadioGroup>
+
+</LinearLayout>
