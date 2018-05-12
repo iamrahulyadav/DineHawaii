@@ -44,8 +44,8 @@ import com.yberry.dinehawaii.Util.RecyclerItemClickListener;
 import com.yberry.dinehawaii.Util.Util;
 import com.yberry.dinehawaii.customview.CustomButton;
 import com.yberry.dinehawaii.customview.CustomTextView;
-import com.yberry.dinehawaii.vendor.Adapter.VendorListAdapter;
 import com.yberry.dinehawaii.vendor.Adapter.SelectVendorTypeAdapter;
+import com.yberry.dinehawaii.vendor.Adapter.VendorListAdapter;
 import com.yberry.dinehawaii.vendor.Model.VendorMasterData;
 
 import org.json.JSONArray;
@@ -59,7 +59,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class VendorListActivity extends AppCompatActivity implements View.OnClickListener {
-    private static final String TAG = "VendorListByCat";
+    private static final String TAG = "VendorListActivity";
     Context context;
     ArrayList<VendorMasterData> masterlist;
     ArrayList<VendorMasterData> sublist;
@@ -92,6 +92,8 @@ public class VendorListActivity extends AppCompatActivity implements View.OnClic
             getAllMasterVendor();
         } else
             Toast.makeText(context, getResources().getString(R.string.msg_no_internet), Toast.LENGTH_SHORT).show();
+//        getAllVendorsList();
+
     }
 
     private void setFloatingControls() {
@@ -202,7 +204,6 @@ public class VendorListActivity extends AppCompatActivity implements View.OnClic
     protected void onResume() {
         super.onResume();
         floatingActionMenu.close(true);
-        getAllVendorsList();
     }
 
     @Override
@@ -239,7 +240,7 @@ public class VendorListActivity extends AppCompatActivity implements View.OnClic
         });
         mLayoutManager = new LinearLayoutManager(context);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        SelectVendorTypeAdapter selectVendor = new SelectVendorTypeAdapter(context, sublist,"sub_category");
+        SelectVendorTypeAdapter selectVendor = new SelectVendorTypeAdapter(context, sublist, "sub_category");
         mRecyclerView.setAdapter(selectVendor);
         mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(context, mRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
@@ -379,6 +380,50 @@ public class VendorListActivity extends AppCompatActivity implements View.OnClic
 
     }
 
+    private void openVendorCatDialog() {
+        final Dialog mDialog;
+        mDialog = new Dialog(context);
+        mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        mDialog.setContentView(R.layout.vendor_list_dialog);
+        mDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(mDialog.getWindow().getAttributes());
+        lp.gravity = Gravity.CENTER;
+        mDialog.getWindow().setAttributes(lp);
+        LinearLayoutManager mLayoutManager;
+        CustomTextView dialog_title = (CustomTextView) mDialog.findViewById(R.id.title);
+        dialog_title.setText("Select Vendor Category");
+        mRecyclerView = (RecyclerView) mDialog.findViewById(R.id.offers_recycler);
+        ImageView cancel = (ImageView) mDialog.findViewById(R.id.btnCancel);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDialog.cancel();
+            }
+        });
+        mLayoutManager = new LinearLayoutManager(context);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        SelectVendorTypeAdapter selectVendor = new SelectVendorTypeAdapter(context, masterlist, "category");
+        mRecyclerView.setAdapter(selectVendor);
+        mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(context, mRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                VendorMasterData model = masterlist.get(position);
+                floatingActionMenu.close(true);
+                Intent intent = new Intent(context, BidItemListActivity.class);
+                intent.putExtra("vendor_id", model.getMaster_vendor_id());
+                startActivity(intent);
+                mDialog.cancel();
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+
+            }
+        }));
+        mDialog.show();
+    }
+
     public class FloatingButton {
         FrameLayout bckgroundDimmer;
         FloatingActionButton button1, button2, button3, button4;
@@ -401,7 +446,7 @@ public class VendorListActivity extends AppCompatActivity implements View.OnClic
                     if (sublist != null && !sublist.isEmpty())
                         openVendorsDialog();
                     else
-                        Snackbar.make(findViewById(android.R.id.content),"Vendors list not available",Snackbar.LENGTH_INDEFINITE).setAction("OK", new View.OnClickListener() {
+                        Snackbar.make(findViewById(android.R.id.content), "Vendors list not available", Snackbar.LENGTH_INDEFINITE).setAction("OK", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
 
@@ -415,7 +460,7 @@ public class VendorListActivity extends AppCompatActivity implements View.OnClic
                     if (masterlist != null && !masterlist.isEmpty())
                         openVendorCatDialog();
                     else
-                        Snackbar.make(findViewById(android.R.id.content),"Vendors category not available",Snackbar.LENGTH_INDEFINITE).setAction("OK", new View.OnClickListener() {
+                        Snackbar.make(findViewById(android.R.id.content), "Vendors category not available", Snackbar.LENGTH_INDEFINITE).setAction("OK", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
 
@@ -451,48 +496,5 @@ public class VendorListActivity extends AppCompatActivity implements View.OnClic
                 }
             });
         }
-    }
-    private void openVendorCatDialog() {
-        final Dialog mDialog;
-        mDialog = new Dialog(context);
-        mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        mDialog.setContentView(R.layout.vendor_list_dialog);
-        mDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.copyFrom(mDialog.getWindow().getAttributes());
-        lp.gravity = Gravity.CENTER;
-        mDialog.getWindow().setAttributes(lp);
-        LinearLayoutManager mLayoutManager;
-        CustomTextView dialog_title = (CustomTextView) mDialog.findViewById(R.id.title);
-        dialog_title.setText("Select Vendor Category");
-        mRecyclerView = (RecyclerView) mDialog.findViewById(R.id.offers_recycler);
-        ImageView cancel = (ImageView) mDialog.findViewById(R.id.btnCancel);
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mDialog.cancel();
-            }
-        });
-        mLayoutManager = new LinearLayoutManager(context);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        SelectVendorTypeAdapter selectVendor = new SelectVendorTypeAdapter(context, masterlist,"category");
-        mRecyclerView.setAdapter(selectVendor);
-        mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(context, mRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                VendorMasterData model = masterlist.get(position);
-                floatingActionMenu.close(true);
-                Intent intent = new Intent(context, BidItemListActivity.class);
-                intent.putExtra("vendor_id", model.getMaster_vendor_id());
-                startActivity(intent);
-                mDialog.cancel();
-            }
-
-            @Override
-            public void onItemLongClick(View view, int position) {
-
-            }
-        }));
-        mDialog.show();
     }
 }

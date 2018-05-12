@@ -98,16 +98,6 @@ public class BidItemListAdapter extends RecyclerView.Adapter<BidItemListAdapter.
                 }
                 showVendorDialog(tempList);
 
-
-               /* detailsModel.setItemId(model.getMaster_item_id());
-                detailsModel.setItemName(model.getMaster_item_name());
-                detailsModel.setItemPrice("0");
-                detailsModel.setItemTotalCost("0");
-                detailsModel.setItemQuan("1");
-                detailsModel.setVendorId(vendor_id);
-                new VendorOrderDBHandler(context).insertVendorOrderCartItem(detailsModel);
-                new VendorOrderDBHandler(context).insertVendorOrderCartItem(detailsModel);*/
-                //Toast.makeText(context, model.getMaster_item_name() + " Added", Toast.LENGTH_SHORT).show();
             }
         });
     }

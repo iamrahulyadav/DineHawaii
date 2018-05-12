@@ -72,7 +72,7 @@ public class VendorBidDBHandler extends SQLiteOpenHelper {
             boolean bb = db.insert(TABLE_CART_BID, null, values) > 0;
             Log.e(TAG, "insertVendorCartItem: inserted >> " + bb);
         } else {
-            boolean bb = db.update(TABLE_CART_BID, values, KEY_ITEMID + "=?", new String[]{model.getItem_id()}) > 0;
+            boolean bb = db.update(TABLE_CART_BID, values, KEY_ITEMID + "=? and " + KEY_VENDOR_ID + "=?", new String[]{model.getItem_id(), model.getVendor_id()}) > 0;
             Log.e(TAG, "insertVendorCartItem: updated >> " + bb);
         }
         db.close();

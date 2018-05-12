@@ -68,10 +68,7 @@ public class BidItemListActivity extends AppCompatActivity {
             category_id = getIntent().getStringExtra("vendor_id");
         init();
         setAdapter();
-        if (Util.isNetworkAvailable(context)) {
-            getAllVendorsFood();
-        } else
-            Toast.makeText(context, getResources().getString(R.string.msg_no_internet), Toast.LENGTH_SHORT).show();
+
     }
 
     private void setToolbar() {
@@ -128,6 +125,10 @@ public class BidItemListActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        if (Util.isNetworkAvailable(context)) {
+            getAllVendorsFood();
+        } else
+            Toast.makeText(context, getResources().getString(R.string.msg_no_internet), Toast.LENGTH_SHORT).show();
         if (tvCountBadge != null)
             getCounterData();
     }
