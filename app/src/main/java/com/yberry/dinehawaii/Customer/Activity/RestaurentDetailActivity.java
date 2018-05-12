@@ -583,11 +583,11 @@ public class RestaurentDetailActivity extends AppCompatActivity {
         business_id = listItem.getId();
         business_name = listItem.getBusinessName();
         healt_status = listItem.getHealthCardStstus();
-        average_price= listItem.getAvgPrice();
+        average_price = listItem.getAvgPrice();
 //        average_price = listItem.getAvgPrice().equals("") ? 0 : Double.parseDouble(listItem.getAvgPrice());
         AppPreferencesBuss.setAveragePrice(context, average_price);
         tvDeparment.setText("Department of health report card : " + healt_status);
-        tvAverage.setText("Average Price : $ " + average_price);
+        tvAverage.setText("Average Price Range : " + average_price);
     }
 
     private void setListener() {

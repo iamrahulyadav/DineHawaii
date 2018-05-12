@@ -39,6 +39,11 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.gson.JsonObject;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.yberry.dinehawaii.Customer.Adapter.CheckOutItemAdapter;
@@ -112,7 +117,9 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
     private String coupon_name, coupon_id = "0";
     private String minOrderValue = "0", takeOut_lead_time, catering_lead_days;
     private ArrayList<OrderItemsDetailsModel> cartItems;
-
+    private EditText daddress;
+    private String latitude = "0.0";
+    private String longitude = "0.0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,7 +149,6 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         mRecyclerView.setNestedScrollingEnabled(false);
         mRecyclerView.setAdapter(adapter);
     }
-
 
     private void getFoodPrepTime() {
         if (Util.isNetworkAvailable(context)) {
@@ -318,7 +324,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         giftcouponcode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (egiftModelsList.isEmpty() || egiftModelsList==null) {
+                if (egiftModelsList.isEmpty() || egiftModelsList == null) {
                     Toast.makeText(context, "No E-Gift Cards Available", Toast.LENGTH_SHORT).show();
                 } else {
                     offersDialog();
@@ -330,7 +336,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         couponCodeText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (couponsModelsList.isEmpty() || couponsModelsList==null) {
+                if (couponsModelsList.isEmpty() || couponsModelsList == null) {
                     Toast.makeText(context, "No Coupons Available", Toast.LENGTH_SHORT).show();
                 } else {
                     offersDialog();
@@ -340,7 +346,6 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
             }
         });
     }
-
 
     public void offersDialog() {
         final Dialog mDialog;
@@ -705,7 +710,6 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         });
     }
 
-
     private void proceedToPayment() {
         if (order_type.equalsIgnoreCase("0")) {
             Toast.makeText(context, "Select your order type", Toast.LENGTH_SHORT).show();
@@ -796,7 +800,6 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
             }
         });
     }
-
 
     private void removeEgiftMethod() {
         giftcouponcode.setText("");
@@ -1113,7 +1116,6 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         timePickerDialog.show();
     }
 
-
     @SuppressLint("RestrictedApi")
     public void updateHomeDeliveryInfo() {
         builder = new AlertDialog.Builder(context);
@@ -1127,7 +1129,13 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
 
         final EditText dname = (EditText) view.findViewById(R.id.dname);
         final EditText dcontact = (EditText) view.findViewById(R.id.dcontact);
-        final EditText daddress = (EditText) view.findViewById(R.id.daddress);
+        daddress = (EditText) view.findViewById(R.id.daddress);
+        daddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                findPlace();
+            }
+        });
         ImageView close = (ImageView) view.findViewById(R.id.close);
 
         dname.setText(AppPreferences.getCustomername(context));
@@ -1329,6 +1337,40 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         });
     }
 
+    public void findPlace() {
+        try {
+            Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY).build(CheckOutActivity.this);
+            startActivityForResult(intent, 1);
+        } catch (GooglePlayServicesRepairableException e) {
+            Log.e(TAG, "findPlace: Exception >> " + e.getMessage());
+            // TODO: Handle the error.
+        } catch (GooglePlayServicesNotAvailableException e) {
+            Log.e(TAG, "findPlace: Exception >> " + e.getMessage());
+            // TODO: Handle the error.
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                Place place = PlaceAutocomplete.getPlace(CheckOutActivity.this, data);
+                Log.e(TAG, "onActivityResult: Place >> " + place.getName() + place.getPhoneNumber());
+                Log.e(TAG, "onActivityResult: LatLng >> " + place.getLatLng());
+
+                daddress.setText(place.getName() + ", " + place.getAddress());
+                latitude = String.valueOf(place.getLatLng().latitude);
+                longitude = String.valueOf(place.getLatLng().longitude);
+                Log.e(TAG, "onActivityResult: latitude >> " + latitude);
+                Log.e(TAG, "onActivityResult: longitude >> " + longitude);
+            } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
+                Status status = PlaceAutocomplete.getStatus(CheckOutActivity.this, data);
+                Log.e(TAG, "onActivityResult: result_error >> " + status.getStatusMessage());
+            } else if (resultCode == RESULT_CANCELED) {
+            }
+        }
+    }
+
     public class InputFilterMinMax implements InputFilter {
 
         private double min, max;
@@ -1358,4 +1400,5 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
             return b > a ? c >= a && c <= b : c >= b && c <= a;
         }
     }
+
 }

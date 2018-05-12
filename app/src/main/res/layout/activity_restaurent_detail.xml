@@ -878,7 +878,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/line1"
-
                     android:padding="@dimen/_8sdp"
                     android:text="Average Price : $0.0"
                     android:textColor="@color/edit_text_color"

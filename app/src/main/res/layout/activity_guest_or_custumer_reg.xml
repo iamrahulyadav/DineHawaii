@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/background2">
 
     <include
@@ -11,46 +11,35 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_below="@+id/toolbar_bar"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar_bar">
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scrollbars="none">
 
             <RelativeLayout
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginRight="@dimen/_10sdp"
                 android:id="@+id/mainView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
                 android:orientation="vertical">
 
                 <com.yberry.dinehawaii.customview.CustomTextView
-                    android:id="@+id/textView6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_gravity="right"
-                    android:padding="@dimen/_5sdp"
-                    android:background="@color/transparent_full"
-                    android:text="Screen No:61"
-                    android:textColor="@color/screen_no_text"
-                    style="@style/TextAppearance.AppCompat.Subhead" />
-
-                <com.yberry.dinehawaii.customview.CustomTextView
                     android:id="@+id/tvRcivePass"
+                    style="@style/TextAppearance.AppCompat.Subhead"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:layout_below="@+id/textView6"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:drawableLeft="@drawable/drawable_green_dot"
                     android:drawablePadding="@dimen/_5sdp"
                     android:gravity="fill_vertical"
                     android:text="@string/howWouldYoulike"
                     android:textColor="@color/colorGreen"
-                    style="@style/TextAppearance.AppCompat.Subhead"
                     app:edittextfont="Raleway-Bold.ttf" />
 
                 <LinearLayout
@@ -64,29 +53,32 @@
                         android:id="@+id/mSelectPasscode"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
                         android:orientation="horizontal">
 
-                        <RadioButton
-                            android:layout_marginLeft="@dimen/_5sdp"
+                        <com.yberry.dinehawaii.customview.CustomRadioButton
                             android:id="@+id/mSmartph"
+                            style="@style/TextAppearance.AppCompat.Subhead"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="fill"
+                            android:layout_marginLeft="@dimen/_5sdp"
                             android:buttonTint="@color/green"
+                            android:gravity="fill"
                             android:text="@string/smartPhoneText"
-                            android:textColor="#fff"
-                            style="@style/TextAppearance.AppCompat.Subhead" />
+                            android:textColor="@color/offwhite"
+                            app:edittextfont="Raleway-Regular.ttf" />
 
-                        <RadioButton
+                        <com.yberry.dinehawaii.customview.CustomRadioButton
                             android:id="@+id/mEmail"
+                            style="@style/TextAppearance.AppCompat.Subhead"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_10sdp"
                             android:buttonTint="@color/green"
                             android:gravity="fill"
                             android:text="@string/emailId"
-                            android:textColor="#fff"
-                            android:layout_marginLeft="@dimen/_10sdp"
-                            style="@style/TextAppearance.AppCompat.Subhead" />
+                            android:textColor="@color/offwhite"
+                            app:edittextfont="Raleway-Regular.ttf" />
                     </RadioGroup>
 
                     <ImageView
@@ -109,14 +101,14 @@
 
                     <com.yberry.dinehawaii.customview.CustomTextView
                         android:id="@+id/tvverificationPass"
-                        android:drawableLeft="@drawable/drawable_green_dot"
+                        style="@style/TextAppearance.AppCompat.Subhead"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/drawable_green_dot"
                         android:drawablePadding="@dimen/_5sdp"
                         android:text="@string/verficatioPasscodeWillBe"
                         android:textColor="@color/colorGreen"
-                        style="@style/TextAppearance.AppCompat.Subhead"
-                        app:edittextfont="Raleway-Bold.ttf"/>
+                        app:edittextfont="Raleway-Bold.ttf" />
 
 
                 </LinearLayout>
@@ -131,19 +123,19 @@
 
                     <com.yberry.dinehawaii.customview.CustomEditText
                         android:id="@+id/mPasscode"
+                        style="@style/TextAppearance.AppCompat.Subhead"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
+                        android:layout_marginLeft="@dimen/_5sdp"
                         android:background="@null"
                         android:hint="@string/enterPass"
-                        android:textColor="@color/offwhite"
-                        android:padding="@dimen/_5sdp"
-                        android:layout_marginLeft="@dimen/_5sdp"
-                        android:singleLine="true"
                         android:imeOptions="actionNext"
+                        android:padding="@dimen/_5sdp"
+                        android:singleLine="true"
+                        android:textColor="@color/offwhite"
                         android:textColorHint="@color/offwhite"
-                        style="@style/TextAppearance.AppCompat.Subhead"
                         app:edittextfont="Raleway-Regular.ttf"></com.yberry.dinehawaii.customview.CustomEditText>
 
                     <ImageView
@@ -156,12 +148,11 @@
                 </LinearLayout>
 
 
-
                 <com.yberry.dinehawaii.customview.CustomTextView
                     android:id="@+id/tvPrefferLan"
+                    style="@style/TextAppearance.AppCompat.Subhead"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:layout_below="@+id/llnameLayout"
@@ -171,47 +162,47 @@
                     android:gravity="center"
                     android:text="@string/whatIsYourPreffered"
                     android:textColor="@color/colorGreen"
-                    style="@style/TextAppearance.AppCompat.Subhead"
+                    android:visibility="gone"
                     app:edittextfont="Raleway-Bold.ttf" />
 
 
                 <Spinner
-                    android:layout_marginLeft="@dimen/_5sdp"
-                    android:layout_marginRight="@dimen/_5sdp"
-                    android:layout_below="@+id/tvPrefferLan"
                     android:id="@+id/mSelectLanguage"
-                    android:visibility="gone"
+                    style="@style/TextAppearance.AppCompat.Subhead"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvPrefferLan"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
                     android:drawableRight="@drawable/ic_keyboard_arrow_down_black_16dp"
                     android:hint="@string/selectPrefferdLangu"
                     android:spinnerMode="dialog"
                     android:textColorHint="@color/offwhite"
                     android:textCursorDrawable="@color/green"
-                    style="@style/TextAppearance.AppCompat.Subhead"></Spinner>
+                    android:visibility="gone"></Spinner>
 
                 <ImageView
-                    android:layout_below="@+id/mSelectLanguage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
+                    android:layout_below="@+id/mSelectLanguage"
                     android:scaleType="fitXY"
-                    android:src="@drawable/lines" />
+                    android:src="@drawable/lines"
+                    android:visibility="gone" />
 
 
                 <com.yberry.dinehawaii.customview.CustomTextView
                     android:id="@+id/tvPassword"
+                    style="@style/TextAppearance.AppCompat.Subhead"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/mSelectLanguage"
 
+                    android:layout_below="@+id/mSelectLanguage"
                     android:layout_marginTop="@dimen/_15sdp"
                     android:drawableLeft="@drawable/drawable_green_dot"
                     android:drawablePadding="@dimen/_5sdp"
                     android:gravity="center"
                     android:text="@string/password"
                     android:textColor="@color/colorGreen"
-                    style="@style/TextAppearance.AppCompat.Subhead"
                     app:edittextfont="Raleway-Bold.ttf" />
 
                 <LinearLayout
@@ -224,20 +215,20 @@
 
                     <com.yberry.dinehawaii.customview.CustomEditText
                         android:id="@+id/mPassword"
-                        android:textColor="@color/offwhite"
+                        style="@style/TextAppearance.AppCompat.Subhead"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
+                        android:layout_marginLeft="@dimen/_5sdp"
                         android:background="@null"
                         android:hint="Enter Password"
-                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:imeOptions="actionNext"
                         android:inputType="textPassword"
                         android:padding="@dimen/_5sdp"
                         android:singleLine="true"
-                        android:imeOptions="actionNext"
+                        android:textColor="@color/offwhite"
                         android:textColorHint="@color/offwhite"
-                        style="@style/TextAppearance.AppCompat.Subhead"
                         app:edittextfont="Raleway-Regular.ttf"></com.yberry.dinehawaii.customview.CustomEditText>
 
                     <ImageView
@@ -251,6 +242,7 @@
 
                 <com.yberry.dinehawaii.customview.CustomTextView
                     android:id="@+id/confirPass"
+                    style="@style/TextAppearance.AppCompat.Subhead"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/llPassword"
@@ -260,7 +252,6 @@
                     android:gravity="center"
                     android:text="@string/confirmPass"
                     android:textColor="@color/colorGreen"
-                    style="@style/TextAppearance.AppCompat.Subhead"
                     app:edittextfont="Raleway-Bold.ttf" />
 
                 <LinearLayout
@@ -273,20 +264,20 @@
 
                     <com.yberry.dinehawaii.customview.CustomEditText
                         android:id="@+id/mConfirmPass"
+                        style="@style/TextAppearance.AppCompat.Subhead"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
+                        android:layout_marginLeft="@dimen/_5sdp"
                         android:background="@null"
                         android:hint="@string/confirmPass"
+                        android:imeOptions="actionDone"
                         android:inputType="textPassword"
                         android:padding="@dimen/_5sdp"
-                        android:textColor="@color/offwhite"
-                        android:layout_marginLeft="@dimen/_5sdp"
                         android:singleLine="true"
+                        android:textColor="@color/offwhite"
                         android:textColorHint="@color/offwhite"
-                        android:imeOptions="actionDone"
-                        style="@style/TextAppearance.AppCompat.Subhead"
                         app:edittextfont="Raleway-Regular.ttf"></com.yberry.dinehawaii.customview.CustomEditText>
 
                     <ImageView
@@ -299,36 +290,36 @@
 
 
                 <com.yberry.dinehawaii.customview.CustomCheckBox
-                    android:layout_marginTop="@dimen/_20sdp"
                     android:id="@+id/mTermCondition"
-                    android:layout_below="@id/llConfirmPass"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/ApproveTandC"
+                    android:layout_below="@id/llConfirmPass"
+                    android:layout_marginTop="@dimen/_20sdp"
                     android:backgroundTint="#fff"
-                    android:textColor="@color/offwhite"
-                    android:gravity="top"
                     android:buttonTint="@color/white"
-                    app:edittextfont="Raleway-Regular.ttf"/>
+                    android:gravity="top"
+                    android:text="@string/ApproveTandC"
+                    android:textColor="@color/offwhite"
+                    app:edittextfont="Raleway-Regular.ttf" />
 
                 <com.yberry.dinehawaii.customview.CustomButton
-                    android:layout_below="@+id/mTermCondition"
                     android:id="@+id/btnSubmit"
+                    style="@style/TextAppearance.AppCompat.Subhead"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_35sdp"
+                    android:layout_below="@+id/mTermCondition"
+                    android:layout_centerHorizontal="true"
                     android:layout_gravity="center"
                     android:layout_margin="@dimen/_20sdp"
-                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="@dimen/_5sdp"
                     android:background="@drawable/greenborder"
                     android:drawableLeft="@drawable/stickicon"
                     android:drawablePadding="@dimen/_5sdp"
                     android:paddingLeft="@dimen/_5sdp"
                     android:paddingRight="@dimen/_15sdp"
-                    android:layout_marginBottom="@dimen/_5sdp"
                     android:text="Submit"
                     android:textColor="#fff"
-                    style="@style/TextAppearance.AppCompat.Subhead"
-                    app:edittextfont="Raleway-Bold.ttf"/>
+                    app:edittextfont="Raleway-Bold.ttf" />
 
                 <!-- <Button
                      android:id="@+id/btnSubmit"

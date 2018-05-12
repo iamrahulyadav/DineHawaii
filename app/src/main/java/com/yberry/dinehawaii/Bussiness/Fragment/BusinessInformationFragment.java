@@ -69,6 +69,7 @@ public class BusinessInformationFragment extends Fragment {
     private String mail_country = "", mail_state = "", mail_city = "";
     private int streetType = 0;
     private String latitude = "0.0", longitude = "0.0";
+    private int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
 
     public BusinessInformationFragment() {
     }
@@ -196,7 +197,7 @@ public class BusinessInformationFragment extends Fragment {
     public void findPlace() {
         try {
             Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY).build(getActivity());
-            startActivityForResult(intent, 1);
+            startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
         } catch (GooglePlayServicesRepairableException e) {
             Log.e(TAG, "findPlace: Exception >> " + e.getMessage());
             // TODO: Handle the error.

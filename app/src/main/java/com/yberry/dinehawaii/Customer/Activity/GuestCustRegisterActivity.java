@@ -16,6 +16,11 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -55,6 +60,8 @@ public class GuestCustRegisterActivity extends AppCompatActivity implements View
     private Spinner mCountryCode;
     private CountryCodePicker ccp;
     private ImageView id_physical, smart, txt_id;
+    private String latitude = "0.0";
+    private String longitude = "0.0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,18 +107,47 @@ public class GuestCustRegisterActivity extends AppCompatActivity implements View
 
     }
 
+    public void findPlace() {
+        try {
+            Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY).build(GuestCustRegisterActivity.this);
+            startActivityForResult(intent, 1);
+        } catch (GooglePlayServicesRepairableException e) {
+            Log.e(TAG, "findPlace: Exception >> " + e.getMessage());
+            // TODO: Handle the error.
+        } catch (GooglePlayServicesNotAvailableException e) {
+            Log.e(TAG, "findPlace: Exception >> " + e.getMessage());
+            // TODO: Handle the error.
+        }
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                Place place = PlaceAutocomplete.getPlace(GuestCustRegisterActivity.this, data);
+                Log.e(TAG, "onActivityResult: Place >> " + place.getName() + place.getPhoneNumber());
+                Log.e(TAG, "onActivityResult: LatLng >> " + place.getLatLng());
+
+                mAddress.setText(place.getName() + ", " + place.getAddress());
+                latitude = String.valueOf(place.getLatLng().latitude);
+                longitude = String.valueOf(place.getLatLng().longitude);
+                Log.e(TAG, "onActivityResult: latitude >> " + latitude);
+                Log.e(TAG, "onActivityResult: longitude >> " + longitude);
+            } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
+                Status status = PlaceAutocomplete.getStatus(GuestCustRegisterActivity.this, data);
+                Log.e(TAG, "onActivityResult: result_error >> " + status.getStatusMessage());
+            } else if (resultCode == RESULT_CANCELED) {
+            }
+        }
+    }
+
     private void listener() {
         btnContinue.setOnClickListener(this);
         id_physical.setOnClickListener(this);
         smart.setOnClickListener(this);
         txt_id.setOnClickListener(this);
-
-       /* String[] countryCode = getResources().getStringArray(R.array.countryCode);
-
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(GuestCustRegisterActivity.this,android.R.layout.simple_spinner_item,countryCode);
-        //this.mCountryCode.setAdapter(arrayAdapter);
-*/
-
+        mAddress.setOnClickListener(this);
     }
 
     @Override
@@ -121,17 +157,16 @@ public class GuestCustRegisterActivity extends AppCompatActivity implements View
                 mFName.setError(fieldRequired);
             } else if (TextUtils.isEmpty(mLName.getText().toString())) {
                 mLName.setError(fieldRequired);
+            } else if (TextUtils.isEmpty(mMobile.getText().toString())) {
+                mMobile.setError(errorMessage);
             } else if (Function.isEmailNotValid(mEmailId)) {
                 mEmailId.setError(errorMessage);
-            }/*else if(mCountryCode.getSelectedItem().toString().equals("+0")){
-                    Snackbar.make(findViewById(android.R.id.content),"Select your country code",Snackbar.LENGTH_LONG).show();
-                }*/ /*else if (Function.isPhoneNumberNotValid(mMobile)) {
-                mMobile.setError(errorMessage);*/ else if (TextUtils.isEmpty(mAddress.getText().toString())) {
-                mAddress.setError(fieldRequired);
-            } else if (TextUtils.isEmpty(mCity.getText().toString())) {
-                mCity.setError(fieldRequired);
             } else if (TextUtils.isEmpty(mState.getText().toString())) {
                 mState.setError(fieldRequired);
+            } else if (TextUtils.isEmpty(mCity.getText().toString())) {
+                mCity.setError(fieldRequired);
+            } else if (TextUtils.isEmpty(mAddress.getText().toString())) {
+                mAddress.setError(fieldRequired);
             } else {
                 if (!TextUtils.isEmpty(promoCode.getText().toString())) {
                     promoText = promoCode.getText().toString();
@@ -146,18 +181,15 @@ public class GuestCustRegisterActivity extends AppCompatActivity implements View
                 jsonObject.addProperty(AppConstants.KEY_ADDRESS, mAddress.getText().toString());
                 jsonObject.addProperty(AppConstants.KEY_CITY, mCity.getText().toString());
                 jsonObject.addProperty(AppConstants.KEY_STATE, mState.getText().toString());
+                jsonObject.addProperty("cust_lat", latitude);
+                jsonObject.addProperty("cust_long", longitude);
                 jsonObject.addProperty("promo_code", promoText);
                 registrationTask(jsonObject);
-                Log.v(TAG, "Json Registration object Request :-" + jsonObject);
+                Log.e(TAG, "Registeration Request >> " + jsonObject);
             }
 
-        } else if (v.getId() == R.id.id_physical) {
-            //Function.bottomToolTipDialogBox(null, GuestCustRegisterActivity.this, "This package is already selected by you !!!" /*+ "\n Package Details : " + datalist.getPackage_detail()*/, id_physical, null);
-        } else if (v.getId() == R.id.smart) {
-            // Function.bottomToolTipDialogBox(null, GuestCustRegisterActivity.this, "This package is already selected by you !!!" /*+ "\n Package Details : " + datalist.getPackage_detail()*/, smart, null);
-        } else if (v.getId() == R.id.txt_id) {
-            // Function.bottomToolTipDialogBox(null, GuestCustRegisterActivity.this, "This package is already selected by you !!!" /*+ "\n Package Details : " + datalist.getPackage_detail()*/, txt_id, null);
-
+        } else if (v.getId() == R.id.mAddress) {
+            findPlace();
         }
 
 
@@ -203,7 +235,7 @@ public class GuestCustRegisterActivity extends AppCompatActivity implements View
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 Log.d("Response: request 1", call.request().toString());
-                Log.v(TAG, "Json Registration object Response :-" + response);
+                Log.v(TAG, "Registration Response >> " + response);
                 // Log.d("Response: Registraion 1", response.body().toString());
                 JsonObject jsonObject = response.body();
 
@@ -221,11 +253,8 @@ public class GuestCustRegisterActivity extends AppCompatActivity implements View
                 } else {
                     JsonArray jsonArray = jsonObject.getAsJsonArray("result");
                     JsonObject result = jsonArray.get(0).getAsJsonObject();
-
                     Log.v(TAG, "Else in register guest" + result.get("msg").getAsString());
-
                     Snackbar.make(findViewById(android.R.id.content), result.get("msg").getAsString(), Snackbar.LENGTH_LONG).show();
-
                 }
 
                 dialogManager.stopProcessDialog();
