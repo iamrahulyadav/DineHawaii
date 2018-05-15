@@ -27,7 +27,6 @@ import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 import com.yberry.dinehawaii.Bussiness.Activity.EditMenuItemActivity;
-import com.yberry.dinehawaii.Bussiness.Activity.ImportFoodTypesActivity;
 import com.yberry.dinehawaii.Bussiness.Activity.SelectFoodTypeActivity;
 import com.yberry.dinehawaii.Bussiness.Adapter.MenuItemsAdapter;
 import com.yberry.dinehawaii.Model.CheckBoxPositionModel;
@@ -50,7 +49,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -63,36 +61,22 @@ import static android.app.Activity.RESULT_OK;
  */
 public class ManageMenuFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = "ManageMenuFragment";
-    private RecyclerView mRecyclerView;
-    private LinearLayoutManager mLayoutManager;
+    public static ArrayList<OrderItemsDetailsModel> itemslist = new ArrayList<OrderItemsDetailsModel>();
     Context context;
     CustomButton addfood, addfoodtype;
     MenuItemsAdapter menuItemsAdapter;
-    public static ArrayList<OrderItemsDetailsModel> itemslist = new ArrayList<OrderItemsDetailsModel>();
-    private String food_type_id_list = "0", listValueNew, listName;
     ArrayList<CheckBoxPositionModel> listFoodService;
-    private CustomTextView text_food;
     Dialog popup;
     RelativeLayout foodLayout;
-    class MyBroadcast extends BroadcastReceiver{
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (food_type_id_list.equalsIgnoreCase("0") || food_type_id_list.equalsIgnoreCase("")) {
-                text_food.setText("");
-                itemslist.clear();
-            } else {
-                text_food.setText(listName);
-                getMenuItems();
-            }
-        }
-    }
     FragmentIntraction intraction;
+    private RecyclerView mRecyclerView;
+    private LinearLayoutManager mLayoutManager;
+    private String food_type_id_list = "0", listValueNew, listName;
+    private CustomTextView text_food;
 
     public ManageMenuFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -104,7 +88,7 @@ public class ManageMenuFragment extends Fragment implements View.OnClickListener
         if (intraction != null) {
             intraction.actionbarsetTitle("Manage Menu");
         }
-        foodLayout = (RelativeLayout)view.findViewById(R.id.foodLayout);
+        foodLayout = (RelativeLayout) view.findViewById(R.id.foodLayout);
         checkDuties();
         itemslist.clear();
         text_food = (CustomTextView) view.findViewById(R.id.spinSelectFoodType);
@@ -115,7 +99,7 @@ public class ManageMenuFragment extends Fragment implements View.OnClickListener
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setHasFixedSize(true);
-        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(new MyBroadcast(),new IntentFilter("menuItemRefresh"));
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(new MyBroadcast(), new IntentFilter("menuItemRefresh"));
         mRecyclerView.setAdapter(menuItemsAdapter);
         menuItemsAdapter = new MenuItemsAdapter(context, itemslist);
         mRecyclerView.setAdapter(menuItemsAdapter);
@@ -129,12 +113,12 @@ public class ManageMenuFragment extends Fragment implements View.OnClickListener
 
     private void checkDuties() {
         String alottedDuty = AppPreferencesBuss.getAllottedDuties(getActivity());
-        if (!TextUtils.isEmpty(alottedDuty)){
-            if (alottedDuty.contains("4") && alottedDuty.contains("5")){
+        if (!TextUtils.isEmpty(alottedDuty)) {
+            if (alottedDuty.contains("4") && alottedDuty.contains("5")) {
                 foodLayout.setVisibility(View.VISIBLE);
-            }else if (alottedDuty.contains("5")){
+            } else if (alottedDuty.contains("5")) {
                 foodLayout.setVisibility(View.GONE);
-            }else {
+            } else {
                 foodLayout.setVisibility(View.VISIBLE);
             }
         }
@@ -157,11 +141,10 @@ public class ManageMenuFragment extends Fragment implements View.OnClickListener
         intraction = null;
     }
 
-
     @Override
     public void onResume() {
         super.onResume();
-        if (food_type_id_list.equalsIgnoreCase("0")||food_type_id_list.equalsIgnoreCase("")) {
+        if (food_type_id_list.equalsIgnoreCase("0") || food_type_id_list.equalsIgnoreCase("")) {
             text_food.setText("");
             itemslist.clear();
         } else {
@@ -261,7 +244,6 @@ public class ManageMenuFragment extends Fragment implements View.OnClickListener
         });
     }
 
-
     private void getMenuItems() {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.BUSSINES_USER_BUSINESSAPI.ALL_FOOD_MODIFY_CATEGORIES);
@@ -271,7 +253,6 @@ public class ManageMenuFragment extends Fragment implements View.OnClickListener
         Log.e(TAG, "get menu json" + jsonObject.toString());
         getMenuItemsApi(jsonObject);
     }
-
 
     private void getMenuItemsApi(JsonObject jsonObject) {
         final ProgressHUD progressHD = ProgressHUD.show(getActivity(), "Please wait...", true, false, new DialogInterface.OnCancelListener() {
@@ -343,7 +324,7 @@ public class ManageMenuFragment extends Fragment implements View.OnClickListener
         switch (v.getId()) {
             case R.id.spinSelectFoodType:
                 food_type_id_list = "0";
-                listName="";
+                listName = "";
                 text_food.setText("");
                 Intent intent1 = new Intent(getContext(), SelectFoodTypeActivity.class);
                 startActivityForResult(intent1, 19);
@@ -360,7 +341,6 @@ public class ManageMenuFragment extends Fragment implements View.OnClickListener
                 break;
         }
     }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -395,8 +375,22 @@ public class ManageMenuFragment extends Fragment implements View.OnClickListener
                 }
             }
         } else {
-            food_type_id_list="0";
+            food_type_id_list = "0";
             Log.e(TAG, "error on activity result");
+        }
+    }
+
+    class MyBroadcast extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (food_type_id_list.equalsIgnoreCase("0") || food_type_id_list.equalsIgnoreCase("")) {
+                text_food.setText("");
+                itemslist.clear();
+            } else {
+                text_food.setText(listName);
+                getMenuItems();
+            }
         }
     }
 

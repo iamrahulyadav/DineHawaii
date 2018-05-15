@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -45,7 +46,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -384,9 +384,14 @@ public class ChienesAdapter extends RecyclerView.Adapter<ChienesAdapter.MyViewHo
                     } else if (status.equalsIgnoreCase("400")) {
                         getCheck.clear();
                         JSONArray error = object.getJSONArray("result");
-                        SweetAlertDialog alertDialog = new SweetAlertDialog(mContext, SweetAlertDialog.CUSTOM_IMAGE_TYPE);
-                        alertDialog.setCustomImage(mContext.getResources().getDrawable(R.drawable.ic_launcher)).setContentText(error.getJSONObject(0).getString("msg")).setConfirmText("Ok").show();
-                        Log.e(TAG + "<<<< 400 Error Customiattion >>>", error.getJSONObject(0).getString("msg"));
+                        AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
+                        alertDialog.setMessage(error.getJSONObject(0).getString("msg"));
+                        alertDialog.setIcon(R.drawable.ic_launcher_app);
+                        alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        });
+                        alertDialog.show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
