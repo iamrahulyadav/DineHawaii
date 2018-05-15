@@ -18,12 +18,10 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -37,7 +35,6 @@ import com.yberry.dinehawaii.Util.AppPreferencesBuss;
 import com.yberry.dinehawaii.Util.ProgressHUD;
 import com.yberry.dinehawaii.customview.CustomButton;
 import com.yberry.dinehawaii.customview.CustomTextView;
-import com.yberry.dinehawaii.database.DatabaseHandler;
 import com.yberry.dinehawaii.database.VendorOrderDBHandler;
 import com.yberry.dinehawaii.vendor.Adapter.VendorCartItemAdapter;
 import com.yberry.dinehawaii.vendor.Model.VendorOrderItemsDetailsModel;
@@ -48,7 +45,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -213,6 +209,7 @@ public class VendorCartActivity extends AppCompatActivity implements View.OnClic
 
         placeOrderTask(jsonObject);
     }
+
     private void placeOrderTask(JsonObject jsonObject) {
         final ProgressHUD progressHD = ProgressHUD.show(context, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
             @Override
@@ -239,12 +236,10 @@ public class VendorCartActivity extends AppCompatActivity implements View.OnClic
                         JSONObject object = jsonArray.getJSONObject(0);
                         mydb = new VendorOrderDBHandler(context);
                         mydb.deleteVendorCartTtem(vendor_id);
-                        showThankYouAlert("Your order placed successfully and the order id is "+object.getString("order_id"));
+                        showThankYouAlert("Your order placed successfully and the order id is " + object.getString("order_id"));
                     } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
                         JSONArray jsonArray = jsonObject.getJSONArray("result");
                         JSONObject object = jsonArray.getJSONObject(0);
-                        showAlertDialog();
-                        //Toast.makeText(context, object.getString("msg"), Toast.LENGTH_LONG).show();
                         Log.e("onResponse", object.getString("msg"));
                     }
                 } catch (JSONException e) {
@@ -257,8 +252,6 @@ public class VendorCartActivity extends AppCompatActivity implements View.OnClic
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Log.e("ERROR", "Error On failure :- " + Log.getStackTraceString(t));
                 progressHD.dismiss();
-                showAlertDialog();
-                //progressHD.dismiss();
             }
         });
     }
@@ -278,21 +271,6 @@ public class VendorCartActivity extends AppCompatActivity implements View.OnClic
         th_alert.show();
     }
 
-    private void showAlertDialog() {
-        new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
-                .setTitleText("Order Didn't Placed!")
-                .setConfirmText("Retry")
-                .showCancelButton(true)
-                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                    @Override
-                    public void onClick(SweetAlertDialog sweetAlertDialog) {
-                        placeOrderData();
-                        sweetAlertDialog.cancel();
-                    }
-                })
-                .show();
-
-    }
 
     @Override
     protected void onDestroy() {

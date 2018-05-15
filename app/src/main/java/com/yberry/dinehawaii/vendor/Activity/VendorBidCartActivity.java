@@ -34,8 +34,6 @@ import com.yberry.dinehawaii.vendor.Model.VendorBidItemModel;
 
 import java.util.ArrayList;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
-
 public class VendorBidCartActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "VendorBidCartActivity";
     CustomTextView total_amount, noItems;
@@ -194,21 +192,6 @@ public class VendorBidCartActivity extends AppCompatActivity implements View.OnC
         th_alert.show();
     }
 
-    private void showAlertDialog() {
-        new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
-                .setTitleText("Order Didn't Placed!")
-                .setConfirmText("Retry")
-                .showCancelButton(true)
-                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                    @Override
-                    public void onClick(SweetAlertDialog sweetAlertDialog) {
-//                        placeOrderData();
-                        sweetAlertDialog.cancel();
-                    }
-                })
-                .show();
-
-    }
 
     @Override
     protected void onDestroy() {

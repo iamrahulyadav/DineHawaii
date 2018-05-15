@@ -4,12 +4,10 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -38,29 +36,27 @@ import org.json.JSONObject;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 
 public class PaymentActivity extends AppCompatActivity {
+    public static final int PAYPAL_REQUEST_CODE = 123;
     private static final String TAG = "PaymentActivity";
+    private static PayPalConfiguration config = new PayPalConfiguration()
+            // Start with mock environment.  When ready, switch to sandbox (ENVIRONMENT_SANDBOX)
+            // or live (ENVIRONMENT_PRODUCTION)
+            .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
+            .clientId(AppConstants.PAYPAL_CLIENT_ID);
     TextView makePaymentButton;
     CheckBox paypalCheckBox;
     ArrayList<OrderItemsDetailsModel> cartItems;
     JsonObject contactDetails, otherDetObj;
     JsonArray orderDetails;
     OrderItemsDetailsModel detailsModel;
-    public static final int PAYPAL_REQUEST_CODE = 123;
-
-    private String paymentAmount = "0",coupon_code,coupon_id="0",coupon_amount="0";
     ArrayList<OrderItemsDetailsModel> arrayList;
-    private static PayPalConfiguration config = new PayPalConfiguration()
-            // Start with mock environment.  When ready, switch to sandbox (ENVIRONMENT_SANDBOX)
-            // or live (ENVIRONMENT_PRODUCTION)
-            .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
-            .clientId(AppConstants.PAYPAL_CLIENT_ID);
+    private String paymentAmount = "0", coupon_code, coupon_id = "0", coupon_amount = "0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,9 +70,9 @@ public class PaymentActivity extends AppCompatActivity {
 
         startService(intent);
 
-        if (!getIntent().getExtras().getString("grandtotal").equalsIgnoreCase("")){
+        if (!getIntent().getExtras().getString("grandtotal").equalsIgnoreCase("")) {
             paymentAmount = getIntent().getExtras().getString("grandtotal");
-            arrayList= getIntent().getParcelableArrayListExtra("place_order");
+            arrayList = getIntent().getParcelableArrayListExtra("place_order");
             coupon_code = getIntent().getStringExtra("couponCode");
             coupon_id = getIntent().getStringExtra("couponId");
             coupon_amount = getIntent().getStringExtra("couponAmount");
@@ -93,15 +89,15 @@ public class PaymentActivity extends AppCompatActivity {
 
     private void initViews() {
 
-        paypalCheckBox =  (CheckBox) findViewById(R.id.paypalCheckBox);
-        makePaymentButton =(TextView)findViewById(R.id.makePayment);
+        paypalCheckBox = (CheckBox) findViewById(R.id.paypalCheckBox);
+        makePaymentButton = (TextView) findViewById(R.id.makePayment);
 //        makePaymentButton.setEnabled(false);
         makePaymentButton.setBackgroundColor(getResources().getColor(R.color.offwhite));
 
         paypalCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
+                if (isChecked) {
                     makePaymentButton.setEnabled(true);
                     makePaymentButton.setBackgroundColor(getResources().getColor(R.color.colorGreen));
                 } else {
@@ -115,7 +111,7 @@ public class PaymentActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (! paypalCheckBox.isChecked()){
+                if (!paypalCheckBox.isChecked()) {
 
                     Log.v(TAG, "Inside check box not checked");
                     Toast.makeText(getApplicationContext(), "Please check the above check box !!!! ", Toast.LENGTH_SHORT).show();
@@ -149,17 +145,17 @@ public class PaymentActivity extends AppCompatActivity {
         });
 
     }
-    
+
 
     private void getPayment(String paymentAmount) {
-        Log.d("hellooo",paymentAmount);
+        Log.d("hellooo", paymentAmount);
         //Getting the amountToBePaid from editText
 
 //        paymentAmount = price;
         Log.v(TAG, "~~~~~~~~~~~~~~~~~~~~ Song Price outside iff :- " + paymentAmount);
 
         //Creating a paypalpayment
-        PayPalPayment payment = new PayPalPayment(new BigDecimal(paymentAmount+"0"), "USD", "Purchase Fee\n",
+        PayPalPayment payment = new PayPalPayment(new BigDecimal(paymentAmount + "0"), "USD", "Purchase Fee\n",
                 PayPalPayment.PAYMENT_INTENT_SALE);
         //Creating Paypal Payment activity intent
         Intent intent = new Intent(PaymentActivity.this, com.paypal.android.sdk.payments.PaymentActivity.class);
@@ -229,11 +225,11 @@ public class PaymentActivity extends AppCompatActivity {
 
 //                        showAlertDialog(paymentAmount);
 
-                        Intent in=new Intent(PaymentActivity.this,ThankYouScreenActivity.class);
-                        in.putExtra("arrayList",arrayList);
-                        in.putExtra("couponCode",coupon_code);
-                        in.putExtra("couponId",coupon_id);
-                        in.putExtra("couponAmount",coupon_amount);
+                        Intent in = new Intent(PaymentActivity.this, ThankYouScreenActivity.class);
+                        in.putExtra("arrayList", arrayList);
+                        in.putExtra("couponCode", coupon_code);
+                        in.putExtra("couponId", coupon_id);
+                        in.putExtra("couponAmount", coupon_amount);
                         startActivity(in);
                         finish();
 
@@ -253,13 +249,7 @@ public class PaymentActivity extends AppCompatActivity {
 
     }
 
-    private void showAlertDialog(String paymentAmount) {
 
-        new SweetAlertDialog(PaymentActivity.this)
-                .setTitleText("Payment of " + paymentAmount + " done Successfully !!!")
-                .show();
-
-    }
     private void sendRequestSubmit() {
 
         detailsModel = new OrderItemsDetailsModel();
@@ -273,10 +263,10 @@ public class PaymentActivity extends AppCompatActivity {
         contactDetails.addProperty("delivery_mobile", AppPreferences.getCustomerMobile(PaymentActivity.this));
         contactDetails.addProperty("adderess_save_status", "1");
         contactDetails.addProperty("paymentType", "paypal");
-        contactDetails.addProperty("txn_id",AppPreferences.getTranctionId(PaymentActivity.this));
-        contactDetails.addProperty("payment_gross",detailsModel.getItemTotalCost());
-        contactDetails.addProperty("currency_code","91");
-        contactDetails.addProperty("payment_status",AppPreferences.getPaymentApproved(PaymentActivity.this));
+        contactDetails.addProperty("txn_id", AppPreferences.getTranctionId(PaymentActivity.this));
+        contactDetails.addProperty("payment_gross", detailsModel.getItemTotalCost());
+        contactDetails.addProperty("currency_code", "91");
+        contactDetails.addProperty("payment_status", AppPreferences.getPaymentApproved(PaymentActivity.this));
 //        contactDetails.addProperty("e_gift_balance",detailsModel.getE);
         contactDetails.addProperty("e_gift_id", "paypal");
         contactDetails.addProperty("loyalty_points", "paypal");
@@ -300,7 +290,7 @@ public class PaymentActivity extends AppCompatActivity {
         orderDetails = new JsonArray();
         orderDetails.add(otherDetObj);
 
-        contactDetails.add("orderDetails",orderDetails);
+        contactDetails.add("orderDetails", orderDetails);
         Log.v(TAG, "OrderDetails Array object :-" + orderDetails);
 
         JsonObject jsonObject = new JsonObject();

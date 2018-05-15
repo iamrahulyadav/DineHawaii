@@ -42,7 +42,6 @@ import org.json.JSONObject;
 
 import java.math.BigDecimal;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -406,20 +405,23 @@ public class SendEGiftVoucher extends Fragment {
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Log.e(TAG, "error :- " + Log.getStackTraceString(t));
-                new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE)
-                        .setTitleText("Server not responding..")
-                        .setConfirmText("Retry")
-                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                            @Override
-                            public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                amount = amountEditText.getText().toString().trim();
-                                message = messageEditText.getText().toString().trim();
-                                submitEGift(amount, message);
-                                sweetAlertDialog.cancel();
-                            }
-                        })
-                        .show();
-                // Toast.makeText(getActivity().getApplicationContext(), "Server not responding..", Toast.LENGTH_SHORT).show();
+                android.support.v7.app.AlertDialog.Builder alertDialog = new android.support.v7.app.AlertDialog.Builder(getActivity());
+                alertDialog.setMessage("Server not responding..");
+                alertDialog.setIcon(R.drawable.ic_launcher_app);
+                alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        amount = amountEditText.getText().toString().trim();
+                        message = messageEditText.getText().toString().trim();
+                        submitEGift(amount, message);
+                    }
+                });
+
+                alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                alertDialog.show();
                 progressHD.dismiss();
             }
         });
