@@ -204,25 +204,6 @@ public class RestaurantListFragment extends Fragment {
 
             }
         }).show();
-        /*new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE)
-                .setTitleText("Something went wrong")
-                .setCancelText("Go Back")
-                .setConfirmText("Retry")
-                .showCancelButton(true)
-                .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                    @Override
-                    public void onClick(SweetAlertDialog sDialog) {
-                        sDialog.cancel();
-                    }
-                })
-                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                    @Override
-                    public void onClick(SweetAlertDialog sweetAlertDialog) {
-                        new getRestFromServer().execute();
-                        sweetAlertDialog.cancel();
-                    }
-                })
-                .show();*/
     }
 
     @Override

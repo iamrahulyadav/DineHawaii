@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -15,6 +16,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.JsonObject;
+import com.yberry.dinehawaii.Customer.Fragment.ChienesFragment;
+import com.yberry.dinehawaii.Model.ListItem;
 import com.yberry.dinehawaii.Model.MenuDetail;
 import com.yberry.dinehawaii.Model.OrderItemsDetailsModel;
 import com.yberry.dinehawaii.R;
@@ -22,9 +25,7 @@ import com.yberry.dinehawaii.RetrofitClasses.ApiClient;
 import com.yberry.dinehawaii.RetrofitClasses.MyApiEndpointInterface;
 import com.yberry.dinehawaii.Util.AppConstants;
 import com.yberry.dinehawaii.Util.ProgressHUD;
-import com.yberry.dinehawaii.Model.ListItem;
 import com.yberry.dinehawaii.adapter.PlaceAnOrderAdapter;
-import com.yberry.dinehawaii.Customer.Fragment.ChienesFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,7 +33,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -86,24 +86,21 @@ public class PlaceAnOrder extends AppCompatActivity {
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                Log.e(TAG, "Response GET ALL MENU >> "+ response.body().toString());
+                Log.e(TAG, "Response GET ALL MENU >> " + response.body().toString());
                 String s = response.body().toString();
                 MenuDetail menuDetail;
                 try {
                     JSONObject jsonObject = new JSONObject(s);
-                    if (jsonObject.getString("status").equalsIgnoreCase("200"))
-                    {
+                    if (jsonObject.getString("status").equalsIgnoreCase("200")) {
                         JSONArray main_menus = jsonObject.getJSONArray("main_menus");
-                        for (int m = 0; m < main_menus.length(); m++)
-                        {
+                        for (int m = 0; m < main_menus.length(); m++) {
                             String mainMenuNames = main_menus.getString(m);
                             Log.e(TAG, "Json Menu :- " + mainMenuNames);
                             arrayListMainMenu.add(mainMenuNames);
                             Log.e(TAG + "<<<<ARRAY>>>", "" + arrayListMainMenu.toString());
                             JSONArray jsonArray_Details = jsonObject.getJSONArray("details");
                             Log.e(TAG + "<<<< JSON ARRAY DETAILS >>>", "" + jsonArray_Details.length());
-                            for (int i = 0; i < jsonArray_Details.length(); i++)
-                            {
+                            for (int i = 0; i < jsonArray_Details.length(); i++) {
                                 JSONObject jsonObject1 = jsonArray_Details.getJSONObject(i);
                                 JSONArray jsonArray_yogurt = jsonObject1.getJSONArray(mainMenuNames);
                                 Log.e(TAG, "of details :- " + jsonArray_yogurt.toString());
@@ -149,15 +146,16 @@ public class PlaceAnOrder extends AppCompatActivity {
                         JSONArray resultError = jsonObject.getJSONArray("result");
                         JSONObject object = resultError.getJSONObject(0);
                         if (object.getString("msg").equalsIgnoreCase("Some Error Occured")) {
-                            SweetAlertDialog pDialog = new SweetAlertDialog(PlaceAnOrder.this, SweetAlertDialog.ERROR_TYPE);
-                            pDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                @Override
-                                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            AlertDialog.Builder alertDialog = new AlertDialog.Builder(PlaceAnOrder.this);
+                            alertDialog.setMessage("NO RECORDS FOUND");
+                            alertDialog.setIcon(R.drawable.ic_launcher_app);
+                            alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
                                     finish();
                                 }
                             });
-                            pDialog.setTitleText("NO RECORDS");
-                            pDialog.show();
+
+                            alertDialog.show();
                         }
                     }
                 } catch (JSONException e) {
@@ -165,6 +163,7 @@ public class PlaceAnOrder extends AppCompatActivity {
                 }
                 progressHD.dismiss();
             }
+
             @SuppressLint("LongLogTag")
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {

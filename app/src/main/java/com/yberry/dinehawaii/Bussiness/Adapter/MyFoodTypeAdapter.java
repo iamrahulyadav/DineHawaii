@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
@@ -39,7 +40,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -103,26 +103,21 @@ public class MyFoodTypeAdapter extends RecyclerView.Adapter<MyFoodTypeAdapter.Vi
                 @Override
                 public void onClick(View v) {
                     del_category_id = optionData.getId();
-                    new SweetAlertDialog(mCotnext, SweetAlertDialog.WARNING_TYPE)
-                            .setTitleText("Are you sure?")
-                            .setContentText("Won't be able to recover this !")
-                            .setCancelText("No,cancel!")
-                            .setConfirmText("Yes,delete it!")
-                            .showCancelButton(true)
-                            .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                @Override
-                                public void onClick(SweetAlertDialog sDialog) {
-                                    sDialog.cancel();
-                                }
-                            })
-                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                @Override
-                                public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                    deleteFoodType(del_category_id);
-                                    sweetAlertDialog.cancel();
-                                }
-                            })
-                            .show();
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(mCotnext);
+                    alertDialog.setMessage("Are you sure you want to delete this?");
+                    alertDialog.setIcon(R.drawable.ic_launcher_app);
+                    alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            deleteFoodType(del_category_id);
+                        }
+                    });
+
+                    alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    alertDialog.show();
                     Log.d(TAG, "delete items id :- " + optionData.getId());
                 }
             });

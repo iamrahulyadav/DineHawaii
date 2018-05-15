@@ -52,7 +52,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -102,18 +101,17 @@ public class BusinessNaviDrawer extends AppCompatActivity implements NavigationV
         mUserImage = (CircleImageView) headerView.findViewById(R.id.mUserImage);
 
         if (!AppPreferencesBuss.getfirstname(BusinessNaviDrawer.this).equalsIgnoreCase("")) {
-            customerName.setText(AppPreferencesBuss.getfirstname(BusinessNaviDrawer.this)+"\n"
-            +AppPreferencesBuss.getEmpPosition(BusinessNaviDrawer.this));
+            customerName.setText(AppPreferencesBuss.getfirstname(BusinessNaviDrawer.this) + "\n"
+                    + AppPreferencesBuss.getEmpPosition(BusinessNaviDrawer.this));
         } else
             customerName.setText("No Name");
         setProfileImage();
         Log.e(TAG, "onCreate: BusinessID >> " + AppPreferencesBuss.getBussiId(this));
         Log.e(TAG, "onCreate: UserID >> " + AppPreferencesBuss.getUserId(this));
 
-        if(AppPreferences.getUserType(this).equalsIgnoreCase(AppConstants.BUSS_LOGIN_TYPE.BUSINESS_USER)) {
+        if (AppPreferences.getUserType(this).equalsIgnoreCase(AppConstants.BUSS_LOGIN_TYPE.BUSINESS_USER)) {
             checkPaymentStatus();
-        }
-        else if(AppPreferences.getUserType(this).equalsIgnoreCase(AppConstants.BUSS_LOGIN_TYPE.BUSSINESS_LOCAL_USER)) {
+        } else if (AppPreferences.getUserType(this).equalsIgnoreCase(AppConstants.BUSS_LOGIN_TYPE.BUSSINESS_LOCAL_USER)) {
             checkLoggedInUser();
             callToDefault();
         }
@@ -288,12 +286,13 @@ public class BusinessNaviDrawer extends AppCompatActivity implements NavigationV
         }
         return true;
     }
+
     private void logoutData() {
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("method",AppConstants.GENERALAPI.LOGOUT);
+        jsonObject.addProperty("method", AppConstants.GENERALAPI.LOGOUT);
         jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(BusinessNaviDrawer.this));
-        jsonObject.addProperty("user_type",AppPreferencesBuss.getUsertypeid(BusinessNaviDrawer.this));
-        Log.e(TAG+"json",jsonObject.toString());
+        jsonObject.addProperty("user_type", AppPreferencesBuss.getUsertypeid(BusinessNaviDrawer.this));
+        Log.e(TAG + "json", jsonObject.toString());
         logoutApi(jsonObject);
     }
 
@@ -323,14 +322,13 @@ public class BusinessNaviDrawer extends AppCompatActivity implements NavigationV
                         AppPreferencesBuss.clearPreference(BusinessNaviDrawer.this);
                         AppPreferences.clearPreference(BusinessNaviDrawer.this);
                         AppPreferencesBuss.clearPreference(BusinessNaviDrawer.this);
-                       Toast.makeText(BusinessNaviDrawer.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BusinessNaviDrawer.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(BusinessNaviDrawer.this, HomeScreenActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                         finish();
-                    }
-                    else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
+                    } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
                         JSONArray jsonArray = jsonObject.getJSONArray("result");
                         JSONObject object = jsonArray.getJSONObject(0);
                         Toast.makeText(BusinessNaviDrawer.this, object.getString("msg"), Toast.LENGTH_SHORT).show();
@@ -427,26 +425,21 @@ public class BusinessNaviDrawer extends AppCompatActivity implements NavigationV
                 intent.putExtra("title", "BUSINESS INFORMATION");
                 startActivity(intent);
             } else {
-                //Toast.makeText(BusinessNaviDrawer.this, "Something went wrong try again later", Toast.LENGTH_SHORT).show();
-                new SweetAlertDialog(BusinessNaviDrawer.this, SweetAlertDialog.WARNING_TYPE)
-                        .setTitleText("Try Again")
-                        .setCancelText("No")
-                        .setConfirmText("Yes")
-                        .showCancelButton(true)
-                        .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                            @Override
-                            public void onClick(SweetAlertDialog sDialog) {
-                                sDialog.cancel();
-                            }
-                        })
-                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                            @Override
-                            public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                new CheckPaymentTask().execute();
-                                sweetAlertDialog.cancel();
-                            }
-                        })
-                        .show();
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(BusinessNaviDrawer.this);
+                alertDialog.setMessage("Some Error Occurred. Try Again");
+                alertDialog.setIcon(R.drawable.ic_launcher_app);
+                alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        new CheckPaymentTask().execute();
+                    }
+                });
+
+                alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                alertDialog.show();
             }
         }
     }

@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -41,7 +42,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -49,14 +49,6 @@ import retrofit2.Response;
 
 public class SelectFoodTypeActivity extends AppCompatActivity {
 
-    class MyRefereshReceiver extends BroadcastReceiver{
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            foodlist.clear();
-            foodlistdata();
-        }
-    }
     private static final String TAG = "SelectFoodTypeActivity";
     public static List<CheckBoxPositionModel> foodlist = new ArrayList<>();
     RecyclerView recyclerView;
@@ -71,10 +63,11 @@ public class SelectFoodTypeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_food_type);
         setToolbar();
-        LocalBroadcastManager.getInstance(SelectFoodTypeActivity.this).registerReceiver(new MyRefereshReceiver(),new IntentFilter("refreshActivity"));
+        LocalBroadcastManager.getInstance(SelectFoodTypeActivity.this).registerReceiver(new MyRefereshReceiver(), new IntentFilter("refreshActivity"));
         init();
         foodlistdata();
     }
+
     private void foodlistdata() {
         if (Util.isNetworkAvailable(SelectFoodTypeActivity.this)) {
             JsonObject jsonObject = new JsonObject();
@@ -135,20 +128,24 @@ public class SelectFoodTypeActivity extends AppCompatActivity {
                         recyclerView.setAdapter(ad);
                         ad.notifyDataSetChanged();
                     } else if (jsonObject.getString("status").equals("400")) {
-                        new SweetAlertDialog(SelectFoodTypeActivity.this, SweetAlertDialog.WARNING_TYPE)
-                                .setTitleText("Import Food Types")
-                                .setContentText("No Food Types found.")
-                                .setConfirmText("Yes,Import it!")
-                                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                    @Override
-                                    public void onClick(SweetAlertDialog sDialog) {
-                                        sDialog.dismissWithAnimation();
-                                        context.startActivity(new Intent(SelectFoodTypeActivity.this, ImportFoodTypesActivity.class));
-                                        finish();
-                                    }
-                                })
-                                .show();
-                    }else{
+                        AlertDialog.Builder alertDialog = new AlertDialog.Builder(SelectFoodTypeActivity.this);
+                        alertDialog.setMessage("No Food Types found.");
+                        alertDialog.setIcon(R.drawable.ic_launcher_app);
+                        alertDialog.setPositiveButton("Yes,Import it!", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                context.startActivity(new Intent(SelectFoodTypeActivity.this, ImportFoodTypesActivity.class));
+                                finish();
+                            }
+                        });
+
+                        alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                        alertDialog.show();
+
+                    } else {
                         Toast.makeText(SelectFoodTypeActivity.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
@@ -237,5 +234,14 @@ public class SelectFoodTypeActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    class MyRefereshReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            foodlist.clear();
+            foodlistdata();
+        }
     }
 }
