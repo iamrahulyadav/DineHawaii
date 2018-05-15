@@ -62,7 +62,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class CustomerNaviDrawer extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, FragmentIntraction {
-    public static CircleImageView mUserImage;
+    public static ImageView mUserImage;
     ImageView headLogo;
     View headerView;
     GPSTracker gpsTracker;
@@ -96,7 +96,7 @@ public class CustomerNaviDrawer extends AppCompatActivity implements NavigationV
         headerView = navigationView.getHeaderView(0);
         customerName = (TextView) headerView.findViewById(R.id.customerName);
         customerName.setText(AppPreferences.getCustomername(CustomerNaviDrawer.this));
-        mUserImage = (CircleImageView) headerView.findViewById(R.id.mUserImage);
+        mUserImage = (ImageView) headerView.findViewById(R.id.mUserImage);
         LocalBroadcastManager.getInstance(this).registerReceiver(new MyReceiver(), new IntentFilter("updateprofile"));
 
         if (!AppPreferences.getCustomerPic(CustomerNaviDrawer.this).equalsIgnoreCase(""))

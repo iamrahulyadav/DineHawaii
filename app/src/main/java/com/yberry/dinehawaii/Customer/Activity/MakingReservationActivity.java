@@ -476,17 +476,22 @@ public class MakingReservationActivity extends AppCompatActivity implements Time
     }
 
     private void showThankYouAlert() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(MakingReservationActivity.this);
+        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(MakingReservationActivity.this);
         builder.setTitle("Thank You!");
+        builder.setCancelable(false);
         builder.setMessage("Your reservation has done successfully.");
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        ImageView img = new ImageView(MakingReservationActivity.this);
+        img.setImageResource(R.drawable.thanks);
+        builder.setView(img);
+        builder.setPositiveButton("GO TO HOME", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                startActivity(new Intent(MakingReservationActivity.this, CustomerNaviDrawer.class));
-                finishAffinity();
+                Intent intent = new Intent(getApplicationContext(), CustomerNaviDrawer.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
             }
         });
-
         builder.show();
     }
 

@@ -61,7 +61,7 @@ import retrofit2.Response;
 public class BusinessNaviDrawer extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, FragmentIntraction {
 
     private static final String TAG = "BusinessNaviDrawer";
-    public static CircleImageView mUserImage;
+    public static ImageView mUserImage;
     public TextView headText;
     ImageView headLogo;
     NavigationView navigationView;
@@ -98,7 +98,7 @@ public class BusinessNaviDrawer extends AppCompatActivity implements NavigationV
         customerName = (CustomTextView) headerView.findViewById(R.id.customerName);
         Log.e("imge04", AppPreferencesBuss.getProfileImage(BusinessNaviDrawer.this));
         Log.e("nameof person", AppPreferencesBuss.getfirstname(BusinessNaviDrawer.this));
-        mUserImage = (CircleImageView) headerView.findViewById(R.id.mUserImage);
+        mUserImage = (ImageView) headerView.findViewById(R.id.mUserImage);
 
         if (!AppPreferencesBuss.getfirstname(BusinessNaviDrawer.this).equalsIgnoreCase("")) {
             customerName.setText(AppPreferencesBuss.getfirstname(BusinessNaviDrawer.this) + "\n"

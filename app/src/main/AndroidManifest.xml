@@ -344,10 +344,6 @@
         </intent-filter>
 
         <activity
-            android:name=".Customer.Activity.ThanksReservationActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity
             android:name=".Customer.Activity.CustomerResturantReviewAcivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />

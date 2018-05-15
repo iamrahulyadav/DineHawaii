@@ -34,6 +34,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -78,7 +79,7 @@ public class CustomerMyProfile extends Fragment implements View.OnClickListener 
     private File file;
     private Uri file_uri;
     private String tempPath, imageString="", name, email_id, phone, image;
-    CircleImageView userImage;
+    ImageView userImage;
     EditText fullname, email, mobileno;
     View rootView;
     TextView txt_userNmae;
@@ -159,7 +160,7 @@ public class CustomerMyProfile extends Fragment implements View.OnClickListener 
 
         mobileno = (CustomEditText) rootView.findViewById(R.id.mobileno);
         mobileno.setText(AppPreferences.getCustomerMobile(getActivity()));
-        userImage = (CircleImageView) rootView.findViewById(R.id.img_circle);
+        userImage = (ImageView) rootView.findViewById(R.id.img_circle);
 
 
         if (!AppPreferences.getCustomerPic(getActivity()).equalsIgnoreCase(""))
