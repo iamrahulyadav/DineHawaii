@@ -105,7 +105,6 @@ public class MyFoodTypeAdapter extends RecyclerView.Adapter<MyFoodTypeAdapter.Vi
                     del_category_id = optionData.getId();
                     AlertDialog.Builder alertDialog = new AlertDialog.Builder(mCotnext);
                     alertDialog.setMessage("Are you sure you want to delete this?");
-                    alertDialog.setIcon(R.drawable.ic_launcher_app);
                     alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             deleteFoodType(del_category_id);

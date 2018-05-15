@@ -172,7 +172,6 @@ public class CustomerNaviDrawer extends AppCompatActivity implements NavigationV
 //            getSupportFragmentManager().popBackStack();
             //exitApplication();
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(CustomerNaviDrawer.this);
-            alertDialog.setIcon(R.drawable.ic_launcher_app);
             alertDialog.setMessage("Do you want to exit?");
             alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
@@ -266,7 +265,6 @@ public class CustomerNaviDrawer extends AppCompatActivity implements NavigationV
             fragment = new SettingFragment();*/
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(CustomerNaviDrawer.this);
             alertDialog.setMessage("Do you want to logout?");
-            alertDialog.setIcon(R.drawable.ic_launcher_app);
             alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     logoutData();

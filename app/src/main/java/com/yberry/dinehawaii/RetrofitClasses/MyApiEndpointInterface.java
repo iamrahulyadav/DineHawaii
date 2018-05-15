@@ -52,7 +52,7 @@ public interface MyApiEndpointInterface {
     @POST(AppConstants.ENDPOINT.BUSINESS_FOOD_VENDOR_API)
     Call<JsonObject> business_food_vendor_api(@Body JsonObject jsonObject);
 
-    @POST(AppConstants.ENDPOINT.VENDOR_LIST_API)
+    @POST(AppConstants.ENDPOINT.N_BUSINESS_NEW_API)
     Call<JsonObject> business_area_api(@Body JsonObject jsonObject);
 
     @POST(AppConstants.ENDPOINT.BUSINESS_ADD_POS_API)

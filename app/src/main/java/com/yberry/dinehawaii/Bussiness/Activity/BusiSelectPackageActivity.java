@@ -171,7 +171,6 @@ public class BusiSelectPackageActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (isRegistration) {
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(BusiSelectPackageActivity.this);
-            alertDialog.setIcon(R.drawable.ic_launcher_app);
             alertDialog.setMessage("Are you sure to cancel the registration process?");
             alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {

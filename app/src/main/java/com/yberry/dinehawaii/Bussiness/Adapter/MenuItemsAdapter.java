@@ -143,7 +143,6 @@ public class MenuItemsAdapter extends RecyclerView.Adapter<MenuItemsAdapter.View
                 Log.e(TAG, "model" + model.getCat_id());
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
                 alertDialog.setMessage("Are you sure?");
-                alertDialog.setIcon(R.drawable.ic_launcher_app);
                 alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         deleteFoodMenuItem(delete_item_id);

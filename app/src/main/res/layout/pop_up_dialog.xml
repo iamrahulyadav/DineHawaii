@@ -1,35 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
-    android:orientation="vertical">
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="horizontal"
+    app:cardCornerRadius="@dimen/_5sdp">
 
     <LinearLayout
+        android:id="@+id/mainRelativeFood"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
         <RelativeLayout
-            android:id="@+id/title_bar"
+            android:id="@+id/toolbar_bar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:background="@color/green">
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary">
 
             <com.yberry.dinehawaii.customview.CustomTextView
-                android:id="@+id/textView"
+                android:id="@+id/foodTitle"
                 style="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:padding="@dimen/_10sdp"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:padding="@dimen/_5sdp"
                 android:text="Delivery Details"
                 android:textAllCaps="true"
                 android:textColor="@color/white"
                 app:edittextfont="Raleway-Bold.ttf" />
-
 
             <ImageView
                 android:id="@+id/close"
@@ -38,152 +41,136 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:padding="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:padding="@dimen/_5sdp"
                 android:src="@drawable/ic_close_white_24dp" />
+
+
         </RelativeLayout>
 
-
-        <EditText
-            android:id="@+id/dname"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/_15sdp"
-            android:layout_marginRight="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:background="@drawable/edit_text_line"
-            android:fontFamily="arial"
-            android:hint="Name"
-            android:inputType="textCapSentences|textAutoCorrect"
-            android:padding="@dimen/_10sdp"
-            android:singleLine="true"
-            android:textColor="@color/gray"
-            android:textSize="@dimen/_10sdp" />
+            android:layout_below="@id/toolbar_bar"
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/dcontact"
+            <com.yberry.dinehawaii.customview.CustomTextView
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_9sdp"
+
+                android:drawablePadding="@dimen/_5sdp"
+                android:gravity="center"
+                android:text="Customer Name"
+                android:textColor="@color/colorGreen"
+                app:edittextfont="Raleway-Bold.ttf" />
+
+            <com.yberry.dinehawaii.customview.CustomEditText
+                android:id="@+id/dname"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/bgrectangle"
+                android:hint="Customer Name"
+                android:padding="@dimen/_5sdp"
+                android:singleLine="true"
+                app:edittextfont="Raleway-Regular.ttf" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/_15sdp"
-            android:layout_marginRight="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:background="@drawable/edit_text_line"
-            android:fontFamily="arial"
-            android:hint="Contact No."
-            android:inputType="number"
-            android:maxLength="10"
-            android:padding="@dimen/_10sdp"
-            android:singleLine="true"
-            android:textColor="@color/gray"
-            android:textSize="@dimen/_10sdp" />
+            android:layout_below="@id/toolbar_bar"
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/daddress"
+            <com.yberry.dinehawaii.customview.CustomTextView
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_9sdp"
+
+                android:drawablePadding="@dimen/_5sdp"
+                android:gravity="center"
+                android:text="Contact No."
+                android:textColor="@color/colorGreen"
+                app:edittextfont="Raleway-Bold.ttf" />
+
+            <com.yberry.dinehawaii.customview.CustomEditText
+                android:id="@+id/dcontact"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/bgrectangle"
+                android:hint="Contact No."
+                android:padding="@dimen/_5sdp"
+                android:singleLine="true"
+                app:edittextfont="Raleway-Regular.ttf" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/_15sdp"
-            android:layout_marginRight="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:background="@drawable/edit_text_line"
-            android:focusableInTouchMode="false"
-            android:fontFamily="arial"
-            android:hint="Address"
-            android:inputType="textPostalAddress"
-            android:padding="@dimen/_10sdp"
-            android:singleLine="true"
-            android:textColor="@color/gray"
-            android:textSize="@dimen/_10sdp" />
+            android:layout_below="@id/toolbar_bar"
+            android:orientation="vertical">
 
-        <!-- <EditText
+            <com.yberry.dinehawaii.customview.CustomTextView
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_9sdp"
 
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:layout_marginLeft="@dimen/_15sdp"
-             android:singleLine="true"
-             android:inputType="text"
-             android:layout_marginRight="@dimen/_15sdp"
-             android:layout_marginTop="@dimen/_8sdp"
-             android:fontFamily="arial"
-             android:background="@drawable/edit_text_line"
-             android:padding="@dimen/_10sdp"
-             android:hint="City"
-             android:textSize="@dimen/_10sdp"
-             android:textColor="@color/gray"
-             android:id="@+id/pcity" />
+                android:drawablePadding="@dimen/_5sdp"
+                android:gravity="center"
+                android:text="Delivery Address"
+                android:textColor="@color/colorGreen"
+                app:edittextfont="Raleway-Bold.ttf" />
 
+            <com.yberry.dinehawaii.customview.CustomEditText
+                android:id="@+id/daddress"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/bgrectangle"
+                android:focusableInTouchMode="false"
+                android:hint="Select Address"
+                android:maxLines="3"
+                
+                android:padding="@dimen/_5sdp"
+                app:edittextfont="Raleway-Regular.ttf" />
 
-         <EditText
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:layout_marginLeft="@dimen/_15sdp"
-             android:singleLine="true"
-             android:layout_marginRight="@dimen/_15sdp"
-             android:layout_marginTop="@dimen/_8sdp"
-             android:fontFamily="arial"
-             android:background="@drawable/edit_text_line"
-             android:padding="@dimen/_10sdp"
-             android:hint="State"
-             android:inputType="text"
-             android:textSize="@dimen/_10sdp"
-             android:textColor="@color/gray"
-             android:id="@+id/pstate" />
+        </LinearLayout>
 
-
-         <EditText
-             android:layout_width="match_parent"
-             android:inputType="number"
-             android:layout_height="wrap_content"
-             android:layout_marginLeft="@dimen/_15sdp"
-             android:singleLine="true"
-             android:layout_marginRight="@dimen/_15sdp"
-             android:layout_marginTop="@dimen/_8sdp"
-             android:fontFamily="arial"
-             android:background="@drawable/edit_text_line"
-             android:padding="@dimen/_10sdp"
-             android:hint="Zip-code"
-             android:textSize="@dimen/_10sdp"
-             android:textColor="@color/gray"
-             android:id="@+id/pzipcode" />
-
-
-         <EditText
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:layout_marginLeft="@dimen/_15sdp"
-             android:singleLine="true"
-             android:layout_marginRight="@dimen/_15sdp"
-             android:layout_marginTop="@dimen/_8sdp"
-             android:fontFamily="arial"
-             android:background="@drawable/edit_text_line"
-             android:padding="@dimen/_10sdp"
-             android:hint="Country"
-             android:inputType="text"
-             android:textSize="@dimen/_10sdp"
-             android:textColor="@color/gray"
-             android:id="@+id/pcountry" />
- -->
-
-
-        <Button
+        <com.yberry.dinehawaii.customview.CustomButton
             android:id="@+id/dsubmit"
+            style="@style/TextAppearance.AppCompat.Subhead"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_10sdp"
-            android:layout_marginLeft="@dimen/_15sdp"
-            android:layout_marginRight="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_margin="@dimen/_10sdp"
             android:background="@drawable/button_border_green"
             android:gravity="center"
             android:padding="@dimen/_10sdp"
-            android:text="Submit"
+            android:text="Confirm"
             android:textAllCaps="true"
             android:textColor="@color/white"
             android:textSize="@dimen/_10sdp"
-            android:textStyle="bold" />
-
-
+            app:edittextfont="@string/raleway_bold" />
     </LinearLayout>
+</android.support.v7.widget.CardView>
 
-
-</LinearLayout>
 
 

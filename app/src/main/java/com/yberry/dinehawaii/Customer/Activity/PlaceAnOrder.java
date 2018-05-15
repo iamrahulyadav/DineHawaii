@@ -148,7 +148,6 @@ public class PlaceAnOrder extends AppCompatActivity {
                         if (object.getString("msg").equalsIgnoreCase("Some Error Occured")) {
                             AlertDialog.Builder alertDialog = new AlertDialog.Builder(PlaceAnOrder.this);
                             alertDialog.setMessage("NO RECORDS FOUND");
-                            alertDialog.setIcon(R.drawable.ic_launcher_app);
                             alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     finish();

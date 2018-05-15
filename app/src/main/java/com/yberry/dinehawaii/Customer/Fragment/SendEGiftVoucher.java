@@ -407,7 +407,6 @@ public class SendEGiftVoucher extends Fragment {
                 Log.e(TAG, "error :- " + Log.getStackTraceString(t));
                 android.support.v7.app.AlertDialog.Builder alertDialog = new android.support.v7.app.AlertDialog.Builder(getActivity());
                 alertDialog.setMessage("Server not responding..");
-                alertDialog.setIcon(R.drawable.ic_launcher_app);
                 alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         amount = amountEditText.getText().toString().trim();

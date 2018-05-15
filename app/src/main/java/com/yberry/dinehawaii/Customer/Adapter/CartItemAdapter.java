@@ -166,7 +166,6 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.MyView
     private void openDialogToDeletePosition(final OrderItemsDetailsModel itemsDetailsModel, final int pos) {
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         builder.setCancelable(true);
-        builder.setIcon(R.drawable.ic_launcher_app);
         builder.setMessage("Do you want to remove this item from list");
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override

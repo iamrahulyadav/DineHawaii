@@ -213,7 +213,6 @@ public class BusinessNaviDrawer extends AppCompatActivity implements NavigationV
 
     private void showExitAlert() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(BusinessNaviDrawer.this);
-        alertDialog.setIcon(R.drawable.ic_launcher_app);
         alertDialog.setMessage("Do you want to exit?");
         alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
@@ -261,7 +260,6 @@ public class BusinessNaviDrawer extends AppCompatActivity implements NavigationV
         } else if (id == R.id.nav_logout) {
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(BusinessNaviDrawer.this);
             alertDialog.setMessage("Do you want to logout?");
-            alertDialog.setIcon(R.drawable.ic_launcher_app);
             alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     logoutData();
@@ -427,7 +425,6 @@ public class BusinessNaviDrawer extends AppCompatActivity implements NavigationV
             } else {
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(BusinessNaviDrawer.this);
                 alertDialog.setMessage("Some Error Occurred. Try Again");
-                alertDialog.setIcon(R.drawable.ic_launcher_app);
                 alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         new CheckPaymentTask().execute();

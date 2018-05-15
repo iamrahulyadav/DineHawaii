@@ -43,9 +43,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
-import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.paypal.android.sdk.payments.PayPalConfiguration;
@@ -126,6 +125,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
     ArrayList<CustomerModel> couponsModelsList = new ArrayList<>();
     RadioButton rd_loylty, rd_egift, rd_coupon;
     RecyclerView mRecyclerView;
+    int PLACE_PICKER_REQUEST = 1;
     private String coupon_type;
     private String coupon_name, coupon_id = "0";
     private String minOrderValue = "0", takeOut_lead_time, catering_lead_days;
@@ -744,6 +744,11 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
             startActivity(intent);
 
             finish();*/
+            AppPreferencesBuss.setfinalLoylityPoints(context, loyality_apply.getText().toString());
+            AppPreferences.setDeliveryName(context, custName.getText().toString());
+            AppPreferencesBuss.setGrandTotal(context, totalPrice.getText().toString());
+            AppPreferences.setPrepTime(context, food_prepration_time.getText().toString());
+            setRadioValue(context, radioValue);
             showPaymentDialog();
         }
     }
@@ -1353,8 +1358,8 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
 
     public void findPlace() {
         try {
-            Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY).build(CheckOutActivity.this);
-            startActivityForResult(intent, 1);
+            PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+            startActivityForResult(builder.build(this), PLACE_PICKER_REQUEST);
         } catch (GooglePlayServicesRepairableException e) {
             Log.e(TAG, "findPlace: Exception >> " + e.getMessage());
             // TODO: Handle the error.
@@ -1423,7 +1428,16 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1) {
+        if (requestCode == PLACE_PICKER_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                Place place = PlacePicker.getPlace(data, this);
+                daddress.setText(String.valueOf(place.getAddress()));
+                latitude = String.valueOf(place.getLatLng().latitude);
+                longitude = String.valueOf(place.getLatLng().longitude);
+                Log.e(TAG, "onActivityResult: latitude >> " + latitude);
+                Log.e(TAG, "onActivityResult: longitude >> " + longitude);
+            }
+        }/* else if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
                 Place place = PlaceAutocomplete.getPlace(CheckOutActivity.this, data);
                 Log.e(TAG, "onActivityResult: Place >> " + place.getName() + place.getPhoneNumber());
@@ -1439,7 +1453,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                 Log.e(TAG, "onActivityResult: result_error >> " + status.getStatusMessage());
             } else if (resultCode == RESULT_CANCELED) {
             }
-        } else if (requestCode == PAYPAL_REQUEST_CODE) {
+        }*/ else if (requestCode == PAYPAL_REQUEST_CODE) {
             //If the result is OK i.e. user has not canceled the payment
             /*
             {
@@ -1632,7 +1646,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
     private void showErrorDialog(String msg) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(CheckOutActivity.this);
         alertDialog.setMessage(msg);
-        alertDialog.setIcon(R.drawable.ic_launcher_app);
+        alertDialog.setCancelable(false);
         alertDialog.setPositiveButton("RETRY", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 placeOrder();

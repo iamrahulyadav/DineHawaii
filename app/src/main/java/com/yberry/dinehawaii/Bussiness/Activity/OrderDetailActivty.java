@@ -374,13 +374,6 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
         }
     }
 
-    private void vendorChildinfo() {
-        if (llVendor.getVisibility() == View.VISIBLE) {
-            llVendor.setVisibility(View.GONE);
-        } else {
-            llVendor.setVisibility(View.VISIBLE);
-        }
-    }
 
     private void itemChildinfo() {
         if (llItems.getVisibility() == View.VISIBLE) {

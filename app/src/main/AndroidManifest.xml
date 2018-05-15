@@ -242,20 +242,12 @@
             android:name=".Customer.Activity.CartActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity
-            android:name=".Customer.Activity.ThankYouScreenActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
         <!--
             <activity
             android:name=".activity.MakingReservationNextOne"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         -->
-        <activity
-            android:name=".activity.PaymentActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".Customer.Activity.EGiftApproved"
             android:screenOrientation="portrait"

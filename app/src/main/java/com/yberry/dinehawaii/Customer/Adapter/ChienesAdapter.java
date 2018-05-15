@@ -386,7 +386,6 @@ public class ChienesAdapter extends RecyclerView.Adapter<ChienesAdapter.MyViewHo
                         JSONArray error = object.getJSONArray("result");
                         AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
                         alertDialog.setMessage(error.getJSONObject(0).getString("msg"));
-                        alertDialog.setIcon(R.drawable.ic_launcher_app);
                         alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                             }

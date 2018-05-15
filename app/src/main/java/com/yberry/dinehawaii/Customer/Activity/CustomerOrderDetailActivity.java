@@ -6,7 +6,6 @@ import android.content.res.ColorStateList;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -51,28 +50,26 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.yberry.dinehawaii.Util.Util.context;
 
-public class CustomerOrderDetailActivity extends AppCompatActivity implements View.OnClickListener {
+public class CustomerOrderDetailActivity extends AppCompatActivity {
     private static final String TAG = "OrderDetailCust";
     public ItemAdapter itemAdapter;
     String order_id;
     LinearLayout llBasic, llItems, llDelivery, llOthers, llloyalty, lleamt, llecode, llccode, llcamt;
     ArrayList<OrderDetailItemData> itemList;
+    View view;
     private ImageView back;
     private RecyclerView mrecycler;
     private LinearLayoutManager mLayoutManager;
     private CustomTextView tvOrderId, tvDateTime, tvOrderStatus, tvOrderType, tvCustomerName, tvContactNo, tvDeliveryName, tvDeliveryAddress, tvPickupName, tvPickUpTime, tvTotalAmount,
             tvloyaltypt, tvegiftamt, tvcouponamt, tvegiftcode, tvcouponcode;
     private CardView cardTakeout, cardDelivery;
-    private FloatingActionButton fabPending, fabInProgress, fabCompleted;
+    private FloatingActionButton fabPending, fabInProgress, fabCompleted, fabPrepared;
     private ProgressBar orderProgress;
     private FloatingActionButton fabDelPick;
     private String status = "";
     private String order_type = "";
     private String new_status = "";
-
     private CustomTextView tvFabText;
-    View view;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,43 +142,18 @@ public class CustomerOrderDetailActivity extends AppCompatActivity implements Vi
 
         fabPending = (FloatingActionButton) findViewById(R.id.fabPending);
         fabInProgress = (FloatingActionButton) findViewById(R.id.fabInProgress);
+        fabPrepared = (FloatingActionButton) findViewById(R.id.fabPrepared);
         fabCompleted = (FloatingActionButton) findViewById(R.id.fabCompleted);
         fabDelPick = (FloatingActionButton) findViewById(R.id.fabDelPick);
 
         fabPending.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
         fabInProgress.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.fab_gray)));
+        fabPrepared.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.fab_gray)));
         fabCompleted.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.fab_gray)));
         fabDelPick.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.fab_gray)));
 
         orderProgress.setProgress(0);
 
-        fabPending.setOnClickListener(this);
-        fabInProgress.setOnClickListener(this);
-        fabCompleted.setOnClickListener(this);
-        fabDelPick.setOnClickListener(this);
-
-    }
-
-    private void showDialog() {
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(CustomerOrderDetailActivity.this);
-        builder.setTitle("CHANGE ORDER STATUS");
-        builder.setMessage("ALERT : If you change the order status, a notification will be sent to customer. This can't be undone. Do you want to change status?");
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                new CompleteOrderTask().execute();
-
-            }
-        });
-
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-        builder.show();
     }
 
     private void setAdapter() {
@@ -194,15 +166,12 @@ public class CustomerOrderDetailActivity extends AppCompatActivity implements Vi
         mrecycler.setAdapter(itemAdapter);
     }
 
-    @Override
-    public void onClick(View view) {
-    }
-
     private void setCompleted() {
         ProgressBarAnimation mProgressAnimation = new ProgressBarAnimation(orderProgress, 700);
         mProgressAnimation.setProgress(300);
         fabPending.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
         fabInProgress.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
+        fabPrepared.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
         fabDelPick.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
         fabCompleted.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
     }
@@ -212,6 +181,7 @@ public class CustomerOrderDetailActivity extends AppCompatActivity implements Vi
         mProgressAnimation.setProgress(200);
         fabPending.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
         fabInProgress.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
+        fabPrepared.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
         fabDelPick.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
         fabCompleted.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.fab_gray)));
     }
@@ -221,51 +191,21 @@ public class CustomerOrderDetailActivity extends AppCompatActivity implements Vi
         mProgressAnimation.setProgress(100);
         fabPending.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
         fabInProgress.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
+        fabPrepared.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.fab_gray)));
         fabDelPick.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.fab_gray)));
         fabCompleted.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.fab_gray)));
     }
 
-    private void setPending() {
+    private void setPrepared() {
         ProgressBarAnimation mProgressAnimation = new ProgressBarAnimation(orderProgress, 700);
-        mProgressAnimation.setProgress(0);
+        mProgressAnimation.setProgress(200);
         fabPending.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
-        fabInProgress.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.fab_gray)));
+        fabInProgress.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
+        fabPrepared.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
         fabDelPick.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.fab_gray)));
         fabCompleted.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.fab_gray)));
     }
 
-
-    private void basicChildInfo() {
-        if (llBasic.getVisibility() == View.VISIBLE) {
-            llBasic.setVisibility(View.GONE);
-        } else {
-            llBasic.setVisibility(View.VISIBLE);
-        }
-    }
-
-    private void itemChildinfo() {
-        if (llItems.getVisibility() == View.VISIBLE) {
-            llItems.setVisibility(View.GONE);
-        } else {
-            llItems.setVisibility(View.VISIBLE);
-        }
-    }
-
-    private void deliveryChildInfo() {
-        if (llDelivery.getVisibility() == View.VISIBLE) {
-            llDelivery.setVisibility(View.GONE);
-        } else {
-            llDelivery.setVisibility(View.VISIBLE);
-        }
-    }
-
-    private void otherChildInfo() {
-        if (llOthers.getVisibility() == View.VISIBLE) {
-            llOthers.setVisibility(View.GONE);
-        } else {
-            llOthers.setVisibility(View.VISIBLE);
-        }
-    }
 
     class getOrderDetails extends AsyncTask<Void, Void, Void> {
         ProgressHUD progressHD;
@@ -322,6 +262,8 @@ public class CustomerOrderDetailActivity extends AppCompatActivity implements Vi
                             if (listItem.getOrder_status().equalsIgnoreCase("Pending")) {
                             } else if (listItem.getOrder_status().equalsIgnoreCase("In-Progress")) {
                                 setInProgress();
+                            } else if (listItem.getOrder_status().equalsIgnoreCase("Prepared")) {
+                                setPrepared();
                             } else if (listItem.getOrder_status().equalsIgnoreCase("Delivered")) {
                                 setDeliveredPicked();
                             } else if (listItem.getOrder_status().equalsIgnoreCase("Completed")) {

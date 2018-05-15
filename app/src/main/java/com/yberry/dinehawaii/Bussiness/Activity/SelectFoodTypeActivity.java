@@ -130,7 +130,6 @@ public class SelectFoodTypeActivity extends AppCompatActivity {
                     } else if (jsonObject.getString("status").equals("400")) {
                         AlertDialog.Builder alertDialog = new AlertDialog.Builder(SelectFoodTypeActivity.this);
                         alertDialog.setMessage("No Food Types found.");
-                        alertDialog.setIcon(R.drawable.ic_launcher_app);
                         alertDialog.setPositiveButton("Yes,Import it!", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 context.startActivity(new Intent(SelectFoodTypeActivity.this, ImportFoodTypesActivity.class));

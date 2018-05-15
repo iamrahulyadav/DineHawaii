@@ -162,7 +162,6 @@ public class VendorLoginWebViewActivity extends AppCompatActivity {
             webView.goBack();
         } else {
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(VendorLoginWebViewActivity.this);
-            alertDialog.setIcon(R.drawable.ic_launcher_app);
             alertDialog.setMessage("Do you want to exit?");
             alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
