@@ -70,11 +70,12 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginRight="@dimen/_10sdp"
+                android:singleLine="true"
                 android:padding="@dimen/_8sdp"
                 android:background="@drawable/bgrectangle"
                 android:hint="Enter food category"
                 style="@style/TextAppearance.AppCompat.Subhead"
-                app:edittextfont="Raleway-Regular.ttf"></com.yberry.dinehawaii.customview.CustomEditText>
+                app:edittextfont="Raleway-Regular.ttf"/>
 
             <com.yberry.dinehawaii.customview.CustomButton
                 android:layout_width="wrap_content"

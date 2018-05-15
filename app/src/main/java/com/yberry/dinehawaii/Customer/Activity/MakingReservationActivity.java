@@ -466,7 +466,6 @@ public class MakingReservationActivity extends AppCompatActivity implements Time
                 if (progressHD != null && progressHD.isShowing())
                     progressHD.dismiss();
             }
-
             @SuppressLint("LongLogTag")
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {

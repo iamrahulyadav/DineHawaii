@@ -30,17 +30,21 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.squareup.picasso.Picasso;
 import com.yberry.dinehawaii.BuildConfig;
+import com.yberry.dinehawaii.Bussiness.model.BusinessAreaModel;
 import com.yberry.dinehawaii.Model.CheckBoxPositionModel;
 import com.yberry.dinehawaii.R;
 import com.yberry.dinehawaii.RetrofitClasses.ApiClient;
@@ -67,29 +71,37 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class EditMenuItemActivity extends AppCompatActivity implements View.OnClickListener {
-    public CustomTextView tvSelectService, text_food;
     public static final int REQUEST_CODE_CAMERA = 1;
     public static final int REQUEST_CODE_ALBUM = 2;
     private static final int REQUEST_IMAGE_CROP = 3;
-    private File file;
-    private Uri file_uri;
-    CustomEditText foodname, halfprice, fullprice, ingredients;
+    public CustomTextView tvSelectService, text_food;
+    CustomEditText foodname, halfprice, fullprice, ingredients, businessArea;
     CustomCheckBox check_half, check_full;
-    private String TAG = "EditMenuItemActivity", finalHalf, finalFull;
-    private String service_id = "", food_catagory_id_list = "", listValueNew = "", tempPath = "", encoded_String = "", imageString = "", edit_id = "";
     ArrayList<CheckBoxPositionModel> listFoodService;
     LinearLayout mainLayout;
     ImageView addFoodImage;
     MenuItem add, edit;
+    Context context;
+    ArrayList<BusinessAreaModel> areaslist;
+    private File file;
+    private Uri file_uri;
+    private String TAG = "EditMenuItemActivity", finalHalf, finalFull;
+    private String service_id = "", food_catagory_id_list = "", listValueNew = "", tempPath = "", encoded_String = "", imageString = "", edit_id = "";
     private TextView tvTitle;
+    private String selectedAreaId = "", selectAreaText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_menu_item);
         setToolbar();
+        context = this;
         init();
         setCheckBox();
+        if (Util.isNetworkAvailable(context)) {
+            getAllAreas();
+        } else
+            Toast.makeText(context, getResources().getString(R.string.msg_no_internet), Toast.LENGTH_SHORT).show();
     }
 
     private void setCheckBox() {
@@ -131,9 +143,11 @@ public class EditMenuItemActivity extends AppCompatActivity implements View.OnCl
             }
         }
         listFoodService = new ArrayList<>();
+        areaslist = new ArrayList<>();
         tvSelectService = ((CustomTextView) findViewById(R.id.tvSelectService));
         text_food = (CustomTextView) findViewById(R.id.spinSelectFoodType);
         mainLayout = (LinearLayout) findViewById(R.id.mainView);
+        businessArea = (CustomEditText) findViewById(R.id.etBusArea);
         foodname = (CustomEditText) findViewById(R.id.edfoodname);
         halfprice = (CustomEditText) findViewById(R.id.edhalfprice);
         fullprice = (CustomEditText) findViewById(R.id.edfullprice);
@@ -142,15 +156,16 @@ public class EditMenuItemActivity extends AppCompatActivity implements View.OnCl
         check_full = (CustomCheckBox) findViewById(R.id.rdfull);
         addFoodImage = (ImageView) findViewById(R.id.food_image);
         addFoodImage.setOnClickListener(this);
+        businessArea.setOnClickListener(this);
         tvSelectService.setOnClickListener(this);
         text_food.setOnClickListener(this);
 
         mainLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent event) {
-                view = EditMenuItemActivity.this.getCurrentFocus();
+                view = getCurrentFocus();
                 if (view != null) {
-                    InputMethodManager imm = (InputMethodManager) EditMenuItemActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE);
+                    InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 }
                 return false;
@@ -159,7 +174,48 @@ public class EditMenuItemActivity extends AppCompatActivity implements View.OnCl
 
         getDataFromIntent();
     }
+    private void getAllAreas() {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.BUSSINES_USER_BUSINESSAPI.ALLBUSAREA);
+        jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(context));
+        jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(context));
+        Log.e(TAG, "getAllAreas: Request >> " + jsonObject);
 
+        MyApiEndpointInterface apiService = ApiClient.getClient().create(MyApiEndpointInterface.class);
+        Call<JsonObject> call = apiService.business_area_api(jsonObject);
+
+        call.enqueue(new Callback<JsonObject>() {
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                String resp = response.body().toString();
+                Log.e(TAG, "getAllAreas: Response >> " + resp);
+                try {
+                    areaslist.clear();
+                    JSONObject jsonObject = new JSONObject(resp);
+                    if (jsonObject.getString("status").equalsIgnoreCase("200")) {
+                        JSONArray jsonArray = jsonObject.getJSONArray("result");
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            Gson gson = new Gson();
+                            BusinessAreaModel model = gson.fromJson(jsonArray.getJSONObject(i).toString(), BusinessAreaModel.class);
+                            areaslist.add(model);
+                        }
+                    } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
+                        areaslist.clear();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.e(TAG, "error :- " + Log.getStackTraceString(t));
+            }
+        });
+
+    }
     private void getDataFromIntent() {
         if (getIntent().getAction().equals("edit_menu")) {
             tvTitle.setText("Edit Food");
@@ -198,13 +254,14 @@ public class EditMenuItemActivity extends AppCompatActivity implements View.OnCl
             }
             if (!getIntent().getStringExtra("foodtype_id").equalsIgnoreCase("")) {
                 food_catagory_id_list = getIntent().getStringExtra("foodtype_id");
-            }  if (!getIntent().getStringExtra("service_id").equalsIgnoreCase("")) {
+            }
+            if (!getIntent().getStringExtra("service_id").equalsIgnoreCase("")) {
                 service_id = getIntent().getStringExtra("service_id");
             }
             if (getIntent().hasExtra("item_image")) {
                 if (!getIntent().getStringExtra("item_image").equalsIgnoreCase("")) {
                     String image = getIntent().getStringExtra("item_image");
-                    Picasso.with(EditMenuItemActivity.this)
+                    Picasso.with(context)
                             .load(image)
                             .placeholder(R.drawable.ic_add_a_photo_black_24dp)
                             .error(R.drawable.ic_add_a_photo_black_24dp)
@@ -224,13 +281,18 @@ public class EditMenuItemActivity extends AppCompatActivity implements View.OnCl
                 selectServiceData();
                 break;
             case R.id.spinSelectFoodType:
-                //selectFoodData();
                 text_food.setText("");
-                Intent intent = new Intent(EditMenuItemActivity.this, SelectFoodTypeActivity.class);
+                Intent intent = new Intent(context, SelectFoodTypeActivity.class);
                 startActivityForResult(intent, 12);
                 break;
             case R.id.food_image:
                 openDialogToChosePic();
+                break;
+            case R.id.etBusArea:
+                if (areaslist != null)
+                    showBusAreasDialog();
+                else
+                    Toast.makeText(context, "No areas available", Toast.LENGTH_LONG).show();
                 break;
             default:
                 break;
@@ -284,20 +346,22 @@ public class EditMenuItemActivity extends AppCompatActivity implements View.OnCl
 
     private void validateData() {
         if (TextUtils.isEmpty(tvSelectService.getText().toString())) {
-            Toast.makeText(this, "Select Service Type", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Select Service Type", Toast.LENGTH_SHORT).show();
         } else if (TextUtils.isEmpty(text_food.getText().toString())) {
-            Toast.makeText(this, "Select Food Type", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Select Food Type", Toast.LENGTH_SHORT).show();
+        } else if (TextUtils.isEmpty(businessArea.getText().toString())&& selectedAreaId.equalsIgnoreCase("")) {
+            Toast.makeText(context, "Select Business Area", Toast.LENGTH_SHORT).show();
         } else if (TextUtils.isEmpty(foodname.getText().toString())) {
-            Toast.makeText(this, "Enter Food Name", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Enter Food Name", Toast.LENGTH_SHORT).show();
         } else if (!check_half.isChecked() && !check_full.isChecked()) {
-            Toast.makeText(this, "Select Quantity", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Select Quantity", Toast.LENGTH_SHORT).show();
         } else if (check_half.isChecked() && TextUtils.isEmpty(halfprice.getText().toString())) {
-            Toast.makeText(this, "Enter Half Price", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Enter Half Price", Toast.LENGTH_SHORT).show();
         } else if (check_full.isChecked() && TextUtils.isEmpty(fullprice.getText().toString())) {
-            Toast.makeText(this, "Enter Full Price", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Enter Full Price", Toast.LENGTH_SHORT).show();
 
         } else {
-            if (Util.isNetworkAvailable(EditMenuItemActivity.this)) {
+            if (Util.isNetworkAvailable(context)) {
                 if (halfprice.getText().toString().equals("")) {
                     finalHalf = "0.0";
                 } else {
@@ -315,7 +379,7 @@ public class EditMenuItemActivity extends AppCompatActivity implements View.OnCl
                 }
 
             } else {
-                Toast.makeText(EditMenuItemActivity.this, "Please Connect Your Internet", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Please Connect Your Internet", Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -324,8 +388,8 @@ public class EditMenuItemActivity extends AppCompatActivity implements View.OnCl
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("method", AppConstants.KEY_EDIT_MENU);
         jsonObject.addProperty("edit_id", edit_id);
-        jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(EditMenuItemActivity.this));
-        jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(EditMenuItemActivity.this));
+        jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(context));
+        jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(context));
         jsonObject.addProperty("food_service_id", service_id);
         jsonObject.addProperty("food_category_id", food_catagory_id_list);
         jsonObject.addProperty("food_name", foodname.getText().toString());
@@ -340,8 +404,8 @@ public class EditMenuItemActivity extends AppCompatActivity implements View.OnCl
     private void addFoodMenuData() {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("method", AppConstants.KEY_ADD_MENU);
-        jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(EditMenuItemActivity.this));
-        jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(EditMenuItemActivity.this));
+        jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(context));
+        jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(context));
         jsonObject.addProperty("food_service_id", service_id);
         jsonObject.addProperty("food_category_id", food_catagory_id_list);
         jsonObject.addProperty("food_name", foodname.getText().toString());
@@ -354,7 +418,7 @@ public class EditMenuItemActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void addFoodMenuApi(JsonObject jsonObject) {
-        final ProgressHUD progressHD = ProgressHUD.show(EditMenuItemActivity.this, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
+        final ProgressHUD progressHD = ProgressHUD.show(context, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
 
@@ -380,7 +444,7 @@ public class EditMenuItemActivity extends AppCompatActivity implements View.OnCl
                             msg = jsonObj.getString("msg");
                         }
                         finish();
-                        Toast.makeText(EditMenuItemActivity.this, msg, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                     } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
                         String msg = "";
                         JSONArray jsonArray = jsonObject.getJSONArray("result");
@@ -388,9 +452,9 @@ public class EditMenuItemActivity extends AppCompatActivity implements View.OnCl
                             JSONObject jsonObj = jsonArray.getJSONObject(i);
                             msg = jsonObj.getString("msg");
                         }
-                        Toast.makeText(EditMenuItemActivity.this, msg, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(EditMenuItemActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -403,7 +467,7 @@ public class EditMenuItemActivity extends AppCompatActivity implements View.OnCl
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Log.e(TAG, "error :- " + Log.getStackTraceString(t));
                 progressHD.dismiss();
-                Toast.makeText(EditMenuItemActivity.this, "Server not Responding", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Server not Responding", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -412,7 +476,7 @@ public class EditMenuItemActivity extends AppCompatActivity implements View.OnCl
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar_bar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        tvTitle= (TextView) findViewById(R.id.headet_text);
+        tvTitle = (TextView) findViewById(R.id.headet_text);
         tvTitle.setText("Add Food");
         ImageView back = (ImageView) findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
@@ -426,7 +490,7 @@ public class EditMenuItemActivity extends AppCompatActivity implements View.OnCl
 
     private String openDialogToChosePic() {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(EditMenuItemActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setCancelable(true);
         builder.setTitle("Take picture using");
         //  final boolean result = Util.checkPermission(MainActivity.this);
@@ -449,18 +513,7 @@ public class EditMenuItemActivity extends AppCompatActivity implements View.OnCl
         return null;
     }
 
-    private void selectFoodData() {
-        if (Util.isNetworkAvailable(EditMenuItemActivity.this)) {
-            text_food.setText("");
-            JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("method", AppConstants.GENERALAPI.FOODTYPE);
-            jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(EditMenuItemActivity.this));// AppPreferencesBuss.getUserId(context));
-            Log.d(TAG, "Request GET ALL FOODTYPE >> " + jsonObject);
-            selectFoodApi(jsonObject);
-        } else {
-            Toast.makeText(EditMenuItemActivity.this, "Please Connect Your Internet", Toast.LENGTH_LONG).show();
-        }
-    }
+
 
     private void onSelectCamera() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -501,7 +554,7 @@ public class EditMenuItemActivity extends AppCompatActivity implements View.OnCl
 
         } else {
             Log.e("iMAGE", file.toString());
-            file_uri = FileProvider.getUriForFile(EditMenuItemActivity.this, BuildConfig.APPLICATION_ID + ".provider", file);
+            file_uri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider", file);
         }
     }
 
@@ -548,55 +601,15 @@ public class EditMenuItemActivity extends AppCompatActivity implements View.OnCl
         } catch (ActivityNotFoundException anfe) {
             // display an error message
             String errorMessage = "Whoops - your device doesn't support the crop action!";
-            // Toast.makeText(EditMenuItemActivity.this, "errorMessage", Toast.LENGTH_LONG).show();
+            // Toast.makeText(context, "errorMessage", Toast.LENGTH_LONG).show();
 
         }
     }
 
-    private void selectFoodApi(JsonObject jsonObject) {
-        final ProgressHUD progressHD = ProgressHUD.show(EditMenuItemActivity.this, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
 
-            }
-        });
-
-        MyApiEndpointInterface apiService =
-                ApiClient.getClient().create(MyApiEndpointInterface.class);
-        Call<JsonObject> call = apiService.requestBusinessUserGeneralurl(jsonObject);
-        call.enqueue(new Callback<JsonObject>() {
-            @SuppressLint("LongLogTag")
-            @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                String s = response.body().toString();
-
-                try {
-                    JSONObject jsonObject = new JSONObject(s);
-                    Log.d("Res:", s);
-                    if (jsonObject.getString("status").equalsIgnoreCase("200")) {
-                        Intent intent = new Intent(EditMenuItemActivity.this, SelectFoodTypeActivity.class);
-                        intent.setAction("FoodFragment45");
-                        intent.putExtra("Foodtype", s);
-                        startActivityForResult(intent, 12);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                progressHD.dismiss();
-            }
-
-            @SuppressLint("LongLogTag")
-            @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.e(TAG, "error :- " + Log.getStackTraceString(t));
-                progressHD.dismiss();
-                Toast.makeText(EditMenuItemActivity.this, "Server not Responding", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 
     private void selectServiceApi(JsonObject jsonObject) {
-        final ProgressHUD progressHD = ProgressHUD.show(EditMenuItemActivity.this, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
+        final ProgressHUD progressHD = ProgressHUD.show(context, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
                 // TODO Auto-generated method stub
@@ -616,11 +629,11 @@ public class EditMenuItemActivity extends AppCompatActivity implements View.OnCl
                     JSONObject jsonObject = new JSONObject(s);
 
                     if (jsonObject.getString("status").equalsIgnoreCase("200")) {
-                        Intent intent = new Intent(EditMenuItemActivity.this, SelectServiceTypeActivity.class);
+                        Intent intent = new Intent(context, SelectServiceTypeActivity.class);
                         intent.putExtra("ServerType", s);
                         startActivityForResult(intent, 101);
-                    }else{
-                        Toast.makeText(EditMenuItemActivity.this, "No services available please import services", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(context, "No services available please import services", Toast.LENGTH_LONG).show();
                     }
                     //  adapter.notifyDataSetChanged();
                 } catch (JSONException e) {
@@ -634,21 +647,21 @@ public class EditMenuItemActivity extends AppCompatActivity implements View.OnCl
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Log.e(TAG, "error :- " + Log.getStackTraceString(t));
                 progressHD.dismiss();
-                Toast.makeText(EditMenuItemActivity.this, "Server not Responding", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Server not Responding", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void selectServiceData() {
-        if (Util.isNetworkAvailable(EditMenuItemActivity.this)) {
+        if (Util.isNetworkAvailable(context)) {
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("method", AppConstants.GENERALAPI.GETALLSERVICES);
-            jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(EditMenuItemActivity.this));
-            jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(EditMenuItemActivity.this));//AppPreferencesBuss.getUserId(getApplicationContext()));
+            jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(context));
+            jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(context));//AppPreferencesBuss.getUserId(getApplicationContext()));
             Log.e(TAG, "Request GET ALL SERVICES >> " + jsonObject.toString());
             selectServiceApi(jsonObject);
         } else {
-            Toast.makeText(EditMenuItemActivity.this, "Please Connect Your Internet", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "Please Connect Your Internet", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -675,7 +688,7 @@ public class EditMenuItemActivity extends AppCompatActivity implements View.OnCl
                 }
             } else if (requestCode == REQUEST_CODE_CAMERA) {
                 try {
-                    bitmap = MediaStore.Images.Media.getBitmap(EditMenuItemActivity.this.getApplicationContext().getContentResolver(),
+                    bitmap = MediaStore.Images.Media.getBitmap(context.getApplicationContext().getContentResolver(),
                             Uri.parse(tempPath));
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -695,7 +708,7 @@ public class EditMenuItemActivity extends AppCompatActivity implements View.OnCl
                 Log.e(TAG, "Camera Encode String " + encoded_String);
 
 
-                String path1 = MediaStore.Images.Media.insertImage(EditMenuItemActivity.this.getApplicationContext().getContentResolver(), bb, "Title", "display.jpg");
+                String path1 = MediaStore.Images.Media.insertImage(context.getApplicationContext().getContentResolver(), bb, "Title", "display.jpg");
                 Uri uri1 = Uri.parse(path1);
                 performCrop1(uri1);
 
@@ -709,7 +722,7 @@ public class EditMenuItemActivity extends AppCompatActivity implements View.OnCl
                     try {
                         //We get the file path from the media info returned by the content resolver
                         String[] filePathColumn = {MediaStore.Images.Media.DATA};
-                        Cursor cursor = EditMenuItemActivity.this.getApplicationContext().getContentResolver().query(photoUri, filePathColumn, null, null, null);
+                        Cursor cursor = context.getApplicationContext().getContentResolver().query(photoUri, filePathColumn, null, null, null);
                         cursor.moveToFirst();
                         int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                         filePath = cursor.getString(columnIndex);
@@ -721,7 +734,7 @@ public class EditMenuItemActivity extends AppCompatActivity implements View.OnCl
 
                 if (data != null) {
                     try {
-                        bm = MediaStore.Images.Media.getBitmap(EditMenuItemActivity.this.getApplicationContext().getContentResolver(), data.getData());
+                        bm = MediaStore.Images.Media.getBitmap(context.getApplicationContext().getContentResolver(), data.getData());
 
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -750,7 +763,7 @@ public class EditMenuItemActivity extends AppCompatActivity implements View.OnCl
                     encoded_String = Base64.encodeToString(b, Base64.DEFAULT);
                     Log.e("EWN", "Out of memory error catched");
                 }
-                String path1 = MediaStore.Images.Media.insertImage(EditMenuItemActivity.this.getApplicationContext().getContentResolver(), bb, "Title", "display.jpg");
+                String path1 = MediaStore.Images.Media.insertImage(context.getApplicationContext().getContentResolver(), bb, "Title", "display.jpg");
                 Uri uri1 = Uri.parse(path1);
                 performCrop1(uri1);
 
@@ -760,7 +773,7 @@ public class EditMenuItemActivity extends AppCompatActivity implements View.OnCl
             } else if (requestCode == REQUEST_IMAGE_CROP) {
                 if (data.getData() != null) {
                     try {
-                        bitmap = MediaStore.Images.Media.getBitmap(EditMenuItemActivity.this.getApplicationContext().getContentResolver(), data.getData());
+                        bitmap = MediaStore.Images.Media.getBitmap(context.getApplicationContext().getContentResolver(), data.getData());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -784,13 +797,54 @@ public class EditMenuItemActivity extends AppCompatActivity implements View.OnCl
 
                 imageString = Base64.encodeToString(byteArray, Base64.DEFAULT);
                 Log.e("image_string_crop", imageString);
-                //    AppPreferencesBuss.setProfileImage(EditMenuItemActivity.this, imageString);
+                //    AppPreferencesBuss.setProfileImage(context, imageString);
 
-                ///  AppPreferences.setPic(EditMenuItemActivity.this,imageString);
+                ///  AppPreferences.setPic(context,imageString);
 
 
             }
         }
     }
 
+    private void showBusAreasDialog() {
+
+        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+        dialog.setTitle("Select Business Area");
+        final RadioGroup group = new RadioGroup(this);
+        for (int i = 0; i < areaslist.size(); i++) {
+            RadioButton button = new RadioButton(context);
+            button.setId(Integer.parseInt(areaslist.get(i).getAreaId()));
+            button.setText(areaslist.get(i).getAreaName());
+            RadioGroup.LayoutParams params = new RadioGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.setMargins(35, 10, 0, 0);
+            button.setLayoutParams(params);
+            group.addView(button);
+        }
+
+        if (!selectedAreaId.equalsIgnoreCase(""))
+            group.check(Integer.parseInt(selectedAreaId));
+        group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                RadioButton radioButton = (RadioButton) group.findViewById(checkedId);
+                selectAreaText = radioButton.getText().toString();
+                Log.e(TAG, "onClick: selectAreaText" + selectAreaText);
+
+            }
+        });
+        dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Log.e(TAG, "onClick: " + group.getCheckedRadioButtonId());
+                selectedAreaId = String.valueOf(group.getCheckedRadioButtonId());
+                businessArea.setText(selectAreaText);
+            }
+        });
+
+        dialog.setView(group);
+        dialog.show();
+
+    }
 }

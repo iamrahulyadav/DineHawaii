@@ -40,7 +40,7 @@ public class BusinessHomeFragment41 extends Fragment {
 
     private static final String TAG = "BusinessHomeFragment41";
     CustomTextView reservation_btn, table_btn, order_btn, feed_btn, info_btn, packagebtn, maketingoption, staff, wholestaff, dinemsg, delivery_charge,
-            service_btn, logo_btn, schedule_btn, manage_table, serviceChargesbtn, employlist, manage_service, tvVendors, vendor_orders_hist, vendor_bid_hist;
+            service_btn, logo_btn, schedule_btn, manage_table, serviceChargesbtn, employlist, manage_service, tvVendors, vendor_orders_hist, vendor_bid_hist,tvBusAreas;
     FragmentIntraction intraction;
     private LinearLayout messageLinearLayout, business_setting_tab, other_setting_tab, manage_operation_tab, security_tab, vendors_tab;
     private ImageView oprationExpand, settingExpand, otherSettingExpand, service_minus, message_minus, securityExpand, vendorsExpand;
@@ -474,6 +474,16 @@ public class BusinessHomeFragment41 extends Fragment {
                 fragmentTransaction.commitAllowingStateLoss();
             }
         });
+        tvBusAreas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new BusinessAreaFragment();
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.replace(R.id.frame, fragment, fragment.getTag());
+                fragmentTransaction.commitAllowingStateLoss();
+            }
+        });
 
         manage_service.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -532,6 +542,7 @@ public class BusinessHomeFragment41 extends Fragment {
         tvVendors = (CustomTextView) view.findViewById(R.id.tvVendors);
         delivery_charge = (CustomTextView) view.findViewById(R.id.tvDelivery);
         vendors_tab = (LinearLayout) view.findViewById(R.id.vendors_tab);
+        tvBusAreas = (CustomTextView) view.findViewById(R.id.tvBusAreas);
     }
 }
 
