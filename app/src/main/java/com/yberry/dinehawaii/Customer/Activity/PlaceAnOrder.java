@@ -154,7 +154,6 @@ public class PlaceAnOrder extends AppCompatActivity {
                                     finish();
                                 }
                             });
-
                             alertDialog.show();
                         }
                     }
