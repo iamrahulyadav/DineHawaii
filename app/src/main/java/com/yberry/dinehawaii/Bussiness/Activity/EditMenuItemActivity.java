@@ -88,7 +88,7 @@ public class EditMenuItemActivity extends AppCompatActivity implements View.OnCl
     private String TAG = "EditMenuItemActivity", finalHalf, finalFull;
     private String service_id = "", food_catagory_id_list = "", listValueNew = "", tempPath = "", encoded_String = "", imageString = "", edit_id = "";
     private TextView tvTitle;
-    private String selectedAreaId = "", selectAreaText;
+    private String selectedAreaId = "", selectAreaText = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,6 +174,7 @@ public class EditMenuItemActivity extends AppCompatActivity implements View.OnCl
 
         getDataFromIntent();
     }
+
     private void getAllAreas() {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.BUSSINES_USER_BUSINESSAPI.ALLBUSAREA);
@@ -212,10 +213,12 @@ public class EditMenuItemActivity extends AppCompatActivity implements View.OnCl
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Log.e(TAG, "error :- " + Log.getStackTraceString(t));
+                getAllAreas();
             }
         });
 
     }
+
     private void getDataFromIntent() {
         if (getIntent().getAction().equals("edit_menu")) {
             tvTitle.setText("Edit Food");
@@ -228,6 +231,7 @@ public class EditMenuItemActivity extends AppCompatActivity implements View.OnCl
             check_full.setEnabled(false);
             addFoodImage.setEnabled(false);
             ingredients.setEnabled(false);
+            businessArea.setEnabled(false);
 
             if (!getIntent().getStringExtra("item_name").equalsIgnoreCase("")) {
                 foodname.setText(getIntent().getStringExtra("item_name"));
@@ -268,6 +272,13 @@ public class EditMenuItemActivity extends AppCompatActivity implements View.OnCl
                             .into(addFoodImage);
                 }
 
+            }
+            if (!getIntent().getStringExtra("area_id").equalsIgnoreCase("0") && !getIntent().getStringExtra("area_id").equalsIgnoreCase("")) {
+                selectedAreaId = getIntent().getStringExtra("area_id");
+            }
+            if (!getIntent().getStringExtra("area_name").equalsIgnoreCase("") && getIntent().getStringExtra("area_name") != null) {
+                selectAreaText = getIntent().getStringExtra("area_name");
+                businessArea.setText(selectAreaText);
             }
             Snackbar.make(findViewById(android.R.id.content), "Click on edit icon to edit food detail", Snackbar.LENGTH_LONG).show();
         }
@@ -342,6 +353,7 @@ public class EditMenuItemActivity extends AppCompatActivity implements View.OnCl
         check_full.setEnabled(true);
         ingredients.setEnabled(true);
         addFoodImage.setEnabled(true);
+        businessArea.setEnabled(true);
     }
 
     private void validateData() {
@@ -349,7 +361,7 @@ public class EditMenuItemActivity extends AppCompatActivity implements View.OnCl
             Toast.makeText(context, "Select Service Type", Toast.LENGTH_SHORT).show();
         } else if (TextUtils.isEmpty(text_food.getText().toString())) {
             Toast.makeText(context, "Select Food Type", Toast.LENGTH_SHORT).show();
-        } else if (TextUtils.isEmpty(businessArea.getText().toString())&& selectedAreaId.equalsIgnoreCase("")) {
+        } else if (TextUtils.isEmpty(businessArea.getText().toString()) && selectedAreaId.equalsIgnoreCase("")) {
             Toast.makeText(context, "Select Business Area", Toast.LENGTH_SHORT).show();
         } else if (TextUtils.isEmpty(foodname.getText().toString())) {
             Toast.makeText(context, "Enter Food Name", Toast.LENGTH_SHORT).show();
@@ -397,6 +409,7 @@ public class EditMenuItemActivity extends AppCompatActivity implements View.OnCl
         jsonObject.addProperty("half_price", finalHalf);
         jsonObject.addProperty("detail", ingredients.getText().toString());
         jsonObject.addProperty("food_image", imageString);
+        jsonObject.addProperty("area_id", selectedAreaId);
         Log.e(TAG, "edit Json" + jsonObject.toString());
         addFoodMenuApi(jsonObject);
     }
@@ -413,6 +426,7 @@ public class EditMenuItemActivity extends AppCompatActivity implements View.OnCl
         jsonObject.addProperty("half_price", finalHalf);
         jsonObject.addProperty("detail", ingredients.getText().toString());
         jsonObject.addProperty("food_image", imageString);
+        jsonObject.addProperty("area_id", selectedAreaId);
         Log.e(TAG, "add Json" + jsonObject.toString());
         addFoodMenuApi(jsonObject);
     }
@@ -514,7 +528,6 @@ public class EditMenuItemActivity extends AppCompatActivity implements View.OnCl
     }
 
 
-
     private void onSelectCamera() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         try {
@@ -542,12 +555,12 @@ public class EditMenuItemActivity extends AppCompatActivity implements View.OnCl
         File image = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         file = File.createTempFile(
 
-                image_name,  // prefix
-                ".jpeg",         // suffix
-                image      // directory
+                image_name,
+                ".jpeg",
+                image
         );
         tempPath = "file:" + file.getAbsolutePath();
-        // file_uri = Uri.fromFile(file);
+
 
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
             file_uri = Uri.fromFile(file);
@@ -599,13 +612,8 @@ public class EditMenuItemActivity extends AppCompatActivity implements View.OnCl
             cropIntent.putExtra("return-data", true);
             startActivityForResult(cropIntent, REQUEST_IMAGE_CROP);
         } catch (ActivityNotFoundException anfe) {
-            // display an error message
-            String errorMessage = "Whoops - your device doesn't support the crop action!";
-            // Toast.makeText(context, "errorMessage", Toast.LENGTH_LONG).show();
-
         }
     }
-
 
 
     private void selectServiceApi(JsonObject jsonObject) {
@@ -635,7 +643,7 @@ public class EditMenuItemActivity extends AppCompatActivity implements View.OnCl
                     } else {
                         Toast.makeText(context, "No services available please import services", Toast.LENGTH_LONG).show();
                     }
-                    //  adapter.notifyDataSetChanged();
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -720,7 +728,7 @@ public class EditMenuItemActivity extends AppCompatActivity implements View.OnCl
                 String filePath = "";
                 if (photoUri != null) {
                     try {
-                        //We get the file path from the media info returned by the content resolver
+
                         String[] filePathColumn = {MediaStore.Images.Media.DATA};
                         Cursor cursor = context.getApplicationContext().getContentResolver().query(photoUri, filePathColumn, null, null, null);
                         cursor.moveToFirst();
@@ -766,8 +774,6 @@ public class EditMenuItemActivity extends AppCompatActivity implements View.OnCl
                 String path1 = MediaStore.Images.Media.insertImage(context.getApplicationContext().getContentResolver(), bb, "Title", "display.jpg");
                 Uri uri1 = Uri.parse(path1);
                 performCrop1(uri1);
-
-                //encoded_String = Base64.encodeToString(byteArray, Base64.DEFAULT);
                 Log.e(TAG, "Gallery Encode String " + encoded_String);
 
             } else if (requestCode == REQUEST_IMAGE_CROP) {
@@ -778,14 +784,11 @@ public class EditMenuItemActivity extends AppCompatActivity implements View.OnCl
                         e.printStackTrace();
                     }
                     addFoodImage.setImageBitmap(bitmap);
-
                 } else {
                     bitmap = (Bitmap) data.getExtras().get("data");
                     addFoodImage.setImageBitmap(bitmap);
 
                 }
-
-
                 ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
                 try {
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 30, outputStream);
@@ -793,21 +796,13 @@ public class EditMenuItemActivity extends AppCompatActivity implements View.OnCl
                     e.printStackTrace();
                 }
                 byte[] byteArray = outputStream.toByteArray();
-                // imageString = Util.encodeTobase64(bitmap);
-
                 imageString = Base64.encodeToString(byteArray, Base64.DEFAULT);
                 Log.e("image_string_crop", imageString);
-                //    AppPreferencesBuss.setProfileImage(context, imageString);
-
-                ///  AppPreferences.setPic(context,imageString);
-
-
             }
         }
     }
 
     private void showBusAreasDialog() {
-
         AlertDialog.Builder dialog = new AlertDialog.Builder(context);
         dialog.setTitle("Select Business Area");
         final RadioGroup group = new RadioGroup(this);
@@ -823,17 +818,17 @@ public class EditMenuItemActivity extends AppCompatActivity implements View.OnCl
 
         if (!selectedAreaId.equalsIgnoreCase(""))
             group.check(Integer.parseInt(selectedAreaId));
+
         group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-
                 RadioButton radioButton = (RadioButton) group.findViewById(checkedId);
                 selectAreaText = radioButton.getText().toString();
                 Log.e(TAG, "onClick: selectAreaText" + selectAreaText);
-
             }
         });
+
         dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -845,6 +840,5 @@ public class EditMenuItemActivity extends AppCompatActivity implements View.OnCl
 
         dialog.setView(group);
         dialog.show();
-
     }
 }

@@ -207,11 +207,7 @@ public class ResvCurrentFragment extends Fragment {
                                 reservList.add(model);
                             }
                         } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
-                            Log.e("status", jsonObject.getString("status"));
-                            JSONObject jobject = jsonObject.getJSONObject("result");
-                            String msg = jobject.getString("msg");
-                            Log.e("msg", msg);
-                            publishProgress(400, msg);
+                            publishProgress(400, "No Records available");
                         }
                         adapter.notifyDataSetChanged();
                     } catch (JSONException e) {

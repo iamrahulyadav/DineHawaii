@@ -1,8 +1,10 @@
 package com.yberry.dinehawaii.Customer.Activity;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -27,7 +29,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -174,7 +175,7 @@ public class ThankYouScreenActivity extends AppCompatActivity {
                         JSONArray jsonArray = jsonObject.getJSONArray("result");
                         JSONObject object = jsonArray.getJSONObject(0);
                         //nodata.setVisibility(View.VISIBLE);
-                      //  showAlertDialog();
+                        //  showAlertDialog();
                         Toast.makeText(ThankYouScreenActivity.this, object.getString("msg"), Toast.LENGTH_LONG).show();
                         Log.e("onResponse", object.getString("msg"));
                     }
@@ -194,19 +195,21 @@ public class ThankYouScreenActivity extends AppCompatActivity {
     }
 
     private void showAlertDialog() {
-        new SweetAlertDialog(ThankYouScreenActivity.this, SweetAlertDialog.WARNING_TYPE)
-                .setTitleText("Order Didn't Placed!")
-                .setConfirmText("Retry")
-                .showCancelButton(true)
-                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                    @Override
-                    public void onClick(SweetAlertDialog sweetAlertDialog) {
-                        placeOrder();
-                        sweetAlertDialog.cancel();
-                    }
-                })
-                .show();
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(ThankYouScreenActivity.this);
+        alertDialog.setMessage("Order Didn't Placed!");
+        alertDialog.setIcon(R.drawable.ic_launcher_app);
+        alertDialog.setPositiveButton("RETRY", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                placeOrder();
+            }
+        });
 
+        alertDialog.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        alertDialog.show();
     }
 
 

@@ -311,6 +311,8 @@ public class ManageMenuFragment extends Fragment implements View.OnClickListener
                             menuModel.setItemEditId(object.getString("edit_id"));
                             menuModel.setService_type_id(object.getString("service_id"));
                             menuModel.setMenuItemStatus(object.getString("status"));
+                            menuModel.setBusAreaId(object.getString("area_id"));
+                            menuModel.setBusAreaName(object.getString("area_name"));
                             itemslist.add(menuModel);
 
                         }

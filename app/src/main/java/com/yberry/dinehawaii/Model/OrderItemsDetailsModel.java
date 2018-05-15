@@ -9,17 +9,141 @@ import android.os.Parcelable;
 
 public class OrderItemsDetailsModel implements Parcelable {
 
+    public static final Creator<OrderItemsDetailsModel> CREATOR = new Creator<OrderItemsDetailsModel>() {
+        @Override
+        public OrderItemsDetailsModel createFromParcel(Parcel in) {
+            return new OrderItemsDetailsModel(in);
+        }
+
+        @Override
+        public OrderItemsDetailsModel[] newArray(int size) {
+            return new OrderItemsDetailsModel[size];
+        }
+    };
     public String ItemName;
     public String ItemPrice;
     public String ItemQuantity;
     public String ItemTotalCost;
     public String avgPrice;
     public String QuantityType;
+    public String itemImage;
+    public String ServiceType;
+    public String ItemEditId;
+    public String food_type_id;
+    public String service_type_id;
+    public String details;
+    public String half_price;
+    public String item_category;
+    public String Menu_id;
+    public String Cat_id;
+    public String Buss_id;
+    public String Message;
+    public String Date;
+    public String Status;
+    public String Name;
+    public String DeliveryAddress;
+    public String DineHawaiiID;
+    public String SmartphoneNo;
+    public String WaitStaffName;
+    public String ItemCustomiationList;
     String homeDelFoodTime;
     String inhouseDelFoodTime;
     String takeoutDelFoodTime;
     String catFoodTime;
     String menuItemStatus;
+    String busAreaId;
+    String busAreaName;
+    private String old_today_take_out_id;
+    private String old_today_take_out_order_id;
+    private String old_today_take_out_date;
+    private String old_today_take_out_business_name;
+    private String old_today_take_out_total_price;
+    private String old_today_take_out_delivery_adderess;
+    private String old_today_take_out_total_delivery_name;
+    private String old_today_take_out_total_delivery_contact_no;
+    private String old_today_take_out_total_order_status;
+    private String old_today_take_out_user_name;
+    private String old_today_take_out_food_name;
+    private String old_today_take_out_quantity;
+    private String old_future_take_out_id;
+    private String old_future_take_out_order_id;
+    private String old_future_take_out_date;
+    private String old_future_take_out_business_name;
+    private String old_future_take_out_total_price;
+    private String old_future_take_out_delivery_adderess;
+    private String old_futurey_take_out_total_delivery_name;
+    private String old_future_take_out_total_delivery_contact_no;
+    private String old_future_take_out_total_order_status;
+    private String old_future_take_out_user_name;
+    private String old_future_take_out_food_name;
+    private String old_future_take_out_quantity;
+    private String OrderType;
+    public OrderItemsDetailsModel() {
+
+    }
+    public OrderItemsDetailsModel(Parcel in) {
+        ItemName = in.readString();
+        ItemPrice = in.readString();
+        ItemQuantity = in.readString();
+        ItemTotalCost = in.readString();
+        Menu_id = in.readString();
+        Cat_id = in.readString();
+        Buss_id = in.readString();
+        Message = in.readString();
+        Date = in.readString();
+        Status = in.readString();
+        Name = in.readString();
+        DeliveryAddress = in.readString();
+        DineHawaiiID = in.readString();
+        SmartphoneNo = in.readString();
+        WaitStaffName = in.readString();
+        old_today_take_out_id = in.readString();
+        old_today_take_out_order_id = in.readString();
+        old_today_take_out_date = in.readString();
+        old_today_take_out_business_name = in.readString();
+        old_today_take_out_total_price = in.readString();
+        old_today_take_out_delivery_adderess = in.readString();
+        old_today_take_out_total_delivery_name = in.readString();
+        old_today_take_out_total_delivery_contact_no = in.readString();
+        old_today_take_out_total_order_status = in.readString();
+        old_today_take_out_user_name = in.readString();
+        old_today_take_out_food_name = in.readString();
+        old_today_take_out_quantity = in.readString();
+        old_future_take_out_id = in.readString();
+        old_future_take_out_order_id = in.readString();
+        old_future_take_out_date = in.readString();
+        old_future_take_out_business_name = in.readString();
+        old_future_take_out_total_price = in.readString();
+        old_future_take_out_delivery_adderess = in.readString();
+        old_futurey_take_out_total_delivery_name = in.readString();
+        old_future_take_out_total_delivery_contact_no = in.readString();
+        old_future_take_out_total_order_status = in.readString();
+        old_future_take_out_user_name = in.readString();
+        old_future_take_out_food_name = in.readString();
+        old_future_take_out_quantity = in.readString();
+        OrderType = in.readString();
+        avgPrice = in.readString();
+        item_category = in.readString();
+        food_type_id = in.readString();
+        half_price = in.readString();
+        details = in.readString();
+        itemImage = in.readString();
+        ServiceType = in.readString();
+        ItemEditId = in.readString();
+        service_type_id = in.readString();
+        QuantityType = in.readString();
+        homeDelFoodTime = in.readString();
+        inhouseDelFoodTime = in.readString();
+        takeoutDelFoodTime = in.readString();
+        menuItemStatus = in.readString();
+        catFoodTime = in.readString();
+        busAreaId = in.readString();
+        busAreaName = in.readString();
+    }
+
+    public static Creator<OrderItemsDetailsModel> getCREATOR() {
+        return CREATOR;
+    }
 
     public String getItemEditId() {
         return ItemEditId;
@@ -28,10 +152,6 @@ public class OrderItemsDetailsModel implements Parcelable {
     public void setItemEditId(String itemEditId) {
         ItemEditId = itemEditId;
     }
-
-    public String itemImage;
-    public String ServiceType;
-    public String ItemEditId;
 
     public String getServiceType() {
         return ServiceType;
@@ -49,9 +169,6 @@ public class OrderItemsDetailsModel implements Parcelable {
         this.itemImage = itemImage;
     }
 
-    public String food_type_id;
-    public String service_type_id;
-
     public String getService_type_id() {
         return service_type_id;
     }
@@ -59,8 +176,6 @@ public class OrderItemsDetailsModel implements Parcelable {
     public void setService_type_id(String service_type_id) {
         this.service_type_id = service_type_id;
     }
-
-    public String details;
 
     public String getDetails() {
         return details;
@@ -78,8 +193,6 @@ public class OrderItemsDetailsModel implements Parcelable {
         this.half_price = half_price;
     }
 
-    public String half_price;
-
     public String getItem_category() {
         return item_category;
     }
@@ -87,8 +200,82 @@ public class OrderItemsDetailsModel implements Parcelable {
     public void setItem_category(String item_category) {
         this.item_category = item_category;
     }
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(ItemName);
+        dest.writeString(ItemPrice);
+        dest.writeString(ItemQuantity);
+        dest.writeString(ItemTotalCost);
+        dest.writeString(Menu_id);
+        dest.writeString(Cat_id);
+        dest.writeString(Buss_id);
+        dest.writeString(Message);
+        dest.writeString(Date);
+        dest.writeString(Status);
+        dest.writeString(Name);
+        dest.writeString(DeliveryAddress);
+        dest.writeString(DineHawaiiID);
+        dest.writeString(SmartphoneNo);
+        dest.writeString(WaitStaffName);
+        dest.writeString(old_today_take_out_id);
+        dest.writeString(old_today_take_out_order_id);
+        dest.writeString(old_today_take_out_date);
+        dest.writeString(old_today_take_out_business_name);
+        dest.writeString(old_today_take_out_total_price);
+        dest.writeString(old_today_take_out_delivery_adderess);
+        dest.writeString(old_today_take_out_total_delivery_name);
+        dest.writeString(old_today_take_out_total_delivery_contact_no);
+        dest.writeString(old_today_take_out_total_order_status);
+        dest.writeString(old_today_take_out_user_name);
+        dest.writeString(old_today_take_out_food_name);
+        dest.writeString(old_today_take_out_quantity);
+        dest.writeString(old_future_take_out_id);
+        dest.writeString(old_future_take_out_order_id);
+        dest.writeString(old_future_take_out_date);
+        dest.writeString(old_future_take_out_business_name);
+        dest.writeString(old_future_take_out_total_price);
+        dest.writeString(old_future_take_out_delivery_adderess);
+        dest.writeString(old_futurey_take_out_total_delivery_name);
+        dest.writeString(old_future_take_out_total_delivery_contact_no);
+        dest.writeString(old_future_take_out_total_order_status);
+        dest.writeString(old_future_take_out_user_name);
+        dest.writeString(old_future_take_out_food_name);
+        dest.writeString(old_future_take_out_quantity);
+        dest.writeString(OrderType);
+        dest.writeString(avgPrice);
+        dest.writeString(item_category);
+        dest.writeString(food_type_id);
+        dest.writeString(half_price);
+        dest.writeString(details);
+        dest.writeString(itemImage);
+        dest.writeString(ServiceType);
+        dest.writeString(ItemEditId);
+        dest.writeString(service_type_id);
+        dest.writeString(QuantityType);
+        dest.writeString(homeDelFoodTime);
+        dest.writeString(inhouseDelFoodTime);
+        dest.writeString(takeoutDelFoodTime);
+        dest.writeString(catFoodTime);
+        dest.writeString(menuItemStatus);
+        dest.writeString(busAreaId);
+        dest.writeString(busAreaName);
+    }
 
-    public String item_category;
+    public String getBusAreaId() {
+        return busAreaId;
+    }
+
+    public void setBusAreaId(String busAreaId) {
+        this.busAreaId = busAreaId;
+    }
+
+    public String getBusAreaName() {
+        return busAreaName;
+    }
+
+    public void setBusAreaName(String busAreaName) {
+        this.busAreaName = busAreaName;
+    }
 
     @Override
     public String toString() {
@@ -148,47 +335,9 @@ public class OrderItemsDetailsModel implements Parcelable {
                 ", catFoodTime ='" + catFoodTime + '\'' +
                 ", menuItemStatus ='" + menuItemStatus + '\'' +
                 ", takeoutDelFoodTime ='" + takeoutDelFoodTime + '\'' +
+                ", busAreaId ='" + busAreaId + '\'' +
+                ", busAreaName ='" + busAreaName + '\'' +
                 '}';
-    }
-
-    public String Menu_id;
-    public String Cat_id;
-    public String Buss_id;
-    public String Message;
-    public String Date;
-    public String Status;
-    public String Name;
-    public String DeliveryAddress;
-    public String DineHawaiiID;
-    public String SmartphoneNo;
-    public String WaitStaffName;
-    public String ItemCustomiationList;
-    private String old_today_take_out_id;
-    private String old_today_take_out_order_id;
-    private String old_today_take_out_date;
-    private String old_today_take_out_business_name;
-    private String old_today_take_out_total_price;
-    private String old_today_take_out_delivery_adderess;
-    private String old_today_take_out_total_delivery_name;
-    private String old_today_take_out_total_delivery_contact_no;
-    private String old_today_take_out_total_order_status;
-    private String old_today_take_out_user_name;
-    private String old_today_take_out_food_name;
-    private String old_today_take_out_quantity;
-    private String old_future_take_out_id;
-    private String old_future_take_out_order_id;
-    private String old_future_take_out_date;
-    private String old_future_take_out_business_name;
-    private String old_future_take_out_total_price;
-    private String old_future_take_out_delivery_adderess;
-    private String old_futurey_take_out_total_delivery_name;
-    private String old_future_take_out_total_delivery_contact_no;
-    private String old_future_take_out_total_order_status;
-    private String old_future_take_out_user_name;
-    private String old_future_take_out_food_name;
-
-    public OrderItemsDetailsModel() {
-
     }
 
     public String getItemName() {
@@ -507,6 +656,10 @@ public class OrderItemsDetailsModel implements Parcelable {
         return old_future_take_out_quantity;
     }
 
+    public void setOld_future_take_out_quantity(String old_future_take_out_quantity) {
+        this.old_future_take_out_quantity = old_future_take_out_quantity;
+    }
+
     public String getAvgPrice() {
         return avgPrice;
     }
@@ -515,81 +668,12 @@ public class OrderItemsDetailsModel implements Parcelable {
         this.avgPrice = avgPrice;
     }
 
-    public void setOld_future_take_out_quantity(String old_future_take_out_quantity) {
-        this.old_future_take_out_quantity = old_future_take_out_quantity;
-    }
-
     public String getOrderType() {
         return OrderType;
     }
 
     public void setOrderType(String orderType) {
         OrderType = orderType;
-    }
-
-    public static Creator<OrderItemsDetailsModel> getCREATOR() {
-        return CREATOR;
-    }
-
-    private String old_future_take_out_quantity;
-    private String OrderType;
-
-    public OrderItemsDetailsModel(Parcel in) {
-        ItemName = in.readString();
-        ItemPrice = in.readString();
-        ItemQuantity = in.readString();
-        ItemTotalCost = in.readString();
-        Menu_id = in.readString();
-        Cat_id = in.readString();
-        Buss_id = in.readString();
-        Message = in.readString();
-        Date = in.readString();
-        Status = in.readString();
-        Name = in.readString();
-        DeliveryAddress = in.readString();
-        DineHawaiiID = in.readString();
-        SmartphoneNo = in.readString();
-        WaitStaffName = in.readString();
-        old_today_take_out_id = in.readString();
-        old_today_take_out_order_id = in.readString();
-        old_today_take_out_date = in.readString();
-        old_today_take_out_business_name = in.readString();
-        old_today_take_out_total_price = in.readString();
-        old_today_take_out_delivery_adderess = in.readString();
-        old_today_take_out_total_delivery_name = in.readString();
-        old_today_take_out_total_delivery_contact_no = in.readString();
-        old_today_take_out_total_order_status = in.readString();
-        old_today_take_out_user_name = in.readString();
-        old_today_take_out_food_name = in.readString();
-        old_today_take_out_quantity = in.readString();
-        old_future_take_out_id = in.readString();
-        old_future_take_out_order_id = in.readString();
-        old_future_take_out_date = in.readString();
-        old_future_take_out_business_name = in.readString();
-        old_future_take_out_total_price = in.readString();
-        old_future_take_out_delivery_adderess = in.readString();
-        old_futurey_take_out_total_delivery_name = in.readString();
-        old_future_take_out_total_delivery_contact_no = in.readString();
-        old_future_take_out_total_order_status = in.readString();
-        old_future_take_out_user_name = in.readString();
-        old_future_take_out_food_name = in.readString();
-        old_future_take_out_quantity = in.readString();
-        OrderType = in.readString();
-        avgPrice = in.readString();
-        item_category = in.readString();
-        food_type_id = in.readString();
-        half_price = in.readString();
-        details = in.readString();
-        itemImage = in.readString();
-        ServiceType = in.readString();
-        ItemEditId = in.readString();
-        service_type_id = in.readString();
-        QuantityType = in.readString();
-        homeDelFoodTime = in.readString();
-        inhouseDelFoodTime = in.readString();
-        takeoutDelFoodTime = in.readString();
-        menuItemStatus = in.readString();
-        catFoodTime = in.readString();
     }
 
     public String getFood_type_id() {
@@ -616,79 +700,10 @@ public class OrderItemsDetailsModel implements Parcelable {
         this.menuItemStatus = menuItemStatus;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(ItemName);
-        dest.writeString(ItemPrice);
-        dest.writeString(ItemQuantity);
-        dest.writeString(ItemTotalCost);
-        dest.writeString(Menu_id);
-        dest.writeString(Cat_id);
-        dest.writeString(Buss_id);
-        dest.writeString(Message);
-        dest.writeString(Date);
-        dest.writeString(Status);
-        dest.writeString(Name);
-        dest.writeString(DeliveryAddress);
-        dest.writeString(DineHawaiiID);
-        dest.writeString(SmartphoneNo);
-        dest.writeString(WaitStaffName);
-        dest.writeString(old_today_take_out_id);
-        dest.writeString(old_today_take_out_order_id);
-        dest.writeString(old_today_take_out_date);
-        dest.writeString(old_today_take_out_business_name);
-        dest.writeString(old_today_take_out_total_price);
-        dest.writeString(old_today_take_out_delivery_adderess);
-        dest.writeString(old_today_take_out_total_delivery_name);
-        dest.writeString(old_today_take_out_total_delivery_contact_no);
-        dest.writeString(old_today_take_out_total_order_status);
-        dest.writeString(old_today_take_out_user_name);
-        dest.writeString(old_today_take_out_food_name);
-        dest.writeString(old_today_take_out_quantity);
-        dest.writeString(old_future_take_out_id);
-        dest.writeString(old_future_take_out_order_id);
-        dest.writeString(old_future_take_out_date);
-        dest.writeString(old_future_take_out_business_name);
-        dest.writeString(old_future_take_out_total_price);
-        dest.writeString(old_future_take_out_delivery_adderess);
-        dest.writeString(old_futurey_take_out_total_delivery_name);
-        dest.writeString(old_future_take_out_total_delivery_contact_no);
-        dest.writeString(old_future_take_out_total_order_status);
-        dest.writeString(old_future_take_out_user_name);
-        dest.writeString(old_future_take_out_food_name);
-        dest.writeString(old_future_take_out_quantity);
-        dest.writeString(OrderType);
-        dest.writeString(avgPrice);
-        dest.writeString(item_category);
-        dest.writeString(food_type_id);
-        dest.writeString(half_price);
-        dest.writeString(details);
-        dest.writeString(itemImage);
-        dest.writeString(ServiceType);
-        dest.writeString(ItemEditId);
-        dest.writeString(service_type_id);
-        dest.writeString(QuantityType);
-        dest.writeString(homeDelFoodTime);
-        dest.writeString(inhouseDelFoodTime);
-        dest.writeString(takeoutDelFoodTime);
-        dest.writeString(catFoodTime);
-        dest.writeString(menuItemStatus);
-    }
+
 
     @Override
     public int describeContents() {
         return 0;
     }
-
-    public static final Creator<OrderItemsDetailsModel> CREATOR = new Creator<OrderItemsDetailsModel>() {
-        @Override
-        public OrderItemsDetailsModel createFromParcel(Parcel in) {
-            return new OrderItemsDetailsModel(in);
-        }
-
-        @Override
-        public OrderItemsDetailsModel[] newArray(int size) {
-            return new OrderItemsDetailsModel[size];
-        }
-    };
 }
