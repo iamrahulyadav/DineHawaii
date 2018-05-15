@@ -92,6 +92,7 @@ public class AppConstants {
         String COUPONURL_CUST = "normal_user/N_business_coupon_Api.php";
         String BUSINESS_ADD_POS_API = "business_user/N_business_Emp_Dueties_API.php";
         String VENDOR_LIST_API = "business_user/N_Business_vendors_Api.php";
+        String N_BUSINESS_NEW_API = "business_user/N_Business_New_Api.php";
         /**/
     }
 
