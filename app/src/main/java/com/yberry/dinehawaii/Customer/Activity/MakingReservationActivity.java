@@ -442,9 +442,7 @@ public class MakingReservationActivity extends AppCompatActivity implements Time
                             Log.e(TAG, "onResponse: reservation_pre_amout >> " + pre_amonut);
                             AppPreferencesBuss.setReservatId(MakingReservationActivity.this, reservation_id);
                             if (pre_amonut.equalsIgnoreCase("0") || isWaitList) {
-                                Intent in = new Intent(MakingReservationActivity.this, ThanksReservationActivity.class);
-                                startActivity(in);
-                                finish();
+                                showThankYouAlert();
                             } else {
                                 Intent in = new Intent(MakingReservationActivity.this, CustomerConfirmreservationActivity.class);
                                 in.putExtra("reservation_id", reservation_id);
@@ -466,6 +464,7 @@ public class MakingReservationActivity extends AppCompatActivity implements Time
                 if (progressHD != null && progressHD.isShowing())
                     progressHD.dismiss();
             }
+
             @SuppressLint("LongLogTag")
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
@@ -474,6 +473,21 @@ public class MakingReservationActivity extends AppCompatActivity implements Time
                     progressHD.dismiss();
             }
         });
+    }
+
+    private void showThankYouAlert() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MakingReservationActivity.this);
+        builder.setTitle("Thank You!");
+        builder.setMessage("Your reservation has done successfully.");
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                startActivity(new Intent(MakingReservationActivity.this, CustomerNaviDrawer.class));
+                finishAffinity();
+            }
+        });
+
+        builder.show();
     }
 
     private void setToolbar() {
@@ -591,7 +605,6 @@ public class MakingReservationActivity extends AppCompatActivity implements Time
                             JSONObject jsonObject1 = jsonArray.getJSONObject(0);
                             msg = jsonObject1.getString("msg");
                             Log.e("msg", msg);
-                            //Toast.makeText(MakingReservationActivity.this, msg, Toast.LENGTH_SHORT).show();
                             showNoTableDialog();
                         }
                         if (progressHD != null && progressHD.isShowing())

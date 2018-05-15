@@ -2,6 +2,7 @@ package com.yberry.dinehawaii.Customer.Activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -47,10 +48,10 @@ public class CustomerConfirmreservationActivity extends AppCompatActivity implem
             // or live (ENVIRONMENT_PRODUCTION)
             .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
             .clientId(AppConstants.PAYPAL_CLIENT_ID);
-    private ImageView back;
-    private String business_id, reservation_id, amount = "", name, time, date, partysize,tablename;
-    CustomTextView resName,resTime,resDate,resAmount;
+    CustomTextView resName, resTime, resDate, resAmount;
     CustomButton btndone;
+    private ImageView back;
+    private String business_id, reservation_id, amount = "", name, time, date, partysize, tablename;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,10 +85,10 @@ public class CustomerConfirmreservationActivity extends AppCompatActivity implem
         Log.e("res_id", reservation_id);
         Log.e("amount", amount);
 
-        resName = (CustomTextView)findViewById(R.id.rescustname);
-        resTime = (CustomTextView)findViewById(R.id.restime);
-        resDate = (CustomTextView)findViewById(R.id.resdate);
-        resAmount = (CustomTextView)findViewById(R.id.resamt);
+        resName = (CustomTextView) findViewById(R.id.rescustname);
+        resTime = (CustomTextView) findViewById(R.id.restime);
+        resDate = (CustomTextView) findViewById(R.id.resdate);
+        resAmount = (CustomTextView) findViewById(R.id.resamt);
         btndone = (CustomButton) findViewById(R.id.btnDone);
         btndone.setOnClickListener(this);
 
@@ -290,9 +291,7 @@ public class CustomerConfirmreservationActivity extends AppCompatActivity implem
                     JSONObject jsonObject = new JSONObject(resp);
                     if (jsonObject.getString("status").equalsIgnoreCase("200")) {
                         jsonObject.getString("message");
-                        Intent in = new Intent(CustomerConfirmreservationActivity.this, ThanksReservationActivity.class);
-                        startActivity(in);
-                        finish();
+                        showThankYouAlert();
                     } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
                         JSONArray jsonArray = jsonObject.getJSONArray("result");
                         JSONObject jsonObject1 = jsonArray.getJSONObject(0);
@@ -317,5 +316,18 @@ public class CustomerConfirmreservationActivity extends AppCompatActivity implem
 
 
     }
+    private void showThankYouAlert () {
+        AlertDialog.Builder builder = new AlertDialog.Builder(CustomerConfirmreservationActivity.this);
+        builder.setTitle("Thank You!");
+        builder.setMessage("Your reservation has done successfully.");
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                startActivity(new Intent(CustomerConfirmreservationActivity.this, CustomerNaviDrawer.class));
+                finishAffinity();
+            }
+        });
 
+        builder.show();
+    }
 }
