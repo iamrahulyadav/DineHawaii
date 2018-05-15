@@ -58,7 +58,7 @@ import static com.yberry.dinehawaii.Util.Util.context;
 public class OrderDetailActivty extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "OrderDetailActivty";
     public ItemAdapter itemAdapter;
-    LinearLayout llBasic, llItems, llDelivery, llloyalty, llOthers, lleamt, llecode, llccode, llcamt;
+    LinearLayout llVendor, llBasic, llItems, llDelivery, llloyalty, llOthers, lleamt, llecode, llccode, llcamt;
     ArrayList<OrderDetailItemData> itemList;
     View view;
     ArrayList<VendorModel> vendorList;
@@ -66,11 +66,11 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
     private RecyclerView mrecycler;
     private CustomTextView tvOrderId, tvDateTime, tvOrderStatus, tvOrderType, tvCustomerName, tvContactNo, tvDeliveryName,
             tvDeliveryAddress, tvPickupName, tvPickUpTime, tvTotalAmount, tvloyaltypt, tvegiftamt, tvcouponamt, tvegiftcode, tvcouponcode;
-    private CardView cardTakeout, cardDelivery;
+    private CardView cardTakeout, cardDelivery, cardVendor;
     private FloatingActionButton fabPending, fabInProgress, fabCompleted, fabDelPick, fabPrepared;
     private ProgressBar orderProgress;
     private String order_id, status = "", order_type = "", new_status = "";
-    private CustomTextView tvFabText;
+    private CustomTextView tvFabText, tvVendorContact, tvVendorBusiness, tvVendorName;
     private String selectedVendorId = "";
 
     @Override
@@ -114,7 +114,11 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
         tvPickUpTime = (CustomTextView) findViewById(R.id.tvPickUpTime);
         tvTotalAmount = (CustomTextView) findViewById(R.id.tvTotalAmount);
         tvFabText = (CustomTextView) findViewById(R.id.tvFabText);
+        tvVendorBusiness = (CustomTextView) findViewById(R.id.tvVendorBusiness);
+        tvVendorName = (CustomTextView) findViewById(R.id.tvVendorName);
+        tvVendorContact = (CustomTextView) findViewById(R.id.tvVendorContact);
 
+        llVendor = (LinearLayout) findViewById(R.id.llVendor);
         llBasic = (LinearLayout) findViewById(R.id.llBasic);
         llItems = (LinearLayout) findViewById(R.id.llItems);
         llDelivery = (LinearLayout) findViewById(R.id.llDelivery);
@@ -126,6 +130,8 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
         llloyalty = (LinearLayout) findViewById(R.id.llloyaltypt);
         cardTakeout = (CardView) findViewById(R.id.cardTakeout);
         cardDelivery = (CardView) findViewById(R.id.cardDelivery);
+        cardVendor = (CardView) findViewById(R.id.cardVendor);
+        cardVendor.setVisibility(View.GONE);
 
         ((CustomTextView) findViewById(R.id.basicinfo)).setOnClickListener(OrderDetailActivty.this);
         ((CustomTextView) findViewById(R.id.items)).setOnClickListener(OrderDetailActivty.this);
@@ -368,6 +374,14 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
         }
     }
 
+    private void vendorChildinfo() {
+        if (llVendor.getVisibility() == View.VISIBLE) {
+            llVendor.setVisibility(View.GONE);
+        } else {
+            llVendor.setVisibility(View.VISIBLE);
+        }
+    }
+
     private void itemChildinfo() {
         if (llItems.getVisibility() == View.VISIBLE) {
             llItems.setVisibility(View.GONE);
@@ -545,7 +559,13 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
                                     order_type = "delivery";
                                     tvFabText.setText("Delivered");
                                     cardDelivery.setVisibility(View.VISIBLE);
-                                    getDeliveryVendors();
+                                    if (listItem.getOrder_status().equalsIgnoreCase("Prepared")) {
+                                        cardVendor.setVisibility(View.VISIBLE);
+                                        tvVendorBusiness.setText(listItem.getVendor_business_name());
+                                        tvVendorName.setText(listItem.getVendor_name());
+                                        tvVendorContact.setText(listItem.getVendor_contact_no());
+                                    } else
+                                        getDeliveryVendors();
                                     break;
                                 case "Take-Out":
                                     tvFabText.setText("Picked-up");

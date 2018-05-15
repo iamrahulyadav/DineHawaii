@@ -199,6 +199,11 @@ public class AppConstants {
         String GETVENDORSMASTERFOODLIST = "Vendor_Master_Item_List";
         String GETVENDORCAT = "getCheckCategoryVendorList";
         String AddVENDOR = "Add_New_Vendor";
+        String ALL_DELIVERY_VENDORS = "All_Delivery_Vendors";
+        String ASSIGN_ORDER_DELIVERY = "Assign_Order_Delivery";
+        String ALLBUSAREA = "all_busi_area";
+        String EDITBUSAREA = "edit_busi_area";
+        String ADDBUSAREA = "add_busi_area";
     }
 
     public interface BUSINESS_FOOD_VENDOR_API {

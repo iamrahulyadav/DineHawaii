@@ -38,8 +38,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         double total = 0;
         OrderDetailItemData model = orderDetails.get(position);
         Log.e("ItemAdapter", "onBindViewHolder: model >> " + model);
-        holder.tvItemName.setText(model.getFoodName() + "\n(Qty : " + model.getQuantity() + ")");
-        if(model.getQuantity().equalsIgnoreCase("1/2"))
+        holder.tvItemName.setText(model.getFoodName() + "(Qty : " + model.getQuantity() + ")" + "\n" + "from " + model.getFood_area_name());
+        if (model.getQuantity().equalsIgnoreCase("1/2"))
             total = Double.parseDouble(model.getItemPrice());
         else
             total = Double.parseDouble(model.getItemPrice()) * Integer.parseInt(model.getQuantity());

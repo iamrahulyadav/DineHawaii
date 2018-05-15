@@ -272,6 +272,99 @@
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
+                android:id="@+id/cardVendor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_5sdp"
+                android:elevation="1dp"
+                android:visibility="visible"
+                app:cardCornerRadius="3dp"
+                app:cardElevation="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_8sdp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/llVendor"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:layout_below="@+id/basicDetails"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginRight="0dp"
+                        android:orientation="vertical"
+                        android:visibility="visible">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <com.yberry.dinehawaii.customview.CustomTextView
+                                style="@style/TextAppearance.AppCompat.Subhead"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/_3sdp"
+                                android:text="Delivery assiged to :"
+                                app:edittextfont="Raleway-Regular.ttf" />
+
+                            <com.yberry.dinehawaii.customview.CustomTextView
+                                android:id="@+id/tvVendorBusiness"
+                                style="@style/TextAppearance.AppCompat.Subhead"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/_3sdp"
+                                android:text="NA"
+                                app:edittextfont="Raleway-Regular.ttf" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <com.yberry.dinehawaii.customview.CustomTextView
+                                style="@style/TextAppearance.AppCompat.Subhead"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/_3sdp"
+                                android:text="Call :"
+                                app:edittextfont="Raleway-Regular.ttf" />
+
+                            <com.yberry.dinehawaii.customview.CustomTextView
+                                android:id="@+id/tvVendorContact"
+                                style="@style/TextAppearance.AppCompat.Subhead"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/_3sdp"
+                                android:autoLink="phone"
+                                android:drawableLeft="@drawable/ic_call_black_drawable"
+                                android:text="NA"
+                                app:edittextfont="Raleway-Regular.ttf" />
+
+                        </LinearLayout>
+
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/tvVendorName"
+                            style="@style/TextAppearance.AppCompat.Subhead"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="NA"
+                            android:visibility="gone"
+                            app:edittextfont="Raleway-Regular.ttf" />
+
+
+                    </LinearLayout>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/_5sdp"
@@ -299,7 +392,7 @@
                         android:padding="@dimen/_5sdp"
                         android:text="Basic Details"
                         android:textAllCaps="true"
-                        android:textColor="@color/edit_text_color"
+                        android:textColor="@color/colorPrimary"
                         app:edittextfont="Raleway-Bold.ttf" />
 
                     <LinearLayout
@@ -582,12 +675,6 @@
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
-            <!-- <View
-                 android:layout_marginTop="@dimen/_5sdp"
-                 android:layout_width="match_parent"
-                 android:layout_height="1dp"
-                 android:background="@color/colorDivider"></View>
- -->
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
@@ -618,7 +705,7 @@
                         android:padding="@dimen/_5sdp"
                         android:text="Items Details"
                         android:textAllCaps="true"
-                        android:textColor="@color/edit_text_color"
+                        android:textColor="@color/colorPrimary"
                         app:edittextfont="Raleway-Bold.ttf" />
 
                     <LinearLayout
@@ -920,7 +1007,7 @@
                         android:padding="@dimen/_5sdp"
                         android:text="Delivery Details"
                         android:textAllCaps="true"
-                        android:textColor="@color/edit_text_color"
+                        android:textColor="@color/colorPrimary"
                         app:edittextfont="Raleway-Bold.ttf" />
 
 
@@ -1033,12 +1120,11 @@
                                     style="@style/TextAppearance.AppCompat.Subhead"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-
                                     android:layout_margin="@dimen/_5sdp"
                                     android:autoLink="phone"
                                     android:clickable="true"
+                                    android:drawableLeft="@drawable/ic_call_black_drawable"
                                     android:text="NA"
-
                                     app:edittextfont="Raleway-Regular.ttf" />
                             </RelativeLayout>
 
@@ -1136,7 +1222,7 @@
                         android:padding="@dimen/_5sdp"
                         android:text="Pick-up &amp; Catering Details"
                         android:textAllCaps="true"
-                        android:textColor="@color/edit_text_color"
+                        android:textColor="@color/colorPrimary"
                         app:edittextfont="Raleway-Bold.ttf" />
 
                     <LinearLayout

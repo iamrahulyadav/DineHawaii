@@ -6,8 +6,7 @@ import java.io.Serializable;
  * Created by hvantage3 on 6/29/2017.
  */
 
-public class OrderDetails implements Serializable
-{
+public class OrderDetails implements Serializable {
 
 
     String id;
@@ -34,6 +33,63 @@ public class OrderDetails implements Serializable
     String coupon_code;
     String coupon_amount;
 
+    public String getVendor_name() {
+        return vendor_name;
+    }
+
+    public void setVendor_name(String vendor_name) {
+        this.vendor_name = vendor_name;
+    }
+
+    public String getVendor_business_name() {
+        return vendor_business_name;
+    }
+
+    public void setVendor_business_name(String vendor_business_name) {
+        this.vendor_business_name = vendor_business_name;
+    }
+
+    public String getVendor_contact_no() {
+        return vendor_contact_no;
+    }
+
+    public void setVendor_contact_no(String vendor_contact_no) {
+        this.vendor_contact_no = vendor_contact_no;
+    }
+
+    String vendor_name = "";
+    String vendor_business_name = "";
+    String vendor_contact_no = "";
+
+    public OrderDetails() {
+    }
+
+    public OrderDetails(String id, String order_id, String date, String business_name, String total_price, String delivery_adderess, String delivery_name, String delivery_contact_no, String order_status, String user_name,
+                        String food_name, String quantity, String order_type, String customization, String description, String loyalty_points,
+                        String e_gift_code, String e_gift_amount, String coupon_code, String coupon_amount) {
+        this.id = id;
+        this.order_id = order_id;
+        this.date = date;
+        this.business_name = business_name;
+        this.total_price = total_price;
+        this.delivery_adderess = delivery_adderess;
+        this.delivery_name = delivery_name;
+        this.delivery_contact_no = delivery_contact_no;
+        this.order_status = order_status;
+        this.user_name = user_name;
+        this.food_name = food_name;
+        this.quantity = quantity;
+        this.order_type = order_type;
+        this.customization = customization;
+        this.description = description;
+        this.loyalty_points = loyalty_points;
+        this.e_gift_code = e_gift_code;
+        this.e_gift_amount = e_gift_amount;
+        this.coupon_code = coupon_code;
+        this.coupon_amount = coupon_amount;
+
+    }
+
     public String getOrder_time() {
         return order_time;
     }
@@ -49,11 +105,6 @@ public class OrderDetails implements Serializable
     public void setDue_time(String due_time) {
         this.due_time = due_time;
     }
-
-
-    public OrderDetails() {
-    }
-
 
     public String getLoyalty_points() {
         return loyalty_points;
@@ -93,32 +144,6 @@ public class OrderDetails implements Serializable
 
     public void setCoupon_amount(String coupon_amount) {
         this.coupon_amount = coupon_amount;
-    }
-
-    public OrderDetails(String id, String order_id, String date, String business_name, String total_price, String delivery_adderess, String delivery_name, String delivery_contact_no, String order_status, String user_name,
-                        String food_name, String quantity, String order_type, String customization, String description, String loyalty_points,
-                        String e_gift_code, String e_gift_amount, String coupon_code, String coupon_amount) {
-        this.id = id;
-        this.order_id = order_id;
-        this.date = date;
-        this.business_name = business_name;
-        this.total_price = total_price;
-        this.delivery_adderess = delivery_adderess;
-        this.delivery_name = delivery_name;
-        this.delivery_contact_no = delivery_contact_no;
-        this.order_status = order_status;
-        this.user_name = user_name;
-        this.food_name = food_name;
-        this.quantity = quantity;
-        this.order_type = order_type;
-        this.customization = customization;
-        this.description = description;
-        this.loyalty_points = loyalty_points;
-        this.e_gift_code = e_gift_code;
-        this.e_gift_amount = e_gift_amount;
-        this.coupon_code = coupon_code;
-        this.coupon_amount = coupon_amount;
-
     }
 
     public String getId() {
@@ -273,6 +298,9 @@ public class OrderDetails implements Serializable
                 ", e_gift_amount='" + e_gift_amount + '\'' +
                 ", coupon_code='" + coupon_code + '\'' +
                 ", coupon_amount='" + coupon_amount + '\'' +
+                ", vendor_name='" + vendor_name + '\'' +
+                ", vendor_business_name='" + vendor_business_name+ '\'' +
+                ", vendor_contact_no='" + vendor_contact_no+ '\'' +
                 '}';
     }
 }

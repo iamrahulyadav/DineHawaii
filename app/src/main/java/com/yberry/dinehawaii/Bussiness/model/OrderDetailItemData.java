@@ -22,6 +22,18 @@ public class OrderDetailItemData {
     @Expose
     private String itemPrice;
 
+    public String getFood_area_name() {
+        return food_area_name;
+    }
+
+    public void setFood_area_name(String food_area_name) {
+        this.food_area_name = food_area_name;
+    }
+
+    @SerializedName("food_area_name")
+    @Expose
+    private String food_area_name;
+
 
     public String getQuantity() {
         return quantity;
@@ -71,6 +83,7 @@ public class OrderDetailItemData {
                 ", iteamMessage='" + iteamMessage + '\'' +
                 ", foodName='" + foodName + '\'' +
                 ", itemPrice='" + itemPrice + '\'' +
+                ", food_area_name='" + food_area_name + '\'' +
                 '}';
     }
 }

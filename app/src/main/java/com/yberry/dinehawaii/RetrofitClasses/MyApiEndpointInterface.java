@@ -94,7 +94,6 @@ public interface MyApiEndpointInterface {
     @POST(AppConstants.CUSTOMERENDPOINT.COUPONS)
     Call<JsonObject> available_coupon(@Body JsonObject jsonObject);
 
-
     @POST(AppConstants.CUSTOMERENDPOINT.ORDER_DETAILS)
     Call<JsonObject> order_details(@Body JsonObject jsonObject);
 
