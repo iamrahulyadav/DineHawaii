@@ -1114,21 +1114,19 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="0.6">
-
                                 <com.yberry.dinehawaii.customview.CustomTextView
                                     android:id="@+id/tvContactNo"
                                     style="@style/TextAppearance.AppCompat.Subhead"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_margin="@dimen/_5sdp"
+                                    android:layout_margin="@dimen/_3sdp"
                                     android:autoLink="phone"
-                                    android:clickable="true"
                                     android:drawableLeft="@drawable/ic_call_black_drawable"
                                     android:text="NA"
                                     app:edittextfont="Raleway-Regular.ttf" />
+
+
                             </RelativeLayout>
-
-
                         </LinearLayout>
 
                         <LinearLayout
@@ -1147,7 +1145,6 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_margin="@dimen/_5sdp"
-
                                     android:text="Address "
                                     app:edittextfont="@string/raleway_regular" />
                             </RelativeLayout>

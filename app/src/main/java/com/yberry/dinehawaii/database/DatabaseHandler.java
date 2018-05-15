@@ -52,8 +52,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             + KEY_QUANT_TYPE + " TEXT "
             + ")";
 
-    // * ------------- Database --  Tables Names -------------//
-
 
     public DatabaseHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
@@ -173,7 +171,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public boolean hasCartData() {
         boolean hasResult = false;
-        SQLiteDatabase myDataBase = this.getReadableDatabase();
+        SQLiteDatabase myDataBase = getReadableDatabase();
 
         String queary = "select * from cartitems";
 

@@ -559,7 +559,7 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
                                     order_type = "delivery";
                                     tvFabText.setText("Delivered");
                                     cardDelivery.setVisibility(View.VISIBLE);
-                                    if (listItem.getOrder_status().equalsIgnoreCase("Prepared")) {
+                                    if (!listItem.getOrder_status().equalsIgnoreCase("In-Progress") || !listItem.getOrder_status().equalsIgnoreCase("Pending")) {
                                         cardVendor.setVisibility(View.VISIBLE);
                                         tvVendorBusiness.setText(listItem.getVendor_business_name());
                                         tvVendorName.setText(listItem.getVendor_name());

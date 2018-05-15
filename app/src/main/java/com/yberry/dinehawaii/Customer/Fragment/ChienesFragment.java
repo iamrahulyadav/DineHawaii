@@ -53,7 +53,6 @@ public class ChienesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.activity_chienes, container, false);
-
         mContext = getActivity();
         initCompnent();
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(new CounterReciever(), new IntentFilter("update_cart_count"));
@@ -99,12 +98,12 @@ public class ChienesFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        getCounterData();
+        getCounterData(mContext);
     }
 
-    private void getCounterData() {
-        if (new DatabaseHandler(getActivity()).hasCartData()) {
-            ArrayList<OrderItemsDetailsModel> cartItems = new DatabaseHandler(getActivity()).getCartItems(AppPreferences.getBusiID(getActivity()));  //database data
+    private void getCounterData(Context context) {
+        if (new DatabaseHandler(context).hasCartData()) {
+            ArrayList<OrderItemsDetailsModel> cartItems = new DatabaseHandler(context).getCartItems(AppPreferences.getBusiID(context));  //database data
             Log.d("cartItems", String.valueOf(cartItems.size()));
             tvCountBadge.setText(String.valueOf(cartItems.size()));
         } else {
@@ -122,7 +121,7 @@ public class ChienesFragment extends Fragment {
         @Override
         public void onReceive(Context context, Intent intent) {
             Log.e("CounterReciever", "onReceive:");
-            getCounterData();
+            getCounterData(context);
         }
     }
 
