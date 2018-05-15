@@ -1503,6 +1503,11 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void placeOrder() {
+        final ProgressHUD progressHD = ProgressHUD.show(CheckOutActivity.this, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+            }
+        });
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("method", AppConstants.CUSTOMER_USER.GET_ORDER_DETAILS);
         JsonObject object = new JsonObject();
@@ -1545,10 +1550,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         jsonObject.add("orderDetails", jsonArray);
 
         Log.e(TAG, "placeOrder: Request >> " + jsonObject);
-        placeOrderTask(jsonObject);
-    }
 
-    private void placeOrderTask(JsonObject jsonObject) {
         MyApiEndpointInterface apiService = ApiClient.getClient().create(MyApiEndpointInterface.class);
         Call<JsonObject> call = apiService.order_details(jsonObject);
         call.enqueue(new Callback<JsonObject>() {
@@ -1561,6 +1563,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
 
                 try {
                     JSONObject jsonObject = new JSONObject(s);
+                    progressHD.dismiss();
                     if (jsonObject.getString("status").equalsIgnoreCase("200")) {
 
                         JSONArray jsonArray = jsonObject.getJSONArray("result");
@@ -1577,15 +1580,15 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                         showErrorDialog(object.getString("msg"));
                     }
                 } catch (JSONException e) {
+                    progressHD.dismiss();
                     e.printStackTrace();
                     showErrorDialog("Order Didn't Placed!");
-
                 }
-                // progressHD.dismiss();
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
+                progressHD.dismiss();
                 Log.e("ERROR", "Error On failure :- " + Log.getStackTraceString(t));
                 showErrorDialog("Order Didn't Placed!");
             }
