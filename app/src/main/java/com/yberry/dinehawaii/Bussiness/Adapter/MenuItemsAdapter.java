@@ -6,14 +6,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SwitchCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
@@ -37,7 +36,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -66,13 +64,12 @@ public class MenuItemsAdapter extends RecyclerView.Adapter<MenuItemsAdapter.View
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         final OrderItemsDetailsModel model = menudetils.get(position);
         String alottedDuty = AppPreferencesBuss.getAllottedDuties(context);
-        if (!TextUtils.isEmpty(alottedDuty)){
-            if (alottedDuty.contains("4") && alottedDuty.contains("5")){
+        if (!TextUtils.isEmpty(alottedDuty)) {
+            if (alottedDuty.contains("4") && alottedDuty.contains("5")) {
                 holder.itemSoldOut.setVisibility(View.VISIBLE);
-            }
-            else if (alottedDuty.contains("4")){
+            } else if (alottedDuty.contains("4")) {
                 holder.itemSoldOut.setVisibility(View.GONE);
-            }else {
+            } else {
                 holder.itemSoldOut.setVisibility(View.VISIBLE);
             }
 
@@ -95,11 +92,10 @@ public class MenuItemsAdapter extends RecyclerView.Adapter<MenuItemsAdapter.View
         if (model.getMenuItemStatus().equalsIgnoreCase("0")) {
             holder.itemSoldOut.setText("Sold Out");
             holder.itemSoldOut.setChecked(true);
-        }
-        else if (model.getMenuItemStatus().equalsIgnoreCase("1")){
+        } else if (model.getMenuItemStatus().equalsIgnoreCase("1")) {
             holder.itemSoldOut.setText("Make Sold Out");
             holder.itemSoldOut.setChecked(false);
-        }else {
+        } else {
             holder.itemSoldOut.setText("Make Sold Out");
             holder.itemSoldOut.setChecked(false);
         }
@@ -108,13 +104,13 @@ public class MenuItemsAdapter extends RecyclerView.Adapter<MenuItemsAdapter.View
         holder.itemSoldOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (model.getMenuItemStatus().equalsIgnoreCase("0")){
+                if (model.getMenuItemStatus().equalsIgnoreCase("0")) {
                     holder.itemSoldOut.setChecked(true);
-                    soldOutData("1",model.getItemEditId(),holder.itemSoldOut,position);
-                }else if(model.getMenuItemStatus().equalsIgnoreCase("1")){
+                    soldOutData("1", model.getItemEditId(), holder.itemSoldOut, position);
+                } else if (model.getMenuItemStatus().equalsIgnoreCase("1")) {
                     holder.itemSoldOut.setChecked(false);
-                    soldOutData("0",model.getItemEditId(),holder.itemSoldOut,position);
-                }else{
+                    soldOutData("0", model.getItemEditId(), holder.itemSoldOut, position);
+                } else {
                     holder.itemSoldOut.setChecked(false);
                 }
             }
@@ -134,8 +130,8 @@ public class MenuItemsAdapter extends RecyclerView.Adapter<MenuItemsAdapter.View
                 intent.putExtra("edit_id", model.getItemEditId());
                 intent.putExtra("foodtype_id", model.getFood_type_id());
                 intent.putExtra("service_id", model.getService_type_id());
-                intent.putExtra("area_id",model.getBusAreaId());
-                intent.putExtra("area_name",model.getBusAreaName());
+                intent.putExtra("area_id", model.getBusAreaId());
+                intent.putExtra("area_name", model.getBusAreaName());
                 context.startActivity(intent);
             }
         });
@@ -145,30 +141,26 @@ public class MenuItemsAdapter extends RecyclerView.Adapter<MenuItemsAdapter.View
             public void onClick(View v) {
                 delete_item_id = model.getCat_id();
                 Log.e(TAG, "model" + model.getCat_id());
-                new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE)
-                        .setTitleText("Are you sure?")
-                        .setContentText("Won't be able to recover this !")
-                        .setCancelText("No,cancel!")
-                        .setConfirmText("Yes,delete it!")
-                        .showCancelButton(true)
-                        .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                            @Override
-                            public void onClick(SweetAlertDialog sDialog) {
-                                sDialog.cancel();
-                            }
-                        })
-                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                            @Override
-                            public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                deleteFoodMenuItem(delete_item_id);
-                                sweetAlertDialog.cancel();
-                            }
-                        })
-                        .show();
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
+                alertDialog.setMessage("Are you sure?");
+                alertDialog.setIcon(R.drawable.ic_launcher_app);
+                alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        deleteFoodMenuItem(delete_item_id);
+                    }
+                });
+
+                alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                alertDialog.show();
             }
         });
 
     }
+
     private void soldOutData(String soldvalue, String itemEditId, final Switch itemSoldOut, final int position) {
         if (Util.isNetworkAvailable(context)) {
             final ProgressHUD progressHD = ProgressHUD.show(context, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
@@ -180,7 +172,7 @@ public class MenuItemsAdapter extends RecyclerView.Adapter<MenuItemsAdapter.View
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.BUSSINES_USER_BUSINESSAPI.SOLDMENUITEM);
             jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(context));
-            jsonObject.addProperty("menu_id",itemEditId);
+            jsonObject.addProperty("menu_id", itemEditId);
             jsonObject.addProperty("menu_status", soldvalue);
             jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(context));
             Log.e(TAG, "solditem json" + jsonObject.toString());
@@ -201,11 +193,11 @@ public class MenuItemsAdapter extends RecyclerView.Adapter<MenuItemsAdapter.View
                             notifyDataSetChanged();
                             JSONArray jsonArray = jsonObject.getJSONArray("result");
                             JSONObject object = jsonArray.getJSONObject(0);
-                            if (menudetils.get(position).getMenuItemStatus().equalsIgnoreCase("0")){
+                            if (menudetils.get(position).getMenuItemStatus().equalsIgnoreCase("0")) {
                                 menudetils.get(position).setMenuItemStatus("1");
-                            }else if (menudetils.get(position).getMenuItemStatus().equalsIgnoreCase("1")){
+                            } else if (menudetils.get(position).getMenuItemStatus().equalsIgnoreCase("1")) {
                                 menudetils.get(position).setMenuItemStatus("0");
-                            }else{
+                            } else {
                                 menudetils.get(position).setMenuItemStatus("0");
                             }
                             Toast.makeText(context, object.getString("msg"), Toast.LENGTH_SHORT).show();
@@ -325,7 +317,7 @@ public class MenuItemsAdapter extends RecyclerView.Adapter<MenuItemsAdapter.View
             name = (CustomTextView) itemView.findViewById(R.id.item_name);
             price = (CustomTextView) itemView.findViewById(R.id.item_price);
             delete_item = (ImageView) itemView.findViewById(R.id.deleteFood);
-            itemSoldOut = (Switch)itemView.findViewById(R.id.switchSoldOut);
+            itemSoldOut = (Switch) itemView.findViewById(R.id.switchSoldOut);
         }
     }
 }
