@@ -54,7 +54,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
-//import static com.yberry.dinehawaii.Bussiness.Activity.BusinessNaviDrawer.headText;
+
 
 /**
  * A simple {@link Fragment} subclass.
