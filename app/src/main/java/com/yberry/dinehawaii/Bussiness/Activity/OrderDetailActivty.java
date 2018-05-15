@@ -14,9 +14,12 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +37,7 @@ import com.yberry.dinehawaii.Util.AppPreferencesBuss;
 import com.yberry.dinehawaii.Util.ProgressBarAnimation;
 import com.yberry.dinehawaii.Util.ProgressHUD;
 import com.yberry.dinehawaii.customview.CustomTextView;
+import com.yberry.dinehawaii.vendor.Model.VendorModel;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -53,23 +57,20 @@ import static com.yberry.dinehawaii.Util.Util.context;
 public class OrderDetailActivty extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "OrderDetailActivty";
     public ItemAdapter itemAdapter;
-    String order_id;
     LinearLayout llBasic, llItems, llDelivery, llloyalty, llOthers, lleamt, llecode, llccode, llcamt;
     ArrayList<OrderDetailItemData> itemList;
+    View view;
+    ArrayList<VendorModel> vendorList;
     private ImageView back;
     private RecyclerView mrecycler;
-    private LinearLayoutManager mLayoutManager;
     private CustomTextView tvOrderId, tvDateTime, tvOrderStatus, tvOrderType, tvCustomerName, tvContactNo, tvDeliveryName,
-            tvDeliveryAddress, tvPickupName, tvPickUpTime, tvTotalAmount,tvloyaltypt, tvegiftamt, tvcouponamt, tvegiftcode, tvcouponcode;
+            tvDeliveryAddress, tvPickupName, tvPickUpTime, tvTotalAmount, tvloyaltypt, tvegiftamt, tvcouponamt, tvegiftcode, tvcouponcode;
     private CardView cardTakeout, cardDelivery;
-    private FloatingActionButton fabPending, fabInProgress, fabCompleted;
+    private FloatingActionButton fabPending, fabInProgress, fabCompleted, fabDelPick, fabPrepared;
     private ProgressBar orderProgress;
-    private FloatingActionButton fabDelPick;
-    private String status = "";
-    private String order_type = "";
-    private String new_status = "";
+    private String order_id, status = "", order_type = "", new_status = "";
     private CustomTextView tvFabText;
-    View view;
+    private String selectedVendorId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +113,6 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
         tvTotalAmount = (CustomTextView) findViewById(R.id.tvTotalAmount);
         tvFabText = (CustomTextView) findViewById(R.id.tvFabText);
 
-
         llBasic = (LinearLayout) findViewById(R.id.llBasic);
         llItems = (LinearLayout) findViewById(R.id.llItems);
         llDelivery = (LinearLayout) findViewById(R.id.llDelivery);
@@ -130,16 +130,17 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
         ((CustomTextView) findViewById(R.id.delivery)).setOnClickListener(OrderDetailActivty.this);
         ((CustomTextView) findViewById(R.id.others)).setOnClickListener(OrderDetailActivty.this);
 
-
         orderProgress = (ProgressBar) findViewById(R.id.orderProgress);
 
         fabPending = (FloatingActionButton) findViewById(R.id.fabPending);
         fabInProgress = (FloatingActionButton) findViewById(R.id.fabInProgress);
+        fabPrepared = (FloatingActionButton) findViewById(R.id.fabPrepared);
         fabCompleted = (FloatingActionButton) findViewById(R.id.fabCompleted);
         fabDelPick = (FloatingActionButton) findViewById(R.id.fabDelPick);
 
         fabPending.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
         fabInProgress.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.fab_gray)));
+        fabPrepared.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.fab_gray)));
         fabCompleted.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.fab_gray)));
         fabDelPick.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.fab_gray)));
 
@@ -148,6 +149,7 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
         if (!getIntent().getAction().equalsIgnoreCase("customer")) {
             fabPending.setOnClickListener(this);
             fabInProgress.setOnClickListener(this);
+            fabPrepared.setOnClickListener(this);
             fabCompleted.setOnClickListener(this);
             fabDelPick.setOnClickListener(this);
         }
@@ -178,8 +180,7 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
     private void setAdapter() {
         itemList = new ArrayList<OrderDetailItemData>();
         mrecycler = (RecyclerView) findViewById(R.id.recycler_view);
-        mLayoutManager = new LinearLayoutManager(OrderDetailActivty.this);
-        mrecycler.setLayoutManager(mLayoutManager);
+        mrecycler.setLayoutManager(new LinearLayoutManager(OrderDetailActivty.this));
         mrecycler.setHasFixedSize(true);
         itemAdapter = new ItemAdapter(context, itemList);
         mrecycler.setAdapter(itemAdapter);
@@ -198,6 +199,15 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
         } else if (view.getId() == R.id.fabInProgress) {
             new_status = "In-Progress";
             showDialog();
+        } else if (view.getId() == R.id.fabPrepared) {
+            //new_status = "Prepared";
+            //showDialog();
+            if (order_type.equalsIgnoreCase("delivery"))
+                showDeliveryVendor();
+            else if (order_type.equalsIgnoreCase("pickup")) {
+                new_status = "Prepared";
+                showDialog();
+            }
         } else if (view.getId() == R.id.fabDelPick) {
             Log.e(TAG, "onClick: order_type >> " + order_type);
             if (order_type.equalsIgnoreCase("delivery"))
@@ -211,21 +221,71 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
         }
     }
 
+    private void showDeliveryVendor() {
+        android.app.AlertDialog.Builder dialog = new android.app.AlertDialog.Builder(OrderDetailActivty.this);
+        dialog.setTitle("Select Delivery Vendor");
+        final RadioGroup group = new RadioGroup(this);
+        for (int i = 0; i < vendorList.size(); i++) {
+            RadioButton button = new RadioButton(OrderDetailActivty.this);
+            button.setId(Integer.parseInt(vendorList.get(i).getVendorId()));
+            button.setText(vendorList.get(i).getVendorBusName());
+            RadioGroup.LayoutParams params = new RadioGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.setMargins(0, 10, 0, 0);
+            button.setLayoutParams(params);
+            group.addView(button);
+        }
+
+        group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                RadioButton radioButton = (RadioButton) group.findViewById(checkedId);
+                Log.e(TAG, "onClick: vendorText" + radioButton.getText().toString());
+
+            }
+        });
+        dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Log.e(TAG, "onClick: " + group.getCheckedRadioButtonId());
+                selectedVendorId = String.valueOf(group.getCheckedRadioButtonId());
+            }
+        });
+
+        dialog.setView(group);
+        dialog.show();
+
+
+    }
+
     private void setCompleted() {
         ProgressBarAnimation mProgressAnimation = new ProgressBarAnimation(orderProgress, 700);
-        mProgressAnimation.setProgress(300);
+        mProgressAnimation.setProgress(400);
         fabPending.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
         fabInProgress.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
+        fabPrepared.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
         fabDelPick.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
         fabCompleted.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
     }
 
     private void setDeliveredPicked() {
         ProgressBarAnimation mProgressAnimation = new ProgressBarAnimation(orderProgress, 700);
+        mProgressAnimation.setProgress(300);
+        fabPending.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
+        fabInProgress.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
+        fabPrepared.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
+        fabDelPick.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
+        fabCompleted.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.fab_gray)));
+    }
+
+    private void setPrepared() {
+        ProgressBarAnimation mProgressAnimation = new ProgressBarAnimation(orderProgress, 700);
         mProgressAnimation.setProgress(200);
         fabPending.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
         fabInProgress.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
-        fabDelPick.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
+        fabPrepared.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
+        fabDelPick.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.fab_gray)));
         fabCompleted.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.fab_gray)));
     }
 
@@ -234,15 +294,7 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
         mProgressAnimation.setProgress(100);
         fabPending.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
         fabInProgress.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
-        fabDelPick.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.fab_gray)));
-        fabCompleted.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.fab_gray)));
-    }
-
-    private void setPending() {
-        ProgressBarAnimation mProgressAnimation = new ProgressBarAnimation(orderProgress, 700);
-        mProgressAnimation.setProgress(0);
-        fabPending.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
-        fabInProgress.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.fab_gray)));
+        fabPrepared.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.fab_gray)));
         fabDelPick.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.fab_gray)));
         fabCompleted.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.fab_gray)));
     }
@@ -335,14 +387,21 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
                                 fabPending.setEnabled(false);
                                 fabInProgress.setEnabled(false);
                                 setInProgress();
+                            } else if (listItem.getOrder_status().equalsIgnoreCase("Prepared")) {
+                                fabPending.setEnabled(false);
+                                fabInProgress.setEnabled(false);
+                                fabPrepared.setEnabled(false);
+                                setPrepared();
                             } else if (listItem.getOrder_status().equalsIgnoreCase("Delivered") || listItem.getOrder_status().equalsIgnoreCase("Picked-up")) {
                                 fabPending.setEnabled(false);
                                 fabInProgress.setEnabled(false);
+                                fabPrepared.setEnabled(false);
                                 fabDelPick.setEnabled(false);
                                 setDeliveredPicked();
                             } else if (listItem.getOrder_status().equalsIgnoreCase("Completed")) {
                                 fabPending.setEnabled(false);
                                 fabInProgress.setEnabled(false);
+                                fabPrepared.setEnabled(false);
                                 fabDelPick.setEnabled(false);
                                 fabCompleted.setEnabled(false);
                                 setCompleted();
