@@ -92,7 +92,6 @@ public class AppConstants {
         String COUPONURL_CUST = "normal_user/N_business_coupon_Api.php";
         String BUSINESS_ADD_POS_API = "business_user/N_business_Emp_Dueties_API.php";
         String VENDOR_LIST_API = "business_user/N_Business_vendors_Api.php";
-        String N_BUSINESS_NEW_API = "business_user/N_Business_New_Api.php";
         /**/
     }
 
@@ -199,8 +198,6 @@ public class AppConstants {
         String GETVENDORSMASTERFOODLIST = "Vendor_Master_Item_List";
         String GETVENDORCAT = "getCheckCategoryVendorList";
         String AddVENDOR = "Add_New_Vendor";
-        String ALL_DELIVERY_VENDORS = "All_Delivery_Vendors";
-        String ASSIGN_ORDER_DELIVERY = "Assign_Order_Delivery";
     }
 
     public interface BUSINESS_FOOD_VENDOR_API {

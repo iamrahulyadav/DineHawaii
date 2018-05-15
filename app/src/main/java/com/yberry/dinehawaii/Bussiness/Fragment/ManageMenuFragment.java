@@ -340,7 +340,8 @@ public class ManageMenuFragment extends Fragment implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.spinSelectFoodType:
-                //foodlistdata();
+                food_type_id_list = "0";
+                listName="";
                 text_food.setText("");
                 Intent intent1 = new Intent(getContext(), SelectFoodTypeActivity.class);
                 startActivityForResult(intent1, 19);

@@ -21,8 +21,10 @@ public interface MyApiEndpointInterface {
 
     @POST(AppConstants.ENDPOINT.COUPONURL_CUST)
     Call<JsonObject> get_coupon_cust(@Body JsonObject jsonObject);
+
     @POST(AppConstants.ENDPOINT.VENDOR_ORDER_API)
     Call<JsonObject> vendorOrderUrl(@Body JsonObject jsonObject);
+
     @POST(AppConstants.ENDPOINT.GENERALAPI)
     Call<JsonObject> requestGeneral(@Body JsonObject jsonObject);
 
@@ -49,6 +51,9 @@ public interface MyApiEndpointInterface {
 
     @POST(AppConstants.ENDPOINT.BUSINESS_FOOD_VENDOR_API)
     Call<JsonObject> business_food_vendor_api(@Body JsonObject jsonObject);
+
+    @POST(AppConstants.ENDPOINT.BUSINESS_AREA_API)
+    Call<JsonObject> business_area_api(@Body JsonObject jsonObject);
 
     @POST(AppConstants.ENDPOINT.BUSINESS_ADD_POS_API)
     Call<JsonObject> business_add_pos_api(@Body JsonObject jsonObject);
