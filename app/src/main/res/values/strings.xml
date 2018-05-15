@@ -25,6 +25,7 @@
     <string name="search">SEARCH</string>
     <string name="submit">SUBMIT</string>
     <string name="text_21B">Please click on the paypal link below to initiate the first monthly payment and set up recuring payments for future months by entering your credit card or Bank account information into Paypal.It is not neccessary for you have a paypal account to intiate the payment</string>
+    <string name="text_place_order_payment">Please select the paypal link below to initial paypal payment for your order grand total.you may log into your paypal account or make payment using your credit card or bank account.</string>
 
     <string name="filterPrice">Filter Prices</string>
 

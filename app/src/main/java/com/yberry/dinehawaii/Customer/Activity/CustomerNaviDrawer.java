@@ -31,13 +31,13 @@ import com.squareup.picasso.Picasso;
 import com.yberry.dinehawaii.Customer.Fragment.CouponOffersFragment;
 import com.yberry.dinehawaii.Customer.Fragment.CustomerHomeFragment;
 import com.yberry.dinehawaii.Customer.Fragment.CustomerMyProfile;
-import com.yberry.dinehawaii.Customer.Fragment.RestaurantListFragment;
 import com.yberry.dinehawaii.Customer.Fragment.EGiftAndCoupons;
 import com.yberry.dinehawaii.Customer.Fragment.LoyaltyPointFragment;
 import com.yberry.dinehawaii.Customer.Fragment.MyReviews;
 import com.yberry.dinehawaii.Customer.Fragment.NotificationCustomerFragment;
 import com.yberry.dinehawaii.Customer.Fragment.OrderHistory;
 import com.yberry.dinehawaii.Customer.Fragment.ReservationOrWaitListManagement;
+import com.yberry.dinehawaii.Customer.Fragment.RestaurantListFragment;
 import com.yberry.dinehawaii.Customer.Fragment.SendEGiftVoucher;
 import com.yberry.dinehawaii.HomeScreenActivity;
 import com.yberry.dinehawaii.R;
@@ -265,7 +265,6 @@ public class CustomerNaviDrawer extends AppCompatActivity implements NavigationV
            /* headText.setText("Settings");
             fragment = new SettingFragment();*/
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(CustomerNaviDrawer.this);
-            alertDialog.setTitle("Dine Hawaii");
             alertDialog.setMessage("Do you want to logout?");
             alertDialog.setIcon(R.drawable.ic_launcher_app);
             alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {

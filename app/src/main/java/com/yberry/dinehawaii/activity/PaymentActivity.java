@@ -143,7 +143,6 @@ public class PaymentActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-
     }
 
 

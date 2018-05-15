@@ -1,6 +1,7 @@
 package com.yberry.dinehawaii.Customer.Activity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -29,6 +30,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -44,7 +46,12 @@ import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.paypal.android.sdk.payments.PayPalConfiguration;
+import com.paypal.android.sdk.payments.PayPalPayment;
+import com.paypal.android.sdk.payments.PayPalService;
+import com.paypal.android.sdk.payments.PaymentConfirmation;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.yberry.dinehawaii.Customer.Adapter.CheckOutItemAdapter;
 import com.yberry.dinehawaii.Customer.Adapter.OffersAdapter;
@@ -60,7 +67,6 @@ import com.yberry.dinehawaii.Util.Function;
 import com.yberry.dinehawaii.Util.ProgressHUD;
 import com.yberry.dinehawaii.Util.RecyclerItemClickListener;
 import com.yberry.dinehawaii.Util.Util;
-import com.yberry.dinehawaii.activity.PaymentActivity;
 import com.yberry.dinehawaii.customview.CustomButton;
 import com.yberry.dinehawaii.customview.CustomCheckBox;
 import com.yberry.dinehawaii.customview.CustomEditText;
@@ -72,6 +78,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -89,6 +96,12 @@ import static com.yberry.dinehawaii.Util.Function.fieldRequired;
 
 public class CheckOutActivity extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
 
+    public static final int PAYPAL_REQUEST_CODE = 123;
+    private static PayPalConfiguration config = new PayPalConfiguration()
+            // Start with mock environment.  When ready, switch to sandbox (ENVIRONMENT_SANDBOX)
+            // or live (ENVIRONMENT_PRODUCTION)
+            .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
+            .clientId(AppConstants.PAYPAL_CLIENT_ID);
     CustomTextView totalPrice, loylityBal, getax, CustPhn, CustAddr, CustOrTime, CustOrDate, tvTotalAmt, TvTotalWithTax, food_prepration_time;
     CustomEditText loyality_apply, giftcouponcode, custName, couponCodeText;
     CustomButton applygiftbtn, removeegift, applyLoyaltyPoints, removePoints, apply_coupon, remove_coupon;
@@ -716,7 +729,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         } else if (totalPrice.getText().toString().equalsIgnoreCase("00.0") || totalPrice.getText().toString().equalsIgnoreCase("0.0")) {
             Toast.makeText(this, "Amount can't be zero", Toast.LENGTH_SHORT).show();
         } else {
-            Intent intent = new Intent(getApplicationContext(), PaymentActivity.class);
+            /*Intent intent = new Intent(getApplicationContext(), PaymentActivity.class);
             AppPreferencesBuss.setfinalLoylityPoints(context, loyality_apply.getText().toString());
             AppPreferences.setDeliveryName(context, custName.getText().toString());
             AppPreferencesBuss.setGrandTotal(context, totalPrice.getText().toString());
@@ -730,7 +743,8 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
             intent.putExtra("offercoupon", coupon_id);
             startActivity(intent);
 
-            finish();
+            finish();*/
+            showPaymentDialog();
         }
     }
 
@@ -1350,8 +1364,65 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    private void showPaymentDialog() {
+        final Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.paypal_order_payment_view);
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.gravity = Gravity.CENTER;
+        dialog.getWindow().setAttributes(lp);
+
+        final CustomButton pay = (CustomButton) dialog.findViewById(R.id.pay);
+        CustomCheckBox checkBox = (CustomCheckBox) dialog.findViewById(R.id.checkbox);
+
+        pay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (Util.isNetworkAvailable(context)) {
+                    dialog.dismiss();
+                    getPayment(totalPrice.getText().toString());
+                } else
+                    Toast.makeText(context, "Please Connect to Internet", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b)
+                    pay.setVisibility(View.VISIBLE);
+                else
+                    pay.setVisibility(View.GONE);
+            }
+        });
+
+        if (!CheckOutActivity.this.isFinishing())
+            dialog.show();
+    }
+
+    private void getPayment(String amount) {
+        Log.d("hellooo", amount);
+        //Creating a paypalpayment
+        PayPalPayment payment = new PayPalPayment(new BigDecimal(amount + "0"), "USD", "Purchase Fee\n",
+                PayPalPayment.PAYMENT_INTENT_SALE);
+        //Creating Paypal Payment activity intent
+        Intent intent = new Intent(CheckOutActivity.this, com.paypal.android.sdk.payments.PaymentActivity.class);
+        //putting the paypal configuration to the intent
+        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
+        //Puting paypal payment to the intent
+        intent.putExtra(com.paypal.android.sdk.payments.PaymentActivity.EXTRA_PAYMENT, payment);
+        //Starting the intent activity for result
+        //the request code will be used on the method onActivityResult
+        startActivityForResult(intent, PAYPAL_REQUEST_CODE);
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
                 Place place = PlaceAutocomplete.getPlace(CheckOutActivity.this, data);
@@ -1368,7 +1439,209 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                 Log.e(TAG, "onActivityResult: result_error >> " + status.getStatusMessage());
             } else if (resultCode == RESULT_CANCELED) {
             }
+        } else if (requestCode == PAYPAL_REQUEST_CODE) {
+            //If the result is OK i.e. user has not canceled the payment
+            /*
+            {
+                "client": {
+                "environment": "sandbox",
+                        "paypal_sdk_version": "2.0.0",
+                        "platform": "iOS",
+                        "product_name": "PayPal iOS SDK;"
+            },
+                "response": {
+                "create_time": "2014-02-12T22:29:49Z",
+                        "id": "PAY-564191241M8701234KL57LXI",
+                        "intent": "sale",
+                        "state": "approved"
+            },
+                "response_type": "payment"
+            }
+        */
+
+            if (resultCode == Activity.RESULT_OK) {
+                //Getting the payment confirmation
+                PaymentConfirmation confirm = data.getParcelableExtra(com.paypal.android.sdk.payments.PaymentActivity.EXTRA_RESULT_CONFIRMATION);
+                //if confirmation is not null
+                if (confirm != null) {
+                    try {
+                        //Getting the payment details
+                        String paymentDetails = confirm.toJSONObject().toString(4);
+                        Log.i("paymentExample", paymentDetails);
+
+                        try {
+                            JSONObject jsonDetails = new JSONObject(paymentDetails);
+                            JSONObject jsonResponse = jsonDetails.getJSONObject("response");
+                            AppPreferences.setTranctionId(CheckOutActivity.this, jsonResponse.getString("id"));
+                            AppPreferences.setPaymentApproved(CheckOutActivity.this, jsonResponse.getString("state"));
+
+                            // String transaction_ID = jsonResponse.getString("id");
+                            String createTime = jsonResponse.getString("create_time");
+                            String intent = jsonResponse.getString("intent");
+                            String paymentState = jsonResponse.getString("state");
+                            //   Log.i("paymentExample", "RESPONSE :- \n" + "Transaction_ID :- " + transaction_ID + "\nCreate Time :- " + createTime +
+                            // "\nIntent :- " + intent + "\nPayment State :- " + paymentState);
+
+                        } catch (JSONException e) {
+                            Toast.makeText(CheckOutActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+
+                        placeOrder();
+                    } catch (JSONException e) {
+                        Log.e("paymentExample", "an extremely unlikely failure occurred: ", e);
+                    }
+                }
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+                Log.i("paymentExample", "The user canceled.");
+
+                Toast.makeText(getApplicationContext(), "Sorry!! Payment cancelled by User", Toast.LENGTH_SHORT).show();
+
+            } else if (resultCode == com.paypal.android.sdk.payments.PaymentActivity.RESULT_EXTRAS_INVALID) {
+                Log.i("paymentExample", "An invalid Payment or PayPalConfiguration was submitted. Please see the docs.");
+            }
         }
+    }
+
+    private void placeOrder() {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("method", AppConstants.CUSTOMER_USER.GET_ORDER_DETAILS);
+        JsonObject object = new JsonObject();
+        object.addProperty("business_id", AppPreferences.getBusiID(CheckOutActivity.this));
+        object.addProperty("user_id", AppPreferences.getCustomerid(CheckOutActivity.this));
+        object.addProperty("delivery_name", AppPreferences.getDeliveryName(CheckOutActivity.this));//, AppPreferencesBuss.getBussiId(getActivity()));
+        object.addProperty("delivery_address", AppPreferences.getDeliveryAddress(CheckOutActivity.this));
+        object.addProperty("delivery_mobile", AppPreferences.getDeliveryContact(CheckOutActivity.this));
+        object.addProperty("adderess_save_status", AppPreferences.getRadioValue(CheckOutActivity.this));
+        object.addProperty("paymentType", "paypal");
+        object.addProperty("txn_id", AppPreferences.getTranctionId(CheckOutActivity.this));
+        object.addProperty("payment_gross", AppPreferences.getPrice(CheckOutActivity.this));
+        object.addProperty("currency_code", "");
+        object.addProperty("payment_status", "pending");
+        object.addProperty("e_gift_balance", egiftamount);
+        object.addProperty("e_gift_id", egiftid);
+        object.addProperty("grandtotal", AppPreferencesBuss.getGrandTotal(context));
+        object.addProperty("loyalty_points", (AppPreferencesBuss.getFinalLoyalityPoint(context)));
+        object.addProperty("gratuity", (AppPreferencesBuss.getGratuity(context)));
+        object.addProperty("credits", (AppPreferencesBuss.getCredit(context)));
+        object.addProperty("order_type", AppPreferences.getOrderType(CheckOutActivity.this)); //  AppPreferences.getOrderType(ThankYouScreenActivity.this)
+        object.addProperty("today_time", AppPreferences.getOrderTime(CheckOutActivity.this)); //order time
+        object.addProperty("future_time", AppPreferences.getOrderTime(CheckOutActivity.this));
+        jsonObject.add("contactDetails", object);
+        Log.e("Place order request", object.toString());
+        JsonArray jsonArray = new JsonArray();
+        for (int i = 0; i < cartItemsList.size(); i++) {
+            OrderItemsDetailsModel model = cartItemsList.get(i);
+            JsonObject orderDetailsObject = new JsonObject();
+            orderDetailsObject.addProperty("menu_id", model.getMenu_id());
+            orderDetailsObject.addProperty("cat_id", model.getCat_id());
+            orderDetailsObject.addProperty("qty", model.getItemQuantity());
+            orderDetailsObject.addProperty("price", model.getItemPrice());
+            orderDetailsObject.addProperty("item_customization", model.getItemCustomiationList());
+            orderDetailsObject.addProperty("iteam_message", model.getMessage());
+            jsonArray.add(orderDetailsObject);
+            Log.e(TAG, orderDetailsObject.toString());
+        }
+
+        jsonObject.add("orderDetails", jsonArray);
+
+        Log.e(TAG, "placeOrder: Request >> " + jsonObject);
+        placeOrderTask(jsonObject);
+    }
+
+    private void placeOrderTask(JsonObject jsonObject) {
+        MyApiEndpointInterface apiService = ApiClient.getClient().create(MyApiEndpointInterface.class);
+        Call<JsonObject> call = apiService.order_details(jsonObject);
+        call.enqueue(new Callback<JsonObject>() {
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+
+                Log.e(TAG, "placeOrder: Response >> " + response.body().toString());
+                String s = response.body().toString();
+
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    if (jsonObject.getString("status").equalsIgnoreCase("200")) {
+
+                        JSONArray jsonArray = jsonObject.getJSONArray("result");
+                        JSONObject jsonObject1 = jsonArray.getJSONObject(0);
+                        String order_id = jsonObject1.getString("id");
+                        DatabaseHandler mydb = new DatabaseHandler(CheckOutActivity.this);
+                        mydb.deleteCartitem();
+                        showThankYouAlert(order_id);
+
+                    } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
+                        JSONArray jsonArray = jsonObject.getJSONArray("result");
+                        JSONObject object = jsonArray.getJSONObject(0);
+                        Log.e("onResponse", object.getString("msg"));
+                        showErrorDialog(object.getString("msg"));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    showErrorDialog("Order Didn't Placed!");
+
+                }
+                // progressHD.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.e("ERROR", "Error On failure :- " + Log.getStackTraceString(t));
+                showErrorDialog("Order Didn't Placed!");
+            }
+        });
+    }
+
+    private void showThankYouAlert(final String order_id) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Thank You!");
+        builder.setMessage("Order Placed Successfully");
+        ImageView img = new ImageView(CheckOutActivity.this);
+        img.setImageResource(R.drawable.thanks);
+        builder.setView(img);
+        builder.setPositiveButton("GO TO HOME", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                AppPreferences.setDeliveryName(context, "");
+                AppPreferences.setDeliveryContact(context, "");
+                AppPreferences.setDeliveryAddress(context, "");
+
+                Intent intent = new Intent(getApplicationContext(), CustomerNaviDrawer.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
+            }
+        });
+        builder.setNeutralButton("FEEDBACK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Intent intent1 = new Intent(getApplicationContext(), CustomerFeedbackActivity.class);
+                intent1.setAction("Order");
+                intent1.putExtra("orderid", order_id);
+                intent1.putExtra("busid", AppPreferences.getBusiID(CheckOutActivity.this));
+                startActivity(intent1);
+                finish();
+            }
+        });
+        builder.show();
+    }
+
+    private void showErrorDialog(String msg) {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(CheckOutActivity.this);
+        alertDialog.setMessage(msg);
+        alertDialog.setIcon(R.drawable.ic_launcher_app);
+        alertDialog.setPositiveButton("RETRY", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                placeOrder();
+            }
+        });
+
+        alertDialog.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        alertDialog.show();
     }
 
     public class InputFilterMinMax implements InputFilter {
@@ -1400,5 +1673,6 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
             return b > a ? c >= a && c <= b : c >= b && c <= a;
         }
     }
+
 
 }

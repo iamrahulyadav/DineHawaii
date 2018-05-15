@@ -14,17 +14,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <com.yberry.dinehawaii.customview.CustomTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_gravity="right"
-        android:background="@color/transparent_full"
-        android:padding="@dimen/_10sdp"
-        android:text="Screen No:90"
-        android:textColor="#000"
-        android:textSize="@dimen/_10sdp" />
-
     <View
         android:id="@+id/line2"
         android:layout_width="match_parent"

@@ -751,15 +751,6 @@ public class RestaurentDetailActivity extends AppCompatActivity {
                         if (object.getString("msg").equalsIgnoreCase("Some Error Occured")) {
                             nmenu.setVisibility(View.VISIBLE);
                             registerlayout.setVisibility(View.GONE);
-                           /* SweetAlertDialog pDialog = new SweetAlertDialog(RestaurentDetailActivity.this, SweetAlertDialog.ERROR_TYPE);
-                            pDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                @Override
-                                public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                    finish();
-                                }
-                            });
-                            pDialog.setTitleText("NO RECORDS FOUNDS");
-                            pDialog.show();*/
                         }
                     }
                 } catch (JSONException e) {
