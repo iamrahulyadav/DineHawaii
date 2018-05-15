@@ -92,7 +92,7 @@ public class AppConstants {
         String COUPONURL_CUST = "normal_user/N_business_coupon_Api.php";
         String BUSINESS_ADD_POS_API = "business_user/N_business_Emp_Dueties_API.php";
         String VENDOR_LIST_API = "business_user/N_Business_vendors_Api.php";
-        String BUSINESS_AREA_API = "business_user/N_Business_New_Api.php";
+        String N_BUSINESS_NEW_API = "business_user/N_Business_New_Api.php";
         /**/
     }
 
@@ -143,12 +143,9 @@ public class AppConstants {
         String CHECK_COUPON = "CheckCoupon";
         String ADDEMPPOS = "add_emp_position";
         String ADDEMPDUTY = "add_emp_duty";
-
     }
 
     public interface BUSSINES_USER_BUSINESSAPI {
-        String ADDBUSAREA = "add_busi_area";
-        String ALLBUSAREA = "all_busi_area";
         String PlACEVENDORORDER = "New_Vendor_Order";
         String GETSERVICEDATA = "BusinessView53";
         String UPDATEBUSINESS42C = "updateBusiness42C";                  //DONE
@@ -202,7 +199,6 @@ public class AppConstants {
         String GETVENDORSMASTERFOODLIST = "Vendor_Master_Item_List";
         String GETVENDORCAT = "getCheckCategoryVendorList";
         String AddVENDOR = "Add_New_Vendor";
-        String EDITBUSAREA="edit_busi_area";
     }
 
     public interface BUSINESS_FOOD_VENDOR_API {

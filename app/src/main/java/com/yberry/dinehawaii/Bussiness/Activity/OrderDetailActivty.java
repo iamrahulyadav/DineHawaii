@@ -39,6 +39,7 @@ import com.yberry.dinehawaii.Util.ProgressHUD;
 import com.yberry.dinehawaii.customview.CustomTextView;
 import com.yberry.dinehawaii.vendor.Model.VendorModel;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -77,6 +78,7 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_detail_activty);
         setToolbar();
+        vendorList = new ArrayList<VendorModel>();
         init();
         setAdapter();
 
@@ -146,13 +148,11 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
 
         orderProgress.setProgress(0);
 
-        if (!getIntent().getAction().equalsIgnoreCase("customer")) {
-            fabPending.setOnClickListener(this);
-            fabInProgress.setOnClickListener(this);
-            fabPrepared.setOnClickListener(this);
-            fabCompleted.setOnClickListener(this);
-            fabDelPick.setOnClickListener(this);
-        }
+        fabPending.setOnClickListener(this);
+        fabInProgress.setOnClickListener(this);
+        fabPrepared.setOnClickListener(this);
+        fabCompleted.setOnClickListener(this);
+        fabDelPick.setOnClickListener(this);
     }
 
     private void showDialog() {
@@ -222,6 +222,14 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
     }
 
     private void showDeliveryVendor() {
+        Log.e(TAG, "showDeliveryVendor: vendorList.size() >> " + vendorList.size());
+       /* vendorList = new ArrayList<VendorModel>();
+        VendorModel data1 = new VendorModel();
+        data1.setVendorId("1");
+        data1.setVendorBusName("Ashu Delivery Vendor");
+        data1.setVendorName("Ashutosh khare");
+        vendorList.add(data1);*/
+
         android.app.AlertDialog.Builder dialog = new android.app.AlertDialog.Builder(OrderDetailActivty.this);
         dialog.setTitle("Select Delivery Vendor");
         final RadioGroup group = new RadioGroup(this);
@@ -230,7 +238,7 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
             button.setId(Integer.parseInt(vendorList.get(i).getVendorId()));
             button.setText(vendorList.get(i).getVendorBusName());
             RadioGroup.LayoutParams params = new RadioGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            params.setMargins(0, 10, 0, 0);
+            params.setMargins(80, 10, 0, 0);
             button.setLayoutParams(params);
             group.addView(button);
         }
@@ -245,11 +253,17 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
 
             }
         });
-        dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        dialog.setPositiveButton("Select", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 Log.e(TAG, "onClick: " + group.getCheckedRadioButtonId());
-                selectedVendorId = String.valueOf(group.getCheckedRadioButtonId());
+                String vendorId = String.valueOf(group.getCheckedRadioButtonId());
+                assignDelivery(vendorId);
+            }
+        });
+        dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
             }
         });
 
@@ -257,6 +271,52 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
         dialog.show();
 
 
+    }
+
+    private void assignDelivery(String vendorId) {
+        final ProgressHUD progressHD = ProgressHUD.show(OrderDetailActivty.this, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+            }
+        });
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.BUSSINES_USER_BUSINESSAPI.ASSIGN_ORDER_DELIVERY);
+        jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(OrderDetailActivty.this));
+        jsonObject.addProperty("order_id", order_id);
+        jsonObject.addProperty("vendor_id", vendorId);
+        Log.e(TAG, "assignDelivery: Request >> " + jsonObject);
+
+        MyApiEndpointInterface apiService = ApiClient.getClient().create(MyApiEndpointInterface.class);
+        Call<JsonObject> call = apiService.n_business_new_api(jsonObject);
+
+        call.enqueue(new Callback<JsonObject>() {
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                String resp = response.body().toString();
+                Log.e(TAG, "assignDelivery: Response >> " + resp);
+                try {
+                    vendorList.clear();
+                    JSONObject jsonObject = new JSONObject(resp);
+                    if (jsonObject.getString("status").equalsIgnoreCase("200")) {
+                        new getOrderDetails().execute();
+                    } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
+                        Toast.makeText(OrderDetailActivty.this, "Some error occured", Toast.LENGTH_SHORT).show();
+                    }
+                    progressHD.dismiss();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.e(TAG, "error :- " + Log.getStackTraceString(t));
+                progressHD.dismiss();
+                Toast.makeText(context, "server not responding", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void setCompleted() {
@@ -332,6 +392,49 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
         }
     }
 
+    private void getDeliveryVendors() {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.BUSSINES_USER_BUSINESSAPI.ALL_DELIVERY_VENDORS);
+        jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(OrderDetailActivty.this));
+        jsonObject.addProperty("business_id", AppPreferencesBuss.getUserId(OrderDetailActivty.this));
+        Log.e(TAG, "getDeliveryVendors: Request >> " + jsonObject);
+
+        MyApiEndpointInterface apiService = ApiClient.getClient().create(MyApiEndpointInterface.class);
+        Call<JsonObject> call = apiService.n_business_new_api(jsonObject);
+
+        call.enqueue(new Callback<JsonObject>() {
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                String resp = response.body().toString();
+                Log.e(TAG, "getDeliveryVendors: Response >> " + resp);
+                try {
+                    vendorList.clear();
+                    JSONObject jsonObject = new JSONObject(resp);
+                    if (jsonObject.getString("status").equalsIgnoreCase("200")) {
+                        JSONArray jsonArray = jsonObject.getJSONArray("result");
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+                            Gson gson = new Gson();
+                            VendorModel model = gson.fromJson(String.valueOf(jsonObject1), VendorModel.class);
+                            vendorList.add(model);
+                        }
+                    } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.e(TAG, "error :- " + Log.getStackTraceString(t));
+                Toast.makeText(context, "Server not Responding", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     class getOrderDetails extends AsyncTask<Void, Void, Void> {
         ProgressHUD progressHD;
 
@@ -350,7 +453,7 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
         protected Void doInBackground(Void... voids) {
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.BUSSINES_USER_BUSINESSAPI.ORDER_DETAIL);
-            jsonObject.addProperty(AppConstants.KEY_USERID, AppPreferencesBuss.getUserId(OrderDetailActivty.this)); //7
+            jsonObject.addProperty(AppConstants.KEY_USERID, AppPreferencesBuss.getUserId(OrderDetailActivty.this));
             jsonObject.addProperty("order_id", order_id);
 
             Log.e(TAG, "Request GET ALL ORDERDETAIL" + jsonObject.toString());
@@ -442,6 +545,7 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
                                     order_type = "delivery";
                                     tvFabText.setText("Delivered");
                                     cardDelivery.setVisibility(View.VISIBLE);
+                                    getDeliveryVendors();
                                     break;
                                 case "Take-Out":
                                     tvFabText.setText("Picked-up");
@@ -491,9 +595,11 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
 
                 @Override
                 public void onFailure(Call<JsonObject> call, Throwable t) {
+                    progressHD.dismiss();
                     Log.e("Response: request 1", call.request().toString());
                     Log.e("Response: onFailure 1", t.toString());
-                    Toast.makeText(OrderDetailActivty.this, "Server not responding .... please try later", Toast.LENGTH_SHORT).show();
+                    publishProgress(400, "Server not responding...");
+
                 }
             });
             return null;
@@ -503,12 +609,22 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
             if (progressHD != null && progressHD.isShowing())
                 progressHD.dismiss();
             if (i == 400) {
-                progressHD.dismiss();
-                Toast.makeText(OrderDetailActivty.this, msg, Toast.LENGTH_SHORT).show();
+                new AlertDialog.Builder(OrderDetailActivty.this)
+                        .setMessage(msg)
+                        .setPositiveButton("Retry", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                new getOrderDetails().execute();
+                            }
+                        }).setNegativeButton("Go Back", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                }).show();
             }
         }
     }
-
 
     class CompleteOrderTask extends AsyncTask<Void, Void, Void> {
         ProgressHUD progressHD;
@@ -575,4 +691,5 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
             }
         }
     }
+
 }
