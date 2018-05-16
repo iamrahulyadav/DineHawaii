@@ -29,7 +29,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -371,13 +370,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         mDialog.getWindow().setAttributes(lp);
         LinearLayoutManager mLayoutManager;
         mRecyclerView = (RecyclerView) mDialog.findViewById(R.id.offers_recycler);
-        ImageView cancel = (ImageView) mDialog.findViewById(R.id.btnCancel);
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mDialog.cancel();
-            }
-        });
+
         mLayoutManager = new LinearLayoutManager(context);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
@@ -1173,7 +1166,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
             }
         });
 
-        Button dsubmit = (Button) view.findViewById(R.id.dsubmit);
+        CustomButton dsubmit = (CustomButton) view.findViewById(R.id.dsubmit);
         dsubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
