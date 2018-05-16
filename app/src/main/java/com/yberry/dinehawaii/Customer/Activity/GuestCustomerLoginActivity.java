@@ -214,17 +214,14 @@ public class GuestCustomerLoginActivity extends AppCompatActivity implements Vie
                     JsonObject result = jsonArray.get(0).getAsJsonObject();
                     User user = new Gson().fromJson(result,User.class);
                     Log.d("Response: user_id ", user.toString());
-
-                    /*:[{"user_id":"8","first_name":"ashu","last_name":"kh","email_id":"ashu@gmail.com","contact_no":"9713891879",
-                    "country_type":"+91","address":"Zanjeer wala square","city":"Inodre","state":"MP"}]*/
                     AppPreferences.setUserType(GuestCustomerLoginActivity.this,"CustomerUser");
                     AppPreferences.setCustomerid(GuestCustomerLoginActivity.this, String.valueOf(user.getId()));
                     AppPreferences.setEmailSetting(GuestCustomerLoginActivity.this,String.valueOf(user.getEmailId()));
                     AppPreferences.setCustomername(GuestCustomerLoginActivity.this, String.valueOf(user.getFName() +" "+user.getLName()));
                     AppPreferences.setCustomerMobile(GuestCustomerLoginActivity.this, String.valueOf(user.getMobile()));
                     AppPreferences.setCustomerAddress(GuestCustomerLoginActivity.this, String.valueOf(user.getAddress()) + ","+ user.getCity());
-                    AppPreferences.setCustAddrLat(GuestCustomerLoginActivity.this, String.valueOf(user.getAddress_Long()));
-                    AppPreferences.setCustAddrLong(GuestCustomerLoginActivity.this, String.valueOf(user.getUserImage()));
+                    AppPreferences.setCustAddrLat(GuestCustomerLoginActivity.this, String.valueOf(user.getAddress_Lat()));
+                    AppPreferences.setCustAddrLong(GuestCustomerLoginActivity.this, String.valueOf(user.getAddress_Long()));
                     if(user.getUserImage().length()==0){
                         AppPreferences.setCustomerPic(GuestCustomerLoginActivity.this, "");
                     }else {

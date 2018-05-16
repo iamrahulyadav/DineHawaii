@@ -29,7 +29,7 @@ import com.yberry.dinehawaii.Util.AppPreferencesBuss;
 import com.yberry.dinehawaii.Util.FragmentIntraction;
 import com.yberry.dinehawaii.Util.Util;
 import com.yberry.dinehawaii.customview.CustomTextView;
-import com.yberry.dinehawaii.vendor.Activity.DeliveryVendorDetailActivity;
+import com.yberry.dinehawaii.Bussiness.Activity.DeliveryChargesActivity;
 import com.yberry.dinehawaii.vendor.Fragment.ManageVendorsFragment;
 
 import retrofit2.Call;
@@ -494,7 +494,7 @@ public class BusinessHomeFragment41 extends Fragment {
         delivery_charge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), DeliveryVendorDetailActivity.class));
+                startActivity(new Intent(getActivity(), DeliveryChargesActivity.class));
             }
         });
     }

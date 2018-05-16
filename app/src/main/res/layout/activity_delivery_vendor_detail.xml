@@ -7,7 +7,7 @@
     android:background="@color/activityBackground"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    tools:context=".vendor.Activity.DeliveryVendorDetailActivity">
+    tools:context=".Bussiness.Activity.DeliveryChargesActivity">
 
     <include
         android:id="@+id/toolbar_bar"
@@ -26,6 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/_10sdp"
+            android:id="@+id/mainLayout"
             android:layout_marginTop="@dimen/_5sdp"
             android:layout_marginRight="@dimen/_10sdp"
             android:orientation="vertical">
@@ -165,20 +166,19 @@
                     <com.yberry.dinehawaii.customview.CustomEditText
                         android:id="@+id/etRangeCost1"
                         style="@style/TextAppearance.AppCompat.Small"
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/_50sdp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.15"
-                        android:hint="$"
+                        android:textAlignment="center"
                         android:inputType="number"
                         android:singleLine="true"
                         app:edittextfont="@string/raleway_regular" />
 
                     <com.yberry.dinehawaii.customview.CustomTextView
                         style="@style/TextAppearance.AppCompat.Small"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.6"
-                        android:text="is the minimum food cost for delivery"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:text="$ is the minimum food cost for delivery"
                         app:edittextfont="@string/raleway_bold" />
 
                 </LinearLayout>
@@ -191,29 +191,27 @@
                     <com.yberry.dinehawaii.customview.CustomEditText
                         android:id="@+id/etRangeCost2"
                         style="@style/TextAppearance.AppCompat.Small"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.15"
-                        android:hint="$"
+                        android:layout_width="@dimen/_50sdp"
+                        android:layout_height="match_parent"
                         android:inputType="number"
                         android:singleLine="true"
+                        android:textAlignment="center"
                         app:edittextfont="@string/raleway_regular" />
 
                     <com.yberry.dinehawaii.customview.CustomTextView
                         style="@style/TextAppearance.AppCompat.Small"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.45"
-                        android:text="if total food cost is less than"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:text="$ if total food cost is less than $"
                         app:edittextfont="@string/raleway_bold" />
 
                     <com.yberry.dinehawaii.customview.CustomEditText
                         android:id="@+id/etMinCostRange"
                         style="@style/TextAppearance.AppCompat.Small"
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/_50sdp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.15"
-                        android:hint="$"
+                        android:textAlignment="center"
                         android:inputType="number"
                         android:singleLine="true"
                         app:edittextfont="@string/raleway_regular" />
@@ -229,49 +227,46 @@
                     <com.yberry.dinehawaii.customview.CustomEditText
                         android:id="@+id/etRangeCost3"
                         style="@style/TextAppearance.AppCompat.Small"
-                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.2"
-                        android:hint="$"
+                        android:layout_width="@dimen/_50sdp"
+                        android:textAlignment="center"
                         android:inputType="number"
                         android:singleLine="true"
                         app:edittextfont="@string/raleway_regular" />
 
                     <com.yberry.dinehawaii.customview.CustomTextView
                         style="@style/TextAppearance.AppCompat.Small"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.4"
-                        android:text="if total food cost is"
+                        android:text="$ if total food cost is $"
+                        android:layout_marginTop="@dimen/_5sdp"
                         app:edittextfont="@string/raleway_bold" />
 
                     <com.yberry.dinehawaii.customview.CustomEditText
                         android:id="@+id/etRangeBetween1"
                         style="@style/TextAppearance.AppCompat.Small"
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/_50sdp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.2"
-                        android:hint="$"
+                        android:textAlignment="center"
                         android:inputType="number"
                         android:singleLine="true"
                         app:edittextfont="@string/raleway_regular" />
 
                     <com.yberry.dinehawaii.customview.CustomTextView
                         style="@style/TextAppearance.AppCompat.Small"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.2"
                         android:gravity="center"
-                        android:text="to"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:text="to $"
                         app:edittextfont="@string/raleway_bold" />
 
                     <com.yberry.dinehawaii.customview.CustomEditText
                         android:id="@+id/etRangeBetween2"
                         style="@style/TextAppearance.AppCompat.Small"
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/_50sdp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.2"
-                        android:hint="$"
+                        android:textAlignment="center"
                         android:inputType="number"
                         android:singleLine="true"
                         app:edittextfont="@string/raleway_regular" />

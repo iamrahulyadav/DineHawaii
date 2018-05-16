@@ -29,6 +29,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -130,8 +131,8 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
     private String minOrderValue = "0", takeOut_lead_time, catering_lead_days;
     private ArrayList<OrderItemsDetailsModel> cartItems;
     private EditText daddress;
-    private String latitude = "0.0";
-    private String longitude = "0.0";
+    private String latitude = "0.0", longitude = "0.0", setDefault = "0";
+    private CheckBox cbDefaultAddr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -417,7 +418,9 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                 inhouse_btn.setChecked(false);
                 catering_btn.setChecked(false);
                 take_way_btn.setChecked(false);
-                deliveryDialog.show();
+                if (!isFinishing()) {
+                    deliveryDialog.show();
+                }
                 break;
             case R.id.take_way_btn:
                 order_type = "11";
@@ -1142,6 +1145,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         final EditText dname = (EditText) view.findViewById(R.id.dname);
         final EditText dcontact = (EditText) view.findViewById(R.id.dcontact);
         daddress = (EditText) view.findViewById(R.id.daddress);
+        cbDefaultAddr = (CheckBox) view.findViewById(R.id.cbDefaultAddr);
         daddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -1183,7 +1187,6 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                     AppPreferences.setOrderType(context, order_type);
                     AppPreferences.setDeliveryName(context, dname.getText().toString());
                     AppPreferences.setDeliveryContact(context, dcontact.getText().toString());
-                    AppPreferences.setDeliveryAddress(context, daddress.getText().toString());
                     custNmLayout.setVisibility(View.VISIBLE);
                     custPhnLayout.setVisibility(View.VISIBLE);
                     custAddLayout.setVisibility(View.VISIBLE);
@@ -1196,6 +1199,16 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                     CustAddr.setText(daddress.getText().toString());
                     setFoodPrepTime(order_type);
                 }
+            }
+        });
+
+        cbDefaultAddr.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked)
+                    setDefault = "1";
+                else
+                    setDefault = "0";
             }
         });
         deliveryDialog.dismiss();
@@ -1493,6 +1506,10 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                             Toast.makeText(CheckOutActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
 
+                        if (latitude.equalsIgnoreCase("")||latitude.equalsIgnoreCase("0.0"))
+                            latitude = AppPreferences.getCustAddrLat(context);
+                        if (longitude.equalsIgnoreCase("")||longitude.equalsIgnoreCase("0.0"))
+                            longitude = AppPreferences.getCustAddrLong(context);
                         placeOrder();
                     } catch (JSONException e) {
                         Log.e("paymentExample", "an extremely unlikely failure occurred: ", e);
@@ -1501,7 +1518,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
             } else if (resultCode == Activity.RESULT_CANCELED) {
                 Log.i("paymentExample", "The user canceled.");
 
-                Toast.makeText(getApplicationContext(), "Sorry!! Payment cancelled by User", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Sorry!! Payment cancelled", Toast.LENGTH_SHORT).show();
 
             } else if (resultCode == com.paypal.android.sdk.payments.PaymentActivity.RESULT_EXTRAS_INVALID) {
                 Log.i("paymentExample", "An invalid Payment or PayPalConfiguration was submitted. Please see the docs.");
@@ -1538,6 +1555,9 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         object.addProperty("order_type", AppPreferences.getOrderType(CheckOutActivity.this)); //  AppPreferences.getOrderType(ThankYouScreenActivity.this)
         object.addProperty("today_time", AppPreferences.getOrderTime(CheckOutActivity.this)); //order time
         object.addProperty("future_time", AppPreferences.getOrderTime(CheckOutActivity.this));
+        object.addProperty("address_lat", latitude);
+        object.addProperty("address_long", longitude);
+        object.addProperty("set_as_default", setDefault);
         jsonObject.add("contactDetails", object);
         Log.e("Place order request", object.toString());
         JsonArray jsonArray = new JsonArray();
@@ -1579,6 +1599,13 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                         DatabaseHandler mydb = new DatabaseHandler(CheckOutActivity.this);
                         mydb.deleteCartitem();
                         showThankYouAlert(order_id);
+                        Log.e(TAG, "onResponse: setDefault>>>>>>"+setDefault );
+                        if (setDefault.equalsIgnoreCase("1")) {
+                            AppPreferences.setDeliveryAddress(context, CustAddr.getText().toString());
+                            AppPreferences.setCustAddrLat(context,latitude);
+                            AppPreferences.setCustAddrLong(context,longitude);
+                        }
+
 
                     } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
                         JSONArray jsonArray = jsonObject.getJSONArray("result");

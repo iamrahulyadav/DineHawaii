@@ -130,8 +130,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_9sdp"
-
-                android:drawablePadding="@dimen/_5sdp"
                 android:gravity="center"
                 android:text="Delivery Address"
                 android:textColor="@color/colorGreen"
@@ -153,7 +151,19 @@
                 android:padding="@dimen/_5sdp"
                 app:edittextfont="Raleway-Regular.ttf" />
 
+
         </LinearLayout>
+
+        <CheckBox
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:buttonTint="@color/colorPrimary"
+            android:textColor="@color/colorPrimary"
+            android:id="@+id/cbDefaultAddr"
+            android:text="Set as default address"
+            android:layout_marginTop="@dimen/_9sdp" />
 
         <com.yberry.dinehawaii.customview.CustomButton
             android:id="@+id/dsubmit"
@@ -163,7 +173,7 @@
             android:layout_marginBottom="@dimen/_10sdp"
             android:layout_marginLeft="@dimen/_10sdp"
             android:layout_marginRight="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:background="@drawable/button_border_green"
             android:gravity="center"
             android:text="Confirm"

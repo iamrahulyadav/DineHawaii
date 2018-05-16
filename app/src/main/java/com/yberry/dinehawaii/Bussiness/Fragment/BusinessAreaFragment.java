@@ -181,7 +181,7 @@ public class BusinessAreaFragment extends Fragment implements View.OnClickListen
         Log.e(TAG, "getAllAreas: Request >> " + jsonObject);
 
         MyApiEndpointInterface apiService = ApiClient.getClient().create(MyApiEndpointInterface.class);
-        Call<JsonObject> call = apiService.business_area_api(jsonObject);
+        Call<JsonObject> call = apiService.business_new_api(jsonObject);
 
         call.enqueue(new Callback<JsonObject>() {
             @SuppressLint("LongLogTag")
@@ -302,7 +302,7 @@ public class BusinessAreaFragment extends Fragment implements View.OnClickListen
         });
 
         MyApiEndpointInterface apiService = ApiClient.getClient().create(MyApiEndpointInterface.class);
-        Call<JsonObject> call = apiService.business_area_api(jsonObject);
+        Call<JsonObject> call = apiService.business_new_api(jsonObject);
 
         call.enqueue(new Callback<JsonObject>() {
             @SuppressLint("LongLogTag")

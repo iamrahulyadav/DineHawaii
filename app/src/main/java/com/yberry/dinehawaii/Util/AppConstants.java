@@ -204,6 +204,8 @@ public class AppConstants {
         String ALLBUSAREA = "all_busi_area";
         String EDITBUSAREA = "edit_busi_area";
         String ADDBUSAREA = "add_busi_area";
+        String ADDDELIVERYCHARGES = "busiDeliveryCharges";
+        String GETDELIVERYCHARGES = "getBussDeliveryCharges";
     }
 
     public interface BUSINESS_FOOD_VENDOR_API {

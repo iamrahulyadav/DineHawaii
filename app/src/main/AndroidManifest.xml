@@ -391,7 +391,7 @@
         <activity android:name=".vendor.Activity.VendorListActivity" />
         <activity android:name=".vendor.Activity.BidItemListActivity" />
         <activity android:name=".vendor.Activity.VendorItemListActivity" />
-        <activity android:name=".vendor.Activity.DeliveryVendorDetailActivity"></activity>
+        <activity android:name=".Bussiness.Activity.DeliveryChargesActivity"></activity>
     </application>
 
 </manifest>
