@@ -3,7 +3,6 @@ package com.yberry.dinehawaii.Model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.google.gson.JsonArray;
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -12,14 +11,17 @@ import com.google.gson.annotations.SerializedName;
 
 public class User implements Parcelable {
 
-    public User(){
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
 
-    }
-
-
-    @SerializedName("user_id")
-    int Id;
-
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
     @SerializedName("method")
     public String Method;
     @SerializedName("first_name")
@@ -30,6 +32,49 @@ public class User implements Parcelable {
     public String EmailId;
     @SerializedName("contact_no")
     public String Mobile;
+    @SerializedName("country_type")
+    public String CountryCode;
+    @SerializedName("physical_address")
+    public String physicalAddress;
+    @SerializedName("address")
+    public String Address;
+    @SerializedName("city")
+    public String City;
+    @SerializedName("state")
+    public String State;
+    @SerializedName("latitude")
+    public String Address_Lat;
+    @SerializedName("longitude")
+    public String Address_Long;
+    @SerializedName("user_image")
+    public String UserImage;
+    @SerializedName("user_id")
+    int Id;
+
+    public User() {
+
+    }
+
+    protected User(Parcel in) {
+        Id = in.readInt();
+        Method = in.readString();
+        FName = in.readString();
+        LName = in.readString();
+        EmailId = in.readString();
+        Mobile = in.readString();
+        CountryCode = in.readString();
+        physicalAddress = in.readString();
+        Address = in.readString();
+        City = in.readString();
+        State = in.readString();
+        Address_Lat = in.readString();
+        Address_Long = in.readString();
+        UserImage = in.readString();
+    }
+
+    public static Creator<User> getCREATOR() {
+        return CREATOR;
+    }
 
     public int getId() {
         return Id;
@@ -127,53 +172,25 @@ public class User implements Parcelable {
         UserImage = userImage;
     }
 
-    public static Creator<User> getCREATOR() {
-        return CREATOR;
-    }
-
-    @SerializedName("country_type")
-    public String CountryCode;
-    @SerializedName("physical_address")
-    public String physicalAddress;
-    @SerializedName("address")
-    public String Address;
-    @SerializedName("city")
-    public String City;
-    @SerializedName("state")
-    public String State;
-    @SerializedName("user_image")
-    public String UserImage;
-
-    protected User(Parcel in) {
-        Id = in.readInt();
-        Method = in.readString();
-        FName = in.readString();
-        LName = in.readString();
-        EmailId = in.readString();
-        Mobile = in.readString();
-        CountryCode = in.readString();
-        physicalAddress = in.readString();
-        Address = in.readString();
-        City = in.readString();
-        State = in.readString();
-        UserImage = in.readString();
-    }
-
-    public static final Creator<User> CREATOR = new Creator<User>() {
-        @Override
-        public User createFromParcel(Parcel in) {
-            return new User(in);
-        }
-
-        @Override
-        public User[] newArray(int size) {
-            return new User[size];
-        }
-    };
-
     @Override
     public int describeContents() {
         return 0;
+    }
+
+    public String getAddress_Lat() {
+        return Address_Lat;
+    }
+
+    public void setAddress_Lat(String address_Lat) {
+        Address_Lat = address_Lat;
+    }
+
+    public String getAddress_Long() {
+        return Address_Long;
+    }
+
+    public void setAddress_Long(String address_Long) {
+        Address_Long = address_Long;
     }
 
     @Override
@@ -189,7 +206,9 @@ public class User implements Parcelable {
         dest.writeString(Address);
         dest.writeString(City);
         dest.writeString(State);
+        dest.writeString(Address_Lat);
         dest.writeString(UserImage);
+        dest.writeString(Address_Long);
     }
 
    /* @SerializedName("user_id")

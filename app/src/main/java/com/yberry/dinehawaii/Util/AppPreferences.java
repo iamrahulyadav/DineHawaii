@@ -57,12 +57,19 @@ public class AppPreferences {
     public static final String RESERVATION_AMOUNT = "reservation_amount";
     public static final String ORDER_MENU_ID = "menu_id_order";
     public static final String PREP_TIME = "prep_time";
-
-
+    public static final String CUST_ADDR_LAT = "cust_addr_lat";
+    public static final String CUST_ADDR_LONG = "cust_addr_long";
 
 
     private final SharedPreferences sharedPreferences;
     private final Editor editor;
+
+    public AppPreferences(Context context) {
+        String prefsFile = context.getPackageName();
+        sharedPreferences = context.getSharedPreferences(prefsFile, Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+    }
+
     public static String getLatitude(Context context) {
         SharedPreferences pereference = context.getSharedPreferences(
                 MBPREFERENCES, 0);
@@ -90,10 +97,33 @@ public class AppPreferences {
         editor.putString(LONGITUDE, id);
         editor.commit();
     }
-    public AppPreferences(Context context) {
-        String prefsFile = context.getPackageName();
-        sharedPreferences = context.getSharedPreferences(prefsFile, Context.MODE_PRIVATE);
-        editor = sharedPreferences.edit();
+
+    public static String getCustAddrLat(Context context) {
+        SharedPreferences pereference = context.getSharedPreferences(
+                MBPREFERENCES, 0);
+        return pereference.getString(CUST_ADDR_LAT, "");
+    }
+
+    public static void setCustAddrLat(Context context, String id) {
+        SharedPreferences preferences = context.getSharedPreferences(
+                MBPREFERENCES, 0);
+        Editor editor = preferences.edit();
+        editor.putString(CUST_ADDR_LAT, id);
+        editor.commit();
+    }
+
+    public static String getCustAddrLong(Context context) {
+        SharedPreferences pereference = context.getSharedPreferences(
+                MBPREFERENCES, 0);
+        return pereference.getString(CUST_ADDR_LONG, "");
+    }
+
+    public static void setCustAddrLong(Context context, String id) {
+        SharedPreferences preferences = context.getSharedPreferences(
+                MBPREFERENCES, 0);
+        Editor editor = preferences.edit();
+        editor.putString(CUST_ADDR_LONG, id);
+        editor.commit();
     }
 
     public static String getCustomerPic(Context context) {
@@ -189,7 +219,8 @@ public class AppPreferences {
         editor.putString(EMAIL_SETTING, email);
         editor.commit();
     }
- public static String getPrepTime(Context context) {
+
+    public static String getPrepTime(Context context) {
         SharedPreferences pereference = context.getSharedPreferences(
                 MBPREFERENCES, 0);
         return pereference.getString(PREP_TIME, "");
@@ -711,10 +742,6 @@ public class AppPreferences {
     }
 
 
-
-
-
-
     public static void setReservationId(Context context, String package_list) {
         SharedPreferences preferences = context.getSharedPreferences(
                 MBPREFERENCES, 0);
@@ -728,6 +755,7 @@ public class AppPreferences {
         SharedPreferences pereference = context.getSharedPreferences(MBPREFERENCES, 0);
         return pereference.getString(RESERVATION_ID, "");
     }
+
     public static void setReservationAmount(Context context, String amount) {
         SharedPreferences preferences = context.getSharedPreferences(
                 MBPREFERENCES, 0);
@@ -741,7 +769,6 @@ public class AppPreferences {
         SharedPreferences pereference = context.getSharedPreferences(MBPREFERENCES, 0);
         return pereference.getString(RESERVATION_AMOUNT, "");
     }
-
 
 
     public static String getMenuOrderId(Context context) {

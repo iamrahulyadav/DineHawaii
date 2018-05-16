@@ -223,7 +223,8 @@ public class GuestCustomerLoginActivity extends AppCompatActivity implements Vie
                     AppPreferences.setCustomername(GuestCustomerLoginActivity.this, String.valueOf(user.getFName() +" "+user.getLName()));
                     AppPreferences.setCustomerMobile(GuestCustomerLoginActivity.this, String.valueOf(user.getMobile()));
                     AppPreferences.setCustomerAddress(GuestCustomerLoginActivity.this, String.valueOf(user.getAddress()) + ","+ user.getCity());
-                  //  AppPreferences.setCustomerPic(GuestCustomerLoginActivity.this, String.valueOf(user.getUserImage()));
+                    AppPreferences.setCustAddrLat(GuestCustomerLoginActivity.this, String.valueOf(user.getAddress_Long()));
+                    AppPreferences.setCustAddrLong(GuestCustomerLoginActivity.this, String.valueOf(user.getUserImage()));
                     if(user.getUserImage().length()==0){
                         AppPreferences.setCustomerPic(GuestCustomerLoginActivity.this, "");
                     }else {

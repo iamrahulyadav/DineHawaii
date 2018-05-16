@@ -6,36 +6,33 @@
     android:background="#1e1e1e"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="@dimen/_10sdp"
+    android:padding="@dimen/_2sdp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <android.support.v7.widget.CardView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="@dimen/_70sdp"
+        android:layout_height="@dimen/_70sdp"
+        android:layout_marginTop="@dimen/_20sdp"
         android:paddingRight="8dp"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:paddingTop="8dp"
         app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="50dp">
+        app:cardCornerRadius="@dimen/_35sdp">
 
         <ImageView
             android:id="@+id/mUserImage"
             android:layout_width="match_parent"
-            android:src="@drawable/pic"
             android:layout_height="match_parent"
-            />
+            android:src="@drawable/pic" />
     </android.support.v7.widget.CardView>
 
     <com.yberry.dinehawaii.customview.CustomTextView
         android:id="@+id/customerName"
+        style="@style/TextAppearance.AppCompat.Subhead"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_5sdp"
         android:text="NA"
         android:textAlignment="center"
-        style="@style/TextAppearance.AppCompat.Subhead"
-        app:edittextfont="Raleway-Bold.ttf"/>
+        app:edittextfont="Raleway-Bold.ttf" />
 
 
-</LinearLayout>
-   <!-- android:layout_height="@dimen/nav_header_height"-->
+</LinearLayout><!-- android:layout_height="@dimen/nav_header_height"-->
