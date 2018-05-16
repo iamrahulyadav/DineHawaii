@@ -552,7 +552,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0.6"
                         android:text=""
-                        app:edittextfont="@string/raleway_bold"/>
+                        app:edittextfont="@string/raleway_bold" />
 
                 </LinearLayout>
 

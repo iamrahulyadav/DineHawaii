@@ -1,13 +1,8 @@
 package com.yberry.dinehawaii.Bussiness.Activity;
 
 import android.annotation.SuppressLint;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -34,7 +29,7 @@ import com.yberry.dinehawaii.Util.AppPreferences;
 import com.yberry.dinehawaii.Util.AppPreferencesBuss;
 import com.yberry.dinehawaii.Util.ProgressHUD;
 import com.yberry.dinehawaii.Util.Util;
-import com.yberry.dinehawaii.adapter.CheckBoxOptionAdapter;
+import com.yberry.dinehawaii.Bussiness.Adapter.CheckBoxOptionAdapter;
 import com.yberry.dinehawaii.customview.CustomTextView;
 
 import org.json.JSONArray;

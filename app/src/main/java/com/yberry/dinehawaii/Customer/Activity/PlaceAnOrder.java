@@ -25,7 +25,7 @@ import com.yberry.dinehawaii.RetrofitClasses.ApiClient;
 import com.yberry.dinehawaii.RetrofitClasses.MyApiEndpointInterface;
 import com.yberry.dinehawaii.Util.AppConstants;
 import com.yberry.dinehawaii.Util.ProgressHUD;
-import com.yberry.dinehawaii.adapter.PlaceAnOrderAdapter;
+import com.yberry.dinehawaii.Customer.Adapter.PlaceAnOrderAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;

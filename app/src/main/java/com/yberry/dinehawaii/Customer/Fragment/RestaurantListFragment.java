@@ -38,7 +38,6 @@ import com.yberry.dinehawaii.Util.AppPreferences;
 import com.yberry.dinehawaii.Util.DialogManager;
 import com.yberry.dinehawaii.Util.FragmentIntraction;
 import com.yberry.dinehawaii.Util.GPSTracker;
-import com.yberry.dinehawaii.adapter.SearchViewPagerAdapter;
 import com.yberry.dinehawaii.customview.CustomTextView;
 
 import java.util.ArrayList;
@@ -54,7 +53,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RestaurantListFragment extends Fragment {
     private static final String TAG = "RestaurantListFragment";
-    SearchViewPagerAdapter adapter;
     GPSTracker gpsTracker;
     FragmentIntraction intraction;
     private double latitude, longitude;

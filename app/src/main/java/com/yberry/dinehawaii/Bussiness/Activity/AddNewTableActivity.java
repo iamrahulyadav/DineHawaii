@@ -34,7 +34,7 @@ import com.yberry.dinehawaii.Util.AppConstants;
 import com.yberry.dinehawaii.Util.AppPreferencesBuss;
 import com.yberry.dinehawaii.Util.ProgressHUD;
 import com.yberry.dinehawaii.Util.Util;
-import com.yberry.dinehawaii.adapter.DialogMultipleChoiceAdapter;
+import com.yberry.dinehawaii.Bussiness.Adapter.DialogMultipleChoiceAdapter;
 import com.yberry.dinehawaii.customview.CustomEditText;
 import com.yberry.dinehawaii.customview.CustomTextView;
 

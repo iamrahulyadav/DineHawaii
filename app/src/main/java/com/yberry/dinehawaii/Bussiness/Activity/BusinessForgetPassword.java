@@ -8,12 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
-import com.yberry.dinehawaii.Customer.Activity.CustomerForgotPassword;
 import com.yberry.dinehawaii.R;
 import com.yberry.dinehawaii.RetrofitClasses.ApiClient;
 import com.yberry.dinehawaii.RetrofitClasses.MyApiEndpointInterface;
@@ -51,7 +49,7 @@ public class BusinessForgetPassword extends AppCompatActivity implements View.On
 
     private void init() {
         mEmail_id = (CustomEditText) findViewById(R.id.mEmail_id);
-      //  helpDialog = (ImageView) findViewById(R.id.help);
+        //  helpDialog = (ImageView) findViewById(R.id.help);
         ((CustomButton) findViewById(R.id.btn_password)).setOnClickListener(this);
        /* helpDialog.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,9 +143,10 @@ public class BusinessForgetPassword extends AppCompatActivity implements View.On
         jsonObject.addProperty("method", AppConstants.REGISTRATION.BUSINESSFORGETPASSWORD);
         jsonObject.addProperty("email_id", mEmail_id.getText().toString());
         jsonObject.addProperty("user_type", "2");
-        Log.e(TAG,"forget json"+jsonObject.toString());
+        Log.e(TAG, "forget json" + jsonObject.toString());
         changePassword(jsonObject);
     }
+
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btn_password) {
@@ -165,7 +164,6 @@ public class BusinessForgetPassword extends AppCompatActivity implements View.On
 
 
     }
-
 
 
 }

@@ -1,4 +1,4 @@
-package com.yberry.dinehawaii.adapter;
+package com.yberry.dinehawaii.Bussiness.Adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -18,12 +18,14 @@ import java.util.ArrayList;
  * Created by JAI on 2/9/2017.
  */
 
-public class CheckBoxMultipleServiceAdapter extends RecyclerView.Adapter<CheckBoxMultipleServiceAdapter.ViewHolder> implements View.OnClickListener{
+public class CheckBoxOptionAdapter extends RecyclerView.Adapter<CheckBoxOptionAdapter.ViewHolder> implements View.OnClickListener{
+    private static final String TAG = "CheckBoxOptionAdapter";
     private Context mCotnext;
     private ArrayList<CheckBoxPositionModel> list;
     public ArrayList<CheckBoxPositionModel> listValue = new ArrayList<CheckBoxPositionModel>();
     setOnClickListener setOnClickListener;
-    public CheckBoxMultipleServiceAdapter(Context mCotnext, ArrayList<CheckBoxPositionModel> list, setOnClickListener setOnClickListener) {
+
+    public CheckBoxOptionAdapter(Context mCotnext, ArrayList<CheckBoxPositionModel> list,setOnClickListener setOnClickListener) {
         this.mCotnext = mCotnext;
         this.list = list;
         this.setOnClickListener=setOnClickListener;
@@ -37,14 +39,15 @@ public class CheckBoxMultipleServiceAdapter extends RecyclerView.Adapter<CheckBo
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
+
         final CheckBoxPositionModel optionData = list.get(position);
         if (optionData != null) {
             holder.checkBoxPositionModel = optionData;
             holder.checkBox.setText(optionData.getName());
             ///holder.checkBox.setText(optionData.getFood_name());
-
             if(optionData.isChckStatus()){
                 holder.checkBox.setChecked(true);
+                listValue.add(optionData);
             }else {
                 holder.checkBox.setChecked(false);
             }
@@ -53,7 +56,6 @@ public class CheckBoxMultipleServiceAdapter extends RecyclerView.Adapter<CheckBo
             holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
                     optionData.setChckStatus(isChecked);
                     if(isChecked) {
                         listValue.add(optionData);
@@ -80,16 +82,26 @@ public class CheckBoxMultipleServiceAdapter extends RecyclerView.Adapter<CheckBo
         ArrayList<CheckBoxPositionModel> lists = new ArrayList<CheckBoxPositionModel>();
         for (CheckBoxPositionModel model : list) {
             if (model.isChckStatus()) {
-               // lists.add(model.getId());
+                // lists.add(model.getId());
                 lists.add(model);
-
-                Log.d("CheckBoxId", model.getId());
             }
-            Log.d("CheckBox",lists.toString());
-
+            Log.d(TAG , "CheckBox model "+lists.toString());
         }
         return lists;
     }
+    public ArrayList<String> getSelectedItemIds() {
+
+        ArrayList<String> lists = new ArrayList<String>();
+        for (CheckBoxPositionModel model : list) {
+            if (model.isChckStatus()) {
+                // lists.add(model.getId());
+                lists.add(model.getId());
+            }
+            Log.d(TAG, "CheckBox items id :- " + lists.toString());
+        }
+        return lists;
+    }
+
 
     @Override
     public void onClick(View view) {
@@ -103,7 +115,8 @@ public class CheckBoxMultipleServiceAdapter extends RecyclerView.Adapter<CheckBo
             super(itemView);
             itemView.setOnClickListener(this);
             checkBox = (CheckBox) itemView.findViewById(R.id.chk_bussineId);
-            checkBox.setChecked(false);
+            this.setIsRecyclable(false);
+           // checkBox.setChecked(false);
         }
 
         @Override
@@ -112,7 +125,9 @@ public class CheckBoxMultipleServiceAdapter extends RecyclerView.Adapter<CheckBo
 
         }
     }
+
     public interface setOnClickListener{
         public void onItemClick(CheckBoxPositionModel checkBoxPositionModel);
     }
+
 }

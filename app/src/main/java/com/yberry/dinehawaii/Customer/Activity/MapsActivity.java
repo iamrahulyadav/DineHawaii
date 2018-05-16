@@ -40,7 +40,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.yberry.dinehawaii.Model.ListItem;
 import com.yberry.dinehawaii.R;
 import com.yberry.dinehawaii.Util.ProgressHUD;
-import com.yberry.dinehawaii.adapter.CustomInfoWindowAdapter;
+import com.yberry.dinehawaii.Customer.Adapter.CustomInfoWindowAdapter;
 import com.yberry.dinehawaii.customview.CustomTextView;
 
 import java.util.ArrayList;

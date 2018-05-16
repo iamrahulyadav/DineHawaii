@@ -14,7 +14,7 @@ import android.view.MenuItem;
 
 import com.yberry.dinehawaii.Model.CheckBoxPositionModel;
 import com.yberry.dinehawaii.R;
-import com.yberry.dinehawaii.adapter.CheckBoxMultipleServiceAdapter;
+import com.yberry.dinehawaii.Bussiness.Adapter.CheckBoxMultipleServiceAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

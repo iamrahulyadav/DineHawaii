@@ -27,7 +27,7 @@ import com.yberry.dinehawaii.Util.AppConstants;
 import com.yberry.dinehawaii.Util.AppPreferencesBuss;
 import com.yberry.dinehawaii.Util.ProgressHUD;
 import com.yberry.dinehawaii.Util.Util;
-import com.yberry.dinehawaii.adapter.CheckBoxOptionAdapter;
+import com.yberry.dinehawaii.Bussiness.Adapter.CheckBoxOptionAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;

@@ -1,4 +1,4 @@
-package com.yberry.dinehawaii.adapter;
+package com.yberry.dinehawaii.Customer.Adapter;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;

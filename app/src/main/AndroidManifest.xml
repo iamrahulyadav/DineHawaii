@@ -87,10 +87,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.SelectFoodTypeActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
             android:name=".Bussiness.Activity.BusinessRestFirstSearchBusiness"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
@@ -139,10 +135,6 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".Customer.Activity.TableManagmentActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity
             android:name=".Customer.Activity.GuestCustomerLoginActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
@@ -156,34 +148,6 @@
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".Bussiness.Activity.FoodTypeActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity
-            android:name=".activity.DeliveryServiceActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity
-            android:name=".activity.DeliveryServicesNextActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity
-            android:name=".activity.DeliveryFoodActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity
-            android:name=".activity.DeliveryFoodNextActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity
-            android:name=".activity.ServiceContractorActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity
-            android:name=".activity.PackagesMarketingOptActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity
-            android:name=".activity.TableManagmentActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
@@ -206,10 +170,6 @@
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".Bussiness.Activity.BusinessRestSecondReg_20B"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity
-            android:name=".activity.PackageAndMarkatingOptions"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
@@ -265,18 +225,8 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".activity.FoodTypeUploadMenu"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity
-            android:name=".Bussiness.Activity.UploadMenuList"
-            android:label="@string/title_activity_upload_menu_list"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity
             android:name=".Bussiness.Activity.MultipleServiceType_52B"
             android:label="@string/title_activity_multiple_service_type_52_b" />
-        <activity android:name=".activity.ViewMenuActivity" />
         <activity
             android:name=".Bussiness.Activity.SelectJobTitleActivity"
             android:label="@string/title_activity_select_job_title"
@@ -291,14 +241,6 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".Customer.Activity.ConfirmCoupon"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity
-            android:name=".activity.ThankYouCouponActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity
             android:name=".Customer.Activity.CustomerFeedbackActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
@@ -308,10 +250,6 @@
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".Customer.Activity.CustomerConfirmreservationActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity
-            android:name=".Customer.Activity.ConfirmationRecieptActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
@@ -343,10 +281,6 @@
             android:name=".Bussiness.Activity.AddNewTableActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity
-            android:name=".Customer.Activity.HealthReportActivity"
-            android:label="@string/title_activity_health_report"
-            android:theme="@style/AppTheme" />
         <activity android:name=".Bussiness.Activity.EditMenuItemActivity" />
         <activity android:name=".Bussiness.Activity.SelectFoodTypeActivity" />
         <activity android:name=".Bussiness.Activity.ImportFoodTypesActivity" />

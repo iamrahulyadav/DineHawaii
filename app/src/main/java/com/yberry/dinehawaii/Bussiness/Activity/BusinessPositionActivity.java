@@ -32,7 +32,7 @@ import com.yberry.dinehawaii.Util.AppPreferencesBuss;
 import com.yberry.dinehawaii.Util.OnClickListener;
 import com.yberry.dinehawaii.Util.ProgressHUD;
 import com.yberry.dinehawaii.Util.Util;
-import com.yberry.dinehawaii.adapter.CheckBoxOptionAdapter;
+import com.yberry.dinehawaii.Bussiness.Adapter.CheckBoxOptionAdapter;
 import com.yberry.dinehawaii.customview.CustomEditText;
 import com.yberry.dinehawaii.customview.CustomTextView;
 

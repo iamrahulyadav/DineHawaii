@@ -28,8 +28,7 @@ import com.yberry.dinehawaii.RetrofitClasses.ApiClient;
 import com.yberry.dinehawaii.RetrofitClasses.MyApiEndpointInterface;
 import com.yberry.dinehawaii.Util.AppConstants;
 import com.yberry.dinehawaii.Util.ProgressHUD;
-import com.yberry.dinehawaii.adapter.CheckBoxOptionAdapter;
-import com.yberry.dinehawaii.adapter.SearchAdapterFood;
+import com.yberry.dinehawaii.Bussiness.Adapter.CheckBoxOptionAdapter;
 import com.yberry.dinehawaii.customview.CustomTextView;
 
 import org.json.JSONArray;
@@ -49,14 +48,13 @@ public class FoodTypeActivity extends AppCompatActivity {
     public static List<String> listAdd;
     RecyclerView recyclerView;
     CustomTextView titleText;
-    private ListView mListView;
     RecyclerView.LayoutManager recyclerViewlayoutManager;
     CheckBoxOptionAdapter ad;
     ArrayAdapter<CheckBoxPositionModel> adapter;
     ListView listview;
-    private SearchAdapterFood imageadapter;
-    private SearchView msearch;
     RelativeLayout layoutLinear;
+    private ListView mListView;
+    private SearchView msearch;
     private Context context;
 
     @Override
@@ -115,7 +113,7 @@ public class FoodTypeActivity extends AppCompatActivity {
             Log.v(TAG, " Job_title_id :- " + jobTitle_id);
             layoutLinear.setVisibility(View.GONE);
             getAllJobDuties(jobTitle_id);
-        }else if (getIntent().getAction().equalsIgnoreCase("serviceType")){
+        } else if (getIntent().getAction().equalsIgnoreCase("serviceType")) {
             String data = getIntent().getStringExtra("service");
             try {
                 JSONObject jsonObject = new JSONObject(data);
@@ -467,7 +465,7 @@ import com.yberry.dinehawaii.RetrofitClasses.ApiClient;
 import com.yberry.dinehawaii.RetrofitClasses.MyApiEndpointInterface;
 import com.yberry.dinehawaii.Util.AppConstants;
 import com.yberry.dinehawaii.Util.ProgressHUD;
-import com.yberry.dinehawaii.adapter.CheckBoxOptionAdapter;
+import com.yberry.dinehawaii.Bussiness.Adapter.CheckBoxOptionAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;

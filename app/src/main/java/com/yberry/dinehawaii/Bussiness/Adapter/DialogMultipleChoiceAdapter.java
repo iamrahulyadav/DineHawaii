@@ -1,4 +1,4 @@
-package com.yberry.dinehawaii.adapter;
+package com.yberry.dinehawaii.Bussiness.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;

@@ -6,13 +6,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
 
 import com.yberry.dinehawaii.Model.CheckBoxPositionModel;
 import com.yberry.dinehawaii.R;
-import com.yberry.dinehawaii.adapter.CheckBoxOptionAdapter;
 
 import java.util.ArrayList;
 
