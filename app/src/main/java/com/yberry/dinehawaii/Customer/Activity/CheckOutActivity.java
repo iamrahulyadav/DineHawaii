@@ -1506,10 +1506,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                             Toast.makeText(CheckOutActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
 
-                        if (latitude.equalsIgnoreCase("")||latitude.equalsIgnoreCase("0.0"))
-                            latitude = AppPreferences.getCustAddrLat(context);
-                        if (longitude.equalsIgnoreCase("")||longitude.equalsIgnoreCase("0.0"))
-                            longitude = AppPreferences.getCustAddrLong(context);
+
                         placeOrder();
                     } catch (JSONException e) {
                         Log.e("paymentExample", "an extremely unlikely failure occurred: ", e);
@@ -1538,7 +1535,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         object.addProperty("business_id", AppPreferences.getBusiID(CheckOutActivity.this));
         object.addProperty("user_id", AppPreferences.getCustomerid(CheckOutActivity.this));
         object.addProperty("delivery_name", AppPreferences.getDeliveryName(CheckOutActivity.this));//, AppPreferencesBuss.getBussiId(getActivity()));
-        object.addProperty("delivery_address", AppPreferences.getDeliveryAddress(CheckOutActivity.this));
+        object.addProperty("delivery_address", daddress.getText().toString());
         object.addProperty("delivery_mobile", AppPreferences.getDeliveryContact(CheckOutActivity.this));
         object.addProperty("adderess_save_status", AppPreferences.getRadioValue(CheckOutActivity.this));
         object.addProperty("paymentType", "paypal");
@@ -1599,11 +1596,11 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                         DatabaseHandler mydb = new DatabaseHandler(CheckOutActivity.this);
                         mydb.deleteCartitem();
                         showThankYouAlert(order_id);
-                        Log.e(TAG, "onResponse: setDefault>>>>>>"+setDefault );
+                        Log.e(TAG, "onResponse: setDefault>>>>>>" + setDefault);
                         if (setDefault.equalsIgnoreCase("1")) {
-                            AppPreferences.setDeliveryAddress(context, CustAddr.getText().toString());
-                            AppPreferences.setCustAddrLat(context,latitude);
-                            AppPreferences.setCustAddrLong(context,longitude);
+                            AppPreferences.setCustomerAddress(context, CustAddr.getText().toString());
+                            AppPreferences.setCustAddrLat(context, latitude);
+                            AppPreferences.setCustAddrLong(context, longitude);
                         }
 
 
@@ -1632,6 +1629,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
     private void showThankYouAlert(final String order_id) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Thank You!");
+        builder.setCancelable(false);
         builder.setMessage("Order Placed Successfully");
         ImageView img = new ImageView(CheckOutActivity.this);
         img.setImageResource(R.drawable.thanks);
