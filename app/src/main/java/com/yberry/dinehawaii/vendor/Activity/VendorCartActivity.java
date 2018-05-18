@@ -186,7 +186,7 @@ public class VendorCartActivity extends AppCompatActivity implements View.OnClic
 
     private void placeOrderData() {
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("method", AppConstants.BUSSINES_USER_BUSINESSAPI.PlACEVENDORORDER);
+        jsonObject.addProperty("method", AppConstants.BUSINESS_VENDOR_API.PlACEVENDORORDER);
         jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(context));
         jsonObject.addProperty("total_amount", total_amount.getText().toString());
         jsonObject.addProperty("vendor_id", vendor_id);

@@ -149,7 +149,7 @@ public class BidItemListActivity extends AppCompatActivity {
         });
 
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.BUSSINES_USER_BUSINESSAPI.GETVENDORSMASTERFOODLIST);
+        jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.BUSINESS_VENDOR_API.GETVENDORSMASTERFOODLIST);
         jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(context));
         jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(context));
         jsonObject.addProperty("category_id", category_id);

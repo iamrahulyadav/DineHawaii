@@ -67,7 +67,7 @@ public class AddNewVendorActivity extends AppCompatActivity implements View.OnCl
         });
 
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.BUSSINES_USER_BUSINESSAPI.MASTERVENDORLIST);
+        jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.BUSINESS_VENDOR_API.MASTERVENDORLIST);
         jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(context));
         jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(context));
         Log.e(TAG, "getAllVendors: Request >> " + jsonObject);
@@ -187,7 +187,7 @@ public class AddNewVendorActivity extends AppCompatActivity implements View.OnCl
         });
 
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.BUSSINES_USER_BUSINESSAPI.AddVENDOR);
+        jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.BUSINESS_VENDOR_API.AddVENDOR);
         jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(context));
         jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(context));
         jsonObject.addProperty("category_id", selectedVendorIds);

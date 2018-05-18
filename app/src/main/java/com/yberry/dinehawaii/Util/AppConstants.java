@@ -146,7 +146,6 @@ public class AppConstants {
     }
 
     public interface BUSSINES_USER_BUSINESSAPI {
-        String PlACEVENDORORDER = "New_Vendor_Order";
         String GETSERVICEDATA = "BusinessView53";
         String UPDATEBUSINESS42C = "updateBusiness42C";                  //DONE
         String UPDATEBUSINESS42D = "updateBusiness42D";                  //DONE
@@ -193,22 +192,17 @@ public class AppConstants {
         String EDITCOUPON = "EditCoupon";
         String SETLEADTIME = "setLeadTime";
         String GETLEADTIMES = "getLeadTimes";
-        String GETVENDORSLIST = "Vendors_List";
-        String MASTERVENDORLIST = "Vendor_Master_Category_List";
-        String GETVENDORSFOODLIST = "Vendor_Items_List";
-        String GETVENDORSMASTERFOODLIST = "Vendor_Master_Item_List";
-        String GETVENDORCAT = "getCheckCategoryVendorList";
-        String AddVENDOR = "Add_New_Vendor";
-        String ALL_DELIVERY_VENDORS = "All_Delivery_Vendors";
         String ASSIGN_ORDER_DELIVERY = "Assign_Order_Delivery";
         String ALLBUSAREA = "all_busi_area";
         String EDITBUSAREA = "edit_busi_area";
         String ADDBUSAREA = "add_busi_area";
         String ADDDELIVERYCHARGES = "busiDeliveryCharges";
         String GETDELIVERYCHARGES = "getBussDeliveryCharges";
+        String ALL_DELIVERY_VENDORS = "All_Delivery_Vendors";
+
     }
 
-    public interface BUSINESS_FOOD_VENDOR_API {
+    public interface BUSINESS_VENDOR_API {
         String ADD_FOOD_SERVICE = "add_food_service";                               //DONE
         String ADD_FOOD_DISTRIBUTION = "add_food_distribution";                     //DONE
         String ADD_SUPPLIER_VENDOR = "add_supplier_vendor";                     //DONE
@@ -219,6 +213,15 @@ public class AppConstants {
         String VIEW_FOOD_DISTRIBUTOR_MENU_PRICE = "view_food_distributor_menu_price";
         String VIEW_FOOD_SUPPLIER_MENU_PRICE = "view_food_supplier_menu_price";                   //DONE
         String VIEW_BUSINESS_SERVICE = "business_user/business_api_view.php";                   //DONE
+        String VENDORORDERHISTORY = "All_Other_Vendors_Order";
+        String GETVENDORSLIST = "Vendors_List";
+        String MASTERVENDORLIST = "Vendor_Master_Category_List";
+        String GETVENDORSFOODLIST = "Vendor_Items_List";
+        String GETVENDORSMASTERFOODLIST = "Vendor_Master_Item_List";
+        String GETVENDORCAT = "getCheckCategoryVendorList";
+        String AddVENDOR = "Add_New_Vendor";
+
+        String PlACEVENDORORDER = "New_Vendor_Order";
     }
 
     public interface BUSINESS_TABLE_SYSTEM_API {

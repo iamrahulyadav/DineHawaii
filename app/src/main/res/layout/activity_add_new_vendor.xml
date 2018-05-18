@@ -56,14 +56,14 @@
                 android:padding="@dimen/_5sdp"
                 android:singleLine="true"
                 android:textColor="@color/edit_text_color"
-                app:edittextfont="Raleway-Regular.ttf"></com.yberry.dinehawaii.customview.CustomEditText>
+                app:edittextfont="Raleway-Regular.ttf" />
 
             <View
                 android:layout_width="wrap_content"
                 android:layout_height="1dp"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginRight="@dimen/_10sdp"
-                android:background="@color/colorDivider"></View>
+                android:background="@color/colorDivider" />
 
             <com.yberry.dinehawaii.customview.CustomTextView
                 style="@style/TextAppearance.AppCompat.Subhead"
@@ -90,14 +90,14 @@
                 android:padding="@dimen/_5sdp"
                 android:singleLine="true"
                 android:textColor="@color/edit_text_color"
-                app:edittextfont="Raleway-Regular.ttf"></com.yberry.dinehawaii.customview.CustomEditText>
+                app:edittextfont="Raleway-Regular.ttf" />
 
             <View
                 android:layout_width="wrap_content"
                 android:layout_height="1dp"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginRight="@dimen/_10sdp"
-                android:background="@color/colorDivider"></View>
+                android:background="@color/colorDivider" />
 
 
             <com.yberry.dinehawaii.customview.CustomTextView
@@ -125,14 +125,14 @@
                 android:padding="@dimen/_5sdp"
                 android:singleLine="true"
                 android:textColor="@color/edit_text_color"
-                app:edittextfont="Raleway-Regular.ttf"></com.yberry.dinehawaii.customview.CustomEditText>
+                app:edittextfont="Raleway-Regular.ttf" />
 
             <View
                 android:layout_width="wrap_content"
                 android:layout_height="1dp"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginRight="@dimen/_10sdp"
-                android:background="@color/colorDivider"></View>
+                android:background="@color/colorDivider" />
 
             <com.yberry.dinehawaii.customview.CustomTextView
                 style="@style/TextAppearance.AppCompat.Subhead"
@@ -161,14 +161,15 @@
                 android:padding="@dimen/_5sdp"
                 android:singleLine="true"
                 android:textColor="@color/edit_text_color"
-                app:edittextfont="Raleway-Regular.ttf"></com.yberry.dinehawaii.customview.CustomEditText>
+                app:edittextfont="Raleway-Regular.ttf" />
 
             <View
                 android:layout_width="wrap_content"
                 android:layout_height="1dp"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginRight="@dimen/_10sdp"
-                android:background="@color/colorDivider"></View>
+                android:background="@color/colorDivider" />
+
             <com.yberry.dinehawaii.customview.CustomTextView
                 style="@style/TextAppearance.AppCompat.Subhead"
                 android:layout_width="wrap_content"
@@ -194,7 +195,7 @@
                 android:padding="@dimen/_5sdp"
                 android:singleLine="true"
                 android:textColor="@color/edit_text_color"
-                app:edittextfont="Raleway-Regular.ttf"></com.yberry.dinehawaii.customview.CustomEditText>
+                app:edittextfont="Raleway-Regular.ttf" />
 
             <View
                 android:layout_width="wrap_content"
@@ -242,7 +243,7 @@
                 android:layout_below="@+id/spinSelectFoodType"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginRight="@dimen/_10sdp"
-                android:background="@color/colorDivider"></View>
+                android:background="@color/colorDivider" />
 
             <com.yberry.dinehawaii.customview.CustomTextView
                 style="@style/TextAppearance.AppCompat.Subhead"
@@ -288,7 +289,7 @@
                 android:layout_below="@+id/spinSelectFoodType"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginRight="@dimen/_10sdp"
-                android:background="@color/colorDivider"></View>
+                android:background="@color/colorDivider" />
 
             <com.yberry.dinehawaii.customview.CustomTextView
                 style="@style/TextAppearance.AppCompat.Subhead"
@@ -334,7 +335,7 @@
                 android:layout_marginBottom="@dimen/_10sdp"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginRight="@dimen/_10sdp"
-                android:background="@color/colorDivider"></View>
+                android:background="@color/colorDivider" />
 
 
         </LinearLayout>

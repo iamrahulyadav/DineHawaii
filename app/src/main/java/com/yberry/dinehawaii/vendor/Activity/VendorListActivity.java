@@ -110,7 +110,7 @@ public class VendorListActivity extends AppCompatActivity implements View.OnClic
         });
 
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.BUSSINES_USER_BUSINESSAPI.GETVENDORCAT);
+        jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.BUSINESS_VENDOR_API.GETVENDORCAT);
         jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(context));
         jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(context));
         jsonObject.addProperty("category_id", category_id);
@@ -295,7 +295,7 @@ public class VendorListActivity extends AppCompatActivity implements View.OnClic
     private void getAllMasterVendor() {
 
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.BUSSINES_USER_BUSINESSAPI.MASTERVENDORLIST);
+        jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.BUSINESS_VENDOR_API.MASTERVENDORLIST);
         jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(context));
         jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(context));
         Log.e(TAG, "getAllVendors: Request >> " + jsonObject);

@@ -31,6 +31,7 @@ import com.yberry.dinehawaii.Util.FragmentIntraction;
 import com.yberry.dinehawaii.Util.Util;
 import com.yberry.dinehawaii.customview.CustomTextView;
 import com.yberry.dinehawaii.vendor.Fragment.ManageVendorsFragment;
+import com.yberry.dinehawaii.vendor.Fragment.VendorOrderHistoryFragment;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -468,6 +469,17 @@ public class BusinessHomeFragment41 extends Fragment {
             @Override
             public void onClick(View v) {
                 Fragment fragment = new BusinessAreaFragment();
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.replace(R.id.frame, fragment, fragment.getTag());
+                fragmentTransaction.commitAllowingStateLoss();
+            }
+        });
+
+       vendor_orders_hist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new VendorOrderHistoryFragment();
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.replace(R.id.frame, fragment, fragment.getTag());

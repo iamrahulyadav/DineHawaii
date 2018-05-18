@@ -119,7 +119,7 @@ public class ManageVendorsFragment extends Fragment implements View.OnClickListe
         });
 
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.BUSSINES_USER_BUSINESSAPI.MASTERVENDORLIST);
+        jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.BUSINESS_VENDOR_API.MASTERVENDORLIST);
         jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(getActivity()));
         jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(getActivity()));
         Log.e(TAG, "getAllVendors: Request >> " + jsonObject);
@@ -181,7 +181,7 @@ public class ManageVendorsFragment extends Fragment implements View.OnClickListe
         });
 
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.BUSSINES_USER_BUSINESSAPI.GETVENDORSLIST);
+        jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.BUSINESS_VENDOR_API.GETVENDORSLIST);
         jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(getActivity()));
         jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(getActivity()));
         Log.e(TAG, "getAllVendors: Request >> " + jsonObject);

@@ -641,7 +641,7 @@ public class RestaurentDetailActivity extends AppCompatActivity {
     private void checkPackage() {
         String package_list = AppPreferences.getBussPackageList(this);
         Log.e(TAG, "checkPackage: package_list >> " + package_list);
-        if (package_list.contains("2") || package_list.contains("3"))
+        if (package_list.contains("1") &&  package_list.contains("2"))
             makeReservationButton.setVisibility(View.VISIBLE);
         else
             makeReservationButton.setVisibility(View.GONE);

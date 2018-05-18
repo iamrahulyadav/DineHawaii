@@ -88,7 +88,7 @@ public interface MyApiEndpointInterface {
     @POST(AppConstants.ENDPOINT.BUSINESS_SERIVCES_VIEW)
     Call<JsonObject> bussines_service_view(@Body JsonObject jsonObject);
 
-    @POST(AppConstants.BUSINESS_FOOD_VENDOR_API.VIEW_BUSINESS_SERVICE)
+    @POST(AppConstants.BUSINESS_VENDOR_API.VIEW_BUSINESS_SERVICE)
     Call<JsonObject> view_service(@Body JsonObject jsonObject);
 
     @POST(AppConstants.CUSTOMERENDPOINT.COUPONS)
