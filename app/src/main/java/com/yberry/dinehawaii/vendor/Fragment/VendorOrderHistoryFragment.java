@@ -59,6 +59,7 @@ public class VendorOrderHistoryFragment extends Fragment {
     public VendorOrderHistoryFragment() {
         // Required empty public constructor
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -76,6 +77,7 @@ public class VendorOrderHistoryFragment extends Fragment {
         super.onResume();
         getOrders();
     }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -170,9 +172,11 @@ public class VendorOrderHistoryFragment extends Fragment {
                                 orderModel.setItemQuantity(object.getString("item_quantity"));
                                 orderModel.setDateTime(object.getString("date_time"));
                                 List<String> items = Arrays.asList(object.getString("item_name").split("\\s*,\\s*"));
-                                Log.e(TAG, "onResponse: items"+items.toString() );
+                                Log.e(TAG, "onResponse: items" + items.toString());
+
                                 list.add(orderModel);
                             }
+
                         } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
                             Log.e("status", jsonObject.getString("status"));
                             JSONObject jobject = jsonObject.getJSONObject("result");

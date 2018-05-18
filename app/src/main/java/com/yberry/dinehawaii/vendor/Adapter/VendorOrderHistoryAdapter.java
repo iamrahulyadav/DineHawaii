@@ -23,9 +23,7 @@ public class VendorOrderHistoryAdapter extends RecyclerView.Adapter<VendorOrderH
     private Context context;
     private ArrayList<VendorOrderHistoryModel> orderDetails;
 
-    public VendorOrderHistoryAdapter(Context context) {
-        this.context = context;
-    }
+
 
     public VendorOrderHistoryAdapter(Context context, ArrayList<VendorOrderHistoryModel> orderDetails) {
         this.context = context;
@@ -44,7 +42,7 @@ public class VendorOrderHistoryAdapter extends RecyclerView.Adapter<VendorOrderH
         VendorOrderHistoryModel model = orderDetails.get(position);
         holder.dateTextView.setText(model.getDateTime());
         holder.nameTextView.setText(model.getVendorName());
-        holder.totalAmountTextView.setText(model.getAmount());
+        holder.totalAmountTextView.setText("$"+model.getAmount());
     }
 
     @Override
