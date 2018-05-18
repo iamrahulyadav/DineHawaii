@@ -23,8 +23,9 @@ public class VendorBidDBHandler extends SQLiteOpenHelper {
     public static final String KEY_VENDOR_ITEMPRICE = "vendor_item_price";
     public static final String KEY_VENDOR_ITEMQUANTITY = "vendor_item_qty";
     public static final String KEY_VENDOR_ITEMTOTALCOST = "vendor_item_total_cost";
+    public static final String KEY_BUSINESS_ITEMTOTALCOST = "vendor_bus_total_cost";
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "DineHawaiiVendorBid    .db";
+    private static final String DATABASE_NAME = "DineHawaiiVendorBid.db";
     private static final String TABLE_CART_BID = "vendor_cart_bid";
 
     String CREATE_TABLE_CART_BID = "CREATE TABLE " + TABLE_CART_BID +
@@ -36,7 +37,8 @@ public class VendorBidDBHandler extends SQLiteOpenHelper {
             + KEY_VENDOR_NAME + " TEXT, "
             + KEY_VENDOR_ITEMPRICE + " TEXT, "
             + KEY_VENDOR_ITEMQUANTITY + " TEXT, "
-            + KEY_VENDOR_ITEMTOTALCOST + " TEXT "
+            + KEY_VENDOR_ITEMTOTALCOST + " TEXT, "
+            + KEY_BUSINESS_ITEMTOTALCOST + " TEXT "
             + ")";
 
     public VendorBidDBHandler(Context context) {
@@ -66,6 +68,7 @@ public class VendorBidDBHandler extends SQLiteOpenHelper {
         values.put(KEY_VENDOR_ITEMPRICE, model.getVendor_item_price());
         values.put(KEY_VENDOR_ITEMQUANTITY, model.getVendor_item_qty());
         values.put(KEY_VENDOR_ITEMTOTALCOST, model.getVendor_item_total_cost());
+        values.put(KEY_BUSINESS_ITEMTOTALCOST, model.getBus_item_total_cost());
 
         String cartmenusId = existItemIdOrder(model.getItem_id(), model.getVendor_id());
         if (cartmenusId.equalsIgnoreCase("")) {
@@ -78,13 +81,24 @@ public class VendorBidDBHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void updateOrderItemQty(String qty, String item_id, String item_total) {
+    public void updateOrderItemQty(String qty, String item_id, String item_total, String vendor_id) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(KEY_VENDOR_ITEMQUANTITY, qty);
         values.put(KEY_VENDOR_ITEMTOTALCOST, item_total);
-        boolean bb = db.update(TABLE_CART_BID, values, KEY_ITEMID + "=?", new String[]{item_id}) > 0;
+        boolean bb = db.update(TABLE_CART_BID, values, KEY_ITEMID + "=? and " + KEY_VENDOR_ID + "=?", new String[]{item_id, vendor_id}) > 0;
+//        boolean bb = db.update(TABLE_CART_BID, values, KEY_ITEMID + "=?", new String[]{item_id}) > 0;
         Log.e(TAG, "updateOrderItemQty: updated >> " + bb);
+        db.close();
+    }
+
+    public void updateBusTotalItemCost(String item_id, String item_total, String vendor_id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_BUSINESS_ITEMTOTALCOST, item_total);
+        boolean bb = db.update(TABLE_CART_BID, values, KEY_ITEMID + "=? and " + KEY_VENDOR_ID + "=?", new String[]{item_id, vendor_id}) > 0;
+//        boolean bb = db.update(TABLE_CART_BID, values, KEY_ITEMID + "=?", new String[]{item_id}) > 0;
+        Log.e(TAG, "updateBusTotalItemCost: updated >> " + bb);
         db.close();
     }
 
@@ -104,7 +118,7 @@ public class VendorBidDBHandler extends SQLiteOpenHelper {
         return menu_id;
     }
 
-    public ArrayList<VendorBidItemModel> getOrderCartItems() {
+    public ArrayList<VendorBidItemModel> getBidCartItems() {
         SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<VendorBidItemModel> modelList = new ArrayList<VendorBidItemModel>();
         String queary = "SELECT * FROM " + TABLE_CART_BID;
@@ -125,6 +139,35 @@ public class VendorBidDBHandler extends SQLiteOpenHelper {
                 itemsDetailsModel.setVendor_item_price(cursor.getString(cursor.getColumnIndex(KEY_VENDOR_ITEMPRICE)));
                 itemsDetailsModel.setVendor_item_qty(cursor.getString(cursor.getColumnIndex(KEY_VENDOR_ITEMQUANTITY)));
                 itemsDetailsModel.setVendor_item_total_cost(cursor.getString(cursor.getColumnIndex(KEY_VENDOR_ITEMTOTALCOST)));
+                itemsDetailsModel.setBus_item_total_cost(cursor.getString(cursor.getColumnIndex(KEY_BUSINESS_ITEMTOTALCOST)));
+                modelList.add(itemsDetailsModel);
+
+            } while (cursor.moveToNext());
+        }
+        return modelList;
+    }
+ public ArrayList<VendorBidItemModel> getfinalBidCartItems() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        ArrayList<VendorBidItemModel> modelList = new ArrayList<VendorBidItemModel>();
+        String queary = "SELECT * FROM " + TABLE_CART_BID + " WHERE " + KEY_BUSINESS_ITEMTOTALCOST + " !=''" ;
+        Cursor cursor = db.rawQuery(queary, null);
+        Log.e(TAG, "getOrderCartItems: cursor >> " + cursor);
+        if (cursor == null) {
+            return modelList;
+        }
+        if (cursor.moveToFirst()) {
+            do {
+                VendorBidItemModel itemsDetailsModel = new VendorBidItemModel();
+                itemsDetailsModel.setId(cursor.getString(cursor.getColumnIndex(KEYID)));
+                itemsDetailsModel.setProduct_id(cursor.getString(cursor.getColumnIndex(KEY_PRODUCT_ID)));
+                itemsDetailsModel.setItem_id(cursor.getString(cursor.getColumnIndex(KEY_ITEMID)));
+                itemsDetailsModel.setItem_name(cursor.getString(cursor.getColumnIndex(KEY_ITEMNAME)));
+                itemsDetailsModel.setVendor_id(cursor.getString(cursor.getColumnIndex(KEY_VENDOR_ID)));
+                itemsDetailsModel.setVendor_name(cursor.getString(cursor.getColumnIndex(KEY_VENDOR_NAME)));
+                itemsDetailsModel.setVendor_item_price(cursor.getString(cursor.getColumnIndex(KEY_VENDOR_ITEMPRICE)));
+                itemsDetailsModel.setVendor_item_qty(cursor.getString(cursor.getColumnIndex(KEY_VENDOR_ITEMQUANTITY)));
+                itemsDetailsModel.setVendor_item_total_cost(cursor.getString(cursor.getColumnIndex(KEY_VENDOR_ITEMTOTALCOST)));
+                itemsDetailsModel.setBus_item_total_cost(cursor.getString(cursor.getColumnIndex(KEY_BUSINESS_ITEMTOTALCOST)));
                 modelList.add(itemsDetailsModel);
 
             } while (cursor.moveToNext());

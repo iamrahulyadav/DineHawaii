@@ -92,6 +92,27 @@
                     android:layout_height="match_parent"
                     android:background="@color/colorDivider" />
 
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.2"
+                    android:gravity="right"
+                    android:orientation="horizontal">
+
+                    <com.yberry.dinehawaii.customview.CustomTextView
+                        style="@style/TextAppearance.AppCompat.Small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_5sdp"
+                        android:text="Item Total"
+                        app:edittextfont="@string/raleway_bold" />
+                </LinearLayout>
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorDivider" />
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -109,26 +130,6 @@
 
                 </LinearLayout>
 
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/colorDivider" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.2"
-                    android:gravity="right"
-                    android:orientation="horizontal">
-
-                    <com.yberry.dinehawaii.customview.CustomTextView
-                        style="@style/TextAppearance.AppCompat.Small"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/_5sdp"
-                        android:text="Item Total"
-                        app:edittextfont="@string/raleway_bold" />
-                </LinearLayout>
             </LinearLayout>
 
 
@@ -161,13 +162,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:weightSum="2">
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:visibility="gone"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -193,18 +194,20 @@
 
             <View
                 android:layout_width="1dp"
+                android:visibility="gone"
                 android:layout_height="match_parent"
                 android:background="@color/white"></View>
 
 
             <com.yberry.dinehawaii.customview.CustomButton
-                android:id="@+id/btnPlaceOrder"
+                android:id="@+id/btnPlaceBid"
                 style="@style/TextAppearance.AppCompat.Subhead"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:gravity="center"
                 android:layout_weight="1"
                 android:background="@null"
-                android:text="Place Order"
+                android:text="Place Bid"
                 android:textColor="@color/white"
                 app:edittextfont="Raleway-Bold.ttf" />
 

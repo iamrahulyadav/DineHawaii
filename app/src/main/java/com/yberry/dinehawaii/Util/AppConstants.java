@@ -220,8 +220,8 @@ public class AppConstants {
         String GETVENDORSMASTERFOODLIST = "Vendor_Master_Item_List";
         String GETVENDORCAT = "getCheckCategoryVendorList";
         String AddVENDOR = "Add_New_Vendor";
-
         String PlACEVENDORORDER = "New_Vendor_Order";
+        String PLACEBID  = "New_Vendor_Bid";
     }
 
     public interface BUSINESS_TABLE_SYSTEM_API {

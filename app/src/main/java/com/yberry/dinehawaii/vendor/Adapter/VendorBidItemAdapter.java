@@ -68,7 +68,7 @@ public class VendorBidItemAdapter extends RecyclerView.Adapter<VendorBidItemAdap
             myViewHolder.llItem.setVisibility(View.GONE);
         }
 
-
+        myViewHolder.etYourPrice.setText(model.getBus_item_total_cost());
         myViewHolder.tvVendorName.setText(model.getVendor_name());
         myViewHolder.tvItemUnitPrice.setText(model.getVendor_item_price());
         myViewHolder.tvItemTotalPrice.setText(String.valueOf(Integer.parseInt(model.getVendor_item_qty()) * Integer.parseInt(model.getVendor_item_price())));
@@ -94,10 +94,29 @@ public class VendorBidItemAdapter extends RecyclerView.Adapter<VendorBidItemAdap
                     String price = model.getVendor_item_price();
                     int itemTotal = Integer.parseInt(qty) * Integer.parseInt(price);
                     Log.e(TAG, "onTextChanged: itemTotal >> " + itemTotal);
-                    new VendorBidDBHandler(mContext).updateOrderItemQty(qty, model.getItem_id(), String.valueOf(itemTotal));
+                    new VendorBidDBHandler(mContext).updateOrderItemQty(qty, model.getItem_id(), String.valueOf(itemTotal),model.getVendor_id());
                     myViewHolder.tvItemTotalPrice.setText(String.valueOf(itemTotal));
-                    LocalBroadcastManager.getInstance(mContext).sendBroadcast(new Intent("updateTotalprice"));
+                 //   LocalBroadcastManager.getInstance(mContext).sendBroadcast(new Intent("updateTotalprice"));
 
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        myViewHolder.etYourPrice.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!myViewHolder.etYourPrice.getText().toString().equalsIgnoreCase("") && !myViewHolder.etYourPrice.getText().toString().equalsIgnoreCase("0")) {
+                    String price = myViewHolder.etYourPrice.getText().toString();
+                    Log.e(TAG, "onTextChanged: "+price );
+                    new VendorBidDBHandler(mContext).updateBusTotalItemCost( model.getItem_id(), price,model.getVendor_id());
                 }
             }
 

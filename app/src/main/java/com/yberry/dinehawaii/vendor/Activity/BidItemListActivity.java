@@ -114,7 +114,7 @@ public class BidItemListActivity extends AppCompatActivity {
     private void getCounterData() {
         if (tvCountBadge != null) ;
         if (new VendorBidDBHandler(BidItemListActivity.this).hasCartData()) {
-            ArrayList<VendorBidItemModel> cartItems = new VendorBidDBHandler(BidItemListActivity.this).getOrderCartItems();
+            ArrayList<VendorBidItemModel> cartItems = new VendorBidDBHandler(BidItemListActivity.this).getBidCartItems();
             Log.e(TAG, "getCounterData: items >> " + String.valueOf(cartItems.size()));
             tvCountBadge.setText(String.valueOf(cartItems.size()));
         } else {

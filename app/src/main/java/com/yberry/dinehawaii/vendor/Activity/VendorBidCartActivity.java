@@ -23,22 +23,39 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.yberry.dinehawaii.Bussiness.Activity.BusinessNaviDrawer;
 import com.yberry.dinehawaii.R;
+import com.yberry.dinehawaii.RetrofitClasses.ApiClient;
+import com.yberry.dinehawaii.RetrofitClasses.MyApiEndpointInterface;
+import com.yberry.dinehawaii.Util.AppConstants;
 import com.yberry.dinehawaii.Util.AppPreferences;
+import com.yberry.dinehawaii.Util.AppPreferencesBuss;
+import com.yberry.dinehawaii.Util.ProgressHUD;
 import com.yberry.dinehawaii.customview.CustomButton;
 import com.yberry.dinehawaii.customview.CustomTextView;
 import com.yberry.dinehawaii.database.VendorBidDBHandler;
+import com.yberry.dinehawaii.database.VendorOrderDBHandler;
 import com.yberry.dinehawaii.vendor.Adapter.VendorBidItemAdapter;
 import com.yberry.dinehawaii.vendor.Model.VendorBidItemModel;
+import com.yberry.dinehawaii.vendor.Model.VendorOrderItemsDetailsModel;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class VendorBidCartActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "VendorBidCartActivity";
     CustomTextView total_amount, noItems;
     VendorBidItemAdapter adapter;
-    CustomButton btnplaceOrder;
+    CustomButton btnPlaceBid;
     ArrayList<VendorBidItemModel> cartItems;
     Context context;
     double amount, totalPrice = 0;
@@ -54,8 +71,6 @@ public class VendorBidCartActivity extends AppCompatActivity implements View.OnC
                 cartItems.clear();
             }
             getCartData();
-
-
         }
     };
     private String vendor_id = "0";
@@ -69,6 +84,8 @@ public class VendorBidCartActivity extends AppCompatActivity implements View.OnC
         context = this;
         mydb = new VendorBidDBHandler(context);
         setToolbar();
+        if (getIntent().hasExtra("vendor_id"))
+            vendor_id = getIntent().getStringExtra("vendor_id");
         initViews();
         LocalBroadcastManager.getInstance(context).registerReceiver(updatePrice, new IntentFilter("updateTotalprice"));
         mainView.setOnTouchListener(new View.OnTouchListener() {
@@ -92,13 +109,11 @@ public class VendorBidCartActivity extends AppCompatActivity implements View.OnC
             cartItems.clear();
         }
         getCartData();
-
-
     }
 
     private void getCartData() {
         if (mydb.hasCartData()) {
-            cartItems = new VendorBidDBHandler(context).getOrderCartItems();  //database data
+            cartItems = new VendorBidDBHandler(context).getBidCartItems();  //database data
             Log.e(TAG, "onCreate: cartItems >> " + cartItems);
             setCartAdapter();
             amount = Double.parseDouble(new VendorBidDBHandler(context).getOrderCartTotal());
@@ -125,8 +140,8 @@ public class VendorBidCartActivity extends AppCompatActivity implements View.OnC
 
     @SuppressLint("LongLogTag")
     private void initViews() {
-        btnplaceOrder = (CustomButton) findViewById(R.id.btnPlaceOrder);
-        btnplaceOrder.setOnClickListener(this);
+        btnPlaceBid = (CustomButton) findViewById(R.id.btnPlaceBid);
+        btnPlaceBid.setOnClickListener(this);
         total_amount = (CustomTextView) findViewById(R.id.total_amount);
         noItems = (CustomTextView) findViewById(R.id.noitems);
         mainView2 = (RelativeLayout) findViewById(R.id.mainView2);
@@ -149,7 +164,7 @@ public class VendorBidCartActivity extends AppCompatActivity implements View.OnC
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.btnPlaceOrder) {
+        if (v.getId() == R.id.btnPlaceBid) {
             showOrderAlert();
         } else if (v.getId() == R.id.fabadditem) {
             finish();
@@ -159,12 +174,13 @@ public class VendorBidCartActivity extends AppCompatActivity implements View.OnC
     private void showOrderAlert() {
         AlertDialog.Builder order_alert = new AlertDialog.Builder(context);
         order_alert.setTitle("Place Order");
-        order_alert.setMessage("Are you sure you want to place the order.");
+        order_alert.setMessage("Are you sure you want to place this Bid.");
         order_alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // updatedcartItems = new VendorBidDBHandler(context).getOrderCartItems(vendor_id);  //database data
-                //placeOrderData();
+                updatedcartItems = new VendorBidDBHandler(context).getfinalBidCartItems();  //database data
+                Log.e(TAG, "onClick: updatedcartItems>>>>>"+updatedcartItems.toString() );
+                placeBid();
             }
         });
         order_alert.setNegativeButton("NO", new DialogInterface.OnClickListener() {
@@ -176,6 +192,78 @@ public class VendorBidCartActivity extends AppCompatActivity implements View.OnC
         order_alert.show();
     }
 
+    private void placeBid() {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("method", AppConstants.BUSINESS_VENDOR_API.PlACEVENDORORDER);
+        jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(context));
+        JsonArray jsonArray = new JsonArray();
+        for (int i = 0; i < updatedcartItems.size(); i++) {
+            VendorBidItemModel model = updatedcartItems.get(i);
+            JsonObject orderDetailsObject = new JsonObject();
+            orderDetailsObject.addProperty("business_id", AppPreferencesBuss.getBussiId(context));
+            orderDetailsObject.addProperty("vendor_id", vendor_id);
+            orderDetailsObject.addProperty("vendor_product_id", model.getProduct_id());
+            orderDetailsObject.addProperty("item_id", model.getItem_id());
+            orderDetailsObject.addProperty("item_quantity", model.getVendor_item_qty());
+            orderDetailsObject.addProperty("item_amount", model.getVendor_item_price());
+            orderDetailsObject.addProperty("business_bid_amt", model.getBus_item_total_cost());
+            orderDetailsObject.addProperty("vendor_bid_amount", model.getVendor_item_total_cost());
+            jsonArray.add(orderDetailsObject);
+            Log.e(TAG, orderDetailsObject.toString());
+        }
+
+        jsonObject.add("orderDetails", jsonArray);
+
+        Log.e(TAG, "Request Place bid >>> " + jsonObject.toString());
+
+        placeBidTask(jsonObject);
+    }
+
+    private void placeBidTask(JsonObject jsonObject) {
+        final ProgressHUD progressHD = ProgressHUD.show(context, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                // TODO Auto-generated method stub
+            }
+        });
+
+        MyApiEndpointInterface apiService =
+                ApiClient.getClient().create(MyApiEndpointInterface.class);
+        Call<JsonObject> call = apiService.vendorOrderUrl(jsonObject);
+        call.enqueue(new Callback<JsonObject>() {
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+
+                Log.e(TAG, "Response Place Order >>> " + response.body().toString());
+                String s = response.body().toString();
+
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    if (jsonObject.getString("status").equalsIgnoreCase("200")) {
+                        JSONArray jsonArray = jsonObject.getJSONArray("result");
+                        JSONObject object = jsonArray.getJSONObject(0);
+                        mydb = new VendorBidDBHandler(context);
+                       // mydb.deleteVendorCartTtem(vendor_id);
+                        showThankYouAlert("Your bid placed successfully.");
+                    } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
+                        JSONArray jsonArray = jsonObject.getJSONArray("result");
+                        JSONObject object = jsonArray.getJSONObject(0);
+                        Log.e("onResponse", object.getString("msg"));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                progressHD.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.e("ERROR", "Error On failure :- " + Log.getStackTraceString(t));
+                progressHD.dismiss();
+            }
+        });
+    }
 
     private void showThankYouAlert(String msg) {
         AlertDialog.Builder th_alert = new AlertDialog.Builder(context);

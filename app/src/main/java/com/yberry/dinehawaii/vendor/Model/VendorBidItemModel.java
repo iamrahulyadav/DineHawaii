@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class VendorBidItemModel {
 
-    String id = "", product_id = "", item_id = "", item_name = "", vendor_id = "", vendor_name = "", vendor_item_price = "", vendor_item_qty = "", vendor_item_total_cost = "";
+    String id = "", product_id = "", item_id = "", item_name = "", vendor_id = "", vendor_name = "", vendor_item_price = "", vendor_item_qty = "", vendor_item_total_cost = "",bus_item_total_cost="";
     ArrayList<VendorBidItemModel> other_vendors_list;
     private boolean isSelected = false;
 
@@ -101,6 +101,14 @@ public class VendorBidItemModel {
     }
 
 
+    public String getBus_item_total_cost() {
+        return bus_item_total_cost;
+    }
+
+    public void setBus_item_total_cost(String bus_item_total_cost) {
+        this.bus_item_total_cost = bus_item_total_cost;
+    }
+
     @Override
     public String toString() {
         return "VendorBidItemModel{" +
@@ -113,6 +121,7 @@ public class VendorBidItemModel {
                 ", vendor_item_price='" + vendor_item_price + '\'' +
                 ", vendor_item_qty='" + vendor_item_qty + '\'' +
                 ", vendor_item_total_cost='" + vendor_item_total_cost + '\'' +
+                ", bus_item_total_cost='" + bus_item_total_cost + '\'' +
                 ", other_vendors_list=" + other_vendors_list +
                 ", isSelected=" + isSelected +
                 '}';
