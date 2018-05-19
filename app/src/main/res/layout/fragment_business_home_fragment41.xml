@@ -323,6 +323,7 @@
                     android:padding="@dimen/_5sdp"
                     android:text="Manage Coupons"
                     app:edittextfont="Raleway-Regular.ttf" />
+
                 <com.yberry.dinehawaii.customview.CustomTextView
                     android:id="@+id/tvBusAreas"
                     style="@style/TextAppearance.AppCompat.Subhead"

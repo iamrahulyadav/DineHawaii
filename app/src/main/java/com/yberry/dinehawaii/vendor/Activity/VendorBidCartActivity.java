@@ -36,10 +36,8 @@ import com.yberry.dinehawaii.Util.ProgressHUD;
 import com.yberry.dinehawaii.customview.CustomButton;
 import com.yberry.dinehawaii.customview.CustomTextView;
 import com.yberry.dinehawaii.database.VendorBidDBHandler;
-import com.yberry.dinehawaii.database.VendorOrderDBHandler;
 import com.yberry.dinehawaii.vendor.Adapter.VendorBidItemAdapter;
 import com.yberry.dinehawaii.vendor.Model.VendorBidItemModel;
-import com.yberry.dinehawaii.vendor.Model.VendorOrderItemsDetailsModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -179,7 +177,7 @@ public class VendorBidCartActivity extends AppCompatActivity implements View.OnC
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 updatedcartItems = new VendorBidDBHandler(context).getfinalBidCartItems();  //database data
-                Log.e(TAG, "onClick: updatedcartItems>>>>>"+updatedcartItems.toString() );
+                Log.e(TAG, "onClick: updatedcartItems>>>>>" + updatedcartItems.toString());
                 placeBid();
             }
         });
@@ -194,14 +192,14 @@ public class VendorBidCartActivity extends AppCompatActivity implements View.OnC
 
     private void placeBid() {
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("method", AppConstants.BUSINESS_VENDOR_API.PlACEVENDORORDER);
+        jsonObject.addProperty("method", AppConstants.BUSINESS_VENDOR_API.PLACEBID);
         jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(context));
         JsonArray jsonArray = new JsonArray();
         for (int i = 0; i < updatedcartItems.size(); i++) {
             VendorBidItemModel model = updatedcartItems.get(i);
             JsonObject orderDetailsObject = new JsonObject();
             orderDetailsObject.addProperty("business_id", AppPreferencesBuss.getBussiId(context));
-            orderDetailsObject.addProperty("vendor_id", vendor_id);
+            orderDetailsObject.addProperty("vendor_id", model.getVendor_id());
             orderDetailsObject.addProperty("vendor_product_id", model.getProduct_id());
             orderDetailsObject.addProperty("item_id", model.getItem_id());
             orderDetailsObject.addProperty("item_quantity", model.getVendor_item_qty());
@@ -212,9 +210,9 @@ public class VendorBidCartActivity extends AppCompatActivity implements View.OnC
             Log.e(TAG, orderDetailsObject.toString());
         }
 
-        jsonObject.add("orderDetails", jsonArray);
+        jsonObject.add("bidDetails", jsonArray);
 
-        Log.e(TAG, "Request Place bid >>> " + jsonObject.toString());
+        Log.e(TAG, "placeBid: Request >> " + jsonObject.toString());
 
         placeBidTask(jsonObject);
     }
@@ -244,7 +242,7 @@ public class VendorBidCartActivity extends AppCompatActivity implements View.OnC
                         JSONArray jsonArray = jsonObject.getJSONArray("result");
                         JSONObject object = jsonArray.getJSONObject(0);
                         mydb = new VendorBidDBHandler(context);
-                       // mydb.deleteVendorCartTtem(vendor_id);
+                        // mydb.deleteVendorCartTtem(vendor_id);
                         showThankYouAlert("Your bid placed successfully.");
                     } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
                         JSONArray jsonArray = jsonObject.getJSONArray("result");

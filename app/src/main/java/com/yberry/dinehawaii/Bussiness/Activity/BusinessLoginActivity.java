@@ -48,13 +48,13 @@ public class BusinessLoginActivity extends AppCompatActivity implements View.OnC
 
     private static final String TAG = "BusinessLoginActivity";
     Context mContext;
+    CustomTextView forgetPass, forgetId;
+    ImageView user_pop, pass_pop;
+    CustomCheckBox rememberMe;
     private CustomButton loginBotton;
     private CustomEditText edittext_id, edittext_pass;
     private ImageView back;
     private String admin_approval;
-    CustomTextView forgetPass, forgetId;
-    ImageView user_pop, pass_pop;
-    CustomCheckBox rememberMe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,17 +114,16 @@ public class BusinessLoginActivity extends AppCompatActivity implements View.OnC
         rememberMe.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    SaveDataPreference.setBusRembEmailId(BusinessLoginActivity.this,edittext_id.getText().toString());
-                    SaveDataPreference.setBusRembPassword(BusinessLoginActivity.this,edittext_pass.getText().toString());
-                }else{
-                    SaveDataPreference.setBusRembEmailId(BusinessLoginActivity.this,"");
-                    SaveDataPreference.setBusRembPassword(BusinessLoginActivity.this,"");
+                if (isChecked) {
+                    SaveDataPreference.setBusRembEmailId(BusinessLoginActivity.this, edittext_id.getText().toString());
+                    SaveDataPreference.setBusRembPassword(BusinessLoginActivity.this, edittext_pass.getText().toString());
+                } else {
+                    SaveDataPreference.setBusRembEmailId(BusinessLoginActivity.this, "");
+                    SaveDataPreference.setBusRembPassword(BusinessLoginActivity.this, "");
                 }
             }
         });
     }
-
 
 
     private void setToolbar() {
@@ -152,14 +151,14 @@ public class BusinessLoginActivity extends AppCompatActivity implements View.OnC
                 edittext_id.setError(errorMessage);
             } else if (password.isEmpty()) {
                 edittext_pass.setError("Enter password");
-            } else if (!rememberMe.isChecked()){
-                SaveDataPreference.setBusRembEmailId(BusinessLoginActivity.this,"");
-                SaveDataPreference.setBusRembPassword(BusinessLoginActivity.this,"");
+            } else if (!rememberMe.isChecked()) {
+                SaveDataPreference.setBusRembEmailId(BusinessLoginActivity.this, "");
+                SaveDataPreference.setBusRembPassword(BusinessLoginActivity.this, "");
                 loginApi();
-            }else {
+            } else {
                 loginApi();
-                SaveDataPreference.setBusRembEmailId(BusinessLoginActivity.this,edittext_id.getText().toString());
-                SaveDataPreference.setBusRembPassword(BusinessLoginActivity.this,edittext_pass.getText().toString());
+                SaveDataPreference.setBusRembEmailId(BusinessLoginActivity.this, edittext_id.getText().toString());
+                SaveDataPreference.setBusRembPassword(BusinessLoginActivity.this, edittext_pass.getText().toString());
             }
         } else if (v.getId() == R.id.forgetPass) {
             Intent i = new Intent(BusinessLoginActivity.this, BusinessForgetPassword.class);
@@ -170,6 +169,7 @@ public class BusinessLoginActivity extends AppCompatActivity implements View.OnC
             // Function.bottomToolTipDialogBox(null, BusinessLoginActivity.this, "This package is already selected by you !!!" /*+ "\n Package Details : " + datalist.getPackage_detail()*/, user_pop, null);
         }
     }
+
     private void loginApi() {
         if (Util.isNetworkAvailable(mContext)) {
             JsonObject jsonObject = new JsonObject();
@@ -253,7 +253,7 @@ public class BusinessLoginActivity extends AppCompatActivity implements View.OnC
                             AppPreferences.setUserType(mContext, "BussinessUser");
                         }*/
                         JSONArray jsonArray = jsonObject.getJSONArray("result");
-                        Log.e(TAG, "onResponse: "+jsonArray );
+                        Log.e(TAG, "onResponse: " + jsonArray);
 
                         JSONObject jsonObject1 = jsonArray.getJSONObject(0);
 
@@ -281,7 +281,7 @@ public class BusinessLoginActivity extends AppCompatActivity implements View.OnC
                         JSONObject jsonObject12 = jsonArray.getJSONObject(0);
                         Log.d("onResponse", jsonObject12.getString("msg"));
                         Toast.makeText(BusinessLoginActivity.this, jsonObject12.getString("msg"), Toast.LENGTH_SHORT).show();
-                    }else if (jsonObject.getString("status").equalsIgnoreCase("700")){
+                    } /*else if (jsonObject.getString("status").equalsIgnoreCase("700")) {
                         AppPreferences.setUserType(mContext, AppConstants.BUSS_LOGIN_TYPE.VENDOR_USER);
                         JSONArray jsonArray = jsonObject.getJSONArray("result");
                         JSONObject jsonObject1 = jsonArray.getJSONObject(0);
@@ -290,9 +290,9 @@ public class BusinessLoginActivity extends AppCompatActivity implements View.OnC
                         AppPreferencesBuss.setVendorUrl(BusinessLoginActivity.this, jsonObject1.getString("VENDOR_ADMIN_Url"));
                         AppPreferencesBuss.setUserId(BusinessLoginActivity.this, jsonObject1.getString("user_id"));
                         Intent intent = new Intent(getApplicationContext(), VendorLoginWebViewActivity.class);
-                        intent.putExtra("vendor_url",jsonObject1.getString("VENDOR_ADMIN_Url"));
+                        intent.putExtra("vendor_url", jsonObject1.getString("VENDOR_ADMIN_Url"));
                         startActivity(intent);
-                    } else {
+                    } */else {
                         Intent intent = new Intent(getApplicationContext(), BusinessLoginError.class);
                         startActivity(intent);
                     }

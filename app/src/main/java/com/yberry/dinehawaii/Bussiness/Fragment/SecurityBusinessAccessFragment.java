@@ -49,7 +49,6 @@ import static android.app.Activity.RESULT_OK;
 public class SecurityBusinessAccessFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = "SecurityBusiAccessFrag";
     ArrayList<CheckBoxPositionModel> checkBoxOptionList, jobpositionlist;
-    LinearLayout addEmpLinearLayout;
     JsonObject otherDetailsJson, employeeDetailsJson, employeeDetailsJson1;
     JsonArray employeeArray;
     FragmentIntraction intraction;
@@ -127,7 +126,6 @@ public class SecurityBusinessAccessFragment extends Fragment implements View.OnC
         dineHawaiID = (CustomEditText) view.findViewById(R.id.dineHawaiID);
         mobileNo = (CustomEditText) view.findViewById(R.id.mobileNo);
         emailAddress = (CustomEditText) view.findViewById(R.id.emailAddress);
-        addEmpLinearLayout = (LinearLayout) view.findViewById(R.id.addEmpLinearLayout);
         assignDuty = (CustomButton) view.findViewById(R.id.assignduty);
         addempl = (CustomButton) view.findViewById(R.id.addemployee);
 

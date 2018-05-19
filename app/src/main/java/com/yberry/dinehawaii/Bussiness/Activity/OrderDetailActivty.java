@@ -208,9 +208,10 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
         } else if (view.getId() == R.id.fabPrepared) {
             //new_status = "Prepared";
             //showDialog();
-            if (order_type.equalsIgnoreCase("delivery"))
-                showDeliveryVendor();
-            else if (order_type.equalsIgnoreCase("pickup")) {
+            if (order_type.equalsIgnoreCase("delivery")) {
+                getDeliveryVendors();
+
+            } else if (order_type.equalsIgnoreCase("pickup")) {
                 new_status = "Prepared";
                 showDialog();
             }
@@ -227,8 +228,8 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
         }
     }
 
-    private void showDeliveryVendor() {
-        Log.e(TAG, "showDeliveryVendor: vendorList.size() >> " + vendorList.size());
+    private void showDeliveryVendor(ArrayList<VendorModel> vendorList) {
+        Log.e(TAG, "showDeliveryVendor: vendorList.size() >> " + this.vendorList.size());
        /* vendorList = new ArrayList<VendorModel>();
         VendorModel data1 = new VendorModel();
         data1.setVendorId("1");
@@ -239,10 +240,10 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
         android.app.AlertDialog.Builder dialog = new android.app.AlertDialog.Builder(OrderDetailActivty.this);
         dialog.setTitle("Select Delivery Vendor");
         final RadioGroup group = new RadioGroup(this);
-        for (int i = 0; i < vendorList.size(); i++) {
+        for (int i = 0; i < this.vendorList.size(); i++) {
             RadioButton button = new RadioButton(OrderDetailActivty.this);
-            button.setId(Integer.parseInt(vendorList.get(i).getVendorId()));
-            button.setText(vendorList.get(i).getVendorBusName());
+            button.setId(Integer.parseInt(this.vendorList.get(i).getVendorId()));
+            button.setText(this.vendorList.get(i).getVendorBusName());
             RadioGroup.LayoutParams params = new RadioGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             params.setMargins(80, 10, 0, 0);
             button.setLayoutParams(params);
@@ -400,6 +401,11 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
     }
 
     private void getDeliveryVendors() {
+        final ProgressHUD progressHD = ProgressHUD.show(OrderDetailActivty.this, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+            }
+        });
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.BUSSINES_USER_BUSINESSAPI.ALL_DELIVERY_VENDORS);
         jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(OrderDetailActivty.this));
@@ -418,6 +424,7 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
                 try {
                     vendorList.clear();
                     JSONObject jsonObject = new JSONObject(resp);
+                    if (progressHD != null) progressHD.dismiss();
                     if (jsonObject.getString("status").equalsIgnoreCase("200")) {
                         JSONArray jsonArray = jsonObject.getJSONArray("result");
                         for (int i = 0; i < jsonArray.length(); i++) {
@@ -426,16 +433,19 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
                             VendorModel model = gson.fromJson(String.valueOf(jsonObject1), VendorModel.class);
                             vendorList.add(model);
                         }
+                        showDeliveryVendor(vendorList);
                     } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    if (progressHD != null) progressHD.dismiss();
                 }
             }
 
             @SuppressLint("LongLogTag")
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
+                if (progressHD != null) progressHD.dismiss();
                 Log.e(TAG, "error :- " + Log.getStackTraceString(t));
                 Toast.makeText(context, "Server not Responding", Toast.LENGTH_SHORT).show();
             }
@@ -552,13 +562,14 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
                                     order_type = "delivery";
                                     tvFabText.setText("Delivered");
                                     cardDelivery.setVisibility(View.VISIBLE);
-                                    if (!listItem.getOrder_status().equalsIgnoreCase("In-Progress") || !listItem.getOrder_status().equalsIgnoreCase("Pending")) {
+                                    if (!listItem.getOrder_status().equalsIgnoreCase("In-Progress") && !listItem.getOrder_status().equalsIgnoreCase("Pending") && !listItem.getOrder_status().equalsIgnoreCase("Picked-up")) {
                                         cardVendor.setVisibility(View.VISIBLE);
                                         tvVendorBusiness.setText(listItem.getVendor_business_name());
                                         tvVendorName.setText(listItem.getVendor_name());
                                         tvVendorContact.setText(listItem.getVendor_contact_no());
                                     } else
-                                        getDeliveryVendors();
+                                        cardVendor.setVisibility(View.GONE);
+
                                     break;
                                 case "Take-Out":
                                     tvFabText.setText("Picked-up");

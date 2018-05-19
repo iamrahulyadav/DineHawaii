@@ -250,4 +250,5 @@
     <string name="title_activity_add_new_coupon">AddNewCouponActivity</string>
     <string name="msg_no_internet">No internet connection</string>
     <string name="title_activity_temp">TempActivity</string>
+    <string name="title_activity_bid_list">Bid History</string>
 </resources>

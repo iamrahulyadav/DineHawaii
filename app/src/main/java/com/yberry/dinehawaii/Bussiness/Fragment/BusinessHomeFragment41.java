@@ -30,6 +30,7 @@ import com.yberry.dinehawaii.Util.AppPreferencesBuss;
 import com.yberry.dinehawaii.Util.FragmentIntraction;
 import com.yberry.dinehawaii.Util.Util;
 import com.yberry.dinehawaii.customview.CustomTextView;
+import com.yberry.dinehawaii.vendor.Activity.BidListActivity;
 import com.yberry.dinehawaii.vendor.Fragment.ManageVendorsFragment;
 import com.yberry.dinehawaii.vendor.Fragment.VendorOrderHistoryFragment;
 
@@ -37,7 +38,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BusinessHomeFragment41 extends Fragment {
+public class BusinessHomeFragment41 extends Fragment implements View.OnClickListener {
 
     private static final String TAG = "BusinessHomeFragment41";
     CustomTextView reservation_btn, table_btn, order_btn, feed_btn, info_btn, packagebtn, maketingoption, staff, wholestaff, dinemsg, delivery_charge,
@@ -46,7 +47,6 @@ public class BusinessHomeFragment41 extends Fragment {
     private LinearLayout messageLinearLayout, business_setting_tab, other_setting_tab, manage_operation_tab, security_tab, vendors_tab;
     private ImageView oprationExpand, settingExpand, otherSettingExpand, service_minus, message_minus, securityExpand, vendorsExpand;
     private String packages = "0";
-    private Context context;
     private CustomTextView manage_menu;
     private CustomTextView packageAndMarketing, securityAccess;
     private CustomTextView manage_coupons;
@@ -476,7 +476,7 @@ public class BusinessHomeFragment41 extends Fragment {
             }
         });
 
-       vendor_orders_hist.setOnClickListener(new View.OnClickListener() {
+        vendor_orders_hist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Fragment fragment = new VendorOrderHistoryFragment();
@@ -545,6 +545,18 @@ public class BusinessHomeFragment41 extends Fragment {
         delivery_charge = (CustomTextView) view.findViewById(R.id.tvDelivery);
         vendors_tab = (LinearLayout) view.findViewById(R.id.vendors_tab);
         tvBusAreas = (CustomTextView) view.findViewById(R.id.tvBusAreas);
+
+        vendor_bid_hist.setOnClickListener(this);
+
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.vendor_bid_hist:
+                startActivity(new Intent(getActivity(), BidListActivity.class));
+                break;
+        }
     }
 }
 

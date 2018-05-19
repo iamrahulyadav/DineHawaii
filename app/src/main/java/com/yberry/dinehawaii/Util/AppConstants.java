@@ -221,7 +221,8 @@ public class AppConstants {
         String GETVENDORCAT = "getCheckCategoryVendorList";
         String AddVENDOR = "Add_New_Vendor";
         String PlACEVENDORORDER = "New_Vendor_Order";
-        String PLACEBID  = "New_Vendor_Bid";
+        String PLACEBID = "New_Vendor_Bid";
+        String GET_BID_LIST = "get_bid_list";
     }
 
     public interface BUSINESS_TABLE_SYSTEM_API {
@@ -344,5 +345,12 @@ public class AppConstants {
         public static final String CUSTOMER_USER = "CustomerUser";
         public static final String BUSINESS_USER = "BussinessUser";
         public static final String BUSSINESS_LOCAL_USER = "BussinessLocalUser";
+    }
+
+    public class NOTIFICATION_KEY {
+        public static final String BUSINESS_DELIVERY_COMPLETED = "business_driver_complete";
+        public static final String BUSINESS_DELIVERY_PICKEDUP = "business_driver_picked";
+        public static final String CUSTOMER_DELIVERY_COMPLETED = "customer_driver_complete";
+        public static final String CUSTOMER_DELIVERY_PICKEDUP = "customer_driver_picked";
     }
 }

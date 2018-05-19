@@ -3,6 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.yberry.dinehawaii">
 
+    <uses-sdk
+        android:minSdkVersion="19"
+        android:targetSdkVersion="26" />
+
     <permission
         android:name="package.name.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
@@ -28,9 +32,6 @@
         android:glEsVersion="0x00020000"
         android:required="true" />
 
-    <!-- <uses-sdk -->
-    <!-- android:minSdkVersion="19" -->
-    <!-- android:targetSdkVersion="25" /> -->
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -325,7 +326,11 @@
         <activity android:name=".vendor.Activity.VendorListActivity" />
         <activity android:name=".vendor.Activity.BidItemListActivity" />
         <activity android:name=".vendor.Activity.VendorItemListActivity" />
-        <activity android:name=".Bussiness.Activity.DeliveryChargesActivity"></activity>
+        <activity android:name=".Bussiness.Activity.DeliveryChargesActivity" />
+        <activity
+            android:name=".vendor.Activity.BidListActivity"
+            android:label="@string/title_activity_bid_list"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
