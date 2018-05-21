@@ -74,15 +74,15 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.2"
-                    android:gravity="center"
                     android:orientation="horizontal">
 
                     <com.yberry.dinehawaii.customview.CustomTextView
                         style="@style/TextAppearance.AppCompat.Small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:gravity="center"
                         android:padding="@dimen/_5sdp"
-                        android:text="Actual Price"
+                        android:text="Vendor Quote"
                         app:edittextfont="@string/raleway_bold" />
 
                 </LinearLayout>
@@ -117,15 +117,15 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.2"
-                    android:gravity="center"
                     android:orientation="horizontal">
 
                     <com.yberry.dinehawaii.customview.CustomTextView
                         style="@style/TextAppearance.AppCompat.Small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:gravity="center"
                         android:padding="@dimen/_5sdp"
-                        android:text="Your Price"
+                        android:text="Offered Price"
                         app:edittextfont="@string/raleway_bold" />
 
                 </LinearLayout>

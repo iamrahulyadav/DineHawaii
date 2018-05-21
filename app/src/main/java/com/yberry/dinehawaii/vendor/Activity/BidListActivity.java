@@ -3,7 +3,9 @@ package com.yberry.dinehawaii.vendor.Activity;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,6 +25,7 @@ import com.yberry.dinehawaii.RetrofitClasses.MyApiEndpointInterface;
 import com.yberry.dinehawaii.Util.AppConstants;
 import com.yberry.dinehawaii.Util.AppPreferencesBuss;
 import com.yberry.dinehawaii.Util.ProgressHUD;
+import com.yberry.dinehawaii.Util.RecyclerItemClickListener;
 import com.yberry.dinehawaii.customview.CustomTextView;
 import com.yberry.dinehawaii.vendor.Adapter.BidListItemAdapter;
 import com.yberry.dinehawaii.vendor.Model.BidListItemModel;
@@ -45,6 +48,7 @@ public class BidListActivity extends AppCompatActivity {
     private ArrayList<BidListItemModel> list;
     private Context context;
     private CustomTextView noData;
+    SwipeRefreshLayout refreshBids;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +58,14 @@ public class BidListActivity extends AppCompatActivity {
         context = BidListActivity.this;
         list = new ArrayList<BidListItemModel>();
         noData = (CustomTextView) findViewById(R.id.noData);
+        refreshBids = (SwipeRefreshLayout) findViewById(R.id.refreshBids);
+        refreshBids.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshBids.setRefreshing(false);
+                getBidList();
+            }
+        });
         setRecyclerView();
         // setStaticData();
         getBidList();
@@ -87,6 +99,21 @@ public class BidListActivity extends AppCompatActivity {
         adapter = new BidListItemAdapter(context, list);
         recycler_view.setLayoutManager(new LinearLayoutManager(context));
         recycler_view.setAdapter(adapter);
+
+        recycler_view.addOnItemTouchListener(new RecyclerItemClickListener(context, recycler_view, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                BidListItemModel model =list.get(position);
+                Intent intent = new Intent(context,BidItemDetailsActivity.class);
+                intent.putExtra("bid_id",model.getBidId());
+                startActivity(intent);
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+
+            }
+        }));
     }
 
     @Override
@@ -129,11 +156,12 @@ public class BidListActivity extends AppCompatActivity {
                             JSONObject jsonObject1 = jsonArray.getJSONObject(i);
                             BidListItemModel model = new BidListItemModel();
                             model.setBidId(jsonObject1.getString("bid_id"));
-                            model.setItem(jsonObject1.getString("item_name"));
+                            model.setBid_unique_id(jsonObject1.getString("bid_unique_id"));
                             model.setDateTime(jsonObject1.getString("date_time"));
                             model.setBidStatus(jsonObject1.getString("bid_status"));
                             list.add(model);
                         }
+
                     } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
                         list.clear();
                         noData.setVisibility(View.VISIBLE);

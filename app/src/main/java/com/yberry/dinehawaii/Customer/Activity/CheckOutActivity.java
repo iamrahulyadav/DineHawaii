@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.design.widget.Snackbar;
@@ -1415,6 +1416,19 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
             dialog.show();
     }
 
+   /* private void calculateDistance(){
+        Location l1=new Location("One");
+        l1.setLatitude(Double.parseDouble(latitude));
+        l1.setLongitude(Double.parseDouble(longitude));
+
+        Log.e(TAG, "calculateDistance: l1"+l1.toString() );
+
+        Location l2=new Location("Two");
+        l2.setLatitude(Double.parseDouble(frnd_lat));
+        l2.setLongitude(Double.parseDouble(frnd_longi));
+
+        float distance_bw_one_and_two=l1.distanceTo(l2);
+    }*/
     private void getPayment(String amount) {
         Log.d("hellooo", amount);
         //Creating a paypalpayment

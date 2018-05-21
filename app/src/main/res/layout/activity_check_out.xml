@@ -696,7 +696,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.3"
-                        android:text="Preparation Time"
+                        android:text="Your food will be delivered in approximately"
                         app:edittextfont="Raleway-Regular.ttf"
 
                         />

@@ -455,6 +455,7 @@ public class MakingReservationActivity extends AppCompatActivity implements Time
                                 in.putExtra("business_id", business_id);
                                 in.putExtra("reserve_amt", pre_amonut);
                                 startActivity(in);
+                                finish();
                             }
                         }
                     }

@@ -41,7 +41,7 @@ public class BidListItemAdapter extends RecyclerView.Adapter<BidListItemAdapter.
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         final BidListItemModel model = vendorModelArrayList.get(position);
 
-        holder.tvItem.setText(model.getItem());
+        holder.tvItemId.setText("#"+model.getBid_unique_id());
         holder.tvStatus.setText(model.getBidStatus());
         holder.tvDateTime.setText(model.getDateTime());
     }
@@ -53,11 +53,11 @@ public class BidListItemAdapter extends RecyclerView.Adapter<BidListItemAdapter.
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvItem, tvStatus, tvDateTime;
+        TextView tvItemId, tvStatus, tvDateTime;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            tvItem = itemView.findViewById(R.id.tvItem);
+            tvItemId = itemView.findViewById(R.id.tvItemId);
             tvStatus = itemView.findViewById(R.id.tvStatus);
             tvDateTime = itemView.findViewById(R.id.tvDateTime);
         }

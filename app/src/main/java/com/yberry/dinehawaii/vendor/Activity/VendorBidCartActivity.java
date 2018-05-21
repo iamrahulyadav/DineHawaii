@@ -71,7 +71,6 @@ public class VendorBidCartActivity extends AppCompatActivity implements View.OnC
             getCartData();
         }
     };
-    private String vendor_id = "0";
     private ArrayList<VendorBidItemModel> updatedcartItems;
 
     @SuppressLint("LongLogTag")
@@ -82,8 +81,6 @@ public class VendorBidCartActivity extends AppCompatActivity implements View.OnC
         context = this;
         mydb = new VendorBidDBHandler(context);
         setToolbar();
-        if (getIntent().hasExtra("vendor_id"))
-            vendor_id = getIntent().getStringExtra("vendor_id");
         initViews();
         LocalBroadcastManager.getInstance(context).registerReceiver(updatePrice, new IntentFilter("updateTotalprice"));
         mainView.setOnTouchListener(new View.OnTouchListener() {
@@ -242,7 +239,7 @@ public class VendorBidCartActivity extends AppCompatActivity implements View.OnC
                         JSONArray jsonArray = jsonObject.getJSONArray("result");
                         JSONObject object = jsonArray.getJSONObject(0);
                         mydb = new VendorBidDBHandler(context);
-                        // mydb.deleteVendorCartTtem(vendor_id);
+                        mydb.deleteCartitem();
                         showThankYouAlert("Your bid placed successfully.");
                     } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
                         JSONArray jsonArray = jsonObject.getJSONArray("result");

@@ -91,7 +91,7 @@ public class VendorItemListActivity extends AppCompatActivity {
     @SuppressLint("RestrictedApi")
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.rest_details_menu, menu);
+        /*getMenuInflater().inflate(R.menu.rest_details_menu, menu);
         MenuItem menuItem1 = menu.findItem(R.id.action_map);
         menuItem1.setVisible(false);
         MenuItem menuItem = menu.findItem(R.id.action_cart);
@@ -108,13 +108,12 @@ public class VendorItemListActivity extends AppCompatActivity {
         if (menu instanceof MenuBuilder) {
             MenuBuilder m = (MenuBuilder) menu;
             m.setOptionalIconsVisible(true);
-        }
+        }*/
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -193,7 +192,7 @@ public class VendorItemListActivity extends AppCompatActivity {
 
     private void setAdapter() {
         recycler_view.setLayoutManager(new LinearLayoutManager(context));
-        adapter = new VendorItemListAdapter(context, list);
+        adapter = new VendorItemListAdapter(context, list,vendor_id);
         recycler_view.setAdapter(adapter);
     }
 

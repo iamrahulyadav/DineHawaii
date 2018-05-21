@@ -2,8 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/menu_order"
-        android:title="Add to Order Cart" />
+        android:title="Order" />
     <item
         android:id="@+id/menu_bid"
-        android:title="Add to Bid Cart" />
+        android:title="Bid" />
 </menu>

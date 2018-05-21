@@ -18,6 +18,18 @@ public class BidListItemModel {
     @Expose
     private String bidStatus;
 
+    public String getBid_unique_id() {
+        return bid_unique_id;
+    }
+
+    public void setBid_unique_id(String bid_unique_id) {
+        this.bid_unique_id = bid_unique_id;
+    }
+
+    @SerializedName("bid_unique_id")
+    @Expose
+    private String bid_unique_id;
+
     public String getBidId() {
         return bidId;
     }

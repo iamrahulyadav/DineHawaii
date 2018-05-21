@@ -2,7 +2,6 @@ package com.yberry.dinehawaii.Customer.Activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -63,7 +62,6 @@ public class CustomerConfirmreservationActivity extends AppCompatActivity implem
 
     private void init() {
         amount = AppPreferences.getReservationAmount(CustomerConfirmreservationActivity.this);
-        Log.d("viniiii", AppPreferences.getReservationAmount(this));
         if (getIntent().hasExtra("business_id"))
             business_id = getIntent().getStringExtra("business_id");
         if (getIntent().hasExtra("reservation_id"))
@@ -121,6 +119,24 @@ public class CustomerConfirmreservationActivity extends AppCompatActivity implem
             getPayment(amount);
         }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        final android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(CustomerConfirmreservationActivity.this);
+        builder.setMessage("Are you sure the restaurant requires Pre-Reservation Amount to confirm the Reservation").setCancelable(false).setPositiveButton("Yes",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        finish();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                            }
+                        });
+        final android.support.v7.app.AlertDialog alert = builder.create();
+        alert.show();
     }
 
     private void getPayment(String amount) {
@@ -316,7 +332,8 @@ public class CustomerConfirmreservationActivity extends AppCompatActivity implem
 
 
     }
-    private void showThankYouAlert () {
+
+    private void showThankYouAlert() {
         android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(CustomerConfirmreservationActivity.this);
         builder.setTitle("Thank You!");
         builder.setCancelable(false);

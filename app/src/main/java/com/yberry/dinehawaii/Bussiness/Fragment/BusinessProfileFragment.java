@@ -34,20 +34,17 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 import com.squareup.picasso.Picasso;
 import com.yberry.dinehawaii.BuildConfig;
-import com.yberry.dinehawaii.Bussiness.Activity.BusinessNaviDrawer;
-import com.yberry.dinehawaii.Customer.Fragment.CustomerMyProfile;
 import com.yberry.dinehawaii.R;
 import com.yberry.dinehawaii.RetrofitClasses.ApiClient;
 import com.yberry.dinehawaii.RetrofitClasses.MyApiEndpointInterface;
 import com.yberry.dinehawaii.Util.AppConstants;
-import com.yberry.dinehawaii.Util.AppPreferences;
 import com.yberry.dinehawaii.Util.AppPreferencesBuss;
 import com.yberry.dinehawaii.Util.ProgressHUD;
 import com.yberry.dinehawaii.Util.Util;
@@ -62,41 +59,41 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
 
-public class BusinessProfileFragment extends Fragment implements View.OnClickListener{
-    private static final String TAG = "BusinessProfile";
+public class BusinessProfileFragment extends Fragment implements View.OnClickListener {
     public static final int REQUEST_CODE_CAMERA = 1;
     public static final int REQUEST_CODE_ALBUM = 2;
+    private static final String TAG = "BusinessProfile";
     private static final int REQUEST_IMAGE_CROP = 3;
-    private Context context;
-    private File file;
-    private Uri file_uri;
-    private String tempPath, imageString, name, email_id,phone,image;
-    CircleImageView userImage;
-    EditText fullname,email,mobileno;
+    ImageView userImage;
+    EditText fullname, email, mobileno;
     View view;
     CustomTextView txt_userNmae;
-    Button submit,update;
+    Button submit, update;
     RelativeLayout relativeLayout;
     //  public static String image;
     String encoded_String;
-
+    private Context context;
+    private File file;
+    private Uri file_uri;
+    private String tempPath, imageString, name, email_id, phone, image;
 
 
     public BusinessProfileFragment() {
         // Required empty public constructor
     }
+
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        context=container.getContext();
-        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder(); StrictMode.setVmPolicy(builder.build());
+        context = container.getContext();
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
         if (ContextCompat.checkSelfPermission(getActivity(),
                 Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -105,7 +102,7 @@ public class BusinessProfileFragment extends Fragment implements View.OnClickLis
                     Manifest.permission.CAMERA)) {
             } else {
                 ActivityCompat.requestPermissions(getActivity(),
-                        new String[]{ Manifest.permission.CAMERA,  Manifest.permission.READ_EXTERNAL_STORAGE,  Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
                         10);
             }
         }
@@ -135,23 +132,23 @@ public class BusinessProfileFragment extends Fragment implements View.OnClickLis
 
         mobileno = (EditText) view.findViewById(R.id.mobileno);
         mobileno.setText(AppPreferencesBuss.getBussiPhoneNo(getActivity()));
-        userImage = (CircleImageView) view.findViewById(R.id.img_circle);
+        userImage = (ImageView) view.findViewById(R.id.img_circle);
 
-        if(!AppPreferencesBuss.getProfileImage(getActivity()).equalsIgnoreCase("")) {
-            Log.d("checkingImage", AppPreferencesBuss.getProfileImage (getActivity()));
+        if (!AppPreferencesBuss.getProfileImage(getActivity()).equalsIgnoreCase("")) {
+            Log.d("checkingImage", AppPreferencesBuss.getProfileImage(getActivity()));
             Picasso.with(context).load(AppPreferencesBuss.getProfileImage(getActivity())).placeholder(R.drawable.pic).into(userImage);
-        }else
+        } else
             userImage.setImageResource(R.drawable.pic);
 
 
         ((CustomButton) view.findViewById(R.id.update)).setOnClickListener(this);
         ((CustomButton) view.findViewById(R.id.btn_change_photo)).setOnClickListener(this);
 
-        relativeLayout = (RelativeLayout)view.findViewById(R.id.relativeBusProfile);
+        relativeLayout = (RelativeLayout) view.findViewById(R.id.relativeBusProfile);
         relativeLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if (v != null){
+                if (v != null) {
                     InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 }
@@ -159,8 +156,6 @@ public class BusinessProfileFragment extends Fragment implements View.OnClickLis
             }
         });
     }
-
-
 
 
     private String openDialogToChosePic() {
@@ -278,7 +273,7 @@ public class BusinessProfileFragment extends Fragment implements View.OnClickLis
 
         }
     }
-/*=============================================== Condition =================================================================================*/
+    /*=============================================== Condition =================================================================================*/
 
 
     @Override
@@ -411,30 +406,27 @@ public class BusinessProfileFragment extends Fragment implements View.OnClickLis
     }
 
 
-
-
-
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.update) {
             dataServer();
         } else if (v.getId() == R.id.btn_change_photo) {
             openDialogToChosePic();
-        }else if (v.getId()  == R.id.email){
+        } else if (v.getId() == R.id.email) {
             Toast.makeText(getContext(), "The Email id cannot be edited", Toast.LENGTH_SHORT).show();
         }
     }
 
-    public void dataServer(){
+    public void dataServer() {
         if (Util.isNetworkAvailable(getActivity())) {
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("method", AppConstants.REGISTRATION.UPDATE_PROFILE);
-            jsonObject.addProperty("name",fullname.getText().toString() );
+            jsonObject.addProperty("name", fullname.getText().toString());
             jsonObject.addProperty("email", email.getText().toString());
             jsonObject.addProperty("phone_number", mobileno.getText().toString());
             jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(getActivity()));
-            jsonObject.addProperty("user_image",imageString);
-            Log.e(TAG , "Business DATA :- " + jsonObject.toString());
+            jsonObject.addProperty("user_image", imageString);
+            Log.e(TAG, "Business DATA :- " + jsonObject.toString());
             JsonCallMethod(jsonObject);
 
         } else {
@@ -458,36 +450,36 @@ public class BusinessProfileFragment extends Fragment implements View.OnClickLis
             @SuppressLint("LongLogTag")
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                Log.e(TAG , "Business PROFILE :- " + response.body().toString());
-                String s=response.body().toString();
+                Log.e(TAG, "Business PROFILE :- " + response.body().toString());
+                String s = response.body().toString();
                 try {
-                    JSONObject jsonObject=new JSONObject(s);
-                    if(jsonObject.getString("status").equalsIgnoreCase("200")){
+                    JSONObject jsonObject = new JSONObject(s);
+                    if (jsonObject.getString("status").equalsIgnoreCase("200")) {
                         JSONArray jsonArray = jsonObject.getJSONArray("result");
-                        for(int i=0;i<jsonArray.length();i++) {
+                        for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject object = jsonArray.getJSONObject(i);
 
                             name = object.getString("name");
                             email_id = object.getString("email");
                             phone = object.getString("phone_number");
                             image = object.getString("user_image");
-                            AppPreferencesBuss.setfirstname(getActivity(),name);
-                            AppPreferencesBuss.setBussiPhoneNo(getActivity(),phone);
+                            AppPreferencesBuss.setfirstname(getActivity(), name);
+                            AppPreferencesBuss.setBussiPhoneNo(getActivity(), phone);
                             Intent intent = new Intent("updated_profile_bus");
                             LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
                             Toast.makeText(getActivity(), jsonObject.getString("message"), Toast.LENGTH_LONG).show();
-                                AppPreferencesBuss.setProfileImage(getActivity(), object.getString("user_image"));
+                            AppPreferencesBuss.setProfileImage(getActivity(), object.getString("user_image"));
 
-                            if(!AppPreferencesBuss.getProfileImage(getActivity()).equalsIgnoreCase("")) {
+                            if (!AppPreferencesBuss.getProfileImage(getActivity()).equalsIgnoreCase("")) {
                                 Picasso.with(context).load(AppPreferencesBuss.getProfileImage(getActivity())).placeholder(R.drawable.pic).into(userImage);
                             }
                         }
                         FragmentTransaction ft = getFragmentManager().beginTransaction();
                         ft.detach(BusinessProfileFragment.this).attach(BusinessProfileFragment.this).commit();
 
-                    }else {
-                        String msg=jsonObject.getString("status");
-                        Toast.makeText(getActivity(),msg,Toast.LENGTH_SHORT).show();
+                    } else {
+                        String msg = jsonObject.getString("status");
+                        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -498,7 +490,7 @@ public class BusinessProfileFragment extends Fragment implements View.OnClickLis
             @SuppressLint("LongLogTag")
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.e("Business error:- ",t.getMessage());
+                Log.e("Business error:- ", t.getMessage());
                 t.getMessage();
                 progressHD.dismiss();
             }

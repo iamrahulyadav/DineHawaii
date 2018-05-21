@@ -10,10 +10,14 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import com.yberry.dinehawaii.R;
 import com.yberry.dinehawaii.customview.CustomTextView;
+import com.yberry.dinehawaii.database.VendorOrderDBHandler;
+import com.yberry.dinehawaii.vendor.Activity.VendorBidCartActivity;
 import com.yberry.dinehawaii.vendor.Activity.VendorCartActivity;
+import com.yberry.dinehawaii.vendor.Model.VendorOrderItemsDetailsModel;
 import com.yberry.dinehawaii.vendor.Model.VendorlistDataModel;
 
 import java.util.ArrayList;
@@ -23,10 +27,12 @@ public class VendorItemListAdapter extends RecyclerView.Adapter<VendorItemListAd
     private static final String TAG = "OrderItemListAdapter";
     Context context;
     ArrayList<VendorlistDataModel> vendorModelArrayList;
+    String vendor_id;
 
-    public VendorItemListAdapter(Context context, ArrayList<VendorlistDataModel> reservList) {
+    public VendorItemListAdapter(Context context, ArrayList<VendorlistDataModel> reservList, String vendor_id) {
         this.context = context;
         this.vendorModelArrayList = reservList;
+        this.vendor_id = vendor_id;
     }
 
     public static boolean isViewClicked(View view, MotionEvent e) {
@@ -54,6 +60,7 @@ public class VendorItemListAdapter extends RecyclerView.Adapter<VendorItemListAd
         final VendorlistDataModel model = vendorModelArrayList.get(position);
         holder.itemName.setText(model.getItemName());
         holder.itemPrice.setText("$" + model.getPrice());
+        final VendorOrderItemsDetailsModel detailsModel = new VendorOrderItemsDetailsModel();
         holder.textViewOptions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -64,10 +71,21 @@ public class VendorItemListAdapter extends RecyclerView.Adapter<VendorItemListAd
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.menu_order:
-                                context.startActivity(new Intent(context, VendorCartActivity.class));
+                                detailsModel.setItemId(model.getItemId());
+                                detailsModel.setItemName(model.getItemName());
+                                detailsModel.setItemPrice(model.getPrice().trim());
+                                detailsModel.setItemTotalCost(model.getPrice().trim());
+                                detailsModel.setItemQuan("1");
+                                detailsModel.setVendorId(vendor_id);
+                                detailsModel.setProductId(model.getProductId());
+                                new VendorOrderDBHandler(context).insertVendorOrderCartItem(detailsModel);
+                                Toast.makeText(context, model.getItemName() + " Added", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(context, VendorCartActivity.class);
+                                intent.putExtra("vendor_id",vendor_id);
+                                context.startActivity(intent);
                                 return true;
                             case R.id.menu_bid:
-                                context.startActivity(new Intent(context, VendorCartActivity.class));
+                                context.startActivity(new Intent(context, VendorBidCartActivity.class));
                                 return true;
                             default:
                                 return false;

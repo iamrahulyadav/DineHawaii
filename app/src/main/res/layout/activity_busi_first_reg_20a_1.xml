@@ -5,9 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background2">
+
     <include
         android:id="@+id/toolbar_bar"
         layout="@layout/toolbar" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -21,16 +23,17 @@
 
 
             <LinearLayout
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginRight="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_30sdp"
                 android:id="@+id/linearLay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_30sdp"
                 android:orientation="vertical">
 
                 <com.yberry.dinehawaii.customview.CustomTextView
                     android:id="@+id/tvSeachByName"
+                    style="@style/TextAppearance.AppCompat.Subhead"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/drawable_green_dot"
@@ -39,7 +42,6 @@
                     android:padding="@dimen/_3sdp"
                     android:text="@string/business_name"
                     android:textColor="@color/colorGreen"
-                    style="@style/TextAppearance.AppCompat.Subhead"
                     app:edittextfont="@string/raleway_bold" />
 
                 <LinearLayout
@@ -58,14 +60,14 @@
                         android:background="@null"
                         android:backgroundTint="@color/blue"
                         android:drawableRight="@drawable/ic_keyboard_arrow_down_black_16dp"
+                        android:enabled="false"
                         android:hint="@string/selectBussinessName"
                         android:imeOptions="actionNext"
                         android:inputType="textCapWords"
                         android:paddingBottom="@dimen/_8sdp"
                         android:paddingTop="@dimen/_5sdp"
-                        android:textColorHint="@color/offwhite"
-                        android:enabled="false"
                         android:textColor="@color/white"
+                        android:textColorHint="@color/offwhite"
                         app:edittextfont="@string/raleway_regular" />
 
                     <ImageView
@@ -84,26 +86,26 @@
 
                     <com.yberry.dinehawaii.customview.CustomTextView
                         android:id="@+id/tvFederalIdNumb"
+                        style="@style/TextAppearance.AppCompat.Subhead"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/llayoutSearch"
                         android:layout_marginTop="@dimen/_10sdp"
-                        android:drawablePadding="@dimen/_5sdp"
 
                         android:drawableLeft="@drawable/drawable_green_dot"
+                        android:drawablePadding="@dimen/_5sdp"
                         android:gravity="center"
                         android:text="@string/federalIdNo"
                         android:textColor="@color/colorGreen"
-                        style="@style/TextAppearance.AppCompat.Subhead"
                         app:edittextfont="@string/raleway_bold" />
 
                     <ImageView
                         android:id="@+id/tvFederalIdNumb_pop"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:visibility="gone"
                         android:layout_marginTop="@dimen/_10sdp"
-                        android:src="@drawable/help" />
+                        android:src="@drawable/help"
+                        android:visibility="gone" />
 
                 </LinearLayout>
 
@@ -116,6 +118,7 @@
 
                     <com.yberry.dinehawaii.customview.CustomEditText
                         android:id="@+id/enterFeinHere"
+                        style="@style/TextAppearance.AppCompat.Subhead"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/_12sdp"
@@ -129,29 +132,8 @@
                         android:singleLine="true"
                         android:textColor="@color/white"
                         android:textColorHint="@color/offwhite"
-                        style="@style/TextAppearance.AppCompat.Subhead"
-                        app:edittextfont="@string/raleway_regular"></com.yberry.dinehawaii.customview.CustomEditText>
+                        app:edittextfont="@string/raleway_regular" />
 
-                    <!--     <com.yberry.dinehawaii.customview.CustomEditText
-                             android:id="@+id/enterFeinHere"
-                             style="@style/EditTextCustomHolo"
-                             android:layout_width="match_parent"
-                             android:layout_height="wrap_content"
-                             android:layout_alignParentEnd="true"
-                             android:layout_alignParentRight="true"
-                             android:layout_marginLeft="@dimen/_12sdp"
-                             android:background="@null"
-                             android:imeOptions="actionNext"
-                             android:backgroundTint="@color/colorAccent"
-                             android:hint="@string/enterFeinHere"
-                             android:paddingBottom="@dimen/_8sdp"
-                             android:paddingTop="@dimen/_5sdp"
-                             android:textColor="@color/white"
-                             android:textColorHighlight="@color/colorGreen"
-                             android:textColorHint="@color/offwhite"
-                             style="@style/TextAppearance.AppCompat.Subhead"
-                             app:edittextfont="Roboto-Regular.ttf" />
-     -->
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -159,6 +141,7 @@
                         android:src="@drawable/lines" />
 
                 </LinearLayout>
+
 
                 <LinearLayout
                     android:id="@+id/llBussiness"
@@ -171,13 +154,13 @@
 
                     <com.yberry.dinehawaii.customview.CustomTextView
                         android:id="@+id/tvMultiSiteBusiness"
+                        style="@style/TextAppearance.AppCompat.Subhead"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/drawable_green_dot"
                         android:drawablePadding="@dimen/_5sdp"
                         android:text="@string/isThisAMultiSiteBussinessUnderThisFEIN"
                         android:textColor="@color/colorGreen"
-                        android:drawableLeft="@drawable/drawable_green_dot"
-                        style="@style/TextAppearance.AppCompat.Subhead"
                         app:edittextfont="@string/raleway_bold" />
 
 
@@ -185,10 +168,10 @@
                         android:id="@+id/multiSite_txt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:visibility="gone"
                         android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:background="@drawable/help" />
+                        android:background="@drawable/help"
+                        android:visibility="gone" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -217,23 +200,22 @@
 
                             <RadioButton
                                 android:id="@+id/yesradioMultiSiteBusiness"
+                                style="@style/TextAppearance.AppCompat.Subhead"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:buttonTint="@color/colorPrimary"
                                 android:text="@string/yes"
-                                android:textColor="@color/offwhite"
-                                style="@style/TextAppearance.AppCompat.Subhead"
-                                />
+                                android:textColor="@color/offwhite" />
 
                             <RadioButton
                                 android:id="@+id/noradioMultiSiteBusiness"
+                                style="@style/TextAppearance.AppCompat.Subhead"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:buttonTint="@color/colorPrimary"
                                 android:checked="true"
                                 android:text="@string/no"
-                                android:textColor="@color/offwhite"
-                                style="@style/TextAppearance.AppCompat.Subhead" />
+                                android:textColor="@color/offwhite" />
                         </RadioGroup>
 
                     </LinearLayout>
@@ -247,6 +229,7 @@
 
                 <com.yberry.dinehawaii.customview.CustomButton
                     android:id="@+id/submitButton"
+                    style="@style/TextAppearance.AppCompat.Subhead"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_35sdp"
                     android:layout_gravity="center"
@@ -259,8 +242,7 @@
                     android:text="Submit"
                     android:textAlignment="gravity"
                     android:textColor="#fff"
-                    style="@style/TextAppearance.AppCompat.Subhead"
-                    app:edittextfont="@string/raleway_bold"/>
+                    app:edittextfont="@string/raleway_bold" />
 
             </LinearLayout>
 
