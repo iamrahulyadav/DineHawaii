@@ -106,6 +106,16 @@
                         android:text="Catering"
                         app:edittextfont="@string/raleway_regular" />
                 </LinearLayout>
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    android:id="@+id/tvDeliveryText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:text="Delivery Charges: Flat $5 on every order"
+                    android:visibility="gone"
+                    app:edittextfont="@string/raleway_regular" />
             </LinearLayout>
 
             <LinearLayout
