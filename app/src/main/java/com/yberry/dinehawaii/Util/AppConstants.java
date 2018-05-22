@@ -228,6 +228,8 @@ public class AppConstants {
         String BID_UPDATE = "Bid_Update";
         String APPROVEBID = "Bid_Approved";
         String REJECTBID = "Bid_Rejected";
+
+
     }
 
     public interface BUSINESS_TABLE_SYSTEM_API {
