@@ -169,5 +169,8 @@ public interface MyApiEndpointInterface {
     @POST(AppConstants.ENDPOINT.N_BUSINESS_NEW_API)
     Call<JsonObject> n_business_new_api(@Body JsonObject jsonObject);
 
+    @POST(AppConstants.ENDPOINT.N_BUSINESS_USER_API)
+    Call<JsonObject> n_business_user_api(@Body JsonObject jsonObject);
+
 
 }

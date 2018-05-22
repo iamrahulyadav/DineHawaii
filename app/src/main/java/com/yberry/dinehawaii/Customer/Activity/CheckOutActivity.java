@@ -9,7 +9,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.design.widget.Snackbar;
@@ -30,7 +29,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -102,10 +100,12 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
             // or live (ENVIRONMENT_PRODUCTION)
             .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
             .clientId(AppConstants.PAYPAL_CLIENT_ID);
-    CustomTextView totalPrice, loylityBal, getax, CustPhn, CustAddr, CustOrTime, CustOrDate, tvTotalAmt, TvTotalWithTax, food_prepration_time;
+    CustomTextView tvTotalPaidAmount, loylityBal, tvGETaxAmount, CustPhn, CustAddr, CustOrTime, CustOrDate, tvTotalAmt, tvTotalPaidAmount2, food_prepration_time;
     CustomEditText loyality_apply, giftcouponcode, custName, couponCodeText;
     CustomButton applygiftbtn, removeegift, applyLoyaltyPoints, removePoints, apply_coupon, remove_coupon;
-    String totalAmount = "0", cateringDateTime = "", TAG = "CheckOutActivity";
+    double totalAmount = 0.0;
+    double totalPaidAmount = 0.0;
+    String cateringDateTime = "", TAG = "CheckOutActivity";
     RelativeLayout proceed, mainLayout;
     LinearLayout rlloyalty, rlegiftcard, rlcoupons;
     View view;
@@ -131,10 +131,13 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
     private String coupon_name, coupon_id = "0";
     private String minOrderValue = "0", takeOut_lead_time, catering_lead_days;
     private ArrayList<OrderItemsDetailsModel> cartItems;
-    private EditText daddress;
+    private CustomEditText daddress;
     private String latitude = "0.0", longitude = "0.0", setDefault = "0";
-    private CheckBox cbDefaultAddr;
-    private CustomTextView tvDeliveryText;
+    private CustomCheckBox cbDefaultAddr;
+    private CustomTextView tvDeliveryText, tvDelChargeAmount;
+    private double delChargeAmount = 0.0;
+    private double geTaxAmount = 0.0;
+    private double totalPaidAmountBase = 0.0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,7 +155,6 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
             getGETax();
             setLoyalityPoints();
             getFoodPrepTime();
-            new DeliveryInfoTask().execute();
         } else {
             Toast.makeText(context, "Please Connect Internet", Toast.LENGTH_LONG).show();
         }
@@ -172,67 +174,64 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void getFoodPrepTime() {
-        if (Util.isNetworkAvailable(context)) {
-            JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.FOOD_PREP_TIME);
-            jsonObject.addProperty("user_id", AppPreferences.getCustomerid(context));
-            jsonObject.addProperty("business_id", AppPreferences.getBusiID(context));
-            Log.e(TAG, "getFoodPrepTime: Request >> " + jsonObject.toString());
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.FOOD_PREP_TIME);
+        jsonObject.addProperty("user_id", AppPreferences.getCustomerid(context));
+        jsonObject.addProperty("business_id", AppPreferences.getBusiID(context));
+        Log.e(TAG, "getFoodPrepTime: Request >> " + jsonObject.toString());
 
-            MyApiEndpointInterface apiService = ApiClient.getClient().create(MyApiEndpointInterface.class);
-            Call<JsonObject> call = apiService.requestGeneral(jsonObject);
+        MyApiEndpointInterface apiService = ApiClient.getClient().create(MyApiEndpointInterface.class);
+        Call<JsonObject> call = apiService.requestGeneral(jsonObject);
 
-            call.enqueue(new Callback<JsonObject>() {
-                @Override
-                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
 
-                    String s = response.body().toString();
-                    Log.e(TAG, "getFoodPrepTime: Response >> " + s);
-                    try {
-                        JSONObject jsonObject = new JSONObject(s);
-                        if (jsonObject.getString("status").equalsIgnoreCase("200")) {
-                            JSONArray resultJsonArray = jsonObject.getJSONArray("result");
-                            JSONObject object = resultJsonArray.getJSONObject(0);
-                            timeInhouse = object.getString("inhouse_min");
-                            timeCatering = object.getString("catering_min");
-                            timeDelivery = object.getString("takeout_del_min");
-                            timeTakeout = object.getString("takeout_min");
-                            takeOut_lead_time = object.getString("takeout_lead_time");
-                            catering_lead_days = object.getString("catering_days");
-                        } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
-                        } else {
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                String s = response.body().toString();
+                Log.e(TAG, "getFoodPrepTime: Response >> " + s);
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    if (jsonObject.getString("status").equalsIgnoreCase("200")) {
+                        JSONArray resultJsonArray = jsonObject.getJSONArray("result");
+                        JSONObject object = resultJsonArray.getJSONObject(0);
+                        timeInhouse = object.getString("inhouse_min");
+                        timeCatering = object.getString("catering_min");
+                        timeDelivery = object.getString("takeout_del_min");
+                        timeTakeout = object.getString("takeout_min");
+                        takeOut_lead_time = object.getString("takeout_lead_time");
+                        catering_lead_days = object.getString("catering_days");
+                    } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
+                    } else {
                     }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
+            }
 
-                @SuppressLint("LongLogTag")
-                @Override
-                public void onFailure(Call<JsonObject> call, Throwable t) {
-                    Log.e(TAG, "error" + t.getMessage());
-                }
-            });
-        } else {
-            Toast.makeText(context, "Please Connect Internet", Toast.LENGTH_LONG).show();
-        }
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.e(TAG, "error" + t.getMessage());
+            }
+        });
+
     }
 
     private void init() {
         cartItemsList = new ArrayList<>();
         cartItemsList.clear();
-        totalPrice = (CustomTextView) findViewById(R.id.totalAmount);
+        tvTotalPaidAmount = (CustomTextView) findViewById(R.id.tvTotalPaidAmount);
         tvTotalAmt = (CustomTextView) findViewById(R.id.totalCost);
-        TvTotalWithTax = (CustomTextView) findViewById(R.id.totalCostTax);
+        tvTotalPaidAmount2 = (CustomTextView) findViewById(R.id.tvTotalPaidAmount2);
         if (!getIntent().getStringExtra("totalamount").equalsIgnoreCase("")) {
-            totalAmount = getIntent().getStringExtra("totalamount");
+            totalAmount = Double.parseDouble(getIntent().getStringExtra("totalamount"));
             tvTotalAmt.setText("$" + totalAmount);
         }
         if (getIntent().getParcelableArrayListExtra("place_order") != null) {
             cartItemsList = getIntent().getParcelableArrayListExtra("place_order");
         }
         couponCodeText = (CustomEditText) findViewById(R.id.couponCodeText);
-        getax = (CustomTextView) findViewById(R.id.getax);
+        tvGETaxAmount = (CustomTextView) findViewById(R.id.tvGETaxAmount);
         food_prepration_time = (CustomTextView) findViewById(R.id.prepTime);
         loylityBal = (CustomTextView) findViewById(R.id.loylityBal);
         loyality_apply = (CustomEditText) findViewById(R.id.loyaliy_apply);
@@ -359,6 +358,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         });
 
         tvDeliveryText = (CustomTextView) findViewById(R.id.tvDeliveryText);
+        tvDelChargeAmount = (CustomTextView) findViewById(R.id.tvDelChargeAmount);
 
         homedelivery_btn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -366,6 +366,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                 if (b) {
                     tvDeliveryText.setVisibility(View.VISIBLE);
                 } else {
+                    getGETax();
                     tvDeliveryText.setVisibility(View.GONE);
                 }
             }
@@ -433,6 +434,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                 if (!isFinishing()) {
                     deliveryDialog.show();
                 }
+
                 break;
             case R.id.take_way_btn:
                 order_type = "11";
@@ -492,7 +494,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         remove_coupon.setVisibility(View.GONE);
         rd_loylty.setEnabled(true);
         rd_egift.setEnabled(true);
-        totalPrice.setText(amount);
+        tvTotalPaidAmount.setText("$"+String.valueOf(totalPaidAmountBase));
     }
 
     private void applyCouponCode() {
@@ -551,14 +553,14 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
     private void removepoints() {
         int points = Integer.parseInt(loyality_apply.getText().toString());
         int balance = Integer.parseInt(loylityBal.getText().toString()) + points;
-        double total = Double.parseDouble(totalPrice.getText().toString()) + points;
+        double total = Double.parseDouble(tvTotalPaidAmount.getText().toString()) + points;
         Log.e(TAG, " remove points" + points);
         Log.e(TAG, "balance" + balance);
         Log.e(TAG, "total" + total);
 
         DecimalFormat twoDForm = new DecimalFormat("#.##");
         double grandtotal = Double.valueOf(twoDForm.format(total));
-        totalPrice.setText(amount);
+        tvTotalPaidAmount.setText("$" + String.valueOf(totalPaidAmountBase));
         loylityBal.setText(balance + "");
         loyality_apply.setText("");
         applyLoyaltyPoints.setVisibility(View.VISIBLE);
@@ -571,19 +573,19 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         if (TextUtils.isEmpty(loyality_apply.getText().toString())) {
             Toast.makeText(context, "Enter points", Toast.LENGTH_LONG).show();
         } else {
-            if (Double.parseDouble(loyality_apply.getText().toString()) < Double.parseDouble(totalPrice.getText().toString())) {
+            if (Double.parseDouble(loyality_apply.getText().toString()) < Double.parseDouble(tvTotalPaidAmount.getText().toString())) {
                 int points = Integer.parseInt(loyality_apply.getText().toString());
                 int balance = loyalityTotal - points;
                 double totalloyalAmount = Double.parseDouble(loyality_apply.getText().toString()) / pointsloyalty;
                 double finalprice = totalloyalAmount * amountofPoints;
-                double total = Double.parseDouble(totalPrice.getText().toString()) - finalprice;
+                double total = Double.parseDouble(tvTotalPaidAmount.getText().toString()) - finalprice;
                 Log.e(TAG, " apply points " + pointsloyalty);
                 Log.e(TAG, "totalloyalAmount" + totalloyalAmount);
                 Log.e(TAG, "finalprice" + finalprice);
                 Log.e(TAG, "total" + total);
                 DecimalFormat twoDForm = new DecimalFormat("#.##");
                 double total_amount = Double.valueOf(twoDForm.format(total));
-                totalPrice.setText(total_amount + "");
+                tvTotalPaidAmount.setText("$" + total_amount);
                 loylityBal.setText(balance + "");
                 applyLoyaltyPoints.setVisibility(View.GONE);
                 removePoints.setVisibility(View.VISIBLE);
@@ -641,7 +643,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                         coupon_type = jsonObject1.getString("coupon_type");
                         coupon_name = jsonObject1.getString("coupon_code");
                         coupon_id = jsonObject1.getString("coupon_id");
-                        if (Double.parseDouble(coupon_amount) < Double.parseDouble(totalPrice.getText().toString())) {
+                        if (Double.parseDouble(coupon_amount) < Double.parseDouble(tvTotalPaidAmount.getText().toString())) {
                             couponCodeText.setText(coupon_name + "( $" + coupon_amount + " )");
                             couponCodeText.setEnabled(false);
                             remove_coupon.setVisibility(View.VISIBLE);
@@ -662,12 +664,12 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
 
                                 DecimalFormat twoDForm = new DecimalFormat("#.##");
                                 double grand_amount = Double.valueOf(twoDForm.format(admin_per));
-                                totalPrice.setText(grand_amount + "");
+                                tvTotalPaidAmount.setText("$" + grand_amount);
                             } else if (coupon_type.equalsIgnoreCase("Discount Amount")) {
-                                double amt = Double.parseDouble(totalPrice.getText().toString()) - Double.parseDouble(coupon_amount);
+                                double amt = Double.parseDouble(tvTotalPaidAmount.getText().toString()) - Double.parseDouble(coupon_amount);
                                 DecimalFormat twoDForm = new DecimalFormat("#.##");
                                 double total_amount = Double.valueOf(twoDForm.format(amt));
-                                totalPrice.setText(total_amount + "");
+                                tvTotalPaidAmount.setText("$" + total_amount);
                             }
 
                             Snackbar.make(findViewById(android.R.id.content), "Your Coupon Code " + coupon_name + " applied successfully", Snackbar.LENGTH_LONG).show();
@@ -734,16 +736,16 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
     private void proceedToPayment() {
         if (order_type.equalsIgnoreCase("0")) {
             Toast.makeText(context, "Select your order type", Toast.LENGTH_SHORT).show();
-        } else if (totalPrice.getText().toString().equalsIgnoreCase("00.0") || totalPrice.getText().toString().equalsIgnoreCase("0.0")) {
+        } else if (tvTotalPaidAmount.getText().toString().equalsIgnoreCase("00.0") || tvTotalPaidAmount.getText().toString().equalsIgnoreCase("0.0")) {
             Toast.makeText(this, "Amount can't be zero", Toast.LENGTH_SHORT).show();
         } else {
             /*Intent intent = new Intent(getApplicationContext(), PaymentActivity.class);
             AppPreferencesBuss.setfinalLoylityPoints(context, loyality_apply.getText().toString());
             AppPreferences.setDeliveryName(context, custName.getText().toString());
-            AppPreferencesBuss.setGrandTotal(context, totalPrice.getText().toString());
+            AppPreferencesBuss.setGrandTotal(context, tvTotalPaidAmount.getText().toString());
             AppPreferences.setPrepTime(context, food_prepration_time.getText().toString());
             setRadioValue(context, radioValue);
-            intent.putExtra("grandtotal", totalPrice.getText().toString());
+            intent.putExtra("grandtotal", tvTotalPaidAmount.getText().toString());
             intent.putExtra("couponCode", egiftcoupon);
             intent.putExtra("couponId", egiftid);
             intent.putExtra("couponAmount", egiftamount);
@@ -754,7 +756,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
             finish();*/
             AppPreferencesBuss.setfinalLoylityPoints(context, loyality_apply.getText().toString());
             AppPreferences.setDeliveryName(context, custName.getText().toString());
-            AppPreferencesBuss.setGrandTotal(context, totalPrice.getText().toString());
+            AppPreferencesBuss.setGrandTotal(context, tvTotalPaidAmount.getText().toString());
             AppPreferences.setPrepTime(context, food_prepration_time.getText().toString());
             setRadioValue(context, radioValue);
             showPaymentDialog();
@@ -764,14 +766,8 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
     private void getGETax() {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("method", AppConstants.REGISTRATION.TAX);
-        geTaxApi(jsonObject);
-        Log.d(TAG, " Request Tax :- " + jsonObject.toString());
 
-    }
-
-    private void geTaxApi(JsonObject jsonObject) {
-        MyApiEndpointInterface apiService =
-                ApiClient.getClient().create(MyApiEndpointInterface.class);
+        MyApiEndpointInterface apiService = ApiClient.getClient().create(MyApiEndpointInterface.class);
         Call<JsonObject> call = apiService.requestGeneral(jsonObject);
 
         call.enqueue(new Callback<JsonObject>() {
@@ -779,41 +775,38 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
 
                 String s = response.body().toString();
+                Log.e(TAG, "getGETax: Request >> " + s);
                 try {
                     JSONObject jsonObject = new JSONObject(s);
 
                     if (jsonObject.getString("status").equalsIgnoreCase("200")) {
-                        Log.v(TAG, "Inside response 200 ");
                         JSONArray resultJsonArray = jsonObject.getJSONArray("result");
                         for (int i = 0; i < resultJsonArray.length(); i++) {
                             JSONObject object = resultJsonArray.getJSONObject(i);
-                            double geTaxTotal = Double.parseDouble(object.getString("geTax").replace("%", ""));
-                            Log.d("demo", String.valueOf(geTaxTotal));
-                            getax.setText(String.valueOf(geTaxTotal) + "%");
-                            Log.d("geTaxTotal1", String.valueOf(geTaxTotal));
+                            tvGETaxAmount.setText(object.getString("geTax"));
+                            double geTaxPer = Double.parseDouble(object.getString("geTax").replace("%", ""));
+                            Log.e(TAG, "getGETax: geTaxPer >> " + geTaxPer);
 
-                            double totaltax = Double.parseDouble(totalAmount) * geTaxTotal / 100;
-                            double finaltotaltax = totaltax;
-                            Log.d("taxdemo1", String.valueOf(finaltotaltax));
+                            geTaxAmount = totalAmount * geTaxPer / 100;
+                            Log.e(TAG, "getGETax: geTaxAmount >> " + geTaxAmount);
 
-
-                            double admin_amount = finaltotaltax + Double.parseDouble(totalAmount);
-                            double admin_per = admin_amount;
-                            double admin_total = admin_per;     /// final amount
+                            totalPaidAmount = geTaxAmount + totalAmount;
+                            totalPaidAmountBase = totalPaidAmount;
+                            Log.e(TAG, "getGETax: totalPaidAmount >> " + totalPaidAmount);
 
                             DecimalFormat twoDForm = new DecimalFormat("#.##");
-                            double grand_amount = Double.valueOf(twoDForm.format(admin_total));
-                            double finaltotaltax1 = Double.valueOf(twoDForm.format(totaltax));
-                            totalPrice.setText(grand_amount + "");
-                            TvTotalWithTax.setText("$" + grand_amount + "");
-                            getax.setText("$" + finaltotaltax1 + "");
-                            amount = String.valueOf(grand_amount);
-                        }
-                    } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
-                    }
+                            geTaxAmount = Double.valueOf(twoDForm.format(geTaxAmount));
+                            totalPaidAmount = Double.valueOf(twoDForm.format(totalPaidAmount));
 
+                            tvTotalPaidAmount.setText("$" + totalPaidAmount);
+                            tvTotalPaidAmount2.setText("$" + totalPaidAmount);
+                            tvGETaxAmount.setText("$" + geTaxAmount);
+                            amount = String.valueOf(totalPaidAmount);
+                        }
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    Log.e(TAG, "getGETax: Exc >> " + e.getMessage());
                 }
 
             }
@@ -821,9 +814,9 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
             @SuppressLint("LongLogTag")
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.e(TAG, "error" + t.getMessage());
+                Log.e(TAG, "getGETax: error >> " + t.getMessage());
                 Toast.makeText(context, "Server Not responding", Toast.LENGTH_SHORT).show();
-//                    t.getMessage();
+
             }
         });
     }
@@ -833,7 +826,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         giftcouponcode.setEnabled(true);
         removeegift.setVisibility(View.GONE);
         applygiftbtn.setVisibility(View.VISIBLE);
-        totalPrice.setText(Double.parseDouble(totalPrice.getText().toString()) + Double.parseDouble(egiftamount) + "");
+        tvTotalPaidAmount.setText("$" + Double.parseDouble(tvTotalPaidAmount.getText().toString()) + Double.parseDouble(egiftamount));
         rd_loylty.setEnabled(true);
         rd_coupon.setEnabled(true);
     }
@@ -857,22 +850,24 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                 try {
                     JSONObject jsonObject = new JSONObject(resp);
                     if (jsonObject.getString("status").equalsIgnoreCase("200")) {
-                        rd_loylty.setVisibility(View.GONE);
-                        rd_coupon.setVisibility(View.GONE);
+                        /*rd_loylty.setVisibility(View.GONE);
+                        rd_coupon.setVisibility(View.GONE);*/
+                        rd_loylty.setEnabled(false);
+                        rd_coupon.setEnabled(false);
                         JSONArray jsonArray1 = jsonObject.getJSONArray("result");
                         JSONObject jsonObject1 = jsonArray1.getJSONObject(0);
                         egiftamount = jsonObject1.getString("coupon_amount");
                         egiftcoupon = jsonObject1.getString("coupon_code");
                         egiftid = jsonObject1.getString("id");
-                        if (Double.parseDouble(egiftamount) < Double.parseDouble(totalPrice.getText().toString())) {
+                        if (Double.parseDouble(egiftamount) < Double.parseDouble(tvTotalPaidAmount.getText().toString())) {
                             giftcouponcode.setText(egiftcoupon + "( $" + egiftamount + " )");
                             giftcouponcode.setEnabled(false);
                             removeegift.setVisibility(View.VISIBLE);
                             applygiftbtn.setVisibility(View.GONE);
-                            double amt = Double.parseDouble(totalPrice.getText().toString()) - Double.parseDouble(egiftamount);
+                            double amt = Double.parseDouble(tvTotalPaidAmount.getText().toString()) - Double.parseDouble(egiftamount);
                             DecimalFormat twoDForm = new DecimalFormat("#.##");
                             double total_amount = Double.valueOf(twoDForm.format(amt));
-                            totalPrice.setText(total_amount + "");
+                            tvTotalPaidAmount.setText("$"+total_amount );
                             Snackbar.make(findViewById(android.R.id.content), "Egift Card " + egiftcoupon + " applied successfully", Snackbar.LENGTH_LONG).show();
                         } else {
                             Snackbar.make(findViewById(android.R.id.content), "Egift Card can't be applied", Snackbar.LENGTH_LONG).setAction("Ok", new View.OnClickListener() {
@@ -908,22 +903,6 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void setLoyalityPoints() {
-        if (Util.isNetworkAvailable(context)) {
-            JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("method", AppConstants.CUSTOMER_USER.BUSSINESSAVAILABLELOYALTYPOINTS);
-            jsonObject.addProperty("user_id", getCustomerid(context));//8
-            jsonObject.addProperty("business_id", getBusiID(context));//8
-            Log.e(TAG, "LoyalityJson :- " + jsonObject.toString());
-            loyalityData(jsonObject);
-
-        } else {
-            Toast.makeText(getApplicationContext(), "Please Connect Your Internet", Toast.LENGTH_LONG).show();
-
-        }
-
-    }
-
-    private void loyalityData(JsonObject jsonObject) {
         final ProgressHUD progressHD = ProgressHUD.show(context, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
@@ -931,6 +910,11 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                 // TODO Auto-generated method stub
             }
         });
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("method", AppConstants.CUSTOMER_USER.BUSSINESSAVAILABLELOYALTYPOINTS);
+        jsonObject.addProperty("user_id", getCustomerid(context));//8
+        jsonObject.addProperty("business_id", getBusiID(context));//8
+        Log.e(TAG, "LoyalityJson :- " + jsonObject.toString());
 
 
         MyApiEndpointInterface apiService =
@@ -1154,10 +1138,10 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         deliveryDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         deliveryDialog.setCanceledOnTouchOutside(false);
 
-        final EditText dname = (EditText) view.findViewById(R.id.dname);
-        final EditText dcontact = (EditText) view.findViewById(R.id.dcontact);
-        daddress = (EditText) view.findViewById(R.id.daddress);
-        cbDefaultAddr = (CheckBox) view.findViewById(R.id.cbDefaultAddr);
+        final EditText dname = (CustomEditText) view.findViewById(R.id.dname);
+        final EditText dcontact = (CustomEditText) view.findViewById(R.id.dcontact);
+        daddress = (CustomEditText) view.findViewById(R.id.daddress);
+        cbDefaultAddr = (CustomCheckBox) view.findViewById(R.id.cbDefaultAddr);
         daddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -1210,6 +1194,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                     CustPhn.setText(dcontact.getText().toString());
                     CustAddr.setText(daddress.getText().toString());
                     setFoodPrepTime(order_type);
+                    getDeliveryInfo();
                 }
             }
         });
@@ -1406,7 +1391,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
             public void onClick(View view) {
                 if (Util.isNetworkAvailable(context)) {
                     dialog.dismiss();
-                    getPayment(totalPrice.getText().toString());
+                    getPayment(tvTotalPaidAmount.getText().toString());
                 } else
                     Toast.makeText(context, "Please Connect to Internet", Toast.LENGTH_SHORT).show();
             }
@@ -1426,19 +1411,6 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
             dialog.show();
     }
 
-    /* private void calculateDistance(){
-         Location l1=new Location("One");
-         l1.setLatitude(Double.parseDouble(latitude));
-         l1.setLongitude(Double.parseDouble(longitude));
-
-         Log.e(TAG, "calculateDistance: l1"+l1.toString() );
-
-         Location l2=new Location("Two");
-         l2.setLatitude(Double.parseDouble(frnd_lat));
-         l2.setLongitude(Double.parseDouble(frnd_longi));
-
-         float distance_bw_one_and_two=l1.distanceTo(l2);
-     }*/
     private void getPayment(String amount) {
         Log.d("hellooo", amount);
         //Creating a paypalpayment
@@ -1703,72 +1675,81 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         alertDialog.show();
     }
 
-    class DeliveryInfoTask extends AsyncTask<Void, String, Void> {
+    public void getDeliveryInfo() {
+        final ProgressHUD progressHD = ProgressHUD.show(context, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                // TODO Auto-generated method stub
+            }
+        });
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.GETDELIVERYINFO);
+        jsonObject.addProperty("user_id", AppPreferences.getCustomerid(context));
+        jsonObject.addProperty("business_id", AppPreferences.getBusiID(context));
+        Log.e(TAG, "getDeliveryInfo: Request >> " + jsonObject.toString());
 
-        @Override
-        protected Void doInBackground(Void... voids) {
-            JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.GETDELIVERYINFO);
-            jsonObject.addProperty("user_id", AppPreferences.getCustomerid(context));
-            jsonObject.addProperty("business_id", AppPreferences.getBusiID(context));
-            Log.e(TAG, "DeliveryInfoTask: Request >> " + jsonObject.toString());
+        MyApiEndpointInterface apiService = ApiClient.getClient().create(MyApiEndpointInterface.class);
+        Call<JsonObject> call = apiService.n_business_user_api(jsonObject);
 
-            MyApiEndpointInterface apiService = ApiClient.getClient().create(MyApiEndpointInterface.class);
-            Call<JsonObject> call = apiService.requestGeneral(jsonObject);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
 
-            call.enqueue(new Callback<JsonObject>() {
-                @Override
-                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-
-                    String s = response.body().toString();
-                    Log.e(TAG, "DeliveryInfoTask: Response >> " + s);
-                    try {
-                        JSONObject jsonObject = new JSONObject(s);
-                        if (jsonObject.getString("status").equalsIgnoreCase("200")) {
-                            JSONArray resultJsonArray = jsonObject.getJSONArray("result");
-                            JSONObject object = resultJsonArray.getJSONObject(0);
-                            String delivery_area = object.getString("delivery_area");
-                            String driver_arrival_time = object.getString("driver_arrival_time");
-                            String cost_flat = object.getString("cost_flat");
-                            String cost_range   = object.getString("cost_range");
-                            String cost_percent   = object.getString("cost_percent");
-                            if(cost_flat.equalsIgnoreCase("1"))
-                            {
-                                String flat_amt = object.getString("flat_amt");
-
-                            }else if(cost_percent.equalsIgnoreCase("1"))
-                            {
-                                String percent_amt = object.getString("percent_amt");
-
-                            }else if(cost_range.equalsIgnoreCase("1"))
-                            {
-                                String percent_amt = object.getString("percent_amt");
-
+                String s = response.body().toString();
+                Log.e(TAG, "getDeliveryInfo: Response >> " + s);
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    if (jsonObject.getString("status").equalsIgnoreCase("200")) {
+                        JSONArray resultJsonArray = jsonObject.getJSONArray("result");
+                        JSONObject object = resultJsonArray.getJSONObject(0);
+                        String delivery_area = object.getString("delivery_area");
+                        String driver_arrival_time = object.getString("driver_arrival_time");
+                        String cost_flat = object.getString("cost_flat");
+                        String cost_range = object.getString("cost_range");
+                        String cost_percent = object.getString("cost_percent");
+                        if (cost_flat.equalsIgnoreCase("1")) {
+                            tvDeliveryText.setText("Delivery Fee: Flat $" + object.getString("flat_amt") + " on every order.");
+                            delChargeAmount = Double.parseDouble(object.getString("flat_amt"));
+                            tvDelChargeAmount.setText(String.valueOf(delChargeAmount));
+                        } else if (cost_percent.equalsIgnoreCase("1")) {
+                            tvDeliveryText.setText("Delivery Fee: " + object.getString("percent_amt") + "% on every order.");
+                            delChargeAmount = totalAmount * Double.parseDouble(object.getString("percent_amt")) / 100;
+                            tvDelChargeAmount.setText(String.valueOf(delChargeAmount));
+                        } else if (cost_range.equalsIgnoreCase("1")) {
+                            tvDeliveryText.setText("Delivery Fee: \n     1. $" + object.getString("min_food_cost") + " is the minimum cost for delivery.\n"
+                                    + "     2. $" + object.getString("lessthan_amt") + " if total food cost is less than $" + object.getString("lessthan_value")
+                                    + ".\n     3. $" + object.getString("between_amt") + " if total food cost is $" + object.getString("between_val1") + " to $" + object.getString("between_val2"));
+                            if (totalAmount < Double.parseDouble(object.getString("lessthan_value"))) {
+                                delChargeAmount = Double.parseDouble(object.getString("lessthan_amt"));
+                            } else if (totalAmount >= Double.parseDouble(object.getString("between_val1")) && totalAmount <= Double.parseDouble(object.getString("between_val2"))) {
+                                delChargeAmount = Double.parseDouble(object.getString("between_amt"));
+                            } else {
+                                delChargeAmount = Double.parseDouble(object.getString("min_food_cost"));
                             }
-                            takeOut_lead_time = object.getString("takeout_lead_time");
-                            catering_lead_days = object.getString("catering_days");
-                        } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
-                        } else {
                         }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+
+                        tvDelChargeAmount.setText("$" + String.valueOf(delChargeAmount));
+                        totalPaidAmount = totalPaidAmount + delChargeAmount;
+                        totalPaidAmountBase = totalPaidAmount;
+                        tvTotalPaidAmount.setText("$" + String.valueOf(totalPaidAmount));
+                        tvTotalPaidAmount2.setText("$" + String.valueOf(totalPaidAmount));
                     }
-                }
+                    if (progressHD != null) progressHD.dismiss();
 
-                @SuppressLint("LongLogTag")
-                @Override
-                public void onFailure(Call<JsonObject> call, Throwable t) {
-                    Log.e(TAG, "error" + t.getMessage());
+                } catch (JSONException e) {
+                    if (progressHD != null) progressHD.dismiss();
+                    Log.e(TAG, "getDeliveryInfo: Exc >> " + e.getMessage());
                 }
-            });
+            }
 
-            return null;
-        }
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                if (progressHD != null) progressHD.dismiss();
+                Log.e(TAG, "getDeliveryInfo: onFailure >> " + t.getMessage());
+            }
+        });
     }
 
     public class InputFilterMinMax implements InputFilter {
