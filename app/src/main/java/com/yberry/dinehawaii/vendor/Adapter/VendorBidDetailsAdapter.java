@@ -2,16 +2,12 @@ package com.yberry.dinehawaii.vendor.Adapter;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 
 import com.yberry.dinehawaii.R;
-import com.yberry.dinehawaii.customview.CustomEditText;
 import com.yberry.dinehawaii.customview.CustomTextView;
 import com.yberry.dinehawaii.vendor.Model.BidDetailsModel;
 
@@ -49,51 +45,10 @@ public class VendorBidDetailsAdapter extends RecyclerView.Adapter<VendorBidDetai
         myViewHolder.tvItemQty.setText(model.getItemQuantity());
         myViewHolder.tvItemTotalPrice.setText(model.getVendorBidAmount());
         myViewHolder.tvyourPrice.setText("$" + model.getBusinessBidAmt());
-        if (model.getVendorBidFinalAmount().equalsIgnoreCase("0")) {
-            myViewHolder.tvFinalPrice.setText("$" + model.getVendorBidFinalAmount());
-            myViewHolder.tvFinalPrice.setClickable(false);
-        } else {
-            myViewHolder.tvFinalPrice.setText("$" + model.getVendorBidFinalAmount());
-            myViewHolder.tvFinalPrice.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_edit_black_18dp, 0);
-            myViewHolder.tvFinalPrice.setCompoundDrawablePadding(5);
-            myViewHolder.tvFinalPrice.setClickable(true);
-        }
+        myViewHolder.tvFinalPrice.setText("$" + model.getVendorBidFinalAmount());
 
-        myViewHolder.tvFinalPrice.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showUpdateBidDialog(model.getItemName(), model.getBusinessBidAmt());
-            }
-        });
     }
 
-    private void showUpdateBidDialog(String itemName, String businessBidAmt) {
-        popup = new Dialog(mContext);
-        popup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        popup.setCancelable(false);
-        popup.setCanceledOnTouchOutside(false);
-        popup.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        popup.setContentView(R.layout.food_category_dialog);
-        final CustomEditText foodtype = (CustomEditText) popup.findViewById(R.id.new_category);
-        final CustomTextView foodTitle = (CustomTextView) popup.findViewById(R.id.foodTitle);
-        final CustomTextView addcategory = (CustomTextView) popup.findViewById(R.id.addcategory);
-        foodTitle.setText("Update Bid");
-        addcategory.setText(itemName + "(Previous Bid Quote : $" + businessBidAmt + ")");
-        foodtype.setHint("Enter bid amount");
-        popup.findViewById(R.id.popupclose).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popup.dismiss();
-            }
-        });
-        popup.findViewById(R.id.cat_submit).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-        popup.show();
-    }
 
     @Override
     public int getItemCount() {

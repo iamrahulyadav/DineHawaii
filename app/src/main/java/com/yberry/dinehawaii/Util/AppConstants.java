@@ -224,6 +224,9 @@ public class AppConstants {
         String PLACEBID = "New_Vendor_Bid";
         String GET_BID_LIST = "get_bid_list";
         String GETBIDDETAILS = "get_single_bid_detail";
+        String BID_UPDATE = "Bid_Update";
+        String APPROVEBID = "Bid_Approved";
+        String REJECTBID = "Bid_Rejected";
     }
 
     public interface BUSINESS_TABLE_SYSTEM_API {

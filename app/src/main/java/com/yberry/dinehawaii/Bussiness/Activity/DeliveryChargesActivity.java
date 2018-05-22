@@ -262,6 +262,13 @@ public class DeliveryChargesActivity extends AppCompatActivity implements View.O
                     rdflat = "1";
                     rdrange = "0";
                     rdpercent = "0";
+                    etPercent.setText("");
+                    etlesssthn_value.setText("");
+                    etminrangeamt.setText("");
+                    etlessthn_amnt.setText("");
+                    etbtwnamt.setText("");
+                    etbtwn1.setText("");
+                    etbtwn2.setText("");
                     etFlatamt.setVisibility(View.VISIBLE);
                     etPercent.setVisibility(View.GONE);
                     llRange.setVisibility(View.GONE);
@@ -269,6 +276,13 @@ public class DeliveryChargesActivity extends AppCompatActivity implements View.O
                     rdpercent = "1";
                     rdflat = "0";
                     rdrange = "0";
+                    etFlatamt.setText("");
+                    etlesssthn_value.setText("");
+                    etminrangeamt.setText("");
+                    etlessthn_amnt.setText("");
+                    etbtwnamt.setText("");
+                    etbtwn1.setText("");
+                    etbtwn2.setText("");
                     etPercent.setVisibility(View.VISIBLE);
                     etFlatamt.setVisibility(View.GONE);
                     llRange.setVisibility(View.GONE);
@@ -276,6 +290,8 @@ public class DeliveryChargesActivity extends AppCompatActivity implements View.O
                     rdrange = "1";
                     rdpercent = "0";
                     rdflat = "0";
+                    etFlatamt.setText("");
+                    etPercent.setText("");
                     llRange.setVisibility(View.VISIBLE);
                     etPercent.setVisibility(View.GONE);
                     etFlatamt.setVisibility(View.GONE);

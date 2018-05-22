@@ -1,18 +1,28 @@
 package com.yberry.dinehawaii.vendor.Activity;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,7 +34,9 @@ import com.yberry.dinehawaii.RetrofitClasses.MyApiEndpointInterface;
 import com.yberry.dinehawaii.Util.AppConstants;
 import com.yberry.dinehawaii.Util.AppPreferencesBuss;
 import com.yberry.dinehawaii.Util.ProgressHUD;
+import com.yberry.dinehawaii.Util.RecyclerItemClickListener;
 import com.yberry.dinehawaii.Util.Util;
+import com.yberry.dinehawaii.customview.CustomEditText;
 import com.yberry.dinehawaii.customview.CustomTextView;
 import com.yberry.dinehawaii.vendor.Adapter.VendorBidDetailsAdapter;
 import com.yberry.dinehawaii.vendor.Model.BidDetailsModel;
@@ -49,6 +61,8 @@ public class BidItemDetailsActivity extends AppCompatActivity implements View.On
     private RecyclerView mRecyclerView;
     private VendorBidDetailsAdapter bidadapter;
     private Context context;
+    private Dialog popup;
+    private AlertDialog.Builder alertdialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +80,281 @@ public class BidItemDetailsActivity extends AppCompatActivity implements View.On
             Toast.makeText(context, getString(R.string.msg_no_internet), Toast.LENGTH_SHORT).show();
 
         setCartAdapter();
+    }
+
+    private void showbidDialog(final String bidRowId, final BidDetailsModel model) {
+        String[] options = {"Accept Bid", "Reject Bid", "Edit Bid"};
+        String[] optionsId = {"0", "1", "2"};
+        alertdialog = new AlertDialog.Builder(context);
+        alertdialog.setTitle("Choose an Option");
+        alertdialog.setCancelable(false);
+        final RadioGroup group = new RadioGroup(this);
+        for (int i = 0; i < options.length; i++) {
+            RadioButton button = new RadioButton(context);
+            button.setId(Integer.parseInt(optionsId[i]));
+            button.setText(options[i]);
+            RadioGroup.LayoutParams params = new RadioGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.setMargins(10, 10, 0, 0);
+            button.setLayoutParams(params);
+            group.addView(button);
+        }
+
+        alertdialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Log.e(TAG, "onClick: " + group.getCheckedRadioButtonId());
+                int groupId = group.getCheckedRadioButtonId();
+                Log.e(TAG, "onClick: groupId" + groupId);
+                if (groupId == 0) {
+                    if (Util.isNetworkAvailable(context)) {
+                        acceptVendorBidApi(bidRowId);
+                        dialogInterface.cancel();
+                    } else
+                        Toast.makeText(context, getString(R.string.msg_no_internet), Toast.LENGTH_SHORT).show();
+                } else if (groupId == 1) {
+                    if (Util.isNetworkAvailable(context)) {
+                        rejectVendorBidApi(bidRowId);
+                        dialogInterface.cancel();
+                    } else
+                        Toast.makeText(context, getString(R.string.msg_no_internet), Toast.LENGTH_SHORT).show();
+                } else if (groupId == 2) {
+                    dialogInterface.cancel();
+                    showUpdateBidDialog(model);
+                }
+            }
+        });
+
+        alertdialog.setView(group);
+        alertdialog.show();
+
+    }
+
+    private void rejectVendorBidApi(String bidRowId) {
+        final ProgressHUD progressHD = ProgressHUD.show(context, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                // TODO Auto-generated method stub
+            }
+        });
+
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.BUSINESS_VENDOR_API.REJECTBID);
+        jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(context));
+        jsonObject.addProperty("bid_row_id", bidRowId);
+        Log.e(TAG, "rejectVendorBidApi: Request >> " + jsonObject);
+
+        MyApiEndpointInterface apiService = ApiClient.getClient().create(MyApiEndpointInterface.class);
+        Call<JsonObject> call = apiService.vendorOrderUrl(jsonObject);
+
+        call.enqueue(new Callback<JsonObject>() {
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                String resp = response.body().toString();
+                Log.e(TAG, "rejectVendorBidApi: Response >> " + resp);
+                try {
+                    JSONObject jsonObject = new JSONObject(resp);
+                    if (jsonObject.getString("status").equalsIgnoreCase("200")) {
+                        JSONArray jsonArray = jsonObject.getJSONArray("result");
+                        JSONObject objresult = jsonArray.getJSONObject(0);
+                        Toast.makeText(context, objresult.getString("msg"), Toast.LENGTH_SHORT).show();
+                        getBidDetails();
+                    } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
+                        JSONArray jsonArray = jsonObject.getJSONArray("result");
+                        JSONObject objresult = jsonArray.getJSONObject(0);
+                        Toast.makeText(context, objresult.getString("msg"), Toast.LENGTH_SHORT).show();
+                    }
+
+                } catch (JSONException e) {
+                    Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+                progressHD.dismiss();
+            }
+
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.e(TAG, "rejectVendorBidApi error :- " + Log.getStackTraceString(t));
+                progressHD.dismiss();
+                Toast.makeText(context, getResources().getString(R.string.msg_no_internet), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void acceptVendorBidApi(String bidRowId) {
+        final ProgressHUD progressHD = ProgressHUD.show(context, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                // TODO Auto-generated method stub
+            }
+        });
+
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.BUSINESS_VENDOR_API.APPROVEBID);
+        jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(context));
+        jsonObject.addProperty("bid_row_id", bidRowId);
+        Log.e(TAG, "acceptVendorBidApi: Request >> " + jsonObject);
+
+        MyApiEndpointInterface apiService = ApiClient.getClient().create(MyApiEndpointInterface.class);
+        Call<JsonObject> call = apiService.vendorOrderUrl(jsonObject);
+
+        call.enqueue(new Callback<JsonObject>() {
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                String resp = response.body().toString();
+                Log.e(TAG, "acceptVendorBidApi: Response >> " + resp);
+                try {
+                    JSONObject jsonObject = new JSONObject(resp);
+                    if (jsonObject.getString("status").equalsIgnoreCase("200")) {
+                        JSONArray jsonArray = jsonObject.getJSONArray("result");
+                        JSONObject objresult = jsonArray.getJSONObject(0);
+                        Toast.makeText(context, objresult.getString("msg"), Toast.LENGTH_SHORT).show();
+                        getBidDetails();
+                    } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
+                        JSONArray jsonArray = jsonObject.getJSONArray("result");
+                        JSONObject objresult = jsonArray.getJSONObject(0);
+                        Toast.makeText(context, objresult.getString("msg"), Toast.LENGTH_SHORT).show();
+                    }
+
+                } catch (JSONException e) {
+                    Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+                progressHD.dismiss();
+            }
+
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.e(TAG, "acceptVendorBidApi error :- " + Log.getStackTraceString(t));
+                progressHD.dismiss();
+                Toast.makeText(context, getResources().getString(R.string.msg_no_internet), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void showUpdateBidDialog(final BidDetailsModel bidModel) {
+        Log.e(TAG, "showUpdateBidDialog: bidModel" + bidModel.toString());
+        popup = new Dialog(context);
+        popup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        popup.setCancelable(false);
+        popup.setCanceledOnTouchOutside(false);
+        popup.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        popup.setContentView(R.layout.update_bid_dialog);
+        final CustomTextView previousBid = (CustomTextView) popup.findViewById(R.id.previousBidQuote);
+        final CustomTextView tvItemName = (CustomTextView) popup.findViewById(R.id.tvItemName);
+        final CustomTextView tvItemUnitPrice = (CustomTextView) popup.findViewById(R.id.tvItemUnitPrice);
+        final CustomTextView tvItemTotalPrice = (CustomTextView) popup.findViewById(R.id.tvItemTotalPrice);
+        final CustomEditText etYourPrice = (CustomEditText) popup.findViewById(R.id.etYourPrice);
+        final CustomEditText etQuantity = (CustomEditText) popup.findViewById(R.id.etQuantity);
+
+        previousBid.setText("Previous Offered Price : $" + bidModel.getBusinessBidAmt());
+
+        tvItemName.setText(bidModel.getItemName());
+        tvItemUnitPrice.setText(bidModel.getVendorBidAmount());
+
+        if (!bidModel.getVendorBidFinalAmount().equalsIgnoreCase("") && !bidModel.getVendorBidFinalAmount().equalsIgnoreCase("0"))
+            etYourPrice.setText(bidModel.getBusinessBidAmt());
+
+        tvItemTotalPrice.setText(bidModel.getBusinessBidAmt());
+        etQuantity.setText(bidModel.getItemQuantity());
+        Log.e(TAG, "showUpdateBidDialog: quantity>>>>>" + bidModel.getItemQuantity());
+        popup.findViewById(R.id.popupclose).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popup.dismiss();
+            }
+        });
+        popup.findViewById(R.id.btnsubmit).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Util.isNetworkAvailable(context)) {
+                    JsonObject jsonObject = new JsonObject();
+                    jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.BUSINESS_VENDOR_API.BID_UPDATE);
+                    jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(context));
+                    jsonObject.addProperty("bid_row_id", bidModel.getBidRowId());
+                    jsonObject.addProperty("bid_amount", etYourPrice.getText().toString());
+                    jsonObject.addProperty("item_quantity", etQuantity.getText().toString());
+                    Log.e(TAG, "UpdateBid: Request >> " + jsonObject);
+                    updateBidApi(jsonObject);
+                } else
+                    Toast.makeText(context, getResources().getString(R.string.msg_no_internet), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        etQuantity.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!etQuantity.getText().toString().equalsIgnoreCase("") && !etQuantity.getText().toString().equalsIgnoreCase("0")) {
+                    String qty = etQuantity.getText().toString();
+                    String price = bidModel.getItemAmount();
+                    int itemTotal = Integer.parseInt(qty) * Integer.parseInt(price);
+                    Log.e(TAG, "onTextChanged: itemTotal >> " + itemTotal);
+                    Log.e(TAG, "onTextChanged: itemTotal qty>> " + qty+"<<<<<price>>>>"+price);
+                    tvItemUnitPrice.setText(String.valueOf(itemTotal));
+
+                } else
+                    tvItemUnitPrice.setText(bidModel.getVendorBidAmount());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        popup.show();
+    }
+
+    private void updateBidApi(JsonObject jsonObject) {
+        final ProgressHUD progressHD = ProgressHUD.show(context, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                // TODO Auto-generated method stub
+            }
+        });
+        MyApiEndpointInterface apiService = ApiClient.getClient().create(MyApiEndpointInterface.class);
+        Call<JsonObject> call = apiService.vendorOrderUrl(jsonObject);
+
+        call.enqueue(new Callback<JsonObject>() {
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                String resp = response.body().toString();
+                Log.e(TAG, "UpdateBid: Response >> " + resp);
+                try {
+                    JSONObject jsonObject = new JSONObject(resp);
+                    if (jsonObject.getString("status").equalsIgnoreCase("200")) {
+                        JSONArray jsonArray = jsonObject.getJSONArray("result");
+                        JSONObject objresult = jsonArray.getJSONObject(0);
+                        Toast.makeText(context, objresult.getString("msg"), Toast.LENGTH_SHORT).show();
+                        getBidDetails();
+                    } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
+                        JSONArray jsonArray = jsonObject.getJSONArray("result");
+                        JSONObject objresult = jsonArray.getJSONObject(0);
+                        Toast.makeText(context, objresult.getString("msg"), Toast.LENGTH_SHORT).show();
+                    }
+
+                } catch (JSONException e) {
+                    Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+                progressHD.dismiss();
+            }
+
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.e(TAG, "acceptVendorBidApi error :- " + Log.getStackTraceString(t));
+                progressHD.dismiss();
+                Toast.makeText(context, getResources().getString(R.string.msg_no_internet), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 
@@ -108,6 +397,19 @@ public class BidItemDetailsActivity extends AppCompatActivity implements View.On
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(bidadapter);
+
+        mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(context, mRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                BidDetailsModel detailsModel = modelsList.get(position);
+                showbidDialog(detailsModel.getBidRowId(), modelsList.get(position));
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+
+            }
+        }));
     }
 
     private void initView() {

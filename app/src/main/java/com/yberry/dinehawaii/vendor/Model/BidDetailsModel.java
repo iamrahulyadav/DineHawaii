@@ -4,6 +4,9 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class BidDetailsModel {
+    @SerializedName("bid_row_id")
+    @Expose
+    private String bidRowId;
     @SerializedName("bid_id")
     @Expose
     private String bidId;
@@ -19,6 +22,9 @@ public class BidDetailsModel {
     @SerializedName("item_name")
     @Expose
     private String itemName;
+    @SerializedName("item_amount")
+    @Expose
+    private String itemAmount;
     @SerializedName("item_id")
     @Expose
     private String itemId;
@@ -37,6 +43,14 @@ public class BidDetailsModel {
     @SerializedName("vendor_bid_final_amount")
     @Expose
     private String vendorBidFinalAmount;
+
+    public String getBidRowId() {
+        return bidRowId;
+    }
+
+    public void setBidRowId(String bidRowId) {
+        this.bidRowId = bidRowId;
+    }
 
     public String getBidId() {
         return bidId;
@@ -76,6 +90,14 @@ public class BidDetailsModel {
 
     public void setItemName(String itemName) {
         this.itemName = itemName;
+    }
+
+    public String getItemAmount() {
+        return itemAmount;
+    }
+
+    public void setItemAmount(String itemAmount) {
+        this.itemAmount = itemAmount;
     }
 
     public String getItemId() {
