@@ -14,6 +14,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
@@ -73,13 +74,17 @@ public class BidItemDetailsActivity extends AppCompatActivity implements View.On
             bid_id = getIntent().getStringExtra("bid_id");
         initView();
         setToolbar();
+        setAdapter();
+    }
 
-        if (Util.isNetworkAvailable(context))
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (Util.isNetworkAvailable(context)) {
+            modelsList.clear();
             getBidDetails();
-        else
+        } else
             Toast.makeText(context, getString(R.string.msg_no_internet), Toast.LENGTH_SHORT).show();
-
-        setCartAdapter();
     }
 
     private void showbidDialog(final String bidRowId, final BidDetailsModel model) {
@@ -94,7 +99,8 @@ public class BidItemDetailsActivity extends AppCompatActivity implements View.On
             button.setId(Integer.parseInt(optionsId[i]));
             button.setText(options[i]);
             RadioGroup.LayoutParams params = new RadioGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            params.setMargins(10, 10, 0, 0);
+            params.setMargins(0, 10, 0, 0);
+            params.setMarginStart(50);
             button.setLayoutParams(params);
             group.addView(button);
         }
@@ -245,7 +251,8 @@ public class BidItemDetailsActivity extends AppCompatActivity implements View.On
         popup.setContentView(R.layout.update_bid_dialog);
         final CustomTextView previousBid = (CustomTextView) popup.findViewById(R.id.previousBidQuote);
         final CustomTextView tvItemName = (CustomTextView) popup.findViewById(R.id.tvItemName);
-        final CustomTextView tvItemUnitPrice = (CustomTextView) popup.findViewById(R.id.tvItemUnitPrice);
+        final CustomTextView tvItemPrice = (CustomTextView) popup.findViewById(R.id.tvItemPrice);
+        final CustomTextView tvItemVendorPrice = (CustomTextView) popup.findViewById(R.id.tvItemVendorPrice);
         final CustomTextView tvItemTotalPrice = (CustomTextView) popup.findViewById(R.id.tvItemTotalPrice);
         final CustomEditText etYourPrice = (CustomEditText) popup.findViewById(R.id.etYourPrice);
         final CustomEditText etQuantity = (CustomEditText) popup.findViewById(R.id.etQuantity);
@@ -253,7 +260,8 @@ public class BidItemDetailsActivity extends AppCompatActivity implements View.On
         previousBid.setText("Previous Offered Price : $" + bidModel.getBusinessBidAmt());
 
         tvItemName.setText(bidModel.getItemName());
-        tvItemUnitPrice.setText(bidModel.getVendorBidAmount());
+        tvItemPrice.setText(bidModel.getItemAmount());
+        tvItemVendorPrice.setText(bidModel.getVendorBidAmount());
 
         if (!bidModel.getVendorBidFinalAmount().equalsIgnoreCase("") && !bidModel.getVendorBidFinalAmount().equalsIgnoreCase("0"))
             etYourPrice.setText(bidModel.getBusinessBidAmt());
@@ -270,17 +278,24 @@ public class BidItemDetailsActivity extends AppCompatActivity implements View.On
         popup.findViewById(R.id.btnsubmit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Util.isNetworkAvailable(context)) {
-                    JsonObject jsonObject = new JsonObject();
-                    jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.BUSINESS_VENDOR_API.BID_UPDATE);
-                    jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(context));
-                    jsonObject.addProperty("bid_row_id", bidModel.getBidRowId());
-                    jsonObject.addProperty("bid_amount", etYourPrice.getText().toString());
-                    jsonObject.addProperty("item_quantity", etQuantity.getText().toString());
-                    Log.e(TAG, "UpdateBid: Request >> " + jsonObject);
-                    updateBidApi(jsonObject);
-                } else
-                    Toast.makeText(context, getResources().getString(R.string.msg_no_internet), Toast.LENGTH_SHORT).show();
+                if (TextUtils.isEmpty(etYourPrice.getText().toString()))
+                    Toast.makeText(context, "Enter Price", Toast.LENGTH_SHORT).show();
+                else if (etYourPrice.getText().toString().equalsIgnoreCase(bidModel.getVendorBidFinalAmount()))
+                    Toast.makeText(context, "Price is same as vendor price you can approve the bid", Toast.LENGTH_LONG).show();
+                  else{
+                    if (Util.isNetworkAvailable(context)) {
+                        JsonObject jsonObject = new JsonObject();
+                        jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.BUSINESS_VENDOR_API.BID_UPDATE);
+                        jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(context));
+                        jsonObject.addProperty("bid_row_id", bidModel.getBidRowId());
+                        jsonObject.addProperty("bid_amount", etYourPrice.getText().toString());
+                        jsonObject.addProperty("item_quantity", etQuantity.getText().toString());
+                        jsonObject.addProperty("vendor_bid_amount", tvItemVendorPrice.getText().toString());
+                        Log.e(TAG, "UpdateBid: Request >> " + jsonObject);
+                        updateBidApi(jsonObject);
+                    } else
+                        Toast.makeText(context, getResources().getString(R.string.msg_no_internet), Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -296,11 +311,11 @@ public class BidItemDetailsActivity extends AppCompatActivity implements View.On
                     String price = bidModel.getItemAmount();
                     int itemTotal = Integer.parseInt(qty) * Integer.parseInt(price);
                     Log.e(TAG, "onTextChanged: itemTotal >> " + itemTotal);
-                    Log.e(TAG, "onTextChanged: itemTotal qty>> " + qty+"<<<<<price>>>>"+price);
-                    tvItemUnitPrice.setText(String.valueOf(itemTotal));
+                    Log.e(TAG, "onTextChanged: itemTotal qty>> " + qty + "<<<<<price>>>>" + price);
+                    tvItemVendorPrice.setText(String.valueOf(itemTotal));
 
                 } else
-                    tvItemUnitPrice.setText(bidModel.getVendorBidAmount());
+                    tvItemVendorPrice.setText(bidModel.getVendorBidAmount());
             }
 
             @Override
@@ -329,6 +344,7 @@ public class BidItemDetailsActivity extends AppCompatActivity implements View.On
                 Log.e(TAG, "UpdateBid: Response >> " + resp);
                 try {
                     JSONObject jsonObject = new JSONObject(resp);
+                    popup.dismiss();
                     if (jsonObject.getString("status").equalsIgnoreCase("200")) {
                         JSONArray jsonArray = jsonObject.getJSONArray("result");
                         JSONObject objresult = jsonArray.getJSONObject(0);
@@ -389,7 +405,7 @@ public class BidItemDetailsActivity extends AppCompatActivity implements View.On
         }
     }
 
-    private void setCartAdapter() {
+    private void setAdapter() {
         bidadapter = new VendorBidDetailsAdapter(context, modelsList);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mLayoutManager = new LinearLayoutManager(context);
@@ -402,7 +418,8 @@ public class BidItemDetailsActivity extends AppCompatActivity implements View.On
             @Override
             public void onItemClick(View view, int position) {
                 BidDetailsModel detailsModel = modelsList.get(position);
-                showbidDialog(detailsModel.getBidRowId(), modelsList.get(position));
+                if (!detailsModel.getBidStatus().equalsIgnoreCase("Completed"))
+                    showbidDialog(detailsModel.getBidRowId(), modelsList.get(position));
             }
 
             @Override

@@ -46,6 +46,7 @@ public class VendorBidDetailsAdapter extends RecyclerView.Adapter<VendorBidDetai
         myViewHolder.tvItemTotalPrice.setText(model.getVendorBidAmount());
         myViewHolder.tvyourPrice.setText("$" + model.getBusinessBidAmt());
         myViewHolder.tvFinalPrice.setText("$" + model.getVendorBidFinalAmount());
+        myViewHolder.tvItemPrice.setText(model.getItemAmount());
 
     }
 
@@ -57,7 +58,7 @@ public class VendorBidDetailsAdapter extends RecyclerView.Adapter<VendorBidDetai
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        CustomTextView tvItemName, tvVendorName, tvItemTotalPrice, tvItemQty, tvyourPrice, tvFinalPrice;
+        CustomTextView tvItemName, tvVendorName, tvItemTotalPrice, tvItemQty, tvyourPrice, tvFinalPrice,tvItemPrice;
 
         public MyViewHolder(View convertView) {
 
@@ -68,6 +69,7 @@ public class VendorBidDetailsAdapter extends RecyclerView.Adapter<VendorBidDetai
             tvyourPrice = (CustomTextView) convertView.findViewById(R.id.tvyourPrice);
             tvItemTotalPrice = (CustomTextView) convertView.findViewById(R.id.tvItemTotalPrice);
             tvFinalPrice = (CustomTextView) convertView.findViewById(R.id.tvFinalPrice);
+            tvItemPrice = (CustomTextView) convertView.findViewById(R.id.tvItemPrice);
 
         }
     }
