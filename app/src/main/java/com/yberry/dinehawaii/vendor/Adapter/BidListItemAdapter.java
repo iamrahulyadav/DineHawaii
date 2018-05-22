@@ -40,12 +40,10 @@ public class BidListItemAdapter extends RecyclerView.Adapter<BidListItemAdapter.
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         final BidListItemModel model = vendorModelArrayList.get(position);
-
-        holder.tvItemId.setText("#"+model.getBid_unique_id());
+        holder.tvItemId.setText("#" + model.getBid_unique_id());
         holder.tvStatus.setText(model.getBidStatus());
         holder.tvDateTime.setText(model.getDateTime());
     }
-
 
     @Override
     public int getItemCount() {

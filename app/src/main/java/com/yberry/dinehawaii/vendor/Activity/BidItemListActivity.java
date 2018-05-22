@@ -98,7 +98,7 @@ public class BidItemListActivity extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(context, VendorBidCartActivity.class));
+                startActivity(new Intent(context, BidCartActivity.class));
             }
         });
         tvCountBadge = (CustomTextView) actionView.findViewById(R.id.counting);

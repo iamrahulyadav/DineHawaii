@@ -321,7 +321,7 @@
         <activity android:name=".vendor.Activity.VendorLoginWebViewActivity" />
         <activity android:name=".vendor.Activity.AddNewVendorActivity" />
         <activity android:name=".vendor.Activity.VendorCartActivity" />
-        <activity android:name=".vendor.Activity.VendorBidCartActivity" />
+        <activity android:name=".vendor.Activity.BidCartActivity" />
         <activity android:name=".vendor.Activity.OrderItemListActivity" />
         <activity android:name=".vendor.Activity.VendorListActivity" />
         <activity android:name=".vendor.Activity.BidItemListActivity" />

@@ -1,14 +1,15 @@
 package com.yberry.dinehawaii.vendor.Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Peter on 11-Apr-17.
  */
 
-public class VendorBidItemModel {
+public class VendorBidItemModel implements Serializable {
 
-    String id = "", product_id = "", item_id = "", item_name = "", vendor_id = "", vendor_name = "", vendor_item_price = "", vendor_item_qty = "", vendor_item_total_cost = "",bus_item_total_cost="";
+    String id = "", product_id = "", item_id = "", item_name = "", vendor_id = "", vendor_name = "", vendor_item_price = "", vendor_item_qty = "", vendor_item_total_cost = "", bus_item_total_cost = "";
     ArrayList<VendorBidItemModel> other_vendors_list;
     private boolean isSelected = false;
 
@@ -126,4 +127,5 @@ public class VendorBidItemModel {
                 ", isSelected=" + isSelected +
                 '}';
     }
+
 }

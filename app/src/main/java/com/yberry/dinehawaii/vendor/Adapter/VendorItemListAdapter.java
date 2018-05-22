@@ -15,7 +15,7 @@ import android.widget.Toast;
 import com.yberry.dinehawaii.R;
 import com.yberry.dinehawaii.customview.CustomTextView;
 import com.yberry.dinehawaii.database.VendorOrderDBHandler;
-import com.yberry.dinehawaii.vendor.Activity.VendorBidCartActivity;
+import com.yberry.dinehawaii.vendor.Activity.BidCartActivity;
 import com.yberry.dinehawaii.vendor.Activity.VendorCartActivity;
 import com.yberry.dinehawaii.vendor.Model.VendorOrderItemsDetailsModel;
 import com.yberry.dinehawaii.vendor.Model.VendorlistDataModel;
@@ -85,7 +85,7 @@ public class VendorItemListAdapter extends RecyclerView.Adapter<VendorItemListAd
                                 context.startActivity(intent);
                                 return true;
                             case R.id.menu_bid:
-                                context.startActivity(new Intent(context, VendorBidCartActivity.class));
+                                context.startActivity(new Intent(context, BidCartActivity.class));
                                 return true;
                             default:
                                 return false;

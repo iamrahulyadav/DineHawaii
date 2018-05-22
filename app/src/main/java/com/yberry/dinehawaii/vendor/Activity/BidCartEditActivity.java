@@ -49,8 +49,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class VendorBidCartActivity extends AppCompatActivity implements View.OnClickListener {
-    private static final String TAG = "VendorBidCartActivity";
+public class BidCartEditActivity extends AppCompatActivity implements View.OnClickListener {
+    private static final String TAG = "BidCartActivity";
     CustomTextView total_amount, noItems;
     VendorBidItemAdapter adapter;
     CustomButton btnPlaceBid;
@@ -108,7 +108,7 @@ public class VendorBidCartActivity extends AppCompatActivity implements View.OnC
 
     private void getCartData() {
         if (mydb.hasCartData()) {
-            cartItems = new VendorBidDBHandler(context).getBidCartItems();  //database data
+            //list
             Log.e(TAG, "onCreate: cartItems >> " + cartItems);
             setCartAdapter();
             amount = Double.parseDouble(new VendorBidDBHandler(context).getOrderCartTotal());
