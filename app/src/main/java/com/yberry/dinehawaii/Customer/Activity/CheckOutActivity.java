@@ -9,7 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.design.widget.Snackbar;
@@ -134,6 +134,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
     private EditText daddress;
     private String latitude = "0.0", longitude = "0.0", setDefault = "0";
     private CheckBox cbDefaultAddr;
+    private CustomTextView tvDeliveryText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,14 +143,20 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         context = this;
         setToolbar();
         init();
-        getGETax();
         checkPackage();
         cartItems = new DatabaseHandler(context).getCartItems(AppPreferences.getBusiID(context));  //database data
-        Log.d("CARTITEMS", cartItems.toString());
         setCartAdapter();
-        setLoyalityPoints();
         updateHomeDeliveryInfo();
-        getFoodPrepTime();
+
+        if (Util.isNetworkAvailable(context)) {
+            getGETax();
+            setLoyalityPoints();
+            getFoodPrepTime();
+            new DeliveryInfoTask().execute();
+        } else {
+            Toast.makeText(context, "Please Connect Internet", Toast.LENGTH_LONG).show();
+        }
+
         custName.requestFocus();
     }
 
@@ -170,54 +177,45 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
             jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.FOOD_PREP_TIME);
             jsonObject.addProperty("user_id", AppPreferences.getCustomerid(context));
             jsonObject.addProperty("business_id", AppPreferences.getBusiID(context));
-            Log.e(TAG, "get food prep time" + jsonObject.toString());
-            getFoodTimeApi(jsonObject);
+            Log.e(TAG, "getFoodPrepTime: Request >> " + jsonObject.toString());
+
+            MyApiEndpointInterface apiService = ApiClient.getClient().create(MyApiEndpointInterface.class);
+            Call<JsonObject> call = apiService.requestGeneral(jsonObject);
+
+            call.enqueue(new Callback<JsonObject>() {
+                @Override
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+
+                    String s = response.body().toString();
+                    Log.e(TAG, "getFoodPrepTime: Response >> " + s);
+                    try {
+                        JSONObject jsonObject = new JSONObject(s);
+                        if (jsonObject.getString("status").equalsIgnoreCase("200")) {
+                            JSONArray resultJsonArray = jsonObject.getJSONArray("result");
+                            JSONObject object = resultJsonArray.getJSONObject(0);
+                            timeInhouse = object.getString("inhouse_min");
+                            timeCatering = object.getString("catering_min");
+                            timeDelivery = object.getString("takeout_del_min");
+                            timeTakeout = object.getString("takeout_min");
+                            takeOut_lead_time = object.getString("takeout_lead_time");
+                            catering_lead_days = object.getString("catering_days");
+                        } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
+                        } else {
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @SuppressLint("LongLogTag")
+                @Override
+                public void onFailure(Call<JsonObject> call, Throwable t) {
+                    Log.e(TAG, "error" + t.getMessage());
+                }
+            });
         } else {
             Toast.makeText(context, "Please Connect Internet", Toast.LENGTH_LONG).show();
         }
-    }
-
-    private void getFoodTimeApi(JsonObject jsonObject) {
-        MyApiEndpointInterface apiService =
-                ApiClient.getClient().create(MyApiEndpointInterface.class);
-        Call<JsonObject> call = apiService.requestGeneral(jsonObject);
-
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-
-                String s = response.body().toString();
-                Log.e(TAG, "get food prep time resp" + s);
-                try {
-                    JSONObject jsonObject = new JSONObject(s);
-
-                    if (jsonObject.getString("status").equalsIgnoreCase("200")) {
-
-                        JSONArray resultJsonArray = jsonObject.getJSONArray("result");
-                        JSONObject object = resultJsonArray.getJSONObject(0);
-                        timeInhouse = object.getString("inhouse_min");
-                        timeCatering = object.getString("catering_min");
-                        timeDelivery = object.getString("takeout_del_min");
-                        timeTakeout = object.getString("takeout_min");
-                        takeOut_lead_time = object.getString("takeout_lead_time");
-                        catering_lead_days = object.getString("catering_days");
-
-                    } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
-                    } else {
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-            @SuppressLint("LongLogTag")
-            @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.e(TAG, "error" + t.getMessage());
-            }
-        });
     }
 
     private void init() {
@@ -356,6 +354,19 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                     offersDialog();
                     couponAdapter = new OffersAdapter(context, couponsModelsList);
                     mRecyclerView.setAdapter(couponAdapter);
+                }
+            }
+        });
+
+        tvDeliveryText = (CustomTextView) findViewById(R.id.tvDeliveryText);
+
+        homedelivery_btn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    tvDeliveryText.setVisibility(View.VISIBLE);
+                } else {
+                    tvDeliveryText.setVisibility(View.GONE);
                 }
             }
         });
@@ -1322,7 +1333,6 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                 ApiClient.getClient().create(MyApiEndpointInterface.class);
         Call<JsonObject> call = apiService.available_coupon(jsonObject);
 
-
         call.enqueue(new Callback<JsonObject>() {
             @SuppressLint("LongLogTag")
             @Override
@@ -1416,19 +1426,19 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
             dialog.show();
     }
 
-   /* private void calculateDistance(){
-        Location l1=new Location("One");
-        l1.setLatitude(Double.parseDouble(latitude));
-        l1.setLongitude(Double.parseDouble(longitude));
+    /* private void calculateDistance(){
+         Location l1=new Location("One");
+         l1.setLatitude(Double.parseDouble(latitude));
+         l1.setLongitude(Double.parseDouble(longitude));
 
-        Log.e(TAG, "calculateDistance: l1"+l1.toString() );
+         Log.e(TAG, "calculateDistance: l1"+l1.toString() );
 
-        Location l2=new Location("Two");
-        l2.setLatitude(Double.parseDouble(frnd_lat));
-        l2.setLongitude(Double.parseDouble(frnd_longi));
+         Location l2=new Location("Two");
+         l2.setLatitude(Double.parseDouble(frnd_lat));
+         l2.setLongitude(Double.parseDouble(frnd_longi));
 
-        float distance_bw_one_and_two=l1.distanceTo(l2);
-    }*/
+         float distance_bw_one_and_two=l1.distanceTo(l2);
+     }*/
     private void getPayment(String amount) {
         Log.d("hellooo", amount);
         //Creating a paypalpayment
@@ -1691,6 +1701,74 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
             }
         });
         alertDialog.show();
+    }
+
+    class DeliveryInfoTask extends AsyncTask<Void, String, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.GETDELIVERYINFO);
+            jsonObject.addProperty("user_id", AppPreferences.getCustomerid(context));
+            jsonObject.addProperty("business_id", AppPreferences.getBusiID(context));
+            Log.e(TAG, "DeliveryInfoTask: Request >> " + jsonObject.toString());
+
+            MyApiEndpointInterface apiService = ApiClient.getClient().create(MyApiEndpointInterface.class);
+            Call<JsonObject> call = apiService.requestGeneral(jsonObject);
+
+            call.enqueue(new Callback<JsonObject>() {
+                @Override
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+
+                    String s = response.body().toString();
+                    Log.e(TAG, "DeliveryInfoTask: Response >> " + s);
+                    try {
+                        JSONObject jsonObject = new JSONObject(s);
+                        if (jsonObject.getString("status").equalsIgnoreCase("200")) {
+                            JSONArray resultJsonArray = jsonObject.getJSONArray("result");
+                            JSONObject object = resultJsonArray.getJSONObject(0);
+                            String delivery_area = object.getString("delivery_area");
+                            String driver_arrival_time = object.getString("driver_arrival_time");
+                            String cost_flat = object.getString("cost_flat");
+                            String cost_range   = object.getString("cost_range");
+                            String cost_percent   = object.getString("cost_percent");
+                            if(cost_flat.equalsIgnoreCase("1"))
+                            {
+                                String flat_amt = object.getString("flat_amt");
+
+                            }else if(cost_percent.equalsIgnoreCase("1"))
+                            {
+                                String percent_amt = object.getString("percent_amt");
+
+                            }else if(cost_range.equalsIgnoreCase("1"))
+                            {
+                                String percent_amt = object.getString("percent_amt");
+
+                            }
+                            takeOut_lead_time = object.getString("takeout_lead_time");
+                            catering_lead_days = object.getString("catering_days");
+                        } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
+                        } else {
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @SuppressLint("LongLogTag")
+                @Override
+                public void onFailure(Call<JsonObject> call, Throwable t) {
+                    Log.e(TAG, "error" + t.getMessage());
+                }
+            });
+
+            return null;
+        }
     }
 
     public class InputFilterMinMax implements InputFilter {
