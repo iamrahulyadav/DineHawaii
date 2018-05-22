@@ -3,7 +3,6 @@ package com.yberry.dinehawaii.vendor.Activity;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -11,8 +10,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -31,7 +28,6 @@ import com.yberry.dinehawaii.Util.Util;
 import com.yberry.dinehawaii.customview.CustomTextView;
 import com.yberry.dinehawaii.vendor.Adapter.VendorBidDetailsAdapter;
 import com.yberry.dinehawaii.vendor.Model.BidDetailsModel;
-import com.yberry.dinehawaii.vendor.Model.VendorBidItemModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,7 +41,6 @@ import retrofit2.Response;
 
 public class BidItemDetailsActivity extends AppCompatActivity implements View.OnClickListener {
     String bid_id = "";
-    ArrayList<VendorBidItemModel> itemList;
     ArrayList<BidDetailsModel> modelsList;
     String TAG = "BidItemDetailsActivity";
     CustomTextView tvbidUid, tvBidStatus, tvBidDate, items, basicinfo;
@@ -73,21 +68,6 @@ public class BidItemDetailsActivity extends AppCompatActivity implements View.On
         setCartAdapter();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.single_edit_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_edit:
-                startActivity(new Intent(context, BidCartEditActivity.class).putExtra("list", itemList));
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     private void setToolbar() {
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar_bar);
@@ -133,7 +113,6 @@ public class BidItemDetailsActivity extends AppCompatActivity implements View.On
     private void initView() {
         context = this;
         modelsList = new ArrayList<>();
-        itemList = new ArrayList<>();
         tvBidDate = (CustomTextView) findViewById(R.id.tvDateTime);
         tvBidStatus = (CustomTextView) findViewById(R.id.tvBidStatus);
         llBasic = (LinearLayout) findViewById(R.id.llBasic);
@@ -179,9 +158,7 @@ public class BidItemDetailsActivity extends AppCompatActivity implements View.On
                         for (int i = 0; i < jsonArray.length(); i++) {
                             Gson gson = new Gson();
                             BidDetailsModel model = gson.fromJson(jsonArray.getJSONObject(i).toString(), BidDetailsModel.class);
-                            VendorBidItemModel model1 = gson.fromJson(jsonArray.getJSONObject(i).toString(), VendorBidItemModel.class);
                             modelsList.add(model);
-                            itemList.add(model1);
                         }
                         JSONObject object = jsonArraymain.getJSONObject(0);
                         tvBidDate.setText(object.getString("date_time"));
