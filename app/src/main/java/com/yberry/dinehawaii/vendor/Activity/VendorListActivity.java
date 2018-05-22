@@ -247,12 +247,13 @@ public class VendorListActivity extends AppCompatActivity implements View.OnClic
             public void onItemClick(View view, int position) {
                 VendorMasterData model = sublist.get(position);
                 floatingActionMenu.close(true);
-                Intent intent = new Intent(context, OrderItemListActivity.class);
-                intent.putExtra("vendor_id", model.getSub_vendor_id());
-                startActivity(intent);
-                Log.e(TAG, "onItemClick: " + model.getSub_vendor_id());
-                Log.e(TAG, "onItemClick: " + model.getSub_vendor_busname());
-                mDialog.cancel();
+                    Intent intent = new Intent(context, OrderItemListActivity.class);
+                    intent.putExtra("vendor_id", model.getSub_vendor_id());
+                    startActivity(intent);
+                    Log.e(TAG, "onItemClick: " + model.getSub_vendor_id());
+                    Log.e(TAG, "onItemClick: " + model.getSub_vendor_busname());
+                    mDialog.cancel();
+
             }
 
             @Override
@@ -410,10 +411,12 @@ public class VendorListActivity extends AppCompatActivity implements View.OnClic
             public void onItemClick(View view, int position) {
                 VendorMasterData model = masterlist.get(position);
                 floatingActionMenu.close(true);
-                Intent intent = new Intent(context, BidItemListActivity.class);
-                intent.putExtra("vendor_id", model.getMaster_vendor_id());
-                startActivity(intent);
-                mDialog.cancel();
+
+                    Intent intent = new Intent(context, BidItemListActivity.class);
+                    intent.putExtra("vendor_id", model.getMaster_vendor_id());
+                    startActivity(intent);
+                    mDialog.cancel();
+
             }
 
             @Override

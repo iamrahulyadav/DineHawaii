@@ -153,6 +153,8 @@ public class CustomerResDetailActivity extends AppCompatActivity implements View
         btnUpdate.setOnClickListener(this);
         btnCancel.setOnClickListener(this);
         btnConfirm.setOnClickListener(this);
+        btnFeedback.setOnClickListener(this);
+        btnReview.setOnClickListener(this);
     }
 
     private void initControls() {
