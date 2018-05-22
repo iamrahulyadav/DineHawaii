@@ -418,7 +418,7 @@ public class BidItemDetailsActivity extends AppCompatActivity implements View.On
             @Override
             public void onItemClick(View view, int position) {
                 BidDetailsModel detailsModel = modelsList.get(position);
-                if (!detailsModel.getBidStatus().equalsIgnoreCase("Completed"))
+                if (!detailsModel.getBidStatus().equalsIgnoreCase("Completed")||!detailsModel.getBidStatus().equalsIgnoreCase("Rejected"))
                     showbidDialog(detailsModel.getBidRowId(), modelsList.get(position));
             }
 
