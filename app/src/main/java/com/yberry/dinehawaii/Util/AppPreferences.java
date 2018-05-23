@@ -59,6 +59,8 @@ public class AppPreferences {
     public static final String PREP_TIME = "prep_time";
     public static final String CUST_ADDR_LAT = "cust_addr_lat";
     public static final String CUST_ADDR_LONG = "cust_addr_long";
+    public static final String SEL_BUSI_LAT = "sel_busi_lat";
+    public static final String SEL_BUSI_LONG = "sel_busi_long";
 
 
     private final SharedPreferences sharedPreferences;
@@ -804,6 +806,35 @@ public class AppPreferences {
         SharedPreferences.Editor editor = preferences.edit();
         editor.clear();
         editor.commit();
+    }
+
+
+    public static void setSelectedBusiLat(Context context, String value) {
+        SharedPreferences preferences = context.getSharedPreferences(
+                MBPREFERENCES, 0);
+        Editor editor = preferences.edit();
+        editor.putString(SEL_BUSI_LAT, value);
+        editor.commit();
+    }
+
+    public static String getSelectedBusiLat(Context context) {
+        SharedPreferences pereference = context.getSharedPreferences(
+                MBPREFERENCES, 0);
+        return pereference.getString(SEL_BUSI_LAT, "0.0");
+    }
+
+    public static void setSelectedBusiLong(Context context, String value) {
+        SharedPreferences preferences = context.getSharedPreferences(
+                MBPREFERENCES, 0);
+        Editor editor = preferences.edit();
+        editor.putString(SEL_BUSI_LONG, value);
+        editor.commit();
+    }
+
+    public static String getSelectedBusiLong(Context context) {
+        SharedPreferences pereference = context.getSharedPreferences(
+                MBPREFERENCES, 0);
+        return pereference.getString(SEL_BUSI_LONG, "0.0");
     }
 
 

@@ -108,6 +108,7 @@ public class RestaurentDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurent_detail);
+        context = RestaurentDetailActivity.this;
         if (checkPermission(Manifest.permission.CALL_PHONE)) {
         } else {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, MAKE_CALL_PERMISSION_REQUEST_CODE);
@@ -124,6 +125,8 @@ public class RestaurentDetailActivity extends AppCompatActivity {
         ListItem listItem = getIntent().getParcelableExtra("data");
         Log.e(TAG, "onCreate: Restaurant Data >> " + listItem);
         listItems.add(listItem);
+        AppPreferences.setSelectedBusiLat(context, "" + listItem.getLatitude());
+        AppPreferences.setSelectedBusiLong(context, "" + listItem.getLongitude());
 
         if (listItem.getType().equalsIgnoreCase("1")) {
             viewLayout.setVisibility(View.VISIBLE);
@@ -641,7 +644,7 @@ public class RestaurentDetailActivity extends AppCompatActivity {
     private void checkPackage() {
         String package_list = AppPreferences.getBussPackageList(this);
         Log.e(TAG, "checkPackage: package_list >> " + package_list);
-        if (package_list.contains("1") &&  package_list.contains("2"))
+        if (package_list.contains("1") && package_list.contains("2"))
             makeReservationButton.setVisibility(View.VISIBLE);
         else
             makeReservationButton.setVisibility(View.GONE);

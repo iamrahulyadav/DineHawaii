@@ -112,6 +112,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_15sdp"
+                    android:layout_marginRight="@dimen/_15sdp"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:lineSpacingExtra="@dimen/_5sdp"
                     android:text="Delivery Rates:"

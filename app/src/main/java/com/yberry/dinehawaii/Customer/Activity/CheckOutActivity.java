@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.design.widget.Snackbar;
@@ -76,6 +77,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -83,6 +85,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -132,12 +136,14 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
     private String minOrderValue = "0", takeOut_lead_time, catering_lead_days;
     private ArrayList<OrderItemsDetailsModel> cartItems;
     private CustomEditText daddress;
-    private String latitude = "0.0", longitude = "0.0", setDefault = "0";
+    private String setDefault = "0";
     private CustomCheckBox cbDefaultAddr;
     private CustomTextView tvDeliveryText, tvDelChargeAmount;
     private double delChargeAmount = 0.0;
     private double geTaxAmount = 0.0;
     private double totalPaidAmountBase = 0.0;
+    private double cust_latitude = 0.0, cust_longitude = 0.0;
+    private int deliveryArea = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,6 +156,9 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         cartItems = new DatabaseHandler(context).getCartItems(AppPreferences.getBusiID(context));  //database data
         setCartAdapter();
         updateHomeDeliveryInfo();
+
+        cust_latitude = Double.parseDouble(AppPreferences.getCustAddrLat(context));
+        cust_longitude = Double.parseDouble(AppPreferences.getCustAddrLong(context));
 
         if (Util.isNetworkAvailable(context)) {
             getGETax();
@@ -494,7 +503,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         remove_coupon.setVisibility(View.GONE);
         rd_loylty.setEnabled(true);
         rd_egift.setEnabled(true);
-        tvTotalPaidAmount.setText("$"+String.valueOf(totalPaidAmountBase));
+        tvTotalPaidAmount.setText("$" + String.valueOf(totalPaidAmountBase));
     }
 
     private void applyCouponCode() {
@@ -867,7 +876,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                             double amt = Double.parseDouble(tvTotalPaidAmount.getText().toString()) - Double.parseDouble(egiftamount);
                             DecimalFormat twoDForm = new DecimalFormat("#.##");
                             double total_amount = Double.valueOf(twoDForm.format(amt));
-                            tvTotalPaidAmount.setText("$"+total_amount );
+                            tvTotalPaidAmount.setText("$" + total_amount);
                             Snackbar.make(findViewById(android.R.id.content), "Egift Card " + egiftcoupon + " applied successfully", Snackbar.LENGTH_LONG).show();
                         } else {
                             Snackbar.make(findViewById(android.R.id.content), "Egift Card can't be applied", Snackbar.LENGTH_LONG).setAction("Ok", new View.OnClickListener() {
@@ -1001,7 +1010,6 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                     Log.e(TAG, "onTimeSet: final date>>>>>   " + finalCurrentTime);
                     if (!catering_lead_days.equalsIgnoreCase("") && !catering_lead_days.equalsIgnoreCase("0")) {
                         if (finalCurrentTime.compareTo(selectedTime24) < 0) {
-
                             Log.e(TAG, "onTimeSet: current time is greater than selected time");
                             order_timings = cateringDateTime + "," + selectedTime;
                             AppPreferences.setOrderTime(context, order_timings);
@@ -1015,16 +1023,13 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                             CustOrTime.setText(selectedTime);
                             CustOrDate.setText(cateringDateTime);
                             setFoodPrepTime(order_type);
-
                         } else if (finalCurrentTime.compareTo(selectedTime24) > 0 || finalCurrentTime.compareTo(selectedTime24) == 0) {
-
                             timePickerDialog.dismiss();
                             order_type = "0";
                             order_timings = "";
                             catering_btn.setChecked(false);
                             showAlertDialog("Catering Order Requires " + catering_lead_days + " days prior booking");
                             Log.e(TAG, "onTimeSet: current time is less than/equals selected time");
-
                         }
                     }
                 } catch (Exception e) {
@@ -1179,22 +1184,18 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                 } else {
                     getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
                     deliveryDialog.hide();
-                    order_type = "1111";
-                    AppPreferences.setOrderType(context, order_type);
                     AppPreferences.setDeliveryName(context, dname.getText().toString());
                     AppPreferences.setDeliveryContact(context, dcontact.getText().toString());
-                    custNmLayout.setVisibility(View.VISIBLE);
-                    custPhnLayout.setVisibility(View.VISIBLE);
-                    custAddLayout.setVisibility(View.VISIBLE);
-                    custTimeLayout.setVisibility(View.GONE);
-                    custDtLayout.setVisibility(View.GONE);
-                    custPreptimeLayout.setVisibility(View.VISIBLE);
                     custName.setText(dname.getText().toString());
-                    custName.setSelection(custName.length());
                     CustPhn.setText(dcontact.getText().toString());
-                    CustAddr.setText(daddress.getText().toString());
-                    setFoodPrepTime(order_type);
-                    getDeliveryInfo();
+
+                    double busi_latitude = Double.parseDouble(AppPreferences.getSelectedBusiLat(context));
+                    double busi_longitude = Double.parseDouble(AppPreferences.getSelectedBusiLong(context));
+                    Log.e(TAG, "updateHomeDeliveryInfo: cust_latitude >> " + cust_latitude);
+                    Log.e(TAG, "updateHomeDeliveryInfo: cust_longitude >> " + cust_longitude);
+                    Log.e(TAG, "updateHomeDeliveryInfo: busi_latitude >> " + busi_latitude);
+                    Log.e(TAG, "updateHomeDeliveryInfo: busi_longitude >> " + busi_longitude);
+                    new GoogleMatrixRequest(busi_latitude, busi_longitude, cust_latitude, cust_longitude).execute();
                 }
             }
         });
@@ -1434,10 +1435,17 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
             if (resultCode == RESULT_OK) {
                 Place place = PlacePicker.getPlace(data, this);
                 daddress.setText(String.valueOf(place.getAddress()));
-                latitude = String.valueOf(place.getLatLng().latitude);
-                longitude = String.valueOf(place.getLatLng().longitude);
-                Log.e(TAG, "onActivityResult: latitude >> " + latitude);
-                Log.e(TAG, "onActivityResult: longitude >> " + longitude);
+                cust_latitude = place.getLatLng().latitude;
+                cust_longitude = place.getLatLng().longitude;
+
+                double busi_latitude = Double.parseDouble(AppPreferences.getSelectedBusiLat(context));
+                double busi_longitude = Double.parseDouble(AppPreferences.getSelectedBusiLong(context));
+
+                Log.e(TAG, "onActivityResult: cust_latitude >> " + cust_latitude);
+                Log.e(TAG, "onActivityResult: cust_longitude >> " + cust_longitude);
+                Log.e(TAG, "onActivityResult: busi_latitude >> " + busi_latitude);
+                Log.e(TAG, "onActivityResult: busi_longitude >> " + busi_longitude);
+
             }
         }/* else if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
@@ -1446,10 +1454,10 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                 Log.e(TAG, "onActivityResult: LatLng >> " + place.getLatLng());
 
                 daddress.setText(place.getName() + ", " + place.getAddress());
-                latitude = String.valueOf(place.getLatLng().latitude);
-                longitude = String.valueOf(place.getLatLng().longitude);
-                Log.e(TAG, "onActivityResult: latitude >> " + latitude);
-                Log.e(TAG, "onActivityResult: longitude >> " + longitude);
+                cust_latitude = String.valueOf(place.getLatLng().latitude);
+                cust_longitude = String.valueOf(place.getLatLng().longitude);
+                Log.e(TAG, "onActivityResult: cust_latitude >> " + cust_latitude);
+                Log.e(TAG, "onActivityResult: cust_longitude >> " + cust_longitude);
             } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
                 Status status = PlaceAutocomplete.getStatus(CheckOutActivity.this, data);
                 Log.e(TAG, "onActivityResult: result_error >> " + status.getStatusMessage());
@@ -1548,8 +1556,8 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         object.addProperty("order_type", AppPreferences.getOrderType(CheckOutActivity.this)); //  AppPreferences.getOrderType(ThankYouScreenActivity.this)
         object.addProperty("today_time", AppPreferences.getOrderTime(CheckOutActivity.this)); //order time
         object.addProperty("future_time", AppPreferences.getOrderTime(CheckOutActivity.this));
-        object.addProperty("address_lat", latitude);
-        object.addProperty("address_long", longitude);
+        object.addProperty("address_lat", String.valueOf(cust_latitude));
+        object.addProperty("address_long", String.valueOf(cust_longitude));
         object.addProperty("set_as_default", setDefault);
         jsonObject.add("contactDetails", object);
         Log.e("Place order request", object.toString());
@@ -1595,10 +1603,9 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                         Log.e(TAG, "onResponse: setDefault>>>>>>" + setDefault);
                         if (setDefault.equalsIgnoreCase("1")) {
                             AppPreferences.setCustomerAddress(context, CustAddr.getText().toString());
-                            AppPreferences.setCustAddrLat(context, latitude);
-                            AppPreferences.setCustAddrLong(context, longitude);
+                            AppPreferences.setCustAddrLat(context, String.valueOf(cust_latitude));
+                            AppPreferences.setCustAddrLong(context, String.valueOf(cust_longitude));
                         }
-
 
                     } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
                         JSONArray jsonArray = jsonObject.getJSONArray("result");
@@ -1675,7 +1682,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         alertDialog.show();
     }
 
-    public void getDeliveryInfo() {
+    public void getDeliveryInfo(final Double distance) {
         final ProgressHUD progressHD = ProgressHUD.show(context, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
@@ -1703,37 +1710,60 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                     if (jsonObject.getString("status").equalsIgnoreCase("200")) {
                         JSONArray resultJsonArray = jsonObject.getJSONArray("result");
                         JSONObject object = resultJsonArray.getJSONObject(0);
-                        String delivery_area = object.getString("delivery_area");
-                        String driver_arrival_time = object.getString("driver_arrival_time");
-                        String cost_flat = object.getString("cost_flat");
-                        String cost_range = object.getString("cost_range");
-                        String cost_percent = object.getString("cost_percent");
-                        if (cost_flat.equalsIgnoreCase("1")) {
-                            tvDeliveryText.setText("Delivery Fee: Flat $" + object.getString("flat_amt") + " on every order.");
-                            delChargeAmount = Double.parseDouble(object.getString("flat_amt"));
-                            tvDelChargeAmount.setText(String.valueOf(delChargeAmount));
-                        } else if (cost_percent.equalsIgnoreCase("1")) {
-                            tvDeliveryText.setText("Delivery Fee: " + object.getString("percent_amt") + "% on every order.");
-                            delChargeAmount = totalAmount * Double.parseDouble(object.getString("percent_amt")) / 100;
-                            tvDelChargeAmount.setText(String.valueOf(delChargeAmount));
-                        } else if (cost_range.equalsIgnoreCase("1")) {
-                            tvDeliveryText.setText("Delivery Fee: \n     1. $" + object.getString("min_food_cost") + " is the minimum cost for delivery.\n"
-                                    + "     2. $" + object.getString("lessthan_amt") + " if total food cost is less than $" + object.getString("lessthan_value")
-                                    + ".\n     3. $" + object.getString("between_amt") + " if total food cost is $" + object.getString("between_val1") + " to $" + object.getString("between_val2"));
-                            if (totalAmount < Double.parseDouble(object.getString("lessthan_value"))) {
-                                delChargeAmount = Double.parseDouble(object.getString("lessthan_amt"));
-                            } else if (totalAmount >= Double.parseDouble(object.getString("between_val1")) && totalAmount <= Double.parseDouble(object.getString("between_val2"))) {
-                                delChargeAmount = Double.parseDouble(object.getString("between_amt"));
-                            } else {
-                                delChargeAmount = Double.parseDouble(object.getString("min_food_cost"));
-                            }
-                        }
+                        deliveryArea = Integer.parseInt(object.getString("delivery_area"));
+                        if (distance <= deliveryArea) {
+                            String cost_flat = object.getString("cost_flat");
+                            String cost_range = object.getString("cost_range");
+                            String cost_percent = object.getString("cost_percent");
+                            tvDeliveryText.setTextColor(getResources().getColor(R.color.blue));
 
-                        tvDelChargeAmount.setText("$" + String.valueOf(delChargeAmount));
-                        totalPaidAmount = totalPaidAmount + delChargeAmount;
-                        totalPaidAmountBase = totalPaidAmount;
-                        tvTotalPaidAmount.setText("$" + String.valueOf(totalPaidAmount));
-                        tvTotalPaidAmount2.setText("$" + String.valueOf(totalPaidAmount));
+                            if (cost_flat.equalsIgnoreCase("1")) {
+                                tvDeliveryText.setText("Delivery Fee: Flat $" + object.getString("flat_amt") + " on every order.");
+                                delChargeAmount = Double.parseDouble(object.getString("flat_amt"));
+                                tvDelChargeAmount.setText(String.valueOf(delChargeAmount));
+                            } else if (cost_percent.equalsIgnoreCase("1")) {
+                                tvDeliveryText.setText("Delivery Fee: " + object.getString("percent_amt") + "% on every order.");
+                                delChargeAmount = totalAmount * Double.parseDouble(object.getString("percent_amt")) / 100;
+                                tvDelChargeAmount.setText(String.valueOf(delChargeAmount));
+                            } else if (cost_range.equalsIgnoreCase("1")) {
+                                tvDeliveryText.setText("Delivery Fee: \n     1. $" + object.getString("min_food_cost") + " is the minimum cost for delivery.\n"
+                                        + "     2. $" + object.getString("lessthan_amt") + " if total food cost is less than $" + object.getString("lessthan_value")
+                                        + ".\n     3. $" + object.getString("between_amt") + " if total food cost is $" + object.getString("between_val1") + " to $" + object.getString("between_val2"));
+                                if (totalAmount < Double.parseDouble(object.getString("lessthan_value"))) {
+                                    delChargeAmount = Double.parseDouble(object.getString("lessthan_amt"));
+                                } else if (totalAmount >= Double.parseDouble(object.getString("between_val1")) && totalAmount <= Double.parseDouble(object.getString("between_val2"))) {
+                                    delChargeAmount = Double.parseDouble(object.getString("between_amt"));
+                                } else {
+                                    delChargeAmount = Double.parseDouble(object.getString("min_food_cost"));
+                                }
+                            }
+
+
+                            order_type = "1111";
+                            AppPreferences.setOrderType(context, order_type);
+
+
+                            custNmLayout.setVisibility(View.VISIBLE);
+                            custPhnLayout.setVisibility(View.VISIBLE);
+                            custAddLayout.setVisibility(View.VISIBLE);
+                            custTimeLayout.setVisibility(View.GONE);
+                            custDtLayout.setVisibility(View.GONE);
+                            custPreptimeLayout.setVisibility(View.VISIBLE);
+                            custName.setSelection(custName.length());
+                            CustAddr.setText(daddress.getText().toString());
+                            setFoodPrepTime(order_type);
+
+                            tvDelChargeAmount.setText("$" + String.valueOf(delChargeAmount));
+                            totalPaidAmount = totalPaidAmount + delChargeAmount;
+                            totalPaidAmountBase = totalPaidAmount;
+                            tvTotalPaidAmount.setText("$" + String.valueOf(totalPaidAmount));
+                            tvTotalPaidAmount2.setText("$" + String.valueOf(totalPaidAmount));
+
+//                getDeliveryInfo();
+                        } else {
+                            tvDeliveryText.setTextColor(Color.RED);
+                            tvDeliveryText.setText("Delivery address is too far. Restaurant delivers within " + deliveryArea + " miles.");
+                        }
                     }
                     if (progressHD != null) progressHD.dismiss();
 
@@ -1782,5 +1812,87 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    public class GoogleMatrixRequest extends AsyncTask<Void, Double, Void> {
 
+
+        private static final String API_KEY = AppConstants.GOOGLE_MATRIX_API_KEY;
+        double origin_lat = 0.0, origin_long = 0.0;
+        double dest_lat = 0.0, dest_long = 0.0;
+        String url_request = "";
+        OkHttpClient client = new OkHttpClient();
+
+        public GoogleMatrixRequest(double origin_lat, double origin_long, double dest_lat, double dest_long) {
+            this.origin_lat = origin_lat;
+            this.origin_long = origin_long;
+            this.dest_lat = dest_lat;
+            this.dest_long = dest_long;
+            url_request = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + origin_lat + "," + origin_long + "&destinations=" + dest_lat + "," + dest_long + "&mode=driving&key=" + API_KEY;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            Log.e(TAG, "GoogleMatrixRequest: doInBackground: Request >> " + url_request);
+            double distance = 0.0;
+            Request request = new Request.Builder()
+                    .url(url_request)
+                    .build();
+
+            okhttp3.Response response = null;
+            try {
+                response = client.newCall(request).execute();
+                String response_str = response.body().string();
+                Log.e(TAG, "GoogleMatrixRequest: doInBackground: Response >> " + response_str);
+
+                JSONObject jsonObject = new JSONObject(response_str);
+                JSONObject elementsObject = jsonObject.getJSONArray("rows").getJSONObject(0).getJSONArray("elements").getJSONObject(0);
+                if (elementsObject.getString("status").equalsIgnoreCase("OK")) {
+
+                    String[] str = elementsObject.getJSONObject("distance").getString("text").split("\\s");
+                    if (str != null)
+                        distance = Double.parseDouble(str[0]);
+                    publishProgress(distance);
+                } else if (elementsObject.getString("status").equalsIgnoreCase("ZERO_RESULTS")) {
+                    publishProgress(distance);
+
+                }
+
+
+
+                /*order_type = "1111";
+                AppPreferences.setOrderType(context, order_type);
+                AppPreferences.setDeliveryName(context, dname.getText().toString());
+                AppPreferences.setDeliveryContact(context, dcontact.getText().toString());
+                custNmLayout.setVisibility(View.VISIBLE);
+                custPhnLayout.setVisibility(View.VISIBLE);
+                custAddLayout.setVisibility(View.VISIBLE);
+                custTimeLayout.setVisibility(View.GONE);
+                custDtLayout.setVisibility(View.GONE);
+                custPreptimeLayout.setVisibility(View.VISIBLE);
+                custName.setText(dname.getText().toString());
+                custName.setSelection(custName.length());
+                CustPhn.setText(dcontact.getText().toString());
+                CustAddr.setText(daddress.getText().toString());
+                setFoodPrepTime(order_type);
+                getDeliveryInfo();*/
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Double... values) {
+            super.onProgressUpdate(values);
+            Log.e(TAG, "GoogleMatrixRequest: onProgressUpdate: distance >> " + values[0]);
+            if (values[0] != 0.0)
+                getDeliveryInfo(values[0]);
+            else {
+                order_type = "0";
+                tvDeliveryText.setTextColor(Color.RED);
+                tvDeliveryText.setText("Unable to locate delivery address, please reselect your delivery address.");
+            }
+        }
+    }
 }

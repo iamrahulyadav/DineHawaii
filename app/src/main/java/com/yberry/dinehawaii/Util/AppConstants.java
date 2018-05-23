@@ -7,6 +7,7 @@ package com.yberry.dinehawaii.Util;
 public class AppConstants {
     public static final String PAYPAL_CLIENT_ID = "AS9fpi-j9BCVs_-NoWAHkBhpMjEdtXh84ZJ6-nLv8cmJnIdkZo8rMkFI2Mbqr0mgokq_yojvl7F8iNe_";
     public static final String GETDELIVERYINFO = "getDeliveryInfo";
+    public static final String GOOGLE_MATRIX_API_KEY = "AIzaSyDl224ZpUkEynbX2OmqpFfCUxXVM_krXsY";
 
     public static String KEY_METHOD = "method";
     public static String KEY_FNAME = "first_name";
