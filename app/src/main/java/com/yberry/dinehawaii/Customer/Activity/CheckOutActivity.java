@@ -1761,6 +1761,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
 
 //                getDeliveryInfo();
                         } else {
+                            order_type = "0";
                             tvDeliveryText.setTextColor(Color.RED);
                             tvDeliveryText.setText("Delivery address is too far. Restaurant delivers within " + deliveryArea + " miles.");
                         }
