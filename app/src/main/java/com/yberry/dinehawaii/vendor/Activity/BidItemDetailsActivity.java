@@ -58,7 +58,6 @@ public class BidItemDetailsActivity extends AppCompatActivity implements View.On
     String TAG = "BidItemDetailsActivity";
     CustomTextView tvbidUid, tvBidStatus, tvBidDate, items, basicinfo;
     LinearLayout llBasic, llitems;
-    String overallBidStatus;
     private LinearLayoutManager mLayoutManager;
     private RecyclerView mRecyclerView;
     private VendorBidDetailsAdapter bidadapter;
@@ -105,6 +104,11 @@ public class BidItemDetailsActivity extends AppCompatActivity implements View.On
             button.setLayoutParams(params);
             group.addView(button);
         }
+        if (model.getVendorBidFinalAmount().equalsIgnoreCase("")|| model.getVendorBidFinalAmount().equalsIgnoreCase("0"))
+            group.removeViewAt(0);
+      /* if (model.getBidStatus().equalsIgnoreCase("Pending")) {
+            group.setEnabled(false);
+       }*/
 
         alertdialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
@@ -419,7 +423,7 @@ public class BidItemDetailsActivity extends AppCompatActivity implements View.On
             @Override
             public void onItemClick(View view, int position) {
                 BidDetailsModel detailsModel = modelsList.get(position);
-                if (!overallBidStatus.equalsIgnoreCase("Completed") && !overallBidStatus.equalsIgnoreCase("Rejected"))
+                if (!detailsModel.getBidStatus().equalsIgnoreCase("Rejected"))
                     showbidDialog(detailsModel.getBidRowId(), modelsList.get(position));
             }
 
@@ -484,7 +488,6 @@ public class BidItemDetailsActivity extends AppCompatActivity implements View.On
                         tvBidDate.setText(object.getString("date_time"));
                         tvbidUid.setText(object.getString("bid_unique_id"));
                         tvBidStatus.setText(object.getString("bid_status"));
-                        overallBidStatus = object.getString("bid_status");
                     } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
                         modelsList.clear();
                         Toast.makeText(context, "no record found", Toast.LENGTH_SHORT).show();

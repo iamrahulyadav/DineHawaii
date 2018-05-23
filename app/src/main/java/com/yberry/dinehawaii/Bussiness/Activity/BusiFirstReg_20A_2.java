@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -49,7 +50,7 @@ public class BusiFirstReg_20A_2 extends AppCompatActivity implements View.OnClic
     CustomButton submitButton;
     private ImageView back;
     private Context mContext;
-    private RadioGroup radioGroupMulti;
+    private RadioGroup radioGroupMulti,rdExemption;
     private String getBusinessName, getfederalNo, value = "0", multisite = "no", fein_id;
     private RelativeLayout mainView;
     private CustomEditText fein_id_ET;
@@ -58,6 +59,7 @@ public class BusiFirstReg_20A_2 extends AppCompatActivity implements View.OnClic
     private ArrayList<String> businessNameArrayList;
     ImageView tvFederalIdNumb_pop, multiSite_txt;
     private String business_name="";
+    LinearLayout llGetax;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +80,7 @@ public class BusiFirstReg_20A_2 extends AppCompatActivity implements View.OnClic
     private void init() {
         mContext = this;
         businessDetails = new BusinessDetails();
+        rdExemption = (RadioGroup) findViewById(R.id.rdExemption);
         radioGroupMulti = (RadioGroup) findViewById(R.id.radioGroupMulti);
         mainView = (RelativeLayout) findViewById(R.id.mainView);
         submitButton = (CustomButton) findViewById(R.id.submitButton);
@@ -85,6 +88,7 @@ public class BusiFirstReg_20A_2 extends AppCompatActivity implements View.OnClic
         fein_id_ET = (CustomEditText) findViewById(R.id.enterFeinHere);
         tvFederalIdNumb_pop = (ImageView) findViewById(R.id.tvFederalIdNumb_pop);
         multiSite_txt = (ImageView) findViewById(R.id.multiSite_txt);
+        llGetax = (LinearLayout) findViewById(R.id.llGetax);
         tvFederalIdNumb_pop.setOnClickListener(this);
         multiSite_txt.setOnClickListener(this);
         businessNameArrayList = new ArrayList<>();
@@ -132,6 +136,16 @@ public class BusiFirstReg_20A_2 extends AppCompatActivity implements View.OnClic
                 } else {
                     Toast.makeText(mContext, "Please Connect Your Internet", Toast.LENGTH_LONG).show();
                 }
+            }
+        });
+
+        rdExemption.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId==R.id.exemptYes)
+                    llGetax.setVisibility(View.VISIBLE);
+                else
+                    llGetax.setVisibility(View.GONE);
             }
         });
     }
