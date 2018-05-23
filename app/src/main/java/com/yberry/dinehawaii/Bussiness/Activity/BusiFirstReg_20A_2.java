@@ -13,7 +13,6 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
@@ -28,14 +27,11 @@ import com.yberry.dinehawaii.RetrofitClasses.ApiClient;
 import com.yberry.dinehawaii.RetrofitClasses.MyApiEndpointInterface;
 import com.yberry.dinehawaii.Util.AppConstants;
 import com.yberry.dinehawaii.Util.AppPreferencesBuss;
-import com.yberry.dinehawaii.Util.Function;
 import com.yberry.dinehawaii.Util.ProgressHUD;
 import com.yberry.dinehawaii.Util.Util;
 import com.yberry.dinehawaii.customview.CustomButton;
 import com.yberry.dinehawaii.customview.CustomEditText;
-import com.yberry.dinehawaii.customview.CustomTextView;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -48,18 +44,16 @@ import retrofit2.Response;
 public class BusiFirstReg_20A_2 extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "BusiFirstReg_20A_2";
     CustomButton submitButton;
+    CustomEditText editTextBusiName,etGeTaxNo;
+    ImageView tvFederalIdNumb_pop, multiSite_txt;
+    LinearLayout llGetax;
     private ImageView back;
     private Context mContext;
-    private RadioGroup radioGroupMulti,rdExemption;
-    private String getBusinessName, getfederalNo, value = "0", multisite = "no", fein_id;
+    private RadioGroup radioGroupMulti, rdExemption;
+    private String getBusinessName, getfederalNo, value = "0", multisite = "no";
     private RelativeLayout mainView;
     private CustomEditText fein_id_ET;
-    CustomEditText editTextBusiName;
-    private BusinessDetails businessDetails;
-    private ArrayList<String> businessNameArrayList;
-    ImageView tvFederalIdNumb_pop, multiSite_txt;
-    private String business_name="";
-    LinearLayout llGetax;
+    private String business_name = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,11 +73,11 @@ public class BusiFirstReg_20A_2 extends AppCompatActivity implements View.OnClic
 
     private void init() {
         mContext = this;
-        businessDetails = new BusinessDetails();
         rdExemption = (RadioGroup) findViewById(R.id.rdExemption);
         radioGroupMulti = (RadioGroup) findViewById(R.id.radioGroupMulti);
         mainView = (RelativeLayout) findViewById(R.id.mainView);
         submitButton = (CustomButton) findViewById(R.id.submitButton);
+        etGeTaxNo = (CustomEditText) findViewById(R.id.etGeTaxNo);
         editTextBusiName = (CustomEditText) findViewById(R.id.editTextBusiName);
         fein_id_ET = (CustomEditText) findViewById(R.id.enterFeinHere);
         tvFederalIdNumb_pop = (ImageView) findViewById(R.id.tvFederalIdNumb_pop);
@@ -91,7 +85,6 @@ public class BusiFirstReg_20A_2 extends AppCompatActivity implements View.OnClic
         llGetax = (LinearLayout) findViewById(R.id.llGetax);
         tvFederalIdNumb_pop.setOnClickListener(this);
         multiSite_txt.setOnClickListener(this);
-        businessNameArrayList = new ArrayList<>();
     }
 
     private void setListener() {
@@ -125,13 +118,13 @@ public class BusiFirstReg_20A_2 extends AppCompatActivity implements View.OnClic
             public void onClick(View v) {
                 getBusinessName = editTextBusiName.getText().toString().trim();
                 getfederalNo = fein_id_ET.getText().toString().trim();
-                Log.d("007value", value);
-                Log.d("007value", multisite);
                 if (getBusinessName.equalsIgnoreCase("")) {
                     editTextBusiName.setError("Enter business name");
                 } else if (fein_id_ET.getText().toString().equalsIgnoreCase("")) {
                     fein_id_ET.setError("Enter FEIN No");
-                } else if (Util.isNetworkAvailable(mContext)) {
+                } else if (rdExemption.getCheckedRadioButtonId() == R.id.exemptYes && TextUtils.isEmpty(etGeTaxNo.getText().toString()))
+                    etGeTaxNo.setError("Enter GE Tax no");
+                else if (Util.isNetworkAvailable(mContext)) {
                     businessRegisration();
                 } else {
                     Toast.makeText(mContext, "Please Connect Your Internet", Toast.LENGTH_LONG).show();
@@ -142,7 +135,7 @@ public class BusiFirstReg_20A_2 extends AppCompatActivity implements View.OnClic
         rdExemption.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId==R.id.exemptYes)
+                if (checkedId == R.id.exemptYes)
                     llGetax.setVisibility(View.VISIBLE);
                 else
                     llGetax.setVisibility(View.GONE);
@@ -177,10 +170,6 @@ public class BusiFirstReg_20A_2 extends AppCompatActivity implements View.OnClic
         jsonObject.addProperty("business_fein_no", getfederalNo);
         jsonObject.addProperty("type", "new");
         Log.e(TAG, jsonObject.toString());
-        businessRegisrationTask(jsonObject);
-    }
-
-    private void businessRegisrationTask(JsonObject jsonObject) {
         Log.v(TAG, "REQUEST SUBMIT BUTTON >> " + jsonObject.toString());
         final ProgressHUD progressHD = ProgressHUD.show(mContext, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
             @Override
@@ -244,7 +233,7 @@ public class BusiFirstReg_20A_2 extends AppCompatActivity implements View.OnClic
         if (v.getId() == R.id.tvFederalIdNumb_pop) {
             //Function.bottomToolTipDialogBox(null, BusiFirstReg_20A_2.this, "This package is already selected by you !!!" /*+ "\n Package Details : " + datalist.getPackage_detail()*/, tvFederalIdNumb_pop, null);
         } else if (v.getId() == R.id.multiSite_txt) {
-           // Function.bottomToolTipDialogBox(null, BusiFirstReg_20A_2.this, "This package is already selected by you !!!" /*+ "\n Package Details : " + datalist.getPackage_detail()*/, multiSite_txt, null);
+            // Function.bottomToolTipDialogBox(null, BusiFirstReg_20A_2.this, "This package is already selected by you !!!" /*+ "\n Package Details : " + datalist.getPackage_detail()*/, multiSite_txt, null);
         }
 
 
