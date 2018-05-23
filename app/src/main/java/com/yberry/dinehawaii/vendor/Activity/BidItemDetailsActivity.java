@@ -104,6 +104,11 @@ public class BidItemDetailsActivity extends AppCompatActivity implements View.On
             button.setLayoutParams(params);
             group.addView(button);
         }
+        if (model.getVendorBidFinalAmount().equalsIgnoreCase("")|| model.getVendorBidFinalAmount().equalsIgnoreCase("0"))
+            group.removeViewAt(0);
+      /* if (model.getBidStatus().equalsIgnoreCase("Pending")) {
+            group.setEnabled(false);
+       }*/
 
         alertdialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
@@ -282,7 +287,7 @@ public class BidItemDetailsActivity extends AppCompatActivity implements View.On
                     Toast.makeText(context, "Enter Price", Toast.LENGTH_SHORT).show();
                 else if (etYourPrice.getText().toString().equalsIgnoreCase(bidModel.getVendorBidFinalAmount()))
                     Toast.makeText(context, "Price is same as vendor price you can approve the bid", Toast.LENGTH_LONG).show();
-                  else{
+                else {
                     if (Util.isNetworkAvailable(context)) {
                         JsonObject jsonObject = new JsonObject();
                         jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.BUSINESS_VENDOR_API.BID_UPDATE);
@@ -418,7 +423,7 @@ public class BidItemDetailsActivity extends AppCompatActivity implements View.On
             @Override
             public void onItemClick(View view, int position) {
                 BidDetailsModel detailsModel = modelsList.get(position);
-                if (!detailsModel.getBidStatus().equalsIgnoreCase("Completed")||!detailsModel.getBidStatus().equalsIgnoreCase("Rejected"))
+                if (!detailsModel.getBidStatus().equalsIgnoreCase("Rejected"))
                     showbidDialog(detailsModel.getBidRowId(), modelsList.get(position));
             }
 

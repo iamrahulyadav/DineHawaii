@@ -67,7 +67,7 @@ public class VendorListAdapter extends RecyclerView.Adapter<VendorListAdapter.Vi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        CustomTextView tvName, tvBusname, tvVendorcontact, tvVendoremail, tvtitle;
+        CustomTextView tvName, tvBusname, tvVendorcontact,  tvtitle;
         LinearLayout llemail, llcontact, llbusnm;
         CardView cardView;
 
@@ -76,7 +76,6 @@ public class VendorListAdapter extends RecyclerView.Adapter<VendorListAdapter.Vi
             tvName = (CustomTextView) itemView.findViewById(R.id.tvName);
             tvBusname = (CustomTextView) itemView.findViewById(R.id.tvBusname);
             tvVendorcontact = (CustomTextView) itemView.findViewById(R.id.tvVendorcontact);
-            tvVendoremail = (CustomTextView) itemView.findViewById(R.id.tvVendoremail);
             tvtitle = (CustomTextView) itemView.findViewById(R.id.tvtitle);
             cardView = (CardView) itemView.findViewById(R.id.cardView_Vendor);
         }

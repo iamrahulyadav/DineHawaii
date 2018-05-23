@@ -5,30 +5,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background2">
+
     <include
         android:id="@+id/toolbar_bar"
         layout="@layout/toolbar" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar_bar"
         android:scrollbars="none">
+
         <RelativeLayout
             android:id="@+id/mainView"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <LinearLayout
-                android:layout_marginTop="@dimen/_30sdp"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginRight="@dimen/_10sdp"
                 android:id="@+id/linearLay"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_30sdp"
                 android:orientation="vertical">
 
                 <com.yberry.dinehawaii.customview.CustomTextView
                     android:id="@+id/tvSeachByName"
+                    style="@style/TextAppearance.AppCompat.Subhead"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/drawable_green_dot"
@@ -37,18 +41,17 @@
                     android:padding="@dimen/_3sdp"
                     android:text="@string/business_name"
                     android:textColor="@color/colorGreen"
-                    style="@style/TextAppearance.AppCompat.Subhead"
                     app:edittextfont="Raleway-Bold.ttf" />
 
                 <LinearLayout
                     android:id="@+id/llayoutSearch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvSeachByName"
                     android:orientation="vertical">
 
                     <com.yberry.dinehawaii.customview.CustomEditText
                         android:id="@+id/editTextBusiName"
+                        style="@style/TextAppearance.AppCompat.Subhead"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/_12sdp"
@@ -62,7 +65,6 @@
                         android:paddingTop="@dimen/_5sdp"
                         android:textColor="@color/white"
                         android:textColorHint="@color/offwhite"
-                        style="@style/TextAppearance.AppCompat.Subhead"
                         app:edittextfont="Raleway-Regular.ttf" />
 
                     <ImageView
@@ -81,26 +83,25 @@
 
                     <com.yberry.dinehawaii.customview.CustomTextView
                         android:id="@+id/tvFederalIdNumb"
+                        style="@style/TextAppearance.AppCompat.Subhead"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/llayoutSearch"
                         android:layout_marginTop="@dimen/_10sdp"
-                        android:drawablePadding="@dimen/_5sdp"
 
                         android:drawableLeft="@drawable/drawable_green_dot"
+                        android:drawablePadding="@dimen/_5sdp"
                         android:gravity="center"
                         android:text="@string/federalIdNo"
                         android:textColor="@color/colorGreen"
-                        style="@style/TextAppearance.AppCompat.Subhead"
                         app:edittextfont="Raleway-Bold.ttf" />
 
                     <ImageView
                         android:id="@+id/tvFederalIdNumb_pop"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:visibility="gone"
                         android:layout_marginTop="@dimen/_10sdp"
-                        android:src="@drawable/help" />
+                        android:src="@drawable/help"
+                        android:visibility="gone" />
 
                 </LinearLayout>
 
@@ -108,11 +109,11 @@
                     android:id="@+id/llFedralNO"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvFederalIdNumb"
                     android:orientation="vertical">
 
                     <com.yberry.dinehawaii.customview.CustomEditText
                         android:id="@+id/enterFeinHere"
+                        style="@style/TextAppearance.AppCompat.Subhead"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/_12sdp"
@@ -126,72 +127,13 @@
                         android:singleLine="true"
                         android:textColor="@color/white"
                         android:textColorHint="@color/offwhite"
-                        style="@style/TextAppearance.AppCompat.Subhead"
-                        app:edittextfont="Raleway-Regular.ttf"/>
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:scaleType="fitXY"
-
-                        android:src="@drawable/lines" />
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <com.yberry.dinehawaii.customview.CustomTextView
-                        style="@style/TextAppearance.AppCompat.Subhead"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/llayoutSearch"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:drawableLeft="@drawable/drawable_green_dot"
-                        android:drawablePadding="@dimen/_5sdp"
-                        android:gravity="center"
-                        android:text="GE Tax No"
-                        android:textColor="@color/colorGreen"
-                        app:edittextfont="@string/raleway_bold" />
-
-                    <ImageView
-                        android:id="@+id/tvGETaxNumb_pop"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:src="@drawable/help"
-                        android:visibility="gone" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvFederalIdNumb"
-                    android:orientation="vertical">
-
-                    <com.yberry.dinehawaii.customview.CustomEditText
-                        android:id="@+id/etGeTaxNo"
-                        style="@style/TextAppearance.AppCompat.Subhead"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_12sdp"
-                        android:background="@null"
-                        android:enabled="true"
-                        android:hint="Enter GE Tax No"
-                        android:imeOptions="actionDone"
-                        android:inputType="textCapWords"
-                        android:paddingBottom="@dimen/_8sdp"
-                        android:paddingTop="@dimen/_5sdp"
-                        android:singleLine="true"
-                        android:textColor="@color/white"
-                        android:textColorHint="@color/offwhite"
-                        app:edittextfont="@string/raleway_regular" />
+                        app:edittextfont="Raleway-Regular.ttf" />
 
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:scaleType="fitXY"
+
                         android:src="@drawable/lines" />
 
                 </LinearLayout>
@@ -199,7 +141,6 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/llFedralNO"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:weightSum="3">
 
@@ -227,6 +168,9 @@
                 <RadioGroup
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:id="@+id/rdExemption"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:layout_marginLeft="@dimen/_10sdp"
                     android:orientation="horizontal">
 
                     <RadioButton
@@ -248,48 +192,114 @@
                         android:text="@string/no"
                         android:textColor="@color/offwhite" />
                 </RadioGroup>
+
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:scaleType="fitXY"
                     android:src="@drawable/lines" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:id="@+id/llGetax"
+                    android:visibility="gone"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            style="@style/TextAppearance.AppCompat.Subhead"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:drawableLeft="@drawable/drawable_green_dot"
+                            android:drawablePadding="@dimen/_5sdp"
+                            android:gravity="center"
+                            android:text="GE Tax No"
+                            android:textColor="@color/colorGreen"
+                            app:edittextfont="@string/raleway_bold" />
+
+                        <ImageView
+                            android:id="@+id/tvGETaxNumb_pop"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:src="@drawable/help"
+                            android:visibility="gone" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <com.yberry.dinehawaii.customview.CustomEditText
+                            android:id="@+id/etGeTaxNo"
+                            style="@style/TextAppearance.AppCompat.Subhead"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_12sdp"
+                            android:background="@null"
+                            android:enabled="true"
+                            android:hint="Enter GE Tax No"
+                            android:imeOptions="actionDone"
+                            android:inputType="textCapWords"
+                            android:paddingBottom="@dimen/_8sdp"
+                            android:paddingTop="@dimen/_5sdp"
+                            android:singleLine="true"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/offwhite"
+                            app:edittextfont="@string/raleway_regular" />
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/lines" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/llBussiness"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/llFedralNO"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:weightSum="3">
 
 
                     <com.yberry.dinehawaii.customview.CustomTextView
                         android:id="@+id/tvMultiSiteBusiness"
+                        style="@style/TextAppearance.AppCompat.Subhead"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/drawable_green_dot"
                         android:drawablePadding="@dimen/_5sdp"
                         android:text="@string/isThisAMultiSiteBussinessUnderThisFEIN"
                         android:textColor="@color/colorGreen"
-                        style="@style/TextAppearance.AppCompat.Subhead"
-                        android:drawableLeft="@drawable/drawable_green_dot"
                         app:edittextfont="Raleway-Bold.ttf" />
 
 
                     <ImageView
                         android:id="@+id/multiSite_txt"
                         android:layout_width="wrap_content"
-                        android:visibility="gone"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:background="@drawable/help" />
+                        android:background="@drawable/help"
+                        android:visibility="gone" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/llRadioGroup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/llBussiness"
-
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -310,22 +320,22 @@
 
                             <RadioButton
                                 android:id="@+id/yesradioMultiSiteBusiness"
+                                style="@style/TextAppearance.AppCompat.Subhead"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:buttonTint="@color/colorPrimary"
                                 android:text="@string/yes"
-                                android:textColor="@color/offwhite"
-                                style="@style/TextAppearance.AppCompat.Subhead" />
+                                android:textColor="@color/offwhite" />
 
                             <RadioButton
                                 android:id="@+id/noradioMultiSiteBusiness"
+                                style="@style/TextAppearance.AppCompat.Subhead"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:buttonTint="@color/colorPrimary"
                                 android:checked="true"
                                 android:text="@string/no"
-                                android:textColor="@color/offwhite"
-                                style="@style/TextAppearance.AppCompat.Subhead" />
+                                android:textColor="@color/offwhite" />
                         </RadioGroup>
 
                     </LinearLayout>
@@ -352,7 +362,7 @@
                     android:text="Submit"
                     android:textAlignment="gravity"
                     android:textColor="#fff"
-                    app:edittextfont="Raleway-Bold.ttf"/>
+                    app:edittextfont="Raleway-Bold.ttf" />
 
             </LinearLayout>
         </RelativeLayout>

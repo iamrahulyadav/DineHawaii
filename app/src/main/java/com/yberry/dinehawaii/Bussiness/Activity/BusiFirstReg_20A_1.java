@@ -19,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -53,15 +54,16 @@ public class BusiFirstReg_20A_1 extends AppCompatActivity implements View.OnClic
     CustomButton submitButton;
     private ImageView back;
     private Context mContext;
-    private CustomEditText federalNo;
-    private RadioGroup radioGroupMulti;
-    private String getBusinessName, getfederalNo, value = "0", multisite = "no", fein_id;
+    private CustomEditText etGeTaxNo;
+    private RadioGroup radioGroupMulti,rdExemption;
+    private String getBusinessName, getfederalNo, value = "0", multisite = "no";
     private RelativeLayout mainView;
     private CustomEditText fein_id_ET;
     CustomTextView businessName;
     private BusinessDetails businessDetails;
     private ArrayList<String> businessNameArrayList;
     ImageView tvFederalIdNumb_pop, multiSite_txt;
+    LinearLayout llGetax;
     String permit_no = "", business_name = "";
 
 
@@ -83,6 +85,8 @@ public class BusiFirstReg_20A_1 extends AppCompatActivity implements View.OnClic
     private void init() {
         mContext = this;
         businessDetails = new BusinessDetails();
+        rdExemption = (RadioGroup) findViewById(R.id.rdExemption);
+        etGeTaxNo = (CustomEditText) findViewById(R.id.etGeTaxNo);
         radioGroupMulti = (RadioGroup) findViewById(R.id.radioGroupMulti);
         mainView = (RelativeLayout) findViewById(R.id.mainView);
         submitButton = (CustomButton) findViewById(R.id.submitButton);
@@ -90,6 +94,7 @@ public class BusiFirstReg_20A_1 extends AppCompatActivity implements View.OnClic
         fein_id_ET = (CustomEditText) findViewById(R.id.enterFeinHere);
         tvFederalIdNumb_pop = (ImageView) findViewById(R.id.tvFederalIdNumb_pop);
         multiSite_txt = (ImageView) findViewById(R.id.multiSite_txt);
+        llGetax = (LinearLayout) findViewById(R.id.llGetax);
        // tvFederalIdNumb_pop.setOnClickListener(this);
         //multiSite_txt.setOnClickListener(this);
         businessNameArrayList = new ArrayList<>();
@@ -140,6 +145,16 @@ public class BusiFirstReg_20A_1 extends AppCompatActivity implements View.OnClic
 
             }
         });
+        rdExemption.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == R.id.exemptYes)
+                    llGetax.setVisibility(View.VISIBLE);
+                else
+                    llGetax.setVisibility(View.GONE);
+            }
+        });
+
     }
 
 
