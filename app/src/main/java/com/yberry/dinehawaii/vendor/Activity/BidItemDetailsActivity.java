@@ -58,6 +58,7 @@ public class BidItemDetailsActivity extends AppCompatActivity implements View.On
     String TAG = "BidItemDetailsActivity";
     CustomTextView tvbidUid, tvBidStatus, tvBidDate, items, basicinfo;
     LinearLayout llBasic, llitems;
+    String overallBidStatus;
     private LinearLayoutManager mLayoutManager;
     private RecyclerView mRecyclerView;
     private VendorBidDetailsAdapter bidadapter;
@@ -282,7 +283,7 @@ public class BidItemDetailsActivity extends AppCompatActivity implements View.On
                     Toast.makeText(context, "Enter Price", Toast.LENGTH_SHORT).show();
                 else if (etYourPrice.getText().toString().equalsIgnoreCase(bidModel.getVendorBidFinalAmount()))
                     Toast.makeText(context, "Price is same as vendor price you can approve the bid", Toast.LENGTH_LONG).show();
-                  else{
+                else {
                     if (Util.isNetworkAvailable(context)) {
                         JsonObject jsonObject = new JsonObject();
                         jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.BUSINESS_VENDOR_API.BID_UPDATE);
@@ -418,7 +419,7 @@ public class BidItemDetailsActivity extends AppCompatActivity implements View.On
             @Override
             public void onItemClick(View view, int position) {
                 BidDetailsModel detailsModel = modelsList.get(position);
-                if (!detailsModel.getBidStatus().equalsIgnoreCase("Completed")||!detailsModel.getBidStatus().equalsIgnoreCase("Rejected"))
+                if (!overallBidStatus.equalsIgnoreCase("Completed") && !overallBidStatus.equalsIgnoreCase("Rejected"))
                     showbidDialog(detailsModel.getBidRowId(), modelsList.get(position));
             }
 
@@ -483,6 +484,7 @@ public class BidItemDetailsActivity extends AppCompatActivity implements View.On
                         tvBidDate.setText(object.getString("date_time"));
                         tvbidUid.setText(object.getString("bid_unique_id"));
                         tvBidStatus.setText(object.getString("bid_status"));
+                        overallBidStatus = object.getString("bid_status");
                     } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
                         modelsList.clear();
                         Toast.makeText(context, "no record found", Toast.LENGTH_SHORT).show();
