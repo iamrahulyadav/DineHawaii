@@ -819,6 +819,10 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                             tvGETaxAmount.setText("$" + geTaxAmount);
                             amount = String.valueOf(totalPaidAmount);
                         }
+                    }else{
+                        tvGETaxValue.setText("GE Tax");
+                        tvTotalAmt.setText("$" + totalAmount);
+                        tvGETaxAmount.setText("00");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
