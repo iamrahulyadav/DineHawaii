@@ -8,16 +8,11 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
@@ -32,7 +27,6 @@ import com.yberry.dinehawaii.RetrofitClasses.ApiClient;
 import com.yberry.dinehawaii.RetrofitClasses.MyApiEndpointInterface;
 import com.yberry.dinehawaii.Util.AppConstants;
 import com.yberry.dinehawaii.Util.AppPreferencesBuss;
-import com.yberry.dinehawaii.Util.Function;
 import com.yberry.dinehawaii.Util.ProgressHUD;
 import com.yberry.dinehawaii.Util.Util;
 import com.yberry.dinehawaii.customview.CustomButton;
@@ -52,20 +46,18 @@ import retrofit2.Response;
 public class BusiFirstReg_20A_1 extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "BusiFirstReg_20A_1";
     CustomButton submitButton;
+    CustomTextView businessName;
+    ImageView tvFederalIdNumb_pop, multiSite_txt;
+    String permit_no = "", business_name = "";
     private ImageView back;
     private Context mContext;
     private CustomEditText etGeTaxNo;
-    private RadioGroup radioGroupMulti,rdExemption;
+    private RadioGroup radioGroupMulti;
     private String getBusinessName, getfederalNo, value = "0", multisite = "no";
     private RelativeLayout mainView;
     private CustomEditText fein_id_ET;
-    CustomTextView businessName;
     private BusinessDetails businessDetails;
     private ArrayList<String> businessNameArrayList;
-    ImageView tvFederalIdNumb_pop, multiSite_txt;
-    LinearLayout llGetax;
-    String permit_no = "", business_name = "";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +77,6 @@ public class BusiFirstReg_20A_1 extends AppCompatActivity implements View.OnClic
     private void init() {
         mContext = this;
         businessDetails = new BusinessDetails();
-        rdExemption = (RadioGroup) findViewById(R.id.rdExemption);
         etGeTaxNo = (CustomEditText) findViewById(R.id.etGeTaxNo);
         radioGroupMulti = (RadioGroup) findViewById(R.id.radioGroupMulti);
         mainView = (RelativeLayout) findViewById(R.id.mainView);
@@ -94,8 +85,7 @@ public class BusiFirstReg_20A_1 extends AppCompatActivity implements View.OnClic
         fein_id_ET = (CustomEditText) findViewById(R.id.enterFeinHere);
         tvFederalIdNumb_pop = (ImageView) findViewById(R.id.tvFederalIdNumb_pop);
         multiSite_txt = (ImageView) findViewById(R.id.multiSite_txt);
-        llGetax = (LinearLayout) findViewById(R.id.llGetax);
-       // tvFederalIdNumb_pop.setOnClickListener(this);
+        // tvFederalIdNumb_pop.setOnClickListener(this);
         //multiSite_txt.setOnClickListener(this);
         businessNameArrayList = new ArrayList<>();
         businessName.setText(business_name);
@@ -132,8 +122,7 @@ public class BusiFirstReg_20A_1 extends AppCompatActivity implements View.OnClic
             public void onClick(View v) {
                 getBusinessName = businessName.getText().toString().trim();
                 getfederalNo = fein_id_ET.getText().toString().trim();
-                Log.d("007value", value);
-                Log.d("007value", multisite);
+
                 if (!TextUtils.isEmpty(fein_id_ET.getText())) {
                     if (Util.isNetworkAvailable(mContext)) {
                         search_submit_business();
@@ -145,16 +134,6 @@ public class BusiFirstReg_20A_1 extends AppCompatActivity implements View.OnClic
 
             }
         });
-        rdExemption.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId == R.id.exemptYes)
-                    llGetax.setVisibility(View.VISIBLE);
-                else
-                    llGetax.setVisibility(View.GONE);
-            }
-        });
-
     }
 
 

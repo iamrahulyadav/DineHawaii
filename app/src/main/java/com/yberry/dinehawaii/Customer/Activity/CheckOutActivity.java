@@ -104,7 +104,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
             // or live (ENVIRONMENT_PRODUCTION)
             .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
             .clientId(AppConstants.PAYPAL_CLIENT_ID);
-    CustomTextView tvTotalPaidAmount, loylityBal, tvGETaxAmount, CustPhn, CustAddr, CustOrTime, CustOrDate, tvTotalAmt, tvTotalPaidAmount2, food_prepration_time;
+    CustomTextView tvTotalPaidAmount, loylityBal, tvGETaxAmount, CustPhn, CustAddr, CustOrTime, CustOrDate, tvTotalAmt, tvTotalPaidAmount2, food_prepration_time,tvGETaxValue;
     CustomEditText loyality_apply, giftcouponcode, custName, couponCodeText;
     CustomButton applygiftbtn, removeegift, applyLoyaltyPoints, removePoints, apply_coupon, remove_coupon;
     double totalAmount = 0.0;
@@ -268,6 +268,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         custDtLayout = (LinearLayout) findViewById(R.id.cust5);
         custPreptimeLayout = (LinearLayout) findViewById(R.id.prepLayout);
         custName = (CustomEditText) findViewById(R.id.custname);
+        tvGETaxValue = (CustomTextView) findViewById(R.id.tvGETaxValue);
         CustPhn = (CustomTextView) findViewById(R.id.custContact);
         CustAddr = (CustomTextView) findViewById(R.id.custAddress);
         CustOrTime = (CustomTextView) findViewById(R.id.custTime);
@@ -775,6 +776,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
     private void getGETax() {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("method", AppConstants.REGISTRATION.TAX);
+        jsonObject.addProperty("business_id", AppPreferences.getBusiID(context));
 
         MyApiEndpointInterface apiService = ApiClient.getClient().create(MyApiEndpointInterface.class);
         Call<JsonObject> call = apiService.requestGeneral(jsonObject);
@@ -790,10 +792,15 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
 
                     if (jsonObject.getString("status").equalsIgnoreCase("200")) {
                         JSONArray resultJsonArray = jsonObject.getJSONArray("result");
-                        for (int i = 0; i < resultJsonArray.length(); i++) {
-                            JSONObject object = resultJsonArray.getJSONObject(i);
-                            tvGETaxAmount.setText(object.getString("geTax"));
-                            double geTaxPer = Double.parseDouble(object.getString("geTax").replace("%", ""));
+                        JSONObject object = resultJsonArray.getJSONObject(0);
+                        if (object.getString("business_get_tax_exemption").equalsIgnoreCase("1")){
+                            tvGETaxValue.setText("GE Tax");
+                            tvTotalAmt.setText("$" + totalAmount);
+                            tvGETaxAmount.setText("00");
+                        }
+                        else {
+                            tvGETaxValue.setText("GE Tax : "+object.getString("geTax_Percentage"));
+                            double geTaxPer = Double.parseDouble(object.getString("geTax_Percentage").replace("%", ""));
                             Log.e(TAG, "getGETax: geTaxPer >> " + geTaxPer);
 
                             geTaxAmount = totalAmount * geTaxPer / 100;

@@ -106,9 +106,9 @@ public class BidItemDetailsActivity extends AppCompatActivity implements View.On
         }
         if (model.getVendorBidFinalAmount().equalsIgnoreCase("")|| model.getVendorBidFinalAmount().equalsIgnoreCase("0"))
             group.removeViewAt(0);
-      /* if (model.getBidStatus().equalsIgnoreCase("Pending")) {
-            group.setEnabled(false);
-       }*/
+       if (model.getBidStatus().equalsIgnoreCase("Completed") || model.getBidStatus().equalsIgnoreCase("Approved")) {
+           group.removeViewAt(0);
+       }
 
         alertdialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override

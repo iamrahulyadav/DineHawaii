@@ -3,6 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:background="@color/white">
     <ScrollView
         android:layout_width="match_parent"
@@ -85,6 +87,105 @@
                 android:drawablePadding="@dimen/_5sdp"
                 android:drawableRight="@drawable/help"
                 android:gravity="center"
+                android:text="GE Tax Exemption"
+                android:textColor="@color/green"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:textStyle="bold"
+                app:edittextfont="@string/raleway_bold" />
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/rgExemption"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rdexemptYes"
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/colorPrimary"
+                    android:text="@string/yes"
+                    android:textColor="@color/offwhite" />
+
+                <RadioButton
+                    android:id="@+id/rdexemptNo"
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/colorPrimary"
+                    android:checked="true"
+                    android:text="@string/no"
+                    android:textColor="@color/offwhite" />
+            </RadioGroup>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:id="@+id/llGetax"
+                android:visibility="gone"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.yberry.dinehawaii.customview.CustomTextView
+                        style="@style/TextAppearance.AppCompat.Subhead"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:drawableLeft="@drawable/drawable_green_dot"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:gravity="center"
+                        android:text="GE Tax No"
+                        android:textColor="@color/colorGreen"
+                        app:edittextfont="@string/raleway_bold" />
+
+                    <ImageView
+                        android:id="@+id/tvGETaxNumb_pop"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:src="@drawable/help"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:orientation="vertical">
+
+                    <com.yberry.dinehawaii.customview.CustomEditText
+                        android:id="@+id/etGeTaxNo"
+                        style="@style/TextAppearance.AppCompat.Subhead"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="true"
+                        android:hint="Enter GE Tax No"
+                        android:imeOptions="actionDone"
+                        android:inputType="textCapWords"
+                        android:paddingBottom="@dimen/_12sdp"
+                        android:singleLine="true"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/offwhite"
+                        app:edittextfont="@string/raleway_regular" />
+
+                </LinearLayout>
+            </LinearLayout>
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:layout_marginTop="@dimen/_8sdp"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/drawable_green_dot"
+                android:drawablePadding="@dimen/_5sdp"
+                android:drawableRight="@drawable/help"
+                android:gravity="center"
                 android:text="About Your Business "
                 android:textColor="@color/green"
                 style="@style/TextAppearance.AppCompat.Subhead"
@@ -137,80 +238,6 @@
                 style="@style/TextAppearance.AppCompat.Subhead"
                 app:edittextfont="Raleway-Regular.ttf" />
 
-            <!--
-
-                        <com.yberry.dinehawaii.customview.CustomTextView
-                            android:id="@+id/customTextView8"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/_12sdp"
-                            android:layout_marginTop="@dimen/_8sdp"
-                            android:drawableLeft="@drawable/drawable_green_dot"
-                            android:drawablePadding="@dimen/_5sdp"
-                            android:drawableRight="@drawable/help"
-                            android:gravity="center_vertical"
-                            android:text="ADD LINK TO YOUR BUINESS WEBSITE"
-                            android:textColor="@color/green"
-                            android:textSize="@dimen/_14sdp"
-                            android:textStyle="bold"
-                            app:edittextfont="@string/raleway_bold" />
-
-                        <RadioGroup
-                            android:id="@+id/radioGroup"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="@dimen/_25sdp"
-                            android:layout_marginRight="@dimen/_25sdp"
-                            android:layout_marginTop="@dimen/_12sdp"
-                            android:orientation="horizontal"
-                            android:padding="@dimen/_1sdp">
-
-                            <RadioButton
-                                android:id="@+id/checkYes"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:buttonTint="@color/colorPrimary"
-                                android:checked="true"
-                                android:text="@string/yes"
-                                android:textColor="@color/gray"
-                                style="@style/TextAppearance.AppCompat.Subhead" />
-
-                            <RadioButton
-                                android:id="@+id/checkNo"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/_19sdp"
-                                android:buttonTint="@color/colorPrimary"
-                                android:text="@string/no"
-                                android:textColor="@color/gray"
-                                style="@style/TextAppearance.AppCompat.Subhead" />
-                        </RadioGroup>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_1sdp"
-                            android:layout_marginLeft="@dimen/_29sdp"
-                            android:layout_marginRight="@dimen/_25sdp"
-                            android:background="@color/gray"></View>
-
-                        <com.yberry.dinehawaii.customview.CustomEditText
-                            android:id="@+id/website_address"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/_25sdp"
-                            android:layout_marginRight="@dimen/_25sdp"
-                            android:layout_marginTop="@dimen/_12sdp"
-                            android:hint="Website Address"
-                            android:paddingBottom="@dimen/_15sdp"
-                            android:singleLine="true"
-                            android:paddingLeft="@dimen/_12sdp"
-                            android:textColor="@color/gray"
-                            android:textColorHint="@color/gray"
-                            style="@style/TextAppearance.AppCompat.Subhead"
-                            app:edittextfont="Raleway-Regular.ttf" />
-
-            -->
 
             <com.yberry.dinehawaii.customview.CustomTextView
                 android:layout_marginTop="@dimen/_8sdp"
@@ -241,13 +268,6 @@
                 style="@style/TextAppearance.AppCompat.Subhead"
                 app:edittextfont="Raleway-Regular.ttf" />
 
-            <!-- <View
-                 android:layout_width="match_parent"
-                 android:layout_height="1dp"
-                 android:layout_marginLeft="@dimen/_10sdp"
-                 android:layout_marginRight="@dimen/_10sdp"
-                 android:background="@color/gray"></View>-->
-
             <RelativeLayout
                 android:layout_width="@dimen/_50sdp"
                 android:layout_height="@dimen/_50sdp"
@@ -262,19 +282,6 @@
                     android:src="@drawable/cont" />
 
             </RelativeLayout>
-
-            <!--
-                        <ImageView
-                            android:id="@+id/imageview"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="right"
-                            android:layout_marginBottom="@dimen/_9sdp"
-                            android:layout_marginRight="20dp"
-                            android:layout_marginTop="@dimen/_19sdp"
-                            android:src="@drawable/cont" />
-            -->
-
         </LinearLayout>
     </ScrollView>
 

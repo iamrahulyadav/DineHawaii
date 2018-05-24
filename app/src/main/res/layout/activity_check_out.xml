@@ -1031,12 +1031,12 @@
                         android:layout_weight="0.3">
 
                         <com.yberry.dinehawaii.customview.CustomTextView
-                            android:id="@+id/tvGETax"
+                            android:id="@+id/tvGETaxValue"
                             style="@style/TextAppearance.AppCompat.Small"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="3dp"
-                            android:text="GE Tax: 4.712%"
+                            android:text="GE Tax"
                             app:edittextfont="@string/raleway_regular" />
                     </RelativeLayout>
 

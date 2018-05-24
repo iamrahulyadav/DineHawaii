@@ -8,20 +8,17 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
-import com.yberry.dinehawaii.Bussiness.model.BusinessDetails;
 import com.yberry.dinehawaii.R;
 import com.yberry.dinehawaii.RetrofitClasses.ApiClient;
 import com.yberry.dinehawaii.RetrofitClasses.MyApiEndpointInterface;
@@ -35,8 +32,6 @@ import com.yberry.dinehawaii.customview.CustomEditText;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -44,12 +39,11 @@ import retrofit2.Response;
 public class BusiFirstReg_20A_2 extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "BusiFirstReg_20A_2";
     CustomButton submitButton;
-    CustomEditText editTextBusiName,etGeTaxNo;
+    CustomEditText editTextBusiName, etGeTaxNo;
     ImageView tvFederalIdNumb_pop, multiSite_txt;
-    LinearLayout llGetax;
     private ImageView back;
     private Context mContext;
-    private RadioGroup radioGroupMulti, rdExemption;
+    private RadioGroup radioGroupMulti;
     private String getBusinessName, getfederalNo, value = "0", multisite = "no";
     private RelativeLayout mainView;
     private CustomEditText fein_id_ET;
@@ -73,7 +67,6 @@ public class BusiFirstReg_20A_2 extends AppCompatActivity implements View.OnClic
 
     private void init() {
         mContext = this;
-        rdExemption = (RadioGroup) findViewById(R.id.rdExemption);
         radioGroupMulti = (RadioGroup) findViewById(R.id.radioGroupMulti);
         mainView = (RelativeLayout) findViewById(R.id.mainView);
         submitButton = (CustomButton) findViewById(R.id.submitButton);
@@ -82,7 +75,6 @@ public class BusiFirstReg_20A_2 extends AppCompatActivity implements View.OnClic
         fein_id_ET = (CustomEditText) findViewById(R.id.enterFeinHere);
         tvFederalIdNumb_pop = (ImageView) findViewById(R.id.tvFederalIdNumb_pop);
         multiSite_txt = (ImageView) findViewById(R.id.multiSite_txt);
-        llGetax = (LinearLayout) findViewById(R.id.llGetax);
         tvFederalIdNumb_pop.setOnClickListener(this);
         multiSite_txt.setOnClickListener(this);
     }
@@ -122,23 +114,11 @@ public class BusiFirstReg_20A_2 extends AppCompatActivity implements View.OnClic
                     editTextBusiName.setError("Enter business name");
                 } else if (fein_id_ET.getText().toString().equalsIgnoreCase("")) {
                     fein_id_ET.setError("Enter FEIN No");
-                } else if (rdExemption.getCheckedRadioButtonId() == R.id.exemptYes && TextUtils.isEmpty(etGeTaxNo.getText().toString()))
-                    etGeTaxNo.setError("Enter GE Tax no");
-                else if (Util.isNetworkAvailable(mContext)) {
+                } else if (Util.isNetworkAvailable(mContext)) {
                     businessRegisration();
                 } else {
                     Toast.makeText(mContext, "Please Connect Your Internet", Toast.LENGTH_LONG).show();
                 }
-            }
-        });
-
-        rdExemption.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId == R.id.exemptYes)
-                    llGetax.setVisibility(View.VISIBLE);
-                else
-                    llGetax.setVisibility(View.GONE);
             }
         });
     }

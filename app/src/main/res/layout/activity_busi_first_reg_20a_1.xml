@@ -59,7 +59,6 @@
                         android:layout_marginLeft="@dimen/_12sdp"
                         android:background="@null"
                         android:backgroundTint="@color/blue"
-                        android:drawableRight="@drawable/ic_keyboard_arrow_down_black_16dp"
                         android:enabled="false"
                         android:hint="@string/selectBussinessName"
                         android:imeOptions="actionNext"
@@ -91,7 +90,6 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/llayoutSearch"
                         android:layout_marginTop="@dimen/_10sdp"
-
                         android:drawableLeft="@drawable/drawable_green_dot"
                         android:drawablePadding="@dimen/_5sdp"
                         android:gravity="center"
@@ -140,133 +138,6 @@
                         android:scaleType="fitXY"
                         android:src="@drawable/lines" />
 
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:weightSum="3">
-
-
-                    <com.yberry.dinehawaii.customview.CustomTextView
-                        style="@style/TextAppearance.AppCompat.Subhead"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/drawable_green_dot"
-                        android:drawablePadding="@dimen/_5sdp"
-                        android:text="GE Tax Exemption"
-                        android:textColor="@color/colorGreen"
-                        app:edittextfont="@string/raleway_bold" />
-
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:background="@drawable/help"
-                        android:visibility="gone" />
-                </LinearLayout>
-
-                <RadioGroup
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/rdExemption"
-                    android:layout_marginTop="@dimen/_4sdp"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/exemptYes"
-                        style="@style/TextAppearance.AppCompat.Subhead"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:buttonTint="@color/colorPrimary"
-                        android:text="@string/yes"
-                        android:textColor="@color/offwhite" />
-
-                    <RadioButton
-                        android:id="@+id/exemptNo"
-                        style="@style/TextAppearance.AppCompat.Subhead"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:buttonTint="@color/colorPrimary"
-                        android:checked="true"
-                        android:text="@string/no"
-                        android:textColor="@color/offwhite" />
-                </RadioGroup>
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/lines" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:id="@+id/llGetax"
-                    android:visibility="gone"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <com.yberry.dinehawaii.customview.CustomTextView
-                            style="@style/TextAppearance.AppCompat.Subhead"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_10sdp"
-                            android:drawableLeft="@drawable/drawable_green_dot"
-                            android:drawablePadding="@dimen/_5sdp"
-                            android:gravity="center"
-                            android:text="GE Tax No"
-                            android:textColor="@color/colorGreen"
-                            app:edittextfont="@string/raleway_bold" />
-
-                        <ImageView
-                            android:id="@+id/tvGETaxNumb_pop"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_10sdp"
-                            android:src="@drawable/help"
-                            android:visibility="gone" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <com.yberry.dinehawaii.customview.CustomEditText
-                            android:id="@+id/etGeTaxNo"
-                            style="@style/TextAppearance.AppCompat.Subhead"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/_12sdp"
-                            android:background="@null"
-                            android:enabled="true"
-                            android:hint="Enter GE Tax No"
-                            android:imeOptions="actionDone"
-                            android:inputType="textCapWords"
-                            android:paddingBottom="@dimen/_8sdp"
-                            android:paddingTop="@dimen/_5sdp"
-                            android:singleLine="true"
-                            android:textColor="@color/white"
-                            android:textColorHint="@color/offwhite"
-                            app:edittextfont="@string/raleway_regular" />
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:scaleType="fitXY"
-                            android:src="@drawable/lines" />
-
-                    </LinearLayout>
                 </LinearLayout>
 
 

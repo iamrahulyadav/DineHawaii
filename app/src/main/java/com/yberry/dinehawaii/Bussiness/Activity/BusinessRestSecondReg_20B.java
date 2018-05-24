@@ -7,11 +7,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -28,6 +30,7 @@ import com.yberry.dinehawaii.Util.AppPreferences;
 import com.yberry.dinehawaii.Util.AppPreferencesBuss;
 import com.yberry.dinehawaii.Util.Function;
 import com.yberry.dinehawaii.Util.ProgressHUD;
+import com.yberry.dinehawaii.Util.SaveDataPreference;
 import com.yberry.dinehawaii.Util.Util;
 import com.yberry.dinehawaii.cpp.CountryCodePicker;
 import com.yberry.dinehawaii.customview.CustomButton;
@@ -44,15 +47,17 @@ import retrofit2.Response;
 public class BusinessRestSecondReg_20B extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "BusiRestSecondReg_20B";
     JSONObject object;
-    private CustomButton btnsubmit;
-    private ImageView back;
-    private CustomEditText userId, password, phoneNo;
-    private String getUserId, getPassword, businessName, federalNo, radioButtonValue, bussiPhoneNo;
-    private Context mContext;
-    private RadioGroup radioGroup;
     String multisite;
     BusinessDetails businessDetails;
     CountryCodePicker ccp;
+    private CustomButton btnsubmit;
+    private ImageView back;
+    private CustomEditText userId, password, phoneNo,etGeTaxNo;
+    private String getUserId, getPassword, businessName, federalNo, radioButtonValue, bussiPhoneNo;
+    private Context mContext;
+    private RadioGroup radioGroup,rgExemption;
+    String exemptValue;
+    LinearLayout llGetax;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +94,10 @@ public class BusinessRestSecondReg_20B extends AppCompatActivity implements View
         mContext = this;
         businessDetails = new BusinessDetails();
         userId = (CustomEditText) findViewById(R.id.password);
+        rgExemption = (RadioGroup) findViewById(R.id.rgExemption);
+        llGetax = (LinearLayout) findViewById(R.id.llGetax);
         password = (CustomEditText) findViewById(R.id.name);
+        etGeTaxNo = (CustomEditText) findViewById(R.id.etGeTaxNo);
         phoneNo = (CustomEditText) findViewById(R.id.mobileNo);
         btnsubmit = (CustomButton) findViewById(R.id.submitButton);
         radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
@@ -113,14 +121,27 @@ public class BusinessRestSecondReg_20B extends AppCompatActivity implements View
             }
         });
 
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+       /* radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.yes) {
+
                     AppPreferences.setSaveIdPass(BusinessRestSecondReg_20B.this,
                             userId.getText().toString(), password.getText().toString());
                 } else {
                     AppPreferences.setSaveIdPass(BusinessRestSecondReg_20B.this, "", "");
+                }
+            }
+        });*/
+        rgExemption.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                if (i==R.id.rbexemptYes){
+                    exemptValue = "1";
+                    llGetax.setVisibility(View.VISIBLE);
+                }else{
+                    exemptValue = "0";
+                    llGetax.setVisibility(View.GONE);
                 }
             }
         });
@@ -143,7 +164,9 @@ public class BusinessRestSecondReg_20B extends AppCompatActivity implements View
                 password.setError("Enter password");
             } else if (bussiPhoneNo.isEmpty()) {
                 phoneNo.setError("Enter phone no");
-            } else {
+            }else if (rgExemption.getCheckedRadioButtonId()==R.id.exemptYes && TextUtils.isEmpty(etGeTaxNo.getText().toString()))
+                etGeTaxNo.setError("Enter GeTax no.");
+                else {
                 if (Util.isNetworkAvailable(mContext)) {
                     JsonObject jsonObject = new JsonObject();
                     jsonObject.addProperty("method", AppConstants.REGISTRATION.BUSINESSREGISTRATIONWITHID);
@@ -153,6 +176,8 @@ public class BusinessRestSecondReg_20B extends AppCompatActivity implements View
                     jsonObject.addProperty("email_id", getUserId);
                     jsonObject.addProperty("password", getPassword);
                     jsonObject.addProperty("phone_no", bussiPhoneNo);
+                    jsonObject.addProperty("business_get_tax_exemption", exemptValue);
+                    jsonObject.addProperty("business_exemption_no", etGeTaxNo.getText().toString());
                     jsonObject.addProperty("fcm_id", FirebaseInstanceId.getInstance().getToken());
                     Log.e(TAG, jsonObject.toString());
                     JsonCallMethod(jsonObject);
@@ -194,7 +219,13 @@ public class BusinessRestSecondReg_20B extends AppCompatActivity implements View
                         AppPreferencesBuss.setBussiFein(BusinessRestSecondReg_20B.this, jsonObject1.getString("business_fein"));
                         AppPreferencesBuss.setBussiId(BusinessRestSecondReg_20B.this, jsonObject1.getString("business_id"));
                         AppPreferencesBuss.setBussiPhoneNo(BusinessRestSecondReg_20B.this, jsonObject1.getString("phone_no"));
-
+                        if (radioGroup.getCheckedRadioButtonId() == R.id.yes) {
+                            SaveDataPreference.setBusRembEmailId(BusinessRestSecondReg_20B.this, jsonObject1.getString("email_id"));
+                            SaveDataPreference.setBusRembPassword(BusinessRestSecondReg_20B.this, password.getText().toString());
+                        }else{
+                            SaveDataPreference.setBusRembEmailId(BusinessRestSecondReg_20B.this, "");
+                            SaveDataPreference.setBusRembPassword(BusinessRestSecondReg_20B.this, "");
+                        }
                         Intent intent = new Intent(BusinessRestSecondReg_20B.this, BusiSelectPackageActivity.class);
                         intent.setAction("register");
                         intent.putExtra("title", "BUSINESS INFORMATION");

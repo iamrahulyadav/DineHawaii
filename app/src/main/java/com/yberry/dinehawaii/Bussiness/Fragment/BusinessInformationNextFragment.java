@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -17,10 +18,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
+import com.yberry.dinehawaii.Bussiness.Activity.SelectLanguageActivity;
 import com.yberry.dinehawaii.Model.GeographicModel;
 import com.yberry.dinehawaii.R;
 import com.yberry.dinehawaii.RetrofitClasses.ApiClient;
@@ -29,7 +32,6 @@ import com.yberry.dinehawaii.Util.AppConstants;
 import com.yberry.dinehawaii.Util.AppPreferencesBuss;
 import com.yberry.dinehawaii.Util.ProgressHUD;
 import com.yberry.dinehawaii.Util.Util;
-import com.yberry.dinehawaii.Bussiness.Activity.SelectLanguageActivity;
 import com.yberry.dinehawaii.customview.CustomEditText;
 
 import org.json.JSONArray;
@@ -52,7 +54,7 @@ import retrofit2.Response;
 public class BusinessInformationNextFragment extends Fragment {
 
     private static final String TAG = "BusinessInfoNextFrag";
-    CustomEditText feinNo, aboutBusiness, businessType;
+    CustomEditText feinNo, aboutBusiness, businessType, etGeTaxNo;
     Spinner geographicArea;
     ImageView nextView;
     String value;
@@ -61,7 +63,10 @@ public class BusinessInformationNextFragment extends Fragment {
     ArrayList<String> geographic_list;
     ArrayList<String> geographic_id_list;
     ArrayList<GeographicModel> geographicModel;
-    private String selected_geographic_location="",selected_geographic_id="";
+    RadioGroup rgExemption;
+    LinearLayout llGeTax;
+    String exemptValue;
+    private String selected_geographic_location = "", selected_geographic_id = "";
 
     public BusinessInformationNextFragment() {
     }
@@ -76,12 +81,15 @@ public class BusinessInformationNextFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_business_information_next, container, false);
 
+        etGeTaxNo = (CustomEditText) view.findViewById(R.id.etGeTaxNo);
         edittextLanguage = (CustomEditText) view.findViewById(R.id.edittext_language);
         feinNo = (CustomEditText) view.findViewById(R.id.fein_no);
         aboutBusiness = (CustomEditText) view.findViewById(R.id.about_business);
         businessType = (CustomEditText) view.findViewById(R.id.business_type);
         geographicArea = (Spinner) view.findViewById(R.id.geographic_area);
         nextView = (ImageView) view.findViewById(R.id.imageview);
+        llGeTax = (LinearLayout) view.findViewById(R.id.llGetax);
+        rgExemption = (RadioGroup) view.findViewById(R.id.rgExemption);
         geographic_list = new ArrayList<>();
         geographic_id_list = new ArrayList<>();
         init();
@@ -101,6 +109,18 @@ public class BusinessInformationNextFragment extends Fragment {
         feinNo.setText(AppPreferencesBuss.getBussiFein(getActivity()));
         getGeographicArea();
 
+        rgExemption.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                if (i == R.id.rdexemptYes) {
+                    exemptValue = "1";
+                    llGeTax.setVisibility(View.VISIBLE);
+                } else {
+                    exemptValue = "0";
+                    llGeTax.setVisibility(View.GONE);
+                }
+            }
+        });
 
         getData();
         return view;
@@ -178,19 +198,18 @@ public class BusinessInformationNextFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Log.e(TAG, "onClick: selected_geographic_location >> "+selected_geographic_location );
-                Log.e(TAG, "onClick: selected_geographic_id >> "+selected_geographic_id );
+                Log.e(TAG, "onClick: selected_geographic_location >> " + selected_geographic_location);
+                Log.e(TAG, "onClick: selected_geographic_id >> " + selected_geographic_id);
 
-                if(selected_geographic_id.equalsIgnoreCase(""))
+                if (selected_geographic_id.equalsIgnoreCase(""))
                     Toast.makeText(getActivity(), "Select geographic area", Toast.LENGTH_SHORT).show();
-                else if(aboutBusiness.getText().toString().length()<10)
+                else if (aboutBusiness.getText().toString().length() < 10)
                     aboutBusiness.setError("Describe your business");
-                /*else if(businessType.getText().toString().equalsIgnoreCase(""))
-                    businessType.setError("Enter business type");*/
-                else if(edittextLanguage.getText().toString().equalsIgnoreCase(""))
+                else if (rgExemption.getCheckedRadioButtonId() == R.id.rbexemptYes && TextUtils.isEmpty(etGeTaxNo.getText().toString()))
+                    etGeTaxNo.setError("Enter Ge Tax No");
+                else if (edittextLanguage.getText().toString().equalsIgnoreCase(""))
                     Toast.makeText(getActivity(), "Select language", Toast.LENGTH_SHORT).show();
-                else
-                {
+                else {
                     saveData();
                 }
             }
