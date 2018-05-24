@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -66,9 +67,8 @@ public class BusiPackagePaymentActivity extends AppCompatActivity implements Vie
             .clientId(AppConstants.PAYPAL_CLIENT_ID);
     JSONObject object;
     String totalAmount, totalpackageamt, totaloptionant;
-    CustomTextView packageAmount, mkt_optionAmount, perctDiscount, taxAmount, total_amount, optionAmount, subTotalCost;
+    CustomTextView packageAmount, mkt_optionAmount, perctDiscount, taxAmount, total_amount, optionAmount, subTotalCost, tvGETaxValue;
     String amountToBePaid = "0.1";
-
     private ImageView back;
     private CustomCheckBox checkBox;
     private RecyclerView pakage_mRecyclerView, option_mRecyclerView;
@@ -110,10 +110,13 @@ public class BusiPackagePaymentActivity extends AppCompatActivity implements Vie
             optionAmount.setText("$" + totaloptionant);
             subTotalCost.setText("$" + totalAmount);
         }
-        getGETax();
+        if (Util.isNetworkAvailable(context)) {
+            getGETax();
 
-        getAllPackage();
-        getOptions();
+            getAllPackage();
+            getOptions();
+        } else
+            Toast.makeText(context, getString(R.string.msg_no_internet), Toast.LENGTH_SHORT).show();
 
         Intent intent = new Intent(context, PayPalService.class);
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
@@ -275,13 +278,11 @@ public class BusiPackagePaymentActivity extends AppCompatActivity implements Vie
 
     private void initViews() {
         total_amount = (CustomTextView) findViewById(R.id.total_amount);
-
         packageAmount = (CustomTextView) findViewById(R.id.packageAmount);
         optionAmount = (CustomTextView) findViewById(R.id.mkt_optionAmount);
-
         mkt_optionAmount = (CustomTextView) findViewById(R.id.mkt_optionAmount);
         subTotalCost = (CustomTextView) findViewById(R.id.subtotalpackg);
-
+        tvGETaxValue = (CustomTextView) findViewById(R.id.tvGETaxValue);
         perctDiscount = (CustomTextView) findViewById(R.id.perctDiscount);
         taxAmount = (CustomTextView) findViewById(R.id.taxAmount);
 
@@ -304,12 +305,8 @@ public class BusiPackagePaymentActivity extends AppCompatActivity implements Vie
     private void getGETax() {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("method", AppConstants.REGISTRATION.TAX);
-        geTaxApi(jsonObject);
-        Log.d(TAG, " Request Tax :- " + jsonObject.toString());
+        jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(context));
 
-    }
-
-    private void geTaxApi(JsonObject jsonObject) {
         MyApiEndpointInterface apiService =
                 ApiClient.getClient().create(MyApiEndpointInterface.class);
         Call<JsonObject> call = apiService.requestGeneral(jsonObject);
@@ -323,12 +320,17 @@ public class BusiPackagePaymentActivity extends AppCompatActivity implements Vie
                     JSONObject jsonObject = new JSONObject(s);
 
                     if (jsonObject.getString("status").equalsIgnoreCase("200")) {
-                        Log.e(TAG, "Inside response 200 ");
                         JSONArray resultJsonArray = jsonObject.getJSONArray("result");
-                        for (int i = 0; i < resultJsonArray.length(); i++) {
-                            JSONObject object = resultJsonArray.getJSONObject(i);
-                            double geTaxTotal = Double.parseDouble(object.getString("geTax").replace("%", ""));
-                            taxAmount.setText(String.valueOf(geTaxTotal) + "%");
+
+                        JSONObject object = resultJsonArray.getJSONObject(0);
+                        if (object.getString("").equalsIgnoreCase("1")) {
+                            tvGETaxValue.setText("GE Tax");
+                            taxAmount.setText("00");
+                            total_amount.setText(totalAmount);
+                        } else {
+                            tvGETaxValue.setText("GE Tax : " + object.getString("geTax_Percentage"));
+                            double geTaxTotal = Double.parseDouble(object.getString("geTax_Percentage").replace("%", ""));
+//                            taxAmount.setText(String.valueOf(geTaxTotal) + "%");
                             double totaltax = Double.parseDouble(totalAmount) * geTaxTotal / 100;
                             double finaltotaltax = totaltax;
 
@@ -345,9 +347,14 @@ public class BusiPackagePaymentActivity extends AppCompatActivity implements Vie
                             amountToBePaid = String.valueOf(grand_amount);
                             AppPreferencesBuss.setPackageAmount(context, String.valueOf(grand_amount));
                         }
+
                     } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
                         /* pay.setVisibility(View.GONE);*/
-                        Toast.makeText(context, "Failed to get Tax,Try Again Later!", Toast.LENGTH_SHORT).show();
+                        tvGETaxValue.setText("GE Tax");
+                        taxAmount.setText("00");
+                        AppPreferencesBuss.setPackageAmount(context, totalAmount);
+                        total_amount.setText(totalAmount);
+//                        Toast.makeText(context, "Failed to get Tax,Try Again Later!", Toast.LENGTH_SHORT).show();
                     }
 
                 } catch (JSONException e) {
@@ -436,17 +443,10 @@ public class BusiPackagePaymentActivity extends AppCompatActivity implements Vie
                             String paymentState = jsonResponse.getString("state");
                             Log.i("paymentExample", "RESPONSE :- \n" + "Transaction_ID :- " + transaction_ID + "\nCreate Time :- " + createTime +
                                     "\nIntent :- " + intent + "\nPayment State :- " + paymentState);
-
+                            finalRegistrationApi();
                         } catch (JSONException e) {
                             Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
-//                        showAlertDialog(paymentAmount);
-
-
-                        Intent intent = new Intent(getApplicationContext(), PaypalApprovedActivity.class);
-                        intent.putExtra("data", object.toString());
-                        startActivity(intent);
-
                     } catch (JSONException e) {
                         Log.e("paymentExample", "an extremely unlikely failure occurred: ", e);
                     }
@@ -466,13 +466,81 @@ public class BusiPackagePaymentActivity extends AppCompatActivity implements Vie
         }
     }
 
+    private void showThankYouAlert() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Thank You!");
+        builder.setCancelable(false);
+        builder.setMessage("Registration Completed Successfully");
+        ImageView img = new ImageView(context);
+        img.setImageResource(R.drawable.thanks);
+        builder.setView(img);
+        builder.setPositiveButton("CONTINUE", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                AppPreferencesBuss.setBussiPackagelist(context, sel_pacakges);
+                AppPreferencesBuss.setBussiOptionlist(context, sel_options);
+                AppPreferencesBuss.setUsertypeid(context, "2");
+                Intent intent = new Intent(context, BusinessNaviDrawer.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
+        if (!isFinishing())
+            builder.show();
+    }
+
+    private void finalRegistrationApi() {
+        JsonObject object = new JsonObject();
+        object.addProperty("method", AppConstants.REGISTRATION.BUSINESSUSERREGISTRATION);
+        object.addProperty("user_id", AppPreferencesBuss.getUserId(context));
+        object.addProperty("business_id", AppPreferencesBuss.getBussiId(context));
+        object.addProperty("pacakges", AppPreferencesBuss.getBussiPackagelist(context));
+        object.addProperty("options", AppPreferencesBuss.getBusinessOptionList(context));
+        object.addProperty("total_amount", AppPreferencesBuss.getPackageAmount(context));
+        object.addProperty("terms_condition", "1");
+        object.addProperty("PayPal_TXN_ID", AppPreferencesBuss.getBusinessTranctionId(context));
+        object.addProperty("PayPal_TXN_STATUS", AppPreferencesBuss.getBusinessTranctionStatus(context));
+        final ProgressHUD progressHD = ProgressHUD.show(context, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                // TODO Auto-generated method stub
+            }
+        });
+        MyApiEndpointInterface apiService =
+                ApiClient.getClient().create(MyApiEndpointInterface.class);
+        Call<JsonObject> call = apiService.requestBusinessUrl(object);
+        call.enqueue(new Callback<JsonObject>() {
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                Log.e(TAG, response.body().toString());
+                String s = response.body().toString();
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    if (jsonObject.getString("status").equalsIgnoreCase("200")) {
+                        showThankYouAlert();
+                    } else {
+                        String msg = jsonObject.getString("message");
+                        Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                progressHD.dismiss();
+            }
+
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+//                Log.e(TAG+"error",t.getMessage());
+                t.getMessage();
+                progressHD.dismiss();
+            }
+        });
+    }
+
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.pay) {
-
-
-        }
-
     }
 
     private void showAlert() {
@@ -519,7 +587,7 @@ public class BusiPackagePaymentActivity extends AppCompatActivity implements Vie
             }
         });
 
-        if (!BusiPackagePaymentActivity.this.isFinishing())
+        if (!isFinishing())
             dialog.show();
     }
 }

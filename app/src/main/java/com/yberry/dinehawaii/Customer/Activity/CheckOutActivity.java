@@ -104,8 +104,8 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
             // or live (ENVIRONMENT_PRODUCTION)
             .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
             .clientId(AppConstants.PAYPAL_CLIENT_ID);
-    CustomTextView tvTotalPaidAmount, loylityBal, tvGETaxAmount, CustPhn, CustAddr, CustOrTime, CustOrDate, tvTotalAmt, tvTotalPaidAmount2, food_prepration_time,tvGETaxValue;
-    CustomEditText loyality_apply, giftcouponcode, custName, couponCodeText;
+    CustomTextView tvTotalPaidAmount, loylityBal, tvGETaxAmount, CustPhn, CustAddr, CustOrTime, CustOrDate, tvTotalAmt, tvTotalPaidAmount2, food_prepration_time, tvGETaxValue;
+    CustomEditText loyality_apply, giftcouponcode, custName, couponCodeText,daddress;
     CustomButton applygiftbtn, removeegift, applyLoyaltyPoints, removePoints, apply_coupon, remove_coupon;
     double totalAmount = 0.0;
     double totalPaidAmount = 0.0;
@@ -118,8 +118,8 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
     CustomRadioButton yesRadioButton, noRadioButton;
     CustomCheckBox homedelivery_btn, take_way_btn, inhouse_btn, catering_btn;
     RadioGroup radioGroup, radioCredits;
-    String timeInhouse = "", timeTakeout = "", timeCatering = "", timeDelivery = "";
-    String order_type = "0", radioValue = "0", egiftamount = "0", egiftcoupon = "", egiftid = "", order_timings = "", amount = "0";
+    String timeInhouse = "", timeTakeout = "", timeCatering = "", timeDelivery = "", order_type = "0", radioValue = "0", minOrderValue = "0", takeOut_lead_time, catering_lead_days,
+            egiftamount = "0", egiftcoupon = "", egiftid = "", order_timings = "", amount = "0", driverArrivalTime = "", coupon_type, coupon_name, coupon_id = "0", setDefault = "0";
     int loyalityTotal = 0;
     ArrayList<OrderItemsDetailsModel> cartItemsList;
     LinearLayout custNmLayout, custPhnLayout, custTimeLayout, custDtLayout, custAddLayout, custPreptimeLayout, llloyaltypt;
@@ -130,20 +130,13 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
     ArrayList<CustomerModel> couponsModelsList = new ArrayList<>();
     RadioButton rd_loylty, rd_egift, rd_coupon;
     RecyclerView mRecyclerView;
-    int PLACE_PICKER_REQUEST = 1;
-    private String coupon_type;
-    private String coupon_name, coupon_id = "0";
-    private String minOrderValue = "0", takeOut_lead_time, catering_lead_days;
+    int PLACE_PICKER_REQUEST = 1, deliveryArea = 0;
     private ArrayList<OrderItemsDetailsModel> cartItems;
-    private CustomEditText daddress;
-    private String setDefault = "0";
     private CustomCheckBox cbDefaultAddr;
     private CustomTextView tvDeliveryText, tvDelChargeAmount;
-    private double delChargeAmount = 0.0;
-    private double geTaxAmount = 0.0;
-    private double totalPaidAmountBase = 0.0;
-    private double cust_latitude = 0.0, cust_longitude = 0.0;
-    private int deliveryArea = 0;
+    private double delChargeAmount = 0.0, geTaxAmount = 0.0, totalPaidAmountBase = 0.0, cust_latitude = 0.0, cust_longitude = 0.0;
+    ;
+    private DecimalFormat decimalFormat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,6 +145,8 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         context = this;
         setToolbar();
         init();
+        decimalFormat = new DecimalFormat("#.##");
+
         checkPackage();
         cartItems = new DatabaseHandler(context).getCartItems(AppPreferences.getBusiID(context));  //database data
         setCartAdapter();
@@ -527,7 +522,10 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
 
     private void setFoodPrepTime(String type) {
         if (type.equalsIgnoreCase("1111")) {
-            food_prepration_time.setText(timeDelivery + " mins");
+                if (timeDelivery.compareTo(driverArrivalTime) > 0)
+                food_prepration_time.setText(timeDelivery + " mins");
+            else
+                food_prepration_time.setText(driverArrivalTime + " mins");
         } else if (type.equalsIgnoreCase("1")) {
             food_prepration_time.setText(timeInhouse + " mins");
         } else if (type.equalsIgnoreCase("11")) {
@@ -568,8 +566,8 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         Log.e(TAG, "balance" + balance);
         Log.e(TAG, "total" + total);
 
-        DecimalFormat twoDForm = new DecimalFormat("#.##");
-        double grandtotal = Double.valueOf(twoDForm.format(total));
+
+        double grandtotal = Double.valueOf(decimalFormat.format(total));
         tvTotalPaidAmount.setText("$" + String.valueOf(totalPaidAmountBase));
         loylityBal.setText(balance + "");
         loyality_apply.setText("");
@@ -593,8 +591,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                 Log.e(TAG, "totalloyalAmount" + totalloyalAmount);
                 Log.e(TAG, "finalprice" + finalprice);
                 Log.e(TAG, "total" + total);
-                DecimalFormat twoDForm = new DecimalFormat("#.##");
-                double total_amount = Double.valueOf(twoDForm.format(total));
+                double total_amount = Double.valueOf(decimalFormat.format(total));
                 tvTotalPaidAmount.setText("$" + total_amount);
                 loylityBal.setText(balance + "");
                 applyLoyaltyPoints.setVisibility(View.GONE);
@@ -672,13 +669,11 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                                 double admin_amount = Double.parseDouble(amount) - finalamt;
                                 double admin_per = admin_amount;
 
-                                DecimalFormat twoDForm = new DecimalFormat("#.##");
-                                double grand_amount = Double.valueOf(twoDForm.format(admin_per));
+                                double grand_amount = Double.valueOf(decimalFormat.format(admin_per));
                                 tvTotalPaidAmount.setText("$" + grand_amount);
                             } else if (coupon_type.equalsIgnoreCase("Discount Amount")) {
                                 double amt = Double.parseDouble(tvTotalPaidAmount.getText().toString()) - Double.parseDouble(coupon_amount);
-                                DecimalFormat twoDForm = new DecimalFormat("#.##");
-                                double total_amount = Double.valueOf(twoDForm.format(amt));
+                                double total_amount = Double.valueOf(decimalFormat.format(amt));
                                 tvTotalPaidAmount.setText("$" + total_amount);
                             }
 
@@ -793,13 +788,12 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                     if (jsonObject.getString("status").equalsIgnoreCase("200")) {
                         JSONArray resultJsonArray = jsonObject.getJSONArray("result");
                         JSONObject object = resultJsonArray.getJSONObject(0);
-                        if (object.getString("business_get_tax_exemption").equalsIgnoreCase("1")){
+                        if (object.getString("business_get_tax_exemption").equalsIgnoreCase("1")) {
                             tvGETaxValue.setText("GE Tax");
                             tvTotalAmt.setText("$" + totalAmount);
                             tvGETaxAmount.setText("00");
-                        }
-                        else {
-                            tvGETaxValue.setText("GE Tax : "+object.getString("geTax_Percentage"));
+                        } else {
+                            tvGETaxValue.setText("GE Tax : " + object.getString("geTax_Percentage"));
                             double geTaxPer = Double.parseDouble(object.getString("geTax_Percentage").replace("%", ""));
                             Log.e(TAG, "getGETax: geTaxPer >> " + geTaxPer);
 
@@ -810,16 +804,15 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                             totalPaidAmountBase = totalPaidAmount;
                             Log.e(TAG, "getGETax: totalPaidAmount >> " + totalPaidAmount);
 
-                            DecimalFormat twoDForm = new DecimalFormat("#.##");
-                            geTaxAmount = Double.valueOf(twoDForm.format(geTaxAmount));
-                            totalPaidAmount = Double.valueOf(twoDForm.format(totalPaidAmount));
+                            geTaxAmount = Double.valueOf(decimalFormat.format(geTaxAmount));
+                            totalPaidAmount = Double.valueOf(decimalFormat.format(totalPaidAmount));
 
                             tvTotalPaidAmount.setText("$" + totalPaidAmount);
                             tvTotalPaidAmount2.setText("$" + totalPaidAmount);
                             tvGETaxAmount.setText("$" + geTaxAmount);
                             amount = String.valueOf(totalPaidAmount);
                         }
-                    }else{
+                    } else {
                         tvGETaxValue.setText("GE Tax");
                         tvTotalAmt.setText("$" + totalAmount);
                         tvGETaxAmount.setText("00");
@@ -885,8 +878,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                             removeegift.setVisibility(View.VISIBLE);
                             applygiftbtn.setVisibility(View.GONE);
                             double amt = Double.parseDouble(tvTotalPaidAmount.getText().toString()) - Double.parseDouble(egiftamount);
-                            DecimalFormat twoDForm = new DecimalFormat("#.##");
-                            double total_amount = Double.valueOf(twoDForm.format(amt));
+                            double total_amount = Double.valueOf(decimalFormat.format(amt));
                             tvTotalPaidAmount.setText("$" + total_amount);
                             Snackbar.make(findViewById(android.R.id.content), "Egift Card " + egiftcoupon + " applied successfully", Snackbar.LENGTH_LONG).show();
                         } else {
@@ -1206,6 +1198,8 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                     Log.e(TAG, "updateHomeDeliveryInfo: cust_longitude >> " + cust_longitude);
                     Log.e(TAG, "updateHomeDeliveryInfo: busi_latitude >> " + busi_latitude);
                     Log.e(TAG, "updateHomeDeliveryInfo: busi_longitude >> " + busi_longitude);
+                    AppPreferences.setDeliveryName(context, dname.getText().toString());
+                    AppPreferences.setDeliveryContact(context, dcontact.getText().toString());
                     new GoogleMatrixRequest(busi_latitude, busi_longitude, cust_latitude, cust_longitude).execute();
                 }
             }
@@ -1722,6 +1716,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                         JSONArray resultJsonArray = jsonObject.getJSONArray("result");
                         JSONObject object = resultJsonArray.getJSONObject(0);
                         deliveryArea = Integer.parseInt(object.getString("delivery_area"));
+                        driverArrivalTime = object.getString("driver_arrival_time");
                         if (distance <= deliveryArea) {
                             String cost_flat = object.getString("cost_flat");
                             String cost_range = object.getString("cost_range");
@@ -1770,7 +1765,6 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                             tvTotalPaidAmount.setText("$" + String.valueOf(totalPaidAmount));
                             tvTotalPaidAmount2.setText("$" + String.valueOf(totalPaidAmount));
 
-//                getDeliveryInfo();
                         } else {
                             order_type = "0";
                             tvDeliveryText.setTextColor(Color.RED);
