@@ -251,10 +251,6 @@ public class ManageMenuFragment extends Fragment implements View.OnClickListener
         jsonObject.addProperty("food_category_id", food_type_id_list);
         jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(getActivity()));
         Log.e(TAG, "get menu json" + jsonObject.toString());
-        getMenuItemsApi(jsonObject);
-    }
-
-    private void getMenuItemsApi(JsonObject jsonObject) {
         final ProgressHUD progressHD = ProgressHUD.show(getActivity(), "Please wait...", true, false, new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
@@ -294,6 +290,7 @@ public class ManageMenuFragment extends Fragment implements View.OnClickListener
                             menuModel.setMenuItemStatus(object.getString("status"));
                             menuModel.setBusAreaId(object.getString("area_id"));
                             menuModel.setBusAreaName(object.getString("area_name"));
+                            menuModel.setItem_customization(object.getString("customization"));
                             itemslist.add(menuModel);
 
                         }

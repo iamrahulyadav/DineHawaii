@@ -78,6 +78,7 @@ public class BusiPackagePaymentActivity extends AppCompatActivity implements Vie
     private BusiPackagePaymentActivity context;
     private String sel_pacakges = "";
     private String sel_options = "";
+    private Dialog paymentDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -306,7 +307,7 @@ public class BusiPackagePaymentActivity extends AppCompatActivity implements Vie
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("method", AppConstants.REGISTRATION.TAX);
         jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(context));
-
+        Log.e(TAG, "getGETax: json"+jsonObject.toString() );
         MyApiEndpointInterface apiService =
                 ApiClient.getClient().create(MyApiEndpointInterface.class);
         Call<JsonObject> call = apiService.requestGeneral(jsonObject);
@@ -314,8 +315,8 @@ public class BusiPackagePaymentActivity extends AppCompatActivity implements Vie
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-
                 String s = response.body().toString();
+                Log.e(TAG, "getGETax onResponse: "+s );
                 try {
                     JSONObject jsonObject = new JSONObject(s);
 
@@ -323,7 +324,7 @@ public class BusiPackagePaymentActivity extends AppCompatActivity implements Vie
                         JSONArray resultJsonArray = jsonObject.getJSONArray("result");
 
                         JSONObject object = resultJsonArray.getJSONObject(0);
-                        if (object.getString("").equalsIgnoreCase("1")) {
+                        if (object.getString("business_get_tax_exemption").equalsIgnoreCase("1")) {
                             tvGETaxValue.setText("GE Tax");
                             taxAmount.setText("00");
                             total_amount.setText(totalAmount);
@@ -544,20 +545,20 @@ public class BusiPackagePaymentActivity extends AppCompatActivity implements Vie
     }
 
     private void showAlert() {
-        final Dialog dialog = new Dialog(context);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCancelable(true);
-        dialog.setContentView(R.layout.paypal_payment_view);
+        paymentDialog = new Dialog(context);
+        paymentDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        paymentDialog.setCancelable(true);
+        paymentDialog.setContentView(R.layout.paypal_payment_view);
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.copyFrom(paymentDialog.getWindow().getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         lp.gravity = Gravity.CENTER;
-        dialog.getWindow().setAttributes(lp);
+        paymentDialog.getWindow().setAttributes(lp);
 
-        JustifiedTextView justifytxt = (JustifiedTextView) dialog.findViewById(R.id.justifytxt);
-        final CustomButton pay = (CustomButton) dialog.findViewById(R.id.pay);
-        checkBox = (CustomCheckBox) dialog.findViewById(R.id.checkbox);
+        JustifiedTextView justifytxt = (JustifiedTextView) paymentDialog.findViewById(R.id.justifytxt);
+        final CustomButton pay = (CustomButton) paymentDialog.findViewById(R.id.pay);
+        checkBox = (CustomCheckBox) paymentDialog.findViewById(R.id.checkbox);
         justifytxt.setText(getResources().getString(R.string.text_21B));
 
         pay.setOnClickListener(new View.OnClickListener() {
@@ -572,7 +573,7 @@ public class BusiPackagePaymentActivity extends AppCompatActivity implements Vie
                             e.printStackTrace();
                         }
                     } else
-                        Snackbar.make(findViewById(android.R.id.content), "Please Check terms & conditions", Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(findViewById(android.R.id.content), "You must agree with the terms & conditions", Snackbar.LENGTH_LONG).show();
                 } else
                     Toast.makeText(context, "Please Connect to Internet", Toast.LENGTH_SHORT).show();
             }
@@ -588,6 +589,12 @@ public class BusiPackagePaymentActivity extends AppCompatActivity implements Vie
         });
 
         if (!isFinishing())
-            dialog.show();
+            paymentDialog.show();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        paymentDialog.dismiss();
     }
 }

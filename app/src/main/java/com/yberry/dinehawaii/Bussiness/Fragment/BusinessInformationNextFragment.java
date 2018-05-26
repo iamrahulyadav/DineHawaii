@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -65,7 +66,9 @@ public class BusinessInformationNextFragment extends Fragment {
     ArrayList<GeographicModel> geographicModel;
     RadioGroup rgExemption;
     LinearLayout llGeTax;
-    String exemptValue;
+    String exemptValue = "0";
+    Context context;
+    RadioButton rdExemptYes, rdExemptNo;
     private String selected_geographic_location = "", selected_geographic_id = "";
 
     public BusinessInformationNextFragment() {
@@ -80,7 +83,7 @@ public class BusinessInformationNextFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_business_information_next, container, false);
-
+        context = getActivity();
         etGeTaxNo = (CustomEditText) view.findViewById(R.id.etGeTaxNo);
         edittextLanguage = (CustomEditText) view.findViewById(R.id.edittext_language);
         feinNo = (CustomEditText) view.findViewById(R.id.fein_no);
@@ -90,6 +93,8 @@ public class BusinessInformationNextFragment extends Fragment {
         nextView = (ImageView) view.findViewById(R.id.imageview);
         llGeTax = (LinearLayout) view.findViewById(R.id.llGetax);
         rgExemption = (RadioGroup) view.findViewById(R.id.rgExemption);
+        rdExemptYes = (RadioButton) view.findViewById(R.id.rdexemptYes);
+        rdExemptNo = (RadioButton) view.findViewById(R.id.rdexemptNo);
         geographic_list = new ArrayList<>();
         geographic_id_list = new ArrayList<>();
         init();
@@ -122,7 +127,10 @@ public class BusinessInformationNextFragment extends Fragment {
             }
         });
 
-        getData();
+        if (Util.isNetworkAvailable(context))
+            getData();
+        else
+            Toast.makeText(context, context.getResources().getString(R.string.msg_no_internet), Toast.LENGTH_SHORT).show();
         return view;
     }
 
@@ -156,6 +164,17 @@ public class BusinessInformationNextFragment extends Fragment {
                     String location_name = jsonObject1.get("geo_location_name").getAsString();
                     String about = jsonObject1.get("business_about").getAsString();
                     String lang = jsonObject1.get("language").getAsString();
+
+                    if (!jsonObject1.get("business_exemption_no").getAsString().equalsIgnoreCase("") && !jsonObject1.get("business_exemption_no").getAsString().equalsIgnoreCase("0"))
+                        etGeTaxNo.setText(jsonObject1.get("business_exemption_no").getAsString());
+
+                    if (jsonObject1.get("business_get_tax_exemption").getAsString().equalsIgnoreCase("0"))
+                        rdExemptNo.setChecked(true);
+                    else if (jsonObject1.get("business_get_tax_exemption").getAsString().equalsIgnoreCase("1")) {
+                        exemptValue = "1";
+                        rdExemptYes.setChecked(true);
+                        llGeTax.setVisibility(View.VISIBLE);
+                    }
 
                     for (int i = 0; i < geographic_list.size(); i++) {
                         if (geographic_list.get(i).equalsIgnoreCase(location_name)) {
@@ -205,56 +224,37 @@ public class BusinessInformationNextFragment extends Fragment {
                     Toast.makeText(getActivity(), "Select geographic area", Toast.LENGTH_SHORT).show();
                 else if (aboutBusiness.getText().toString().length() < 10)
                     aboutBusiness.setError("Describe your business");
-                else if (rgExemption.getCheckedRadioButtonId() == R.id.rbexemptYes && TextUtils.isEmpty(etGeTaxNo.getText().toString()))
+                else if (exemptValue.equalsIgnoreCase("1") && etGeTaxNo.getText().toString().equalsIgnoreCase(""))
                     etGeTaxNo.setError("Enter Ge Tax No");
                 else if (edittextLanguage.getText().toString().equalsIgnoreCase(""))
                     Toast.makeText(getActivity(), "Select language", Toast.LENGTH_SHORT).show();
                 else {
-                    saveData();
+                    if (Util.isNetworkAvailable(context))
+                        saveData();
+                    else
+                        Toast.makeText(getActivity(), "Please Connect Your Internet", Toast.LENGTH_LONG).show();
+
                 }
             }
         });
     }
 
     private void saveData() {
-        if (Util.isNetworkAvailable(getActivity())) {
-            JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("method", AppConstants.BUSSINES_USER_BUSINESSAPI.UPDATEBUSINESS42D);
-            jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(getActivity()));
-            jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(getActivity()));
-            jsonObject.addProperty("business_fein_no", AppPreferencesBuss.getBussiFein(getActivity()));
-            jsonObject.addProperty("geo_graphic_area", selected_geographic_id);
-            jsonObject.addProperty("about_business", aboutBusiness.getText().toString().trim());
-            jsonObject.addProperty("business_type", businessType.getText().toString().trim());
-            jsonObject.addProperty("add_bussiness_website", "");
-            jsonObject.addProperty("website_link", "");
-            jsonObject.addProperty("select_language", edittextLanguage.getText().toString().trim());
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("method", AppConstants.BUSSINES_USER_BUSINESSAPI.UPDATEBUSINESS42D);
+        jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(getActivity()));
+        jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(getActivity()));
+        jsonObject.addProperty("business_fein_no", AppPreferencesBuss.getBussiFein(getActivity()));
+        jsonObject.addProperty("geo_graphic_area", selected_geographic_id);
+        jsonObject.addProperty("about_business", aboutBusiness.getText().toString().trim());
+        jsonObject.addProperty("business_type", businessType.getText().toString().trim());
+        jsonObject.addProperty("add_bussiness_website", "");
+        jsonObject.addProperty("website_link", "");
+        jsonObject.addProperty("business_get_tax_exemption", exemptValue);
+        jsonObject.addProperty("business_exemption_no", etGeTaxNo.getText().toString());
+        jsonObject.addProperty("select_language", edittextLanguage.getText().toString().trim());
 
-            Log.d(TAG, "Request saveData >> " + jsonObject);
-            JsonCallMethod(jsonObject);
-        } else {
-            Toast.makeText(getActivity(), "Please Connect Your Internet", Toast.LENGTH_LONG).show();
-        }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Log.w(TAG, "Inside on Activity result ");
-        String languageName = null;
-        if (requestCode == 100) {
-            try {
-                languageName = data.getStringExtra("language");
-                Log.e(TAG, "Language selected :- " + languageName);
-            } catch (Exception e) {
-                Log.e(TAG, "Exception in selecting Language :-" + e.getMessage());
-            }
-            edittextLanguage.setText(languageName);
-        }
-    }
-
-    private void JsonCallMethod(JsonObject jsonObject) {
-
+        Log.d(TAG, "Request saveData >> " + jsonObject);
         final ProgressHUD progressHD = ProgressHUD.show(getActivity(), "Please wait...", true, false, new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
@@ -267,7 +267,7 @@ public class BusinessInformationNextFragment extends Fragment {
             @SuppressLint("LongLogTag")
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                Log.e(TAG, "Response of updateBusiness 42D :- " + response.body().toString());
+                Log.e(TAG, "Response of saveData:- " + response.body().toString());
                 String s = response.body().toString();
                 try {
                     JSONObject jsonObject = new JSONObject(s);
@@ -299,6 +299,22 @@ public class BusinessInformationNextFragment extends Fragment {
                 progressHD.dismiss();
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.w(TAG, "Inside on Activity result ");
+        String languageName = null;
+        if (requestCode == 100) {
+            try {
+                languageName = data.getStringExtra("language");
+                Log.e(TAG, "Language selected :- " + languageName);
+            } catch (Exception e) {
+                Log.e(TAG, "Exception in selecting Language :-" + e.getMessage());
+            }
+            edittextLanguage.setText(languageName);
+        }
     }
 
     @SuppressLint("LongLogTag")

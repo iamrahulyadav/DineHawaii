@@ -56,7 +56,7 @@ public class BusinessRestSecondReg_20B extends AppCompatActivity implements View
     String multisite;
     BusinessDetails businessDetails;
     CountryCodePicker ccp;
-    String exemptValue;
+    String exemptValue="0";
     LinearLayout llGetax;
     ArrayList<String> geographic_list;
     ArrayList<String> geographic_id_list;
@@ -256,6 +256,7 @@ public class BusinessRestSecondReg_20B extends AppCompatActivity implements View
                     jsonObject.addProperty("phone_no", bussiPhoneNo);
                     jsonObject.addProperty("business_get_tax_exemption", exemptValue);
                     jsonObject.addProperty("business_exemption_no", etGeTaxNo.getText().toString());
+                    jsonObject.addProperty("geo_graphic_area",selected_geographic_id);
                     jsonObject.addProperty("fcm_id", FirebaseInstanceId.getInstance().getToken());
                     Log.e(TAG, jsonObject.toString());
                     JsonCallMethod(jsonObject);

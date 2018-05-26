@@ -78,6 +78,7 @@ public class OrderItemsDetailsModel implements Parcelable {
     private String old_future_take_out_food_name;
     private String old_future_take_out_quantity;
     private String OrderType;
+    private String item_customization;
     public OrderItemsDetailsModel() {
 
     }
@@ -139,6 +140,7 @@ public class OrderItemsDetailsModel implements Parcelable {
         catFoodTime = in.readString();
         busAreaId = in.readString();
         busAreaName = in.readString();
+        item_customization = in.readString();
     }
 
     public static Creator<OrderItemsDetailsModel> getCREATOR() {
@@ -259,6 +261,7 @@ public class OrderItemsDetailsModel implements Parcelable {
         dest.writeString(menuItemStatus);
         dest.writeString(busAreaId);
         dest.writeString(busAreaName);
+        dest.writeString(item_customization);
     }
 
     public String getBusAreaId() {
@@ -275,6 +278,23 @@ public class OrderItemsDetailsModel implements Parcelable {
 
     public void setBusAreaName(String busAreaName) {
         this.busAreaName = busAreaName;
+    }
+
+    public String getItem_customization() {
+        return item_customization;
+    }
+
+    public void setItem_customization(String item_customization) {
+        this.item_customization = item_customization;
+    }
+
+    public String getHomeDelFoodTime() {
+
+        return homeDelFoodTime;
+    }
+
+    public void setHomeDelFoodTime(String homeDelFoodTime) {
+        this.homeDelFoodTime = homeDelFoodTime;
     }
 
     @Override
@@ -337,6 +357,7 @@ public class OrderItemsDetailsModel implements Parcelable {
                 ", takeoutDelFoodTime ='" + takeoutDelFoodTime + '\'' +
                 ", busAreaId ='" + busAreaId + '\'' +
                 ", busAreaName ='" + busAreaName + '\'' +
+                ", item_customization ='" + item_customization + '\'' +
                 '}';
     }
 

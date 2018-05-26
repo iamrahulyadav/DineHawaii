@@ -7,7 +7,7 @@
         app:showAsAction="always" />
     <item
         android:id="@+id/editfood"
-        android:title="EDIT"
+        android:title="UPDATE"
         android:visible="false"
         app:showAsAction="always"
         />

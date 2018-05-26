@@ -132,6 +132,7 @@ public class MenuItemsAdapter extends RecyclerView.Adapter<MenuItemsAdapter.View
                 intent.putExtra("service_id", model.getService_type_id());
                 intent.putExtra("area_id", model.getBusAreaId());
                 intent.putExtra("area_name", model.getBusAreaName());
+                intent.putExtra("customization", model.getItem_customization());
                 context.startActivity(intent);
             }
         });

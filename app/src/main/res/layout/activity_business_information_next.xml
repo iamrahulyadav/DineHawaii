@@ -171,7 +171,7 @@
                         android:inputType="textCapWords"
                         android:paddingBottom="@dimen/_12sdp"
                         android:singleLine="true"
-                        android:textColor="@color/white"
+                        android:textColor="@color/gray"
                         android:textColorHint="@color/offwhite"
                         app:edittextfont="@string/raleway_regular" />
 

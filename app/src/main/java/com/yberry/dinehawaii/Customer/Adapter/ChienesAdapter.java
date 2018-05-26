@@ -34,6 +34,7 @@ import com.yberry.dinehawaii.RetrofitClasses.MyApiEndpointInterface;
 import com.yberry.dinehawaii.Util.AppConstants;
 import com.yberry.dinehawaii.Util.AppPreferences;
 import com.yberry.dinehawaii.Util.ProgressHUD;
+import com.yberry.dinehawaii.Util.Util;
 import com.yberry.dinehawaii.customview.CustomButton;
 import com.yberry.dinehawaii.customview.CustomEditText;
 import com.yberry.dinehawaii.customview.CustomTextView;
@@ -258,7 +259,8 @@ public class ChienesAdapter extends RecyclerView.Adapter<ChienesAdapter.MyViewHo
                 tv_totalCost.setText(" " + totalCost);
             }
         });
-        getSelectedCustomizaton(recyler_customization);
+        if (Util.isNetworkAvailable(context))
+            getSelectedCustomizaton(recyler_customization);
 
         tvdone.setOnClickListener(new View.OnClickListener() {
             @Override
