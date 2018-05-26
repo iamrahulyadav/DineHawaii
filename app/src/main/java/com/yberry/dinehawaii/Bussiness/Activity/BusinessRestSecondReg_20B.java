@@ -12,16 +12,20 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.JsonObject;
 import com.yberry.dinehawaii.Bussiness.model.BusinessDetails;
+import com.yberry.dinehawaii.Model.GeographicModel;
 import com.yberry.dinehawaii.R;
 import com.yberry.dinehawaii.RetrofitClasses.ApiClient;
 import com.yberry.dinehawaii.RetrofitClasses.MyApiEndpointInterface;
@@ -40,6 +44,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -50,14 +56,20 @@ public class BusinessRestSecondReg_20B extends AppCompatActivity implements View
     String multisite;
     BusinessDetails businessDetails;
     CountryCodePicker ccp;
-    private CustomButton btnsubmit;
-    private ImageView back;
-    private CustomEditText userId, password, phoneNo,etGeTaxNo;
-    private String getUserId, getPassword, businessName, federalNo, radioButtonValue, bussiPhoneNo;
-    private Context mContext;
-    private RadioGroup radioGroup,rgExemption;
     String exemptValue;
     LinearLayout llGetax;
+    ArrayList<String> geographic_list;
+    ArrayList<String> geographic_id_list;
+    ArrayList<GeographicModel> geographicModel;
+    ArrayAdapter<String> geographicAdapter;
+    Spinner geographicArea;
+    private CustomButton btnsubmit;
+    private ImageView back;
+    private CustomEditText userId, password, phoneNo, etGeTaxNo;
+    private String getUserId, getPassword, businessName, federalNo, bussiPhoneNo;
+    private Context mContext;
+    private RadioGroup radioGroup, rgExemption;
+    private String selected_geographic_location = "", selected_geographic_id = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,15 +100,91 @@ public class BusinessRestSecondReg_20B extends AppCompatActivity implements View
         }
 
         init();
+        getGeographicArea();
+
+    }
+
+    @SuppressLint("LongLogTag")
+    private void getGeographicArea() {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("method", AppConstants.GENERALAPI.ALLGEOLOCATION);
+        jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(mContext));
+        Log.e(TAG, jsonObject.toString());
+        final ProgressHUD progressHD = ProgressHUD.show(mContext, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                // TODO Auto-generated method stub
+            }
+        });
+        MyApiEndpointInterface apiService =
+                ApiClient.getClient().create(MyApiEndpointInterface.class);
+        Call<JsonObject> call = apiService.requestBusinessUserGeneralurl(jsonObject);
+        call.enqueue(new Callback<JsonObject>() {
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                Log.e(TAG + "onResponse", response.body().toString());
+                String s = response.body().toString();
+                geographic_list.clear();
+                geographic_id_list.clear();
+                geographicModel = new ArrayList<>();
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    JSONArray jsonArray = jsonObject.getJSONArray("result");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+                        String name = jsonObject1.getString("geo_location_name");
+                        String geo_id = jsonObject1.getString("id");
+                        geographic_list.add(name);
+                        geographic_id_list.add(geo_id);
+                        GeographicModel m = new GeographicModel();
+                        m.setGeo_id(geo_id);
+                        m.setName(name);
+                        geographicModel.add(m);
+                    }
+                    geographicAdapter = new ArrayAdapter<>(mContext, R.layout.row_spn, geographic_list);
+                    geographicArea.setAdapter(geographicAdapter);
+                    geographicArea.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            ((TextView) parent.getChildAt(0)).setTextColor(getResources().getColor(R.color.white));
+                            selected_geographic_location = geographic_list.get(position);
+                            selected_geographic_id = geographic_id_list.get(position);
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+
+                        }
+                    });
+                    Log.d("geographic_list", String.valueOf(geographic_list));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                if (progressHD != null && progressHD.isShowing())
+                    progressHD.dismiss();
+            }
+
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.e(TAG, "error :- " + Log.getStackTraceString(t));
+                if (progressHD != null && progressHD.isShowing())
+                    progressHD.dismiss();
+            }
+        });
     }
 
     private void init() {
         mContext = this;
+        geographic_list = new ArrayList<>();
+        geographic_id_list = new ArrayList<>();
         businessDetails = new BusinessDetails();
         userId = (CustomEditText) findViewById(R.id.password);
         rgExemption = (RadioGroup) findViewById(R.id.rgExemption);
         llGetax = (LinearLayout) findViewById(R.id.llGetax);
         password = (CustomEditText) findViewById(R.id.name);
+        geographicArea = (Spinner) findViewById(R.id.geographic_area);
         etGeTaxNo = (CustomEditText) findViewById(R.id.etGeTaxNo);
         phoneNo = (CustomEditText) findViewById(R.id.mobileNo);
         btnsubmit = (CustomButton) findViewById(R.id.submitButton);
@@ -121,25 +209,13 @@ public class BusinessRestSecondReg_20B extends AppCompatActivity implements View
             }
         });
 
-       /* radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId == R.id.yes) {
-
-                    AppPreferences.setSaveIdPass(BusinessRestSecondReg_20B.this,
-                            userId.getText().toString(), password.getText().toString());
-                } else {
-                    AppPreferences.setSaveIdPass(BusinessRestSecondReg_20B.this, "", "");
-                }
-            }
-        });*/
         rgExemption.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                if (i==R.id.rbexemptYes){
+                if (i == R.id.rbexemptYes) {
                     exemptValue = "1";
                     llGetax.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     exemptValue = "0";
                     llGetax.setVisibility(View.GONE);
                 }
@@ -164,9 +240,11 @@ public class BusinessRestSecondReg_20B extends AppCompatActivity implements View
                 password.setError("Enter password");
             } else if (bussiPhoneNo.isEmpty()) {
                 phoneNo.setError("Enter phone no");
-            }else if (rgExemption.getCheckedRadioButtonId()==R.id.exemptYes && TextUtils.isEmpty(etGeTaxNo.getText().toString()))
+            } else if (rgExemption.getCheckedRadioButtonId() == R.id.rdexemptYes && TextUtils.isEmpty(etGeTaxNo.getText().toString()))
                 etGeTaxNo.setError("Enter GeTax no.");
-                else {
+            else if (selected_geographic_id.equalsIgnoreCase(""))
+                Toast.makeText(mContext, "Select geographic area", Toast.LENGTH_SHORT).show();
+            else {
                 if (Util.isNetworkAvailable(mContext)) {
                     JsonObject jsonObject = new JsonObject();
                     jsonObject.addProperty("method", AppConstants.REGISTRATION.BUSINESSREGISTRATIONWITHID);
@@ -222,7 +300,7 @@ public class BusinessRestSecondReg_20B extends AppCompatActivity implements View
                         if (radioGroup.getCheckedRadioButtonId() == R.id.yes) {
                             SaveDataPreference.setBusRembEmailId(BusinessRestSecondReg_20B.this, jsonObject1.getString("email_id"));
                             SaveDataPreference.setBusRembPassword(BusinessRestSecondReg_20B.this, password.getText().toString());
-                        }else{
+                        } else {
                             SaveDataPreference.setBusRembEmailId(BusinessRestSecondReg_20B.this, "");
                             SaveDataPreference.setBusRembPassword(BusinessRestSecondReg_20B.this, "");
                         }

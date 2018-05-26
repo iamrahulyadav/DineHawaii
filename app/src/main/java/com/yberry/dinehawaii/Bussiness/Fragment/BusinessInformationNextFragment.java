@@ -307,11 +307,6 @@ public class BusinessInformationNextFragment extends Fragment {
         jsonObject.addProperty("method", AppConstants.GENERALAPI.ALLGEOLOCATION);
         jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(getActivity()));
         Log.e(TAG, jsonObject.toString());
-        geographicListMethod(jsonObject);
-    }
-
-    private void geographicListMethod(JsonObject jsonObject) {
-
         final ProgressHUD progressHD = ProgressHUD.show(getActivity(), "Please wait...", true, false, new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {

@@ -19,7 +19,7 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
-import com.yberry.dinehawaii.Bussiness.Activity.EditMenuItemActivity;
+import com.yberry.dinehawaii.Bussiness.Activity.AddMenuItemActivity;
 import com.yberry.dinehawaii.Model.OrderItemsDetailsModel;
 import com.yberry.dinehawaii.R;
 import com.yberry.dinehawaii.RetrofitClasses.ApiClient;
@@ -118,7 +118,7 @@ public class MenuItemsAdapter extends RecyclerView.Adapter<MenuItemsAdapter.View
         holder.itemlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, EditMenuItemActivity.class);
+                Intent intent = new Intent(context, AddMenuItemActivity.class);
                 intent.setAction("edit_menu");
                 intent.putExtra("item_name", model.getItemName());
                 intent.putExtra("item_price", model.getItemPrice());

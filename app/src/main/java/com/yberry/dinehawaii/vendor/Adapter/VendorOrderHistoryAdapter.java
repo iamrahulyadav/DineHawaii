@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,7 @@ public class VendorOrderHistoryAdapter extends RecyclerView.Adapter<VendorOrderH
         VendorOrderHistoryModel model = orderDetails.get(position);
         holder.dateTextView.setText(model.getDateTime());
         holder.nameTextView.setText(model.getVendorName());
+        holder.tvOrderItems.setText(model.getItemName());
         holder.totalAmountTextView.setText("$"+model.getAmount());
     }
 
@@ -53,7 +55,7 @@ public class VendorOrderHistoryAdapter extends RecyclerView.Adapter<VendorOrderH
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         CardView cardView;
-        CustomTextView dateTextView, nameTextView, totalAmountTextView, statusTextView;
+        CustomTextView dateTextView, nameTextView, totalAmountTextView, statusTextView,tvOrderItems;
         LinearLayout recycler_item;
 
         public ViewHolder(View itemView) {
@@ -63,6 +65,7 @@ public class VendorOrderHistoryAdapter extends RecyclerView.Adapter<VendorOrderH
             nameTextView = (CustomTextView) itemView.findViewById(R.id.nameTextView);
             totalAmountTextView = (CustomTextView) itemView.findViewById(R.id.totalAmountTextView);
             statusTextView = (CustomTextView) itemView.findViewById(R.id.statusTextView);
+            tvOrderItems = (CustomTextView) itemView.findViewById(R.id.tvOrderItems);
             recycler_item = (LinearLayout) itemView.findViewById(R.id.recycler_item);
         }
     }

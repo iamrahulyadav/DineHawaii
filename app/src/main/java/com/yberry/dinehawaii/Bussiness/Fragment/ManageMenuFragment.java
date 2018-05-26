@@ -26,7 +26,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
-import com.yberry.dinehawaii.Bussiness.Activity.EditMenuItemActivity;
+import com.yberry.dinehawaii.Bussiness.Activity.AddMenuItemActivity;
 import com.yberry.dinehawaii.Bussiness.Activity.SelectFoodTypeActivity;
 import com.yberry.dinehawaii.Bussiness.Adapter.MenuItemsAdapter;
 import com.yberry.dinehawaii.Model.CheckBoxPositionModel;
@@ -330,7 +330,7 @@ public class ManageMenuFragment extends Fragment implements View.OnClickListener
                 startActivityForResult(intent1, 19);
                 break;
             case R.id.addNewfood:
-                Intent intent = new Intent(getActivity(), EditMenuItemActivity.class);
+                Intent intent = new Intent(getActivity(), AddMenuItemActivity.class);
                 intent.setAction("addmenu");
                 getContext().startActivity(intent);
                 break;

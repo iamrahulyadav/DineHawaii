@@ -278,7 +278,7 @@
             android:name=".Bussiness.Activity.AddNewTableActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity android:name=".Bussiness.Activity.EditMenuItemActivity" />
+        <activity android:name=".Bussiness.Activity.AddMenuItemActivity" />
         <activity android:name=".Bussiness.Activity.SelectFoodTypeActivity" />
         <activity android:name=".Bussiness.Activity.ImportFoodTypesActivity" />
         <activity android:name=".Bussiness.Activity.BusinessPositionActivity" />

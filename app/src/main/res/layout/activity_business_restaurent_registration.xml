@@ -12,7 +12,7 @@
     <LinearLayout
         android:layout_marginLeft="@dimen/_10sdp"
         android:layout_marginRight="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_5sdp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar_bar"
@@ -326,7 +326,35 @@
 
             </LinearLayout>
         </LinearLayout>
+        <com.yberry.dinehawaii.customview.CustomTextView
+            android:layout_marginTop="@dimen/_8sdp"
 
+            android:id="@+id/customTextView13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/drawable_green_dot"
+            android:drawablePadding="@dimen/_5sdp"
+            android:gravity="center"
+            android:text="Geographic Area"
+            android:textColor="@color/green"
+            style="@style/TextAppearance.AppCompat.Subhead"
+            android:textStyle="bold"
+            app:edittextfont="@string/raleway_bold" />
+
+        <Spinner
+            android:id="@+id/geographic_area"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Select Area "
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            style="@style/TextAppearance.AppCompat.Subhead" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:src="@drawable/lines" />
         <com.yberry.dinehawaii.customview.CustomTextView
             android:id="@+id/save"
             android:layout_width="match_parent"
@@ -340,7 +368,6 @@
             android:textColor="@color/green"
             style="@style/TextAppearance.AppCompat.Subhead"
             app:edittextfont="@string/raleway_bold" />
-        <!--</RelativeLayout>-->
 
         <LinearLayout
             android:id="@+id/linear"
