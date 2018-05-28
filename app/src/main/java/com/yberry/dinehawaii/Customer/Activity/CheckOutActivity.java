@@ -495,7 +495,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         remove_coupon.setVisibility(View.GONE);
         rd_loylty.setEnabled(true);
         rd_egift.setEnabled(true);
-        tvTotalPaidAmount.setText("" + String.valueOf(totalPaidAmountBase));
+        tvTotalPaidAmount.setText("" + String.valueOf(decimalFormat.format(totalPaidAmountBase)));
     }
 
     private void applyCouponCode() {
@@ -564,7 +564,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
 
 
         double grandtotal = Double.valueOf(decimalFormat.format(total));
-        tvTotalPaidAmount.setText("" + String.valueOf(totalPaidAmountBase));
+        tvTotalPaidAmount.setText("" + String.valueOf(decimalFormat.format(totalPaidAmountBase)));
         loylityBal.setText(balance + "");
         loyality_apply.setText("");
         applyLoyaltyPoints.setVisibility(View.VISIBLE);
@@ -1081,7 +1081,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                                 order_timings = "";
                                 inhouse_btn.setChecked(false);
                                 take_way_btn.setChecked(false);
-                                showAlertDialog("Take-out order requires prior " + takeOut_lead_time + " mins order");
+                                showAlertDialog("TakeOut time must be after " + takeOut_lead_time + " mins of order timing");
                             } else {
                                 order_timings = AppPreferences.getOrderTime(context);
                                 Log.d("ORDERTIME>>", order_timings);

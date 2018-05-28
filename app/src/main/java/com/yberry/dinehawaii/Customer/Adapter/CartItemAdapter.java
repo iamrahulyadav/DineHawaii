@@ -40,21 +40,13 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.MyView
         this.mContext = mContext;
         this.orderItemsDetailsModels = orderItemsDetailsModels;
         this.total_amount = total_amount;
-       /* this.temp= str;
-        Log.e("type:", temp);*/
-    }
-
-    public CartItemAdapter(Context context, ArrayList<OrderItemsDetailsModel> list) {
-
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-
         MyViewHolder myViewHolder;
         View itemView = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.cart_item_layout, viewGroup, false);
-
         myViewHolder = new MyViewHolder(itemView);
         return myViewHolder;
     }
