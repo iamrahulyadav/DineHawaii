@@ -57,11 +57,10 @@ public class SendEGiftVoucher extends Fragment {
             .clientId(AppConstants.PAYPAL_CLIENT_ID);
     String amount, message, transaction_ID, intent, createTime, paymentState;
     Button submitPayment, search;
-    String send_UserId = "0";
+    String send_UserId = "0",send_user_type = "";;
     CustomEditText amountEditText, usernameEditText, messageEditText;
     LinearLayout giftLinear;
     FragmentIntraction intraction;
-    private String send_user_type = "";
     private CustomTextView tvTotalBal;
 
     @Override
@@ -194,6 +193,73 @@ public class SendEGiftVoucher extends Fragment {
         }).show();
     }
 
+    private void showBalanceAlert() {
+        new AlertDialog.Builder(getActivity())
+                .setMessage("We are unable to fetch your EGift balance.Please try again.")
+                .setPositiveButton("RETRY", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        getBalance();
+                    }
+                }).setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        }).show();
+    }
+
+    private void getBalance() {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.CUSTOMER_USER.CHECK_EMAILID);
+        jsonObject.addProperty(AppConstants.KEY_EMAILID, usernameEditText.getText().toString());
+
+        Log.e(TAG, "getBalance json" + jsonObject.toString());
+
+        final ProgressHUD progressHD = ProgressHUD.show(getActivity(), "Please wait...", true, false, new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                // TODO Auto-generated method stub
+            }
+        });
+
+        MyApiEndpointInterface apiService =
+                ApiClient.getClient().create(MyApiEndpointInterface.class);
+        Call<JsonObject> call = apiService.normalUserSendGift(jsonObject);
+        call.enqueue(new Callback<JsonObject>() {
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                Log.e(TAG, " getBalance response" + response.body().toString());
+                String s = response.body().toString();
+
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    if (jsonObject.getString("status").equalsIgnoreCase("200")) {
+                        JSONArray result = jsonObject.getJSONArray("result");
+                        JSONObject res = result.getJSONObject(0);
+
+                    } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
+                    } else {
+                        Toast.makeText(getActivity().getApplicationContext(), "Something went wrong !!", Toast.LENGTH_SHORT).show();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                progressHD.dismiss();
+            }
+
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.e(TAG, "error :- " + Log.getStackTraceString(t));
+                progressHD.dismiss();
+                Toast.makeText(getActivity().getApplicationContext(), "Server not responding!!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -217,12 +283,6 @@ public class SendEGiftVoucher extends Fragment {
         jsonObject.addProperty(AppConstants.KEY_EMAILID, usernameEditText.getText().toString());
 
         Log.e(TAG, "egift check user json :- " + jsonObject.toString());
-
-        searchUserTask(jsonObject);
-
-    }
-
-    private void searchUserTask(JsonObject jsonObject) {
 
         final ProgressHUD progressHD = ProgressHUD.show(getActivity(), "Please wait...", true, false, new DialogInterface.OnCancelListener() {
             @Override

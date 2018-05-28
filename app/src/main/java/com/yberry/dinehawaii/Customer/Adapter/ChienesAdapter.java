@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -22,34 +21,22 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
-import com.google.gson.JsonObject;
 import com.yberry.dinehawaii.Model.MenuCart;
 import com.yberry.dinehawaii.Model.MenuDetail;
 import com.yberry.dinehawaii.Model.OrderItemsDetailsModel;
 import com.yberry.dinehawaii.Model.SelectedCustomizationModel;
 import com.yberry.dinehawaii.MyApplication;
 import com.yberry.dinehawaii.R;
-import com.yberry.dinehawaii.RetrofitClasses.ApiClient;
-import com.yberry.dinehawaii.RetrofitClasses.MyApiEndpointInterface;
-import com.yberry.dinehawaii.Util.AppConstants;
 import com.yberry.dinehawaii.Util.AppPreferences;
 import com.yberry.dinehawaii.Util.ProgressHUD;
-import com.yberry.dinehawaii.Util.Util;
 import com.yberry.dinehawaii.customview.CustomButton;
 import com.yberry.dinehawaii.customview.CustomEditText;
 import com.yberry.dinehawaii.customview.CustomTextView;
 import com.yberry.dinehawaii.database.DatabaseHandler;
 import com.yberry.dinehawaii.interfacese.SelectedChbkInterface;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import java.util.Arrays;
 
 import static com.yberry.dinehawaii.Customer.Activity.PlaceAnOrder.itemsDetailsModels;
 
@@ -259,8 +246,30 @@ public class ChienesAdapter extends RecyclerView.Adapter<ChienesAdapter.MyViewHo
                 tv_totalCost.setText(" " + totalCost);
             }
         });
-        if (Util.isNetworkAvailable(context))
-            getSelectedCustomizaton(recyler_customization);
+        CustomTextView noCustomizations= (CustomTextView)dialog.findViewById(R.id.noCustomizations);
+        getCheck.clear();
+        if (!menuDetail.getCustomizations().equalsIgnoreCase("") && !menuDetail.getCustomizations().equalsIgnoreCase("null")) {
+            noCustomizations.setVisibility(View.GONE);
+            ArrayList<String> cust_items = new ArrayList<>(Arrays.asList(menuDetail.getCustomizations().split("\\s*,\\s*")));
+            Log.e(TAG, "customDialog: cust_items >>>" + cust_items);
+            for (int i = 0; i < cust_items.size(); i++) {
+                SelectedCustomizationModel model = new SelectedCustomizationModel();
+                model.setId(String.valueOf(i));
+                model.setName(cust_items.get(i));
+                getCheck.add(model);
+            }
+            chbkInterface = new SelectedChbkInterface() {
+                @Override
+                public void setOnSelectedItems(String cbhk) {
+                    stateChbk = cbhk;
+                    notifyDataSetChanged();
+                }
+            };
+            SelectedCustamizationAdapter selectedCustamizationAdapter = new SelectedCustamizationAdapter(mContext, getCheck, chbkInterface);
+            recyler_customization.setAdapter(selectedCustamizationAdapter);
+            selectedCustamizationAdapter.notifyDataSetChanged();
+        }else
+            noCustomizations.setVisibility(View.VISIBLE);
 
         tvdone.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -269,6 +278,7 @@ public class ChienesAdapter extends RecyclerView.Adapter<ChienesAdapter.MyViewHo
                 AppPreferences.setCustomizationMsg(context, enter_mesage);
                 Log.d(TAG + "Bussiness Id", menuDetail.getItem_bus_id());
                 orderesItem.setItemCustomiationList(stateChbk);
+                Log.e(TAG, "onClick: stateChbk>>>>>>>>"+stateChbk);
                 orderesItem.setMenu_id(menuDetail.getItemId());
                 orderesItem.setCat_id(menuDetail.getItem_cat_id());
                 orderesItem.setBuss_id(menuDetail.getItem_bus_id());
@@ -320,93 +330,6 @@ public class ChienesAdapter extends RecyclerView.Adapter<ChienesAdapter.MyViewHo
 
     public void setOnItemClickListener(OnItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
-    }
-
-    @SuppressLint("LongLogTag")
-    private void getSelectedCustomizaton(RecyclerView recyclerView) {
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("method", AppConstants.CUSTOMER_USER.BUSSINESSCUSTOMIZATIONS);
-        jsonObject.addProperty("business_id", AppPreferences.getBusiID(mContext));
-        jsonObject.addProperty("user_id", AppPreferences.getCustomerid(mContext));
-        Log.e(TAG + "customization request", jsonObject.toString());
-        JBody(jsonObject, recyclerView);
-    }
-
-    @SuppressLint("LongLogTag")
-
-    private void JBody(JsonObject jsonObject, final RecyclerView r) {
-
-        final ProgressHUD progressHD = ProgressHUD.show(mContext, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                // TODO Auto-generated method stub
-            }
-        });
-        MyApiEndpointInterface apiService =
-                ApiClient.getClient().create(MyApiEndpointInterface.class);
-        Call<JsonObject> call = apiService.getcustomization_normaluser(jsonObject);
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                String s = response.body().toString();
-                Log.e(TAG + "customization response", s);
-
-                try {
-                    JSONObject object = new JSONObject(s);
-                    String status = object.getString("status");
-                    if (status.equalsIgnoreCase("200")) {
-                        getCheck.clear();
-                        JSONArray result = object.getJSONArray("result");
-                        if (result.length() != 0 || result != null) {
-                            for (int i = 0; i < result.length(); i++) {
-                                SelectedCustomizationModel model = new SelectedCustomizationModel();
-                                JSONObject resultJSONObject = result.getJSONObject(i);
-                                model.setId(resultJSONObject.getString("id"));
-                                model.setName(resultJSONObject.getString("name"));
-                                getCheck.add(model);
-                            }
-                            chbkInterface = new SelectedChbkInterface() {
-                                @Override
-                                public void setOnSelectedItems(String cbhk) {
-
-                                    stateChbk = cbhk;
-                                    notifyDataSetChanged();
-                                    Log.e(TAG + "Chbk", cbhk);
-                                    Log.d("dthawDR", cbhk.replace("[", "").replace("]", ""));
-                                    //  AppPreferences.setCustomizationDelivery(mContext,cbhk.replace("[","").replace("]",""));
-
-                                }
-                            };
-                            SelectedCustamizationAdapter selectedCustamizationAdapter = new SelectedCustamizationAdapter(mContext, getCheck, chbkInterface);
-                            r.setAdapter(selectedCustamizationAdapter);
-                            selectedCustamizationAdapter.notifyDataSetChanged();
-
-
-                        }
-                    } else if (status.equalsIgnoreCase("400")) {
-                        getCheck.clear();
-                        JSONArray error = object.getJSONArray("result");
-                        AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
-                        alertDialog.setMessage(error.getJSONObject(0).getString("msg"));
-                        alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                            }
-                        });
-                        alertDialog.show();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                progressHD.dismiss();
-            }
-
-            @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
-                progressHD.dismiss();
-            }
-        });
-
-        Log.e(TAG + "Response list", getCheck.toString());
     }
 
     public interface OnItemClickListener {

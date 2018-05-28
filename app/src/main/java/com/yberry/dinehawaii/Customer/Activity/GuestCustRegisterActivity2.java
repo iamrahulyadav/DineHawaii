@@ -296,7 +296,7 @@ public class GuestCustRegisterActivity2 extends AppCompatActivity implements Vie
 
                     JsonArray jsonArray = jsonObject.getAsJsonArray("result");
                     JsonObject result = jsonArray.get(0).getAsJsonObject();
-                    Log.v(TAG, "Else in register guest final" +result.get("msg").getAsString());
+                    Log.v(TAG, "Else in register guest_icon final" +result.get("msg").getAsString());
                     Snackbar.make(findViewById(android.R.id.content),result.get("msg").getAsString(),Snackbar.LENGTH_LONG).show();
                 }
 

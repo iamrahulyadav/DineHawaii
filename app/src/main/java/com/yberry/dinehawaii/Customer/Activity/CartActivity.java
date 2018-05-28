@@ -183,7 +183,6 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                 } else {
                     Intent intent = new Intent(getApplicationContext(), CheckOutActivity.class);
                     intent.putExtra("totalamount", total_amount.getText().toString());
-                    intent.putExtra("place_order", cartItems);
                     startActivity(intent);
                 }
             } else if (minAmount.equalsIgnoreCase("$$")) {
@@ -192,7 +191,6 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                 } else {
                     Intent intent = new Intent(getApplicationContext(), CheckOutActivity.class);
                     intent.putExtra("totalamount", total_amount.getText().toString());
-                    intent.putExtra("place_order", cartItems);
                     startActivity(intent);
                 }
             } else if (minAmount.equalsIgnoreCase("$$$")) {
@@ -201,7 +199,6 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                 } else {
                     Intent intent = new Intent(getApplicationContext(), CheckOutActivity.class);
                     intent.putExtra("totalamount", total_amount.getText().toString());
-                    intent.putExtra("place_order", cartItems);
                     startActivity(intent);
                 }
             } else if (minAmount.equalsIgnoreCase("$$$$")) {
@@ -210,7 +207,6 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                 } else {
                     Intent intent = new Intent(getApplicationContext(), CheckOutActivity.class);
                     intent.putExtra("totalamount", total_amount.getText().toString());
-                    intent.putExtra("place_order", cartItems);
                     startActivity(intent);
                 }
             }

@@ -253,7 +253,7 @@ public class GuestCustRegisterActivity extends AppCompatActivity implements View
                 } else {
                     JsonArray jsonArray = jsonObject.getAsJsonArray("result");
                     JsonObject result = jsonArray.get(0).getAsJsonObject();
-                    Log.v(TAG, "Else in register guest" + result.get("msg").getAsString());
+                    Log.v(TAG, "Else in register guest_icon" + result.get("msg").getAsString());
                     Snackbar.make(findViewById(android.R.id.content), result.get("msg").getAsString(), Snackbar.LENGTH_LONG).show();
                 }
 

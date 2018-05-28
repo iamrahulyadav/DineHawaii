@@ -15,6 +15,7 @@ public class MenuDetail {
     String service_type="";
     String item_half_price="";
     String details="";
+    String customizations="";
 
     public String getItem_half_price() {
         return item_half_price;
@@ -109,6 +110,14 @@ public class MenuDetail {
     }
 
 
+    public String getCustomizations() {
+        return customizations;
+    }
+
+    public void setCustomizations(String customizations) {
+        this.customizations = customizations;
+    }
+
     @Override
     public String toString() {
         return "MenuDetail{" +
@@ -121,6 +130,9 @@ public class MenuDetail {
                 ", service_type='" + service_type + '\'' +
                 ", item_half_price='" + item_half_price + '\'' +
                 ", details='" + details + '\'' +
+                ", customizations='" + customizations + '\'' +
+                ", menu='" + menu + '\'' +
+                ", totalItems='" + totalItems + '\'' +
                 '}';
     }
 }

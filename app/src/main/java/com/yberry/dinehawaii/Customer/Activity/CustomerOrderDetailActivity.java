@@ -260,7 +260,7 @@ public class CustomerOrderDetailActivity extends AppCompatActivity {
                             fabDelPick.setEnabled(false);
                             fabCompleted.setEnabled(false);
                             if (listItem.getOrder_status().equalsIgnoreCase("Pending")) {
-                            } else if (listItem.getOrder_status().equalsIgnoreCase("In-Progress")) {
+                           } else if (listItem.getOrder_status().equalsIgnoreCase("In-Progress")) {
                                 setInProgress();
                             } else if (listItem.getOrder_status().equalsIgnoreCase("Prepared")) {
                                 setPrepared();

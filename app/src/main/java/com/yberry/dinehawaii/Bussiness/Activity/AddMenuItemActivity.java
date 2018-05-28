@@ -396,12 +396,14 @@ public class AddMenuItemActivity extends AppCompatActivity implements View.OnCli
             }
             if (getIntent().hasExtra("customization")) {
                 Log.e(TAG, "getDataFromIntent: customization>>>>>>" + getIntent().getStringExtra("customization"));
-                ArrayList<String> items = new ArrayList<>(Arrays.asList(getIntent().getStringExtra("customization").split("\\s*,\\s*")));
-                for (int i = 0; i < items.size(); i++) {
-                    custList.add(items.get(i));
+                if (!getIntent().getStringExtra("customization").equalsIgnoreCase("") && !getIntent().getStringExtra("customization").equalsIgnoreCase("null")) {
+                    ArrayList<String> items = new ArrayList<>(Arrays.asList(getIntent().getStringExtra("customization").split("\\s*,\\s*")));
+                    for (int i = 0; i < items.size(); i++) {
+                        custList.add(items.get(i));
+                    }
+                    Log.e(TAG, "getDataFromIntent: custList>>>>>>" + custList.toString());
+                    custitemsAdapter.notifyDataSetChanged();
                 }
-                Log.e(TAG, "getDataFromIntent: custList>>>>>>" + custList.toString());
-                custitemsAdapter.notifyDataSetChanged();
             }
         }
 
@@ -422,7 +424,7 @@ public class AddMenuItemActivity extends AppCompatActivity implements View.OnCli
                 openDialogToChosePic();
                 break;
             case R.id.etBusArea:
-                if (areaslist != null)
+                if (areaslist != null && !areaslist.isEmpty())
                     showBusAreasDialog();
                 else
                     Toast.makeText(context, "No areas available", Toast.LENGTH_LONG).show();
@@ -458,8 +460,7 @@ public class AddMenuItemActivity extends AppCompatActivity implements View.OnCli
                 validateData();
                 break;
             case R.id.editfood:
-                add.setVisible(true);
-                edit.setVisible(false);
+                validateData();
                 break;
             default:
                 break;
@@ -496,14 +497,18 @@ public class AddMenuItemActivity extends AppCompatActivity implements View.OnCli
                     finalFull = fullprice.getText().toString();
                 }
                 if (!edit_id.equalsIgnoreCase("") || !edit_id.isEmpty()) {
-                    editFoodMenuData();
+                    String customize_edit;
+                    if (custList.isEmpty() || custList == null)
+                        customize_edit = "";
+                    else
+                        customize_edit = TextUtils.join(",", custList);
+                    editFoodMenuData(customize_edit);
                 } else {
                     String customize;
                     if (custList.isEmpty() || custList == null)
                         customize = "";
                     else
                         customize = TextUtils.join(",", custList);
-                    Log.e(TAG, "validateData:customize list>>>>>>" + TextUtils.join(",", custList));
                     addFoodMenuData(customize);
                 }
 
@@ -513,7 +518,7 @@ public class AddMenuItemActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
-    private void editFoodMenuData() {
+    private void editFoodMenuData(String customize) {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("method", AppConstants.KEY_EDIT_MENU);
         jsonObject.addProperty("edit_id", edit_id);
@@ -527,6 +532,7 @@ public class AddMenuItemActivity extends AppCompatActivity implements View.OnCli
         jsonObject.addProperty("detail", ingredients.getText().toString());
         jsonObject.addProperty("food_image", imageString);
         jsonObject.addProperty("area_id", selectedAreaId);
+        jsonObject.addProperty("customization", customize);
         Log.e(TAG, "edit Json" + jsonObject.toString());
         addFoodMenuApi(jsonObject);
     }

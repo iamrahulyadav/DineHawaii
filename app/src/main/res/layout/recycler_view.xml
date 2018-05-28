@@ -67,7 +67,7 @@
          android:layout_gravity="bottom|end"
          android:layout_marginBottom="10dp"
          android:layout_marginEnd="10dp"
-         android:src="@drawable/guest"
+         android:src="@drawable/guest_icon"
          app:backgroundTint="@color/green"
          app:fabSize="mini"
          android:layout_marginRight="10dp"

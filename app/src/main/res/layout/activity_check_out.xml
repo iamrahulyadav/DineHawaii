@@ -1176,7 +1176,7 @@
                 style="@style/TextAppearance.AppCompat.Medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Pay"
+                android:text="Pay $"
                 android:textColor="@color/white"
                 app:edittextfont="Raleway-Bold.ttf" />
 

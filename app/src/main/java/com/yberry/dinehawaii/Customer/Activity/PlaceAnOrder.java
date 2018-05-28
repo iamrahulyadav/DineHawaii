@@ -128,12 +128,12 @@ public class PlaceAnOrder extends AppCompatActivity {
                                     menuDetail.setService_type(service_type);
                                     menuDetail.setItem_half_price(half_price);
                                     menuDetail.setDetails(details);
+                                    menuDetail.setCustomizations(frozenYogurt.getString("customization"));
                                     submenuArraylist.add(menuDetail);
                                 }
 
                                 menuArraylist.add(submenuArraylist);
                                 Log.e("CART09", menuArraylist.toString());
-                                //  Log.e("CART091",menuDetail.toString());
                             }
                         }
 
