@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="green">#4ac779</color>
-
-    <!-- SplashColor-->
-
-    <color name="test">#221224</color>
     <color name="defaultContentColor">@android:color/black</color>
     <color name="colorPrimary">#4ac779</color>
     <color name="colorPrimaryDark">#4ac779</color>
@@ -16,7 +12,6 @@
     <color name="lightgray">#82cccccc</color>
     <color name="transparent">#00800000</color>
     <color name="transparent_full">#00000000</color>
-    <color name="transparent_black_color">#000</color>
     <color name="black">#000</color>
     <color name="gray">#9b9b9b</color>
     <color name="offwhite">#cecece</color>
@@ -26,7 +21,6 @@
     <color name="edit_text_hint_color">#9ea1a1a1</color>
     <color name="activityBackground">#ededed</color>
     <color name="progressDialog">#e643af6b</color>
-    <color name="semiWhite">#ebffffff</color>
     <color name="red">#FF0000</color>
     <color name="edit_text_color">#b1111111</color>
     <color name="fab_gray">#e1e1e1</color>

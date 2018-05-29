@@ -88,7 +88,7 @@ public class BidItemDetailsActivity extends AppCompatActivity implements View.On
     }
 
     private void showbidDialog(final String bidRowId, final BidDetailsModel model) {
-        String[] options = {"Accept Bid", "Reject Bid", "Edit Bid"};
+        String[] options = {"Approve Bid", "Reject Bid", "Edit Bid"};
         String[] optionsId = {"0", "1", "2"};
         alertdialog = new AlertDialog.Builder(context);
         alertdialog.setTitle("Choose an Option");
@@ -269,7 +269,7 @@ public class BidItemDetailsActivity extends AppCompatActivity implements View.On
         tvItemVendorPrice.setText(bidModel.getVendorBidAmount());
 
         if (!bidModel.getVendorBidFinalAmount().equalsIgnoreCase("") && !bidModel.getVendorBidFinalAmount().equalsIgnoreCase("0"))
-            etYourPrice.setText(bidModel.getBusinessBidAmt());
+            etYourPrice.setText(bidModel.getVendorBidFinalAmount());
 
         tvItemTotalPrice.setText(bidModel.getBusinessBidAmt());
         etQuantity.setText(bidModel.getItemQuantity());

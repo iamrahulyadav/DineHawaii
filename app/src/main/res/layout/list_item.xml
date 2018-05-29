@@ -33,7 +33,6 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.2">
-
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/restLogo"
                 android:layout_width="@dimen/_36sdp"

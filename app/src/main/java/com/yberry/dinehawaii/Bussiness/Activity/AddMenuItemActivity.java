@@ -27,6 +27,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
@@ -102,6 +104,18 @@ public class AddMenuItemActivity extends AppCompatActivity implements View.OnCli
     private LinearLayoutManager mLayoutManager;
     private CustomizationItemsAdapter custitemsAdapter;
     private AlertDialog.Builder customItemAlert;
+    private String blockCharacterSet = "~#^|$%&*!,@";
+    private InputFilter filter = new InputFilter() {
+
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+
+            if (source != null && blockCharacterSet.contains(("" + source))) {
+                return "";
+            }
+            return null;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -206,6 +220,7 @@ public class AddMenuItemActivity extends AppCompatActivity implements View.OnCli
         popup.requestWindowFeature(Window.FEATURE_NO_TITLE);
         popup.setContentView(R.layout.food_customization_dialog);
         final CustomEditText etCustomize = (CustomEditText) popup.findViewById(R.id.etCustomize);
+        etCustomize.setFilters(new InputFilter[]{filter});
         popup.findViewById(R.id.popupclose).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -234,6 +249,7 @@ public class AddMenuItemActivity extends AppCompatActivity implements View.OnCli
         final CustomTextView tvEditCust = (CustomTextView) popup.findViewById(R.id.tvEditCust);
         tvEditCust.setText("Edit Item");
         etCustomize.setText(item);
+        etCustomize.setFilters(new InputFilter[]{filter});
         popup.findViewById(R.id.popupclose).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

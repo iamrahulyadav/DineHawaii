@@ -509,7 +509,91 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                 jsonObject.addProperty("business_id", AppPreferences.getBusiID(context));
                 jsonObject.addProperty("coupon_code", couponCodeText.getText().toString());
                 Log.e(TAG, "coupon apply json" + jsonObject.toString());
-                applyCouponCodeApi(jsonObject);
+                final ProgressHUD progressHD = ProgressHUD.show(context, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        // TODO Auto-generated method stub
+                    }
+                });
+                MyApiEndpointInterface apiService =
+                        ApiClient.getClient().create(MyApiEndpointInterface.class);
+                Call<JsonObject> call = apiService.get_coupon_cust(jsonObject);
+                call.enqueue(new Callback<JsonObject>() {
+                    @SuppressLint("LongLogTag")
+                    @Override
+                    public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                        Log.e(TAG, "Json Response :- " + response.body().toString());
+                        String resp = response.body().toString();
+                        try {
+                            JSONObject jsonObject = new JSONObject(resp);
+                            if (jsonObject.getString("status").equalsIgnoreCase("200")) {
+                                rd_loylty.setEnabled(false);
+                                rd_egift.setEnabled(false);
+                                JSONArray jsonArray1 = jsonObject.getJSONArray("result");
+                                JSONObject jsonObject1 = jsonArray1.getJSONObject(0);
+                                String coupon_amount = jsonObject1.getString("coupon_amt_per");
+                                coupon_type = jsonObject1.getString("coupon_type");
+                                coupon_name = jsonObject1.getString("coupon_code");
+                                coupon_id = jsonObject1.getString("coupon_id");
+                                if (Double.parseDouble(coupon_amount) < Double.parseDouble(tvTotalPaidAmount.getText().toString())) {
+                                    couponCodeText.setText(coupon_name + "( $" + coupon_amount + " )");
+                                    couponCodeText.setEnabled(false);
+                                    remove_coupon.setVisibility(View.VISIBLE);
+                                    apply_coupon.setVisibility(View.GONE);
+                                    if (coupon_type.equalsIgnoreCase("Discount Percentage")) {
+                                        double couponTotal = Double.parseDouble(coupon_amount.replace("%", ""));
+                                        couponCodeText.setText(coupon_name + "( " + coupon_amount + "% )");
+                                        Log.d("demo", String.valueOf(couponTotal));
+                                        Log.d("couponTotal", String.valueOf(couponTotal));
+
+                                        double totalamt = Double.parseDouble(amount) * couponTotal / 100;
+                                        double finalamt = totalamt;
+                                        Log.d("taxdemo1", String.valueOf(finalamt));
+
+
+                                        double admin_amount = Double.parseDouble(amount) - finalamt;
+                                        double admin_per = admin_amount;
+
+                                        double grand_amount = Double.valueOf(decimalFormat.format(admin_per));
+                                        tvTotalPaidAmount.setText("" + grand_amount);
+                                    } else if (coupon_type.equalsIgnoreCase("Discount Amount")) {
+                                        double amt = Double.parseDouble(tvTotalPaidAmount.getText().toString()) - Double.parseDouble(coupon_amount);
+                                        double total_amount = Double.valueOf(decimalFormat.format(amt));
+                                        tvTotalPaidAmount.setText("" + total_amount);
+                                    }
+
+                                    Snackbar.make(findViewById(android.R.id.content), "Your Coupon Code " + coupon_name + " applied successfully", Snackbar.LENGTH_LONG).show();
+                                } else {
+                                    Snackbar.make(findViewById(android.R.id.content), "Your Coupon Code can't be applied", Snackbar.LENGTH_LONG).setAction("Ok", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+
+                                        }
+                                    }).show();
+                                }
+
+                            } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
+                                JSONArray jsonArray2 = jsonObject.getJSONArray("result");
+                                JSONObject jsonObject1 = jsonArray2.getJSONObject(0);
+                                Toast.makeText(context, jsonObject1.getString("msg"), Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(context, "Server not Responding", Toast.LENGTH_SHORT).show();
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        progressHD.dismiss();
+                    }
+
+                    @SuppressLint("LongLogTag")
+                    @Override
+                    public void onFailure(Call<JsonObject> call, Throwable t) {
+                        Log.e(TAG, "error :- " + Log.getStackTraceString(t));
+                        progressHD.dismiss();
+                        Toast.makeText(context, "Server not Responding", Toast.LENGTH_SHORT).show();
+                    }
+                });
             } else {
                 Toast.makeText(context, "Please Connect Internet", Toast.LENGTH_LONG).show();
             }
@@ -612,99 +696,77 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                 jsonObject.addProperty("user_id", AppPreferences.getCustomerid(context));
                 jsonObject.addProperty("coupon_code", giftcouponcode.getText().toString());
                 Log.e(TAG, "egift apply json" + jsonObject.toString());
-                applyCouponApi(jsonObject);
+                final ProgressHUD progressHD = ProgressHUD.show(context, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        // TODO Auto-generated method stub
+                    }
+                });
+                MyApiEndpointInterface apiService =
+                        ApiClient.getClient().create(MyApiEndpointInterface.class);
+                Call<JsonObject> call = apiService.normalUserBusinessApi(jsonObject);
+                call.enqueue(new Callback<JsonObject>() {
+                    @SuppressLint("LongLogTag")
+                    @Override
+                    public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                        Log.e(TAG, "Json Response :- " + response.body().toString());
+                        String resp = response.body().toString();
+                        try {
+                            JSONObject jsonObject = new JSONObject(resp);
+                            if (jsonObject.getString("status").equalsIgnoreCase("200")) {
+                        /*rd_loylty.setVisibility(View.GONE);
+                        rd_coupon.setVisibility(View.GONE);*/
+                                rd_loylty.setEnabled(false);
+                                rd_coupon.setEnabled(false);
+                                JSONArray jsonArray1 = jsonObject.getJSONArray("result");
+                                JSONObject jsonObject1 = jsonArray1.getJSONObject(0);
+                                egiftamount = jsonObject1.getString("coupon_amount");
+                                egiftcoupon = jsonObject1.getString("coupon_code");
+                                egiftid = jsonObject1.getString("id");
+                                if (Double.parseDouble(egiftamount) < Double.parseDouble(tvTotalPaidAmount.getText().toString())) {
+                                    giftcouponcode.setText(egiftcoupon + "( $" + egiftamount + " )");
+                                    giftcouponcode.setEnabled(false);
+                                    removeegift.setVisibility(View.VISIBLE);
+                                    applygiftbtn.setVisibility(View.GONE);
+                                    double amt = Double.parseDouble(tvTotalPaidAmount.getText().toString()) - Double.parseDouble(egiftamount);
+                                    double total_amount = Double.valueOf(decimalFormat.format(amt));
+                                    tvTotalPaidAmount.setText("" + total_amount);
+                                    Snackbar.make(findViewById(android.R.id.content), "Egift Card " + egiftcoupon + " applied successfully", Snackbar.LENGTH_LONG).show();
+                                } else {
+                                    Snackbar.make(findViewById(android.R.id.content), "Egift Card can't be applied", Snackbar.LENGTH_LONG).setAction("Ok", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+
+                                        }
+                                    }).show();
+                                }
+
+                            } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
+                                JSONArray jsonArray2 = jsonObject.getJSONArray("result");
+                                JSONObject jsonObject1 = jsonArray2.getJSONObject(0);
+                                Toast.makeText(context, jsonObject1.getString("msg"), Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(context, "Server not Responding", Toast.LENGTH_SHORT).show();
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        progressHD.dismiss();
+                    }
+
+                    @SuppressLint("LongLogTag")
+                    @Override
+                    public void onFailure(Call<JsonObject> call, Throwable t) {
+                        Log.e(TAG, "error :- " + Log.getStackTraceString(t));
+                        progressHD.dismiss();
+                        Toast.makeText(context, "Server not Responding", Toast.LENGTH_SHORT).show();
+                    }
+                });
             } else {
                 Toast.makeText(context, "Please Connect Internet", Toast.LENGTH_LONG).show();
             }
         }
-    }
-
-    private void applyCouponCodeApi(JsonObject jsonObject) {
-        final ProgressHUD progressHD = ProgressHUD.show(context, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                // TODO Auto-generated method stub
-            }
-        });
-        MyApiEndpointInterface apiService =
-                ApiClient.getClient().create(MyApiEndpointInterface.class);
-        Call<JsonObject> call = apiService.get_coupon_cust(jsonObject);
-        call.enqueue(new Callback<JsonObject>() {
-            @SuppressLint("LongLogTag")
-            @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                Log.e(TAG, "Json Response :- " + response.body().toString());
-                String resp = response.body().toString();
-                try {
-                    JSONObject jsonObject = new JSONObject(resp);
-                    if (jsonObject.getString("status").equalsIgnoreCase("200")) {
-                        rd_loylty.setEnabled(false);
-                        rd_egift.setEnabled(false);
-                        JSONArray jsonArray1 = jsonObject.getJSONArray("result");
-                        JSONObject jsonObject1 = jsonArray1.getJSONObject(0);
-                        String coupon_amount = jsonObject1.getString("coupon_amt_per");
-                        coupon_type = jsonObject1.getString("coupon_type");
-                        coupon_name = jsonObject1.getString("coupon_code");
-                        coupon_id = jsonObject1.getString("coupon_id");
-                        if (Double.parseDouble(coupon_amount) < Double.parseDouble(tvTotalPaidAmount.getText().toString())) {
-                            couponCodeText.setText(coupon_name + "( $" + coupon_amount + " )");
-                            couponCodeText.setEnabled(false);
-                            remove_coupon.setVisibility(View.VISIBLE);
-                            apply_coupon.setVisibility(View.GONE);
-                            if (coupon_type.equalsIgnoreCase("Discount Percentage")) {
-                                double couponTotal = Double.parseDouble(coupon_amount.replace("%", ""));
-                                couponCodeText.setText(coupon_name + "( " + coupon_amount + "% )");
-                                Log.d("demo", String.valueOf(couponTotal));
-                                Log.d("couponTotal", String.valueOf(couponTotal));
-
-                                double totalamt = Double.parseDouble(amount) * couponTotal / 100;
-                                double finalamt = totalamt;
-                                Log.d("taxdemo1", String.valueOf(finalamt));
-
-
-                                double admin_amount = Double.parseDouble(amount) - finalamt;
-                                double admin_per = admin_amount;
-
-                                double grand_amount = Double.valueOf(decimalFormat.format(admin_per));
-                                tvTotalPaidAmount.setText("" + grand_amount);
-                            } else if (coupon_type.equalsIgnoreCase("Discount Amount")) {
-                                double amt = Double.parseDouble(tvTotalPaidAmount.getText().toString()) - Double.parseDouble(coupon_amount);
-                                double total_amount = Double.valueOf(decimalFormat.format(amt));
-                                tvTotalPaidAmount.setText("" + total_amount);
-                            }
-
-                            Snackbar.make(findViewById(android.R.id.content), "Your Coupon Code " + coupon_name + " applied successfully", Snackbar.LENGTH_LONG).show();
-                        } else {
-                            Snackbar.make(findViewById(android.R.id.content), "Your Coupon Code can't be applied", Snackbar.LENGTH_LONG).setAction("Ok", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-
-                                }
-                            }).show();
-                        }
-
-                    } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
-                        JSONArray jsonArray2 = jsonObject.getJSONArray("result");
-                        JSONObject jsonObject1 = jsonArray2.getJSONObject(0);
-                        Toast.makeText(context, jsonObject1.getString("msg"), Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(context, "Server not Responding", Toast.LENGTH_SHORT).show();
-
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                progressHD.dismiss();
-            }
-
-            @SuppressLint("LongLogTag")
-            @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.e(TAG, "error :- " + Log.getStackTraceString(t));
-                progressHD.dismiss();
-                Toast.makeText(context, "Server not Responding", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     private void cateringOrder() {
@@ -827,75 +889,6 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         rd_coupon.setEnabled(true);
     }
 
-    private void applyCouponApi(JsonObject jsonObject) {
-        final ProgressHUD progressHD = ProgressHUD.show(context, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                // TODO Auto-generated method stub
-            }
-        });
-        MyApiEndpointInterface apiService =
-                ApiClient.getClient().create(MyApiEndpointInterface.class);
-        Call<JsonObject> call = apiService.normalUserBusinessApi(jsonObject);
-        call.enqueue(new Callback<JsonObject>() {
-            @SuppressLint("LongLogTag")
-            @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                Log.e(TAG, "Json Response :- " + response.body().toString());
-                String resp = response.body().toString();
-                try {
-                    JSONObject jsonObject = new JSONObject(resp);
-                    if (jsonObject.getString("status").equalsIgnoreCase("200")) {
-                        /*rd_loylty.setVisibility(View.GONE);
-                        rd_coupon.setVisibility(View.GONE);*/
-                        rd_loylty.setEnabled(false);
-                        rd_coupon.setEnabled(false);
-                        JSONArray jsonArray1 = jsonObject.getJSONArray("result");
-                        JSONObject jsonObject1 = jsonArray1.getJSONObject(0);
-                        egiftamount = jsonObject1.getString("coupon_amount");
-                        egiftcoupon = jsonObject1.getString("coupon_code");
-                        egiftid = jsonObject1.getString("id");
-                        if (Double.parseDouble(egiftamount) < Double.parseDouble(tvTotalPaidAmount.getText().toString())) {
-                            giftcouponcode.setText(egiftcoupon + "( $" + egiftamount + " )");
-                            giftcouponcode.setEnabled(false);
-                            removeegift.setVisibility(View.VISIBLE);
-                            applygiftbtn.setVisibility(View.GONE);
-                            double amt = Double.parseDouble(tvTotalPaidAmount.getText().toString()) - Double.parseDouble(egiftamount);
-                            double total_amount = Double.valueOf(decimalFormat.format(amt));
-                            tvTotalPaidAmount.setText("" + total_amount);
-                            Snackbar.make(findViewById(android.R.id.content), "Egift Card " + egiftcoupon + " applied successfully", Snackbar.LENGTH_LONG).show();
-                        } else {
-                            Snackbar.make(findViewById(android.R.id.content), "Egift Card can't be applied", Snackbar.LENGTH_LONG).setAction("Ok", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-
-                                }
-                            }).show();
-                        }
-
-                    } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
-                        JSONArray jsonArray2 = jsonObject.getJSONArray("result");
-                        JSONObject jsonObject1 = jsonArray2.getJSONObject(0);
-                        Toast.makeText(context, jsonObject1.getString("msg"), Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(context, "Server not Responding", Toast.LENGTH_SHORT).show();
-
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                progressHD.dismiss();
-            }
-
-            @SuppressLint("LongLogTag")
-            @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.e(TAG, "error :- " + Log.getStackTraceString(t));
-                progressHD.dismiss();
-                Toast.makeText(context, "Server not Responding", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 
     private void setLoyalityPoints() {
         final ProgressHUD progressHD = ProgressHUD.show(context, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
@@ -1002,20 +995,20 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                             catering_btn.setChecked(false);
                             showAlertDialog("Catering Order Requires " + catering_lead_days + " days prior booking");
                             Log.e(TAG, "onTimeSet: current time is less than/equals selected time");
-                        }else if (finalCurrentTime.compareTo(selectedTime24) < 0) {
-                                Log.e(TAG, "onTimeSet: current time is greater than selected time");
-                                order_timings = cateringDateTime + "," + selectedTime;
-                                AppPreferences.setOrderTime(context, order_timings);
-                                custPhnLayout.setVisibility(View.GONE);
-                                custAddLayout.setVisibility(View.GONE);
-                                custDtLayout.setVisibility(View.VISIBLE);
-                                custPreptimeLayout.setVisibility(View.VISIBLE);
-                                custNmLayout.setVisibility(View.VISIBLE);
-                                custName.setText(AppPreferences.getCustomername(context));
-                                custName.setSelection(custName.length());
-                                CustOrTime.setText(selectedTime);
-                                CustOrDate.setText(cateringDateTime);
-                                setFoodPrepTime(order_type);
+                        } else if (finalCurrentTime.compareTo(selectedTime24) < 0) {
+                            Log.e(TAG, "onTimeSet: current time is greater than selected time");
+                            order_timings = cateringDateTime + "," + selectedTime;
+                            AppPreferences.setOrderTime(context, order_timings);
+                            custPhnLayout.setVisibility(View.GONE);
+                            custAddLayout.setVisibility(View.GONE);
+                            custDtLayout.setVisibility(View.VISIBLE);
+                            custPreptimeLayout.setVisibility(View.VISIBLE);
+                            custNmLayout.setVisibility(View.VISIBLE);
+                            custName.setText(AppPreferences.getCustomername(context));
+                            custName.setSelection(custName.length());
+                            CustOrTime.setText(selectedTime);
+                            CustOrDate.setText(cateringDateTime);
+                            setFoodPrepTime(order_type);
 
                         }
                     }
@@ -1217,65 +1210,61 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
             jsonObject.addProperty("user_id", AppPreferences.getCustomerid(context));
             jsonObject.addProperty("business_id", AppPreferences.getBusiID(context));
             Log.e(TAG, "available coupon json :- " + jsonObject.toString());
-            getCoupon(jsonObject);
+            final ProgressHUD progressHD = ProgressHUD.show(context, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+
+                    // TODO Auto-generated method stub
+                }
+            });
+            MyApiEndpointInterface apiService =
+                    ApiClient.getClient().create(MyApiEndpointInterface.class);
+            Call<JsonObject> call = apiService.get_coupon_cust(jsonObject);
+
+
+            call.enqueue(new Callback<JsonObject>() {
+                @SuppressLint("LongLogTag")
+                @Override
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                    Log.e(TAG, "available coupon Response :- " + response.body().toString());
+                    String resp = response.body().toString();
+                    try {
+                        JSONObject jsonObject = new JSONObject(resp);
+                        if (jsonObject.getString("status").equalsIgnoreCase("200")) {
+                            JSONArray jsonArray = jsonObject.getJSONArray("result");
+                            couponsModelsList.clear();
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                CustomerModel customerModel = new CustomerModel();
+                                JSONObject object = jsonArray.getJSONObject(i);
+                                customerModel.setOffer_amount(object.getString("coupon_amt_per"));
+                                customerModel.setOffer_name(object.getString("coupon_code"));
+                                customerModel.setOffer_decp(object.getString("coupon_description"));
+                                customerModel.setMinOrderAmt(object.getString("min_order_amt"));
+                                couponsModelsList.add(customerModel);
+                            }
+                        } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
+                            JSONArray jsonArray = jsonObject.getJSONArray("result");
+                            JSONObject object = jsonArray.getJSONObject(0);
+
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    progressHD.dismiss();
+                }
+
+                @SuppressLint("LongLogTag")
+                @Override
+                public void onFailure(Call<JsonObject> call, Throwable t) {
+                    Log.e(TAG, "error :- " + Log.getStackTraceString(t));
+                    progressHD.dismiss();
+                    // Toast.makeText(context, "Server not Responding", Toast.LENGTH_SHORT).show();
+                }
+            });
 
         } else {
             Toast.makeText(context, "Please Connect Your Internet", Toast.LENGTH_LONG).show();
         }
-    }
-
-    private void getCoupon(JsonObject jsonObject) {
-        final ProgressHUD progressHD = ProgressHUD.show(context, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-
-                // TODO Auto-generated method stub
-            }
-        });
-        MyApiEndpointInterface apiService =
-                ApiClient.getClient().create(MyApiEndpointInterface.class);
-        Call<JsonObject> call = apiService.get_coupon_cust(jsonObject);
-
-
-        call.enqueue(new Callback<JsonObject>() {
-            @SuppressLint("LongLogTag")
-            @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                Log.e(TAG, "available coupon Response :- " + response.body().toString());
-                String resp = response.body().toString();
-                try {
-                    JSONObject jsonObject = new JSONObject(resp);
-                    if (jsonObject.getString("status").equalsIgnoreCase("200")) {
-                        JSONArray jsonArray = jsonObject.getJSONArray("result");
-                        couponsModelsList.clear();
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            CustomerModel customerModel = new CustomerModel();
-                            JSONObject object = jsonArray.getJSONObject(i);
-                            customerModel.setOffer_amount(object.getString("coupon_amt_per"));
-                            customerModel.setOffer_name(object.getString("coupon_code"));
-                            customerModel.setOffer_decp(object.getString("coupon_description"));
-                            customerModel.setMinOrderAmt(object.getString("min_order_amt"));
-                            couponsModelsList.add(customerModel);
-                        }
-                    } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
-                        JSONArray jsonArray = jsonObject.getJSONArray("result");
-                        JSONObject object = jsonArray.getJSONObject(0);
-
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                progressHD.dismiss();
-            }
-
-            @SuppressLint("LongLogTag")
-            @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.e(TAG, "error :- " + Log.getStackTraceString(t));
-                progressHD.dismiss();
-                // Toast.makeText(context, "Server not Responding", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     private void getAllEgifts() {
@@ -1285,64 +1274,61 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
             jsonObject.addProperty("user_id", AppPreferences.getCustomerid(context));
             jsonObject.addProperty("curr_date", Function.getCurrentDate());
             Log.e(TAG, "available coupon json :- " + jsonObject.toString());
-            getDataFromServerAvailableCoupon(jsonObject);
+            final ProgressHUD progressHD = ProgressHUD.show(context, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+
+                    // TODO Auto-generated method stub
+                }
+            });
+            MyApiEndpointInterface apiService =
+                    ApiClient.getClient().create(MyApiEndpointInterface.class);
+            Call<JsonObject> call = apiService.available_coupon(jsonObject);
+
+            call.enqueue(new Callback<JsonObject>() {
+                @SuppressLint("LongLogTag")
+                @Override
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                    Log.e(TAG, "available coupon Response :- " + response.body().toString());
+                    String resp = response.body().toString();
+                    try {
+                        JSONObject jsonObject = new JSONObject(resp);
+                        if (jsonObject.getString("status").equalsIgnoreCase("200")) {
+                            JSONArray jsonArray = jsonObject.getJSONArray("result");
+                            egiftModelsList.clear();
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                CustomerModel customerModel = new CustomerModel();
+                                JSONObject object = jsonArray.getJSONObject(i);
+                                customerModel.setOffer_amount(object.getString("amount"));
+                                customerModel.setOffer_name(object.getString("coupon"));
+                                customerModel.setOffer_decp(object.getString("message"));
+                                egiftModelsList.add(customerModel);
+                            }
+                        } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
+                            JSONArray jsonArray = jsonObject.getJSONArray("result");
+                            JSONObject object = jsonArray.getJSONObject(0);
+                            //Toast.makeText(context, object.getString("msg"), Toast.LENGTH_LONG).show();
+//                        Log.d("onResponse", jsonObject.getString("msg"));
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    progressHD.dismiss();
+                }
+
+                @SuppressLint("LongLogTag")
+                @Override
+                public void onFailure(Call<JsonObject> call, Throwable t) {
+                    Log.e(TAG, "error :- " + Log.getStackTraceString(t));
+                    progressHD.dismiss();
+                }
+            });
 
         } else {
             Toast.makeText(context, "Please Connect Your Internet", Toast.LENGTH_LONG).show();
         }
     }
 
-    private void getDataFromServerAvailableCoupon(JsonObject jsonObject) {
-        final ProgressHUD progressHD = ProgressHUD.show(context, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-
-                // TODO Auto-generated method stub
-            }
-        });
-        MyApiEndpointInterface apiService =
-                ApiClient.getClient().create(MyApiEndpointInterface.class);
-        Call<JsonObject> call = apiService.available_coupon(jsonObject);
-
-        call.enqueue(new Callback<JsonObject>() {
-            @SuppressLint("LongLogTag")
-            @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                Log.e(TAG, "available coupon Response :- " + response.body().toString());
-                String resp = response.body().toString();
-                try {
-                    JSONObject jsonObject = new JSONObject(resp);
-                    if (jsonObject.getString("status").equalsIgnoreCase("200")) {
-                        JSONArray jsonArray = jsonObject.getJSONArray("result");
-                        egiftModelsList.clear();
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            CustomerModel customerModel = new CustomerModel();
-                            JSONObject object = jsonArray.getJSONObject(i);
-                            customerModel.setOffer_amount(object.getString("amount"));
-                            customerModel.setOffer_name(object.getString("coupon"));
-                            customerModel.setOffer_decp(object.getString("message"));
-                            egiftModelsList.add(customerModel);
-                        }
-                    } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
-                        JSONArray jsonArray = jsonObject.getJSONArray("result");
-                        JSONObject object = jsonArray.getJSONObject(0);
-                        //Toast.makeText(context, object.getString("msg"), Toast.LENGTH_LONG).show();
-//                        Log.d("onResponse", jsonObject.getString("msg"));
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                progressHD.dismiss();
-            }
-
-            @SuppressLint("LongLogTag")
-            @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.e(TAG, "error :- " + Log.getStackTraceString(t));
-                progressHD.dismiss();
-            }
-        });
-    }
 
     public void findPlace() {
         try {

@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -63,14 +64,14 @@ public class NotificationBusinessAdapter extends RecyclerView.Adapter<Notificati
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView noti_msg, noti_tym;
-        CircleImageView noti_img;
+        ImageView noti_img;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             noti_msg = (TextView) itemView.findViewById(R.id.message);
             noti_tym = (TextView) itemView.findViewById(R.id.time);
-            noti_img = (CircleImageView) itemView.findViewById(R.id.noti_image);
+            noti_img = (ImageView) itemView.findViewById(R.id.noti_image);
         }
 
 

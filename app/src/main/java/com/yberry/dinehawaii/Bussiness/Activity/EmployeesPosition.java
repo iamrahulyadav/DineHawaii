@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
+import com.yberry.dinehawaii.Bussiness.Adapter.CheckBoxOptionAdapter;
 import com.yberry.dinehawaii.Model.CheckBoxPositionModel;
 import com.yberry.dinehawaii.R;
 import com.yberry.dinehawaii.RetrofitClasses.ApiClient;
@@ -32,7 +33,6 @@ import com.yberry.dinehawaii.Util.AppConstants;
 import com.yberry.dinehawaii.Util.AppPreferencesBuss;
 import com.yberry.dinehawaii.Util.ProgressHUD;
 import com.yberry.dinehawaii.Util.Util;
-import com.yberry.dinehawaii.Bussiness.Adapter.CheckBoxOptionAdapter;
 import com.yberry.dinehawaii.customview.CustomEditText;
 import com.yberry.dinehawaii.customview.CustomTextView;
 
@@ -43,7 +43,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -52,21 +51,20 @@ import retrofit2.Response;
 
 public class EmployeesPosition extends AppCompatActivity {
     private static final String TAG = "EmployeesPosition";
-    Context context;
     public static List<CheckBoxPositionModel> list = new ArrayList<>();
+    Context context;
     CheckBoxOptionAdapter ad;
     RecyclerView recyclerView;
     RecyclerView.LayoutManager recyclerViewlayoutManager;
-    private ImageView back;
-    private String[] position_ids;
     CustomTextView tvaddpostion;
     Dialog popup;
+    private ImageView back;
+    private String[] position_ids;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_employees_position);
-        ButterKnife.bind(this);
         if (getIntent().getAction().equalsIgnoreCase("udpate")) ;
         {
             String position_id = getIntent().getStringExtra("position_id");
@@ -108,7 +106,7 @@ public class EmployeesPosition extends AppCompatActivity {
             }
         });
         recyclerView.setAdapter(ad);
-        
+
         tvaddpostion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,45 +116,45 @@ public class EmployeesPosition extends AppCompatActivity {
     }
 
     private void showAddPosDialog() {
-             popup = new Dialog(context);
-            popup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            popup.setCancelable(false);
-            popup.setCanceledOnTouchOutside(false);
-            popup.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            popup.setContentView(R.layout.food_category_dialog);
-            final CustomEditText foodtype = (CustomEditText) popup.findViewById(R.id.new_category);
-            final CustomTextView subtitle = (CustomTextView) popup.findViewById(R.id.addcategory);
-            final CustomTextView title = (CustomTextView) popup.findViewById(R.id.foodTitle);
-            title.setText("Employee Position");
-            subtitle.setText("Add Employee Position");
+        popup = new Dialog(context);
+        popup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        popup.setCancelable(false);
+        popup.setCanceledOnTouchOutside(false);
+        popup.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        popup.setContentView(R.layout.food_category_dialog);
+        final CustomEditText foodtype = (CustomEditText) popup.findViewById(R.id.new_category);
+        final CustomTextView subtitle = (CustomTextView) popup.findViewById(R.id.addcategory);
+        final CustomTextView title = (CustomTextView) popup.findViewById(R.id.foodTitle);
+        title.setText("Employee Position");
+        subtitle.setText("Add Employee Position");
         foodtype.setHint("Enter position");
-            popup.findViewById(R.id.popupclose).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    popup.dismiss();
-                }
-            });
-            popup.findViewById(R.id.cat_submit).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (TextUtils.isEmpty(foodtype.getText().toString())) {
-                        foodtype.setError("Enter Position");
+        popup.findViewById(R.id.popupclose).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popup.dismiss();
+            }
+        });
+        popup.findViewById(R.id.cat_submit).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (TextUtils.isEmpty(foodtype.getText().toString())) {
+                    foodtype.setError("Enter Position");
+                } else {
+                    if (Util.isNetworkAvailable(context)) {
+                        JsonObject jsonObject = new JsonObject();
+                        jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.GENERALAPI.ADDEMPPOS);
+                        jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(context));
+                        jsonObject.addProperty("position", foodtype.getText().toString());
+                        jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(context));
+                        Log.e(TAG, "add emppos json" + jsonObject.toString());
+                        addNewPosApi(jsonObject);
                     } else {
-                        if (Util.isNetworkAvailable(context)) {
-                            JsonObject jsonObject = new JsonObject();
-                            jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.GENERALAPI.ADDEMPPOS);
-                            jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(context));
-                            jsonObject.addProperty("position", foodtype.getText().toString());
-                            jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(context));
-                            Log.e(TAG, "add emppos json" + jsonObject.toString());
-                            addNewPosApi(jsonObject);
-                        } else {
-                            Toast.makeText(context, "Please Connect Internet", Toast.LENGTH_LONG).show();
-                        }
+                        Toast.makeText(context, "Please Connect Internet", Toast.LENGTH_LONG).show();
                     }
                 }
-            });
-            popup.show();
+            }
+        });
+        popup.show();
     }
 
     private void addNewPosApi(JsonObject jsonObject) {
@@ -181,7 +179,7 @@ public class EmployeesPosition extends AppCompatActivity {
                     if (jsonObject.getString("status").equalsIgnoreCase("200")) {
                         popup.dismiss();
                         list.clear();
-                       getallpos();
+                        getallpos();
                         Toast.makeText(context, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                     } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
                         popup.dismiss();
