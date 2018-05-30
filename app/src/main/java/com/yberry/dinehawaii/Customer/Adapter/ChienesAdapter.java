@@ -236,7 +236,7 @@ public class ChienesAdapter extends RecyclerView.Adapter<ChienesAdapter.MyViewHo
             public void onClick(View v) {
                 int quantity = Integer.parseInt(tv_itemQuantity.getText().toString());
                 if (quantity == 1) {
-                    Toast.makeText(mContext, "Quantity cann't be less than 1 !!!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "Quantity can't be less than 1", Toast.LENGTH_SHORT).show();
                 } else {
                     quantity = quantity - 1;
                     tv_itemQuantity.setText("" + quantity);

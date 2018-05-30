@@ -116,7 +116,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.MyView
                 int quantity = Integer.parseInt(myViewHolder.item_Quantity.getText().toString());
                 Log.v(TAG, "Quantity before minus :- " + quantity);
                 if (quantity == 1) {
-                    Toast.makeText(mContext, "Quantity cann't be less than 1", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "Quantity can't be less than 1", Toast.LENGTH_SHORT).show();
                 } else {
                     quantity = quantity - 1;
                     myViewHolder.item_Quantity.setText("" + quantity);

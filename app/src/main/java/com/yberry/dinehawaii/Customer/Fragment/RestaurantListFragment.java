@@ -251,7 +251,7 @@ public class RestaurantListFragment extends Fragment {
     private void loadSearchFragment() {
         Fragment fragment = new RestaurantFilterFragment();
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.addToBackStack(null);
+        //fragmentTransaction.addToBackStack(null);
         fragmentTransaction.replace(R.id.frameSearch, fragment, fragment.getTag());
         fragmentTransaction.commit();
 //        mMap.setVisibility(View.GONE);

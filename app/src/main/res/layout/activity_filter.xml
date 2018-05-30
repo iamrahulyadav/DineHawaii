@@ -9,14 +9,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:overScrollMode="never"
+        android:layout_marginBottom="?attr/actionBarSize"
         android:scrollbars="none">
 
         <LinearLayout
             android:id="@+id/searchmain"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/_10sdp"
-            android:layout_marginRight="@dimen/_10sdp"
+            android:layout_marginLeft="@dimen/_8sdp"
+            android:layout_marginRight="@dimen/_8sdp"
             android:orientation="vertical">
 
             <com.yberry.dinehawaii.customview.CustomTextView
@@ -357,21 +358,21 @@
                     app:edittextfont="Raleway-Regular.ttf" />
 
             </LinearLayout>
-
-            <com.yberry.dinehawaii.customview.CustomButton
-                android:id="@+id/btnSearch"
-                style="@style/TextAppearance.AppCompat.Subhead"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:background="@color/colorGreen"
-                android:text="APPLY FILTER"
-                android:textColor="@color/white"
-                app:edittextfont="@string/raleway_bold" />
         </LinearLayout>
     </ScrollView>
 
-
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="?attr/actionBarSize">
+        <com.yberry.dinehawaii.customview.CustomButton
+            android:id="@+id/btnSearch"
+            style="@style/TextAppearance.AppCompat.Subhead"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorGreen"
+            android:text="APPLY FILTER"
+            android:textColor="@color/white"
+            app:edittextfont="@string/raleway_bold" />
+    </RelativeLayout>
 </RelativeLayout>

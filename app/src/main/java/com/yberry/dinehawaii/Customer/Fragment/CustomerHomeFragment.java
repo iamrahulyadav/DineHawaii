@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
@@ -38,12 +40,6 @@ public class CustomerHomeFragment extends Fragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        setHasOptionsMenu(false);
-    }
-
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
@@ -54,6 +50,7 @@ public class CustomerHomeFragment extends Fragment {
         if (intraction != null) {
             intraction.actionbarsetTitle("Home");
         }
+        setHasOptionsMenu(true);
         tvSearchBuss = (TextView) view.findViewById(R.id.tvSearchBuss);
         tvNearest = (TextView) view.findViewById(R.id.viewNearest);
         tvPlaceOrder = (TextView) view.findViewById(R.id.placeOrder);
@@ -202,6 +199,12 @@ public class CustomerHomeFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
     }
 
     private void setFloatingButton() {

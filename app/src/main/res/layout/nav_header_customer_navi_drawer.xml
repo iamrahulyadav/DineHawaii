@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#1e1e1e"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:padding="@dimen/_2sdp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <android.support.v7.widget.CardView
         android:layout_width="@dimen/_70sdp"
+        android:id="@+id/cardView"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="@dimen/_10sdp"
         android:layout_height="@dimen/_70sdp"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:paddingRight="8dp"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="@dimen/_35sdp">
 
@@ -27,13 +25,15 @@
     <com.yberry.dinehawaii.customview.CustomTextView
         android:id="@+id/customerName"
         style="@style/TextAppearance.AppCompat.Subhead"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_below="@id/cardView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:padding="@dimen/_2sdp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_5sdp"
         android:text="NA"
-        android:textAlignment="center"
         app:edittextfont="Raleway-Bold.ttf" />
 
 
-</LinearLayout><!-- android:layout_height="@dimen/nav_header_height"-->
+</RelativeLayout><!-- android:layout_height="@dimen/nav_header_height"-->
 
