@@ -25,6 +25,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -104,7 +106,8 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
             // or live (ENVIRONMENT_PRODUCTION)
             .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
             .clientId(AppConstants.PAYPAL_CLIENT_ID);
-    CustomTextView tvTotalPaidAmount, loylityBal, tvGETaxAmount, CustPhn, CustAddr, CustOrTime, CustOrDate, tvTotalAmt, tvTotalPaidAmount2, food_prepration_time, tvGETaxValue;
+    CustomTextView tvTotalPaidAmount, loylityBal, tvGETaxAmount, CustPhn, CustAddr, CustOrTime, CustOrDate, tvTotalAmt, tvTotalPaidAmount2,
+            food_prepration_time, tvGETaxValue, tvDriverTipAmt, tvDriverTipVal;
     CustomEditText loyality_apply, giftcouponcode, custName, couponCodeText, daddress;
     CustomButton applygiftbtn, removeegift, applyLoyaltyPoints, removePoints, apply_coupon, remove_coupon;
     double totalAmount = 0.0;
@@ -133,7 +136,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
     int PLACE_PICKER_REQUEST = 1, deliveryArea = 0;
     private ArrayList<OrderItemsDetailsModel> cartItems;
     private CustomCheckBox cbDefaultAddr;
-    private CustomTextView tvDeliveryText, tvDelChargeAmount;
+    private CustomTextView tvDeliveryText,tvDriverTipText, tvDelChargeAmount;
     private double delChargeAmount = 0.0, geTaxAmount = 0.0, totalPaidAmountBase = 0.0, cust_latitude = 0.0, cust_longitude = 0.0;
     private DecimalFormat decimalFormat;
 
@@ -271,6 +274,9 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         rd_egift = (RadioButton) findViewById(R.id.radio_egift);
         rd_loylty = (RadioButton) findViewById(R.id.radio_loyalty);
         rd_coupon = (RadioButton) findViewById(R.id.radio_coupon);
+        tvDriverTipVal = (CustomTextView) findViewById(R.id.tvDriverTipValue);
+        tvDriverTipAmt = (CustomTextView) findViewById(R.id.tvDriverTipAmt);
+        tvDriverTipText = (CustomTextView) findViewById(R.id.tvDriverTipText);
         homedelivery_btn.setOnClickListener(this);
         take_way_btn.setOnClickListener(this);
         inhouse_btn.setOnClickListener(this);
@@ -1688,8 +1694,29 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                                 String cost_flat = object.getString("cost_flat");
                                 String cost_range = object.getString("cost_range");
                                 String cost_percent = object.getString("cost_percent");
+                               // String driver_tip = object.getString("");
                                 tvDeliveryText.setTextColor(getResources().getColor(R.color.blue));
+                              /*  if (driver_tip.equalsIgnoreCase("0")) {
+                                    tvDriverTipText.setText("Please Tip driver generously.");
+                                } else if (driver_tip.equalsIgnoreCase("1")) {
+                                    tvDriverTipVal.setText("Driver Tip : " + object.getString(""));
+                                    double geTaxPer = Double.parseDouble(object.getString("").replace("%", ""));
+                                    Log.e(TAG, "DriverTip: getTip% >> " + geTaxPer);
 
+                                    Double percentAmt = totalPaidAmount * geTaxPer / 100;
+                                    Log.e(TAG, "DriverTip: geTaxAmount >> " + geTaxAmount);
+
+                                    totalPaidAmount = percentAmt + totalPaidAmount;
+                                    totalPaidAmountBase = totalPaidAmount;
+                                    Log.e(TAG, "DriverTip: totalPaidAmount >> " + totalPaidAmount);
+
+                                    percentAmt = Double.valueOf(decimalFormat.format(percentAmt));
+                                    totalPaidAmount = Double.valueOf(decimalFormat.format(totalPaidAmount));
+
+                                    tvTotalPaidAmount.setText("" + totalPaidAmount);
+                                    tvTotalPaidAmount2.setText("$" + totalPaidAmount);
+                                    tvDriverTipAmt.setText("$" + percentAmt);
+                                }*/
                                 if (cost_flat.equalsIgnoreCase("1")) {
                                     tvDeliveryText.setText("Delivery Fee: Flat $" + object.getString("flat_amt") + " on every order.");
                                     delChargeAmount = Double.parseDouble(object.getString("flat_amt"));

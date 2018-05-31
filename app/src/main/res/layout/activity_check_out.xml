@@ -118,6 +118,18 @@
                     android:text="Delivery Rates:"
                     android:visibility="gone"
                     app:edittextfont="@string/raleway_regular" />
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    android:id="@+id/tvDriverTipText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_15sdp"
+                    android:layout_marginRight="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:text="0"
+                    android:visibility="gone"
+                    android:textColor="@color/red"
+                    android:lineSpacingExtra="@dimen/_5sdp"
+                    app:edittextfont="@string/raleway_regular" />
             </LinearLayout>
 
             <LinearLayout
@@ -980,6 +992,80 @@
 
                         <com.yberry.dinehawaii.customview.CustomTextView
                             android:id="@+id/tvDelChargeAmount"
+                            style="@style/TextAppearance.AppCompat.Small"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="end"
+                            android:text="$0"
+                            android:textAlignment="textEnd"
+                            app:edittextfont="Raleway-Regular.ttf" />
+                    </RelativeLayout>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="1">
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.4">
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            style="@style/TextAppearance.AppCompat.Subhead"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="3dp"
+                            android:text=""
+                            app:edittextfont="@string/raleway_bold" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.15">
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            style="@style/TextAppearance.AppCompat.Subhead"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="3dp"
+                            android:text=""
+                            android:textAlignment="center"
+                            app:edittextfont="@string/raleway_bold" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.3">
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            style="@style/TextAppearance.AppCompat.Small"
+                            android:layout_width="match_parent"
+                            android:id="@+id/tvDriverTipValue"
+                            android:layout_height="wrap_content"
+                            android:padding="3dp"
+                            android:text="Driver Tip"
+                            app:edittextfont="@string/raleway_regular" />
+                    </RelativeLayout>
+
+                    <com.yberry.dinehawaii.customview.CustomTextView
+                        style="@style/TextAppearance.AppCompat.Small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="2dp"
+                        android:text=":"
+                        app:edittextfont="@string/raleway_regular" />
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.15">
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/tvDriverTipAmt"
                             style="@style/TextAppearance.AppCompat.Small"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"

@@ -14,6 +14,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -49,7 +51,6 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
     RelativeLayout mainView2;
     String cateringDateTime = "";
     TextView tvordertime;
-    CardView actionButton;
     BroadcastReceiver updatePrice = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -61,7 +62,6 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                 mainView.setVisibility(View.GONE);
                 mainView2.setVisibility(View.GONE);
                 noItems.setVisibility(View.VISIBLE);
-                actionButton.setVisibility(View.GONE);
             }
 
         }
@@ -104,8 +104,23 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
             mainView.setVisibility(View.GONE);
             mainView2.setVisibility(View.GONE);
             noItems.setVisibility(View.VISIBLE);
-            actionButton.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.cart_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_cart) {
+            Intent intent = new Intent(getApplicationContext(), PlaceAnOrder.class);
+            intent.putExtra("business_id", AppPreferences.getBusiID(context));
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -154,8 +169,6 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         noItems = (CustomTextView) findViewById(R.id.noitems);
         mainView2 = (RelativeLayout) findViewById(R.id.mainView2);
         mainView = (LinearLayout) findViewById(R.id.main_view);
-        actionButton = (CardView) findViewById(R.id.fabadditem);
-        actionButton.setOnClickListener(this);
     }
 
     private void setToolbar() {
@@ -210,21 +223,6 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                     startActivity(intent);
                 }
             }
-
-           /* Float minOrderAmount = Float.parseFloat(AppPreferencesBuss.getAveragePrice(CartActivity.this));
-            if (totalPrice < minOrderAmount) {
-                Toast.makeText(CartActivity.this, "Your order should be more than " + minOrderAmount + "$", Toast.LENGTH_LONG).show();
-            } else {
-                Intent intent = new Intent(getApplicationContext(), CheckOutActivity.class);
-                intent.putExtra("totalamount", total_amount.getText().toString());
-                intent.putExtra("place_order", cartItems);
-                startActivity(intent);
-                // finish();
-            }*/
-        } else if (v.getId() == R.id.fabadditem) {
-            Intent intent = new Intent(getApplicationContext(), PlaceAnOrder.class);
-            intent.putExtra("business_id", AppPreferences.getBusiID(context));
-            startActivity(intent);
         }
     }
 

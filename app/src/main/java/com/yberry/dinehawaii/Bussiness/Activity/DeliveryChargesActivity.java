@@ -40,8 +40,8 @@ import retrofit2.Response;
 
 public class DeliveryChargesActivity extends AppCompatActivity implements View.OnClickListener {
     String TAG = "";
-    CustomEditText etDeliveryArea, etDriverArrivalTime, etFlatamt, etPercent, etminrangeamt, etlessthn_amnt, etlesssthn_value, etbtwn1, etbtwn2, etbtwnamt;
-    LinearLayout llRange,mainLayout;
+    CustomEditText etDeliveryArea, etDriverArrivalTime, etFlatamt, etPercent, etminrangeamt, etlessthn_amnt, etlesssthn_value, etbtwn1, etbtwn2, etbtwnamt, etDriverTip;
+    LinearLayout llRange, mainLayout;
     RadioGroup rgDeliveryCost, rgDriverTip;
     RadioButton radiodFlatAmt, radioPrecent, radioRange, rdTipYes, rdTipNo;
     String rdflat = "0", rdpercent = "0", rdrange = "0", selectedTip = "0";
@@ -55,6 +55,9 @@ public class DeliveryChargesActivity extends AppCompatActivity implements View.O
         initViews();
         if (Util.isNetworkAvailable(context))
             getAllCharges();
+        else
+            Toast.makeText(context, getString(R.string.msg_no_internet), Toast.LENGTH_SHORT).show();
+        setRadioGrpListners();
     }
 
     private void getAllCharges() {
@@ -105,10 +108,16 @@ public class DeliveryChargesActivity extends AppCompatActivity implements View.O
                         if (!object.getString("flat_amt").equalsIgnoreCase("0"))
                             etFlatamt.setText(object.getString("flat_amt"));
 
-                        if (object.getString("driver_tip").equalsIgnoreCase("1"))
+                        if (object.getString("driver_tip").equalsIgnoreCase("1")) {
+                            selectedTip = "1";
+                            etDriverTip.setVisibility(View.VISIBLE);
                             rdTipYes.setChecked(true);
-                        else
+                        } else {
+                            selectedTip = "0";
+                            etDriverTip.setVisibility(View.GONE);
                             rdTipNo.setChecked(true);
+                        }
+
                         if (object.getString("cost_flat").equalsIgnoreCase("1"))
                             radiodFlatAmt.setChecked(true);
                         if (object.getString("cost_percent").equalsIgnoreCase("1"))
@@ -149,6 +158,7 @@ public class DeliveryChargesActivity extends AppCompatActivity implements View.O
     private void initViews() {
         context = this;
         etDeliveryArea = (CustomEditText) findViewById(R.id.etdeliveryArea);
+        etDriverTip = (CustomEditText) findViewById(R.id.etDriverTip);
         etDriverArrivalTime = (CustomEditText) findViewById(R.id.etArrivalTime);
         etFlatamt = (CustomEditText) findViewById(R.id.etFlatAmount);
         etPercent = (CustomEditText) findViewById(R.id.etPercentage);
@@ -164,26 +174,27 @@ public class DeliveryChargesActivity extends AppCompatActivity implements View.O
         radiodFlatAmt = (RadioButton) findViewById(R.id.rdFlatAmount);
         radioPrecent = (RadioButton) findViewById(R.id.rdPercent);
         radioRange = (RadioButton) findViewById(R.id.rdRange);
-        rdTipNo = (RadioButton) findViewById(R.id.tipYes);
-        rdTipYes = (RadioButton) findViewById(R.id.tipNo);
+        rdTipYes = (RadioButton) findViewById(R.id.tipYes);
+        rdTipNo = (RadioButton) findViewById(R.id.tipNo);
         rgDeliveryCost = (RadioGroup) findViewById(R.id.rgrpCost);
         rgDriverTip = (RadioGroup) findViewById(R.id.rgrpTip);
-        setRadioGrpListners();
         mainLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                v= getCurrentFocus();
-                if (v!=null)
+                v = getCurrentFocus();
+                if (v != null)
                     hideKeyboard();
                 return false;
             }
         });
     }
+
     private void hideKeyboard() {
         View view = getCurrentFocus();
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.right_icon_menu, menu);
@@ -302,10 +313,13 @@ public class DeliveryChargesActivity extends AppCompatActivity implements View.O
         rgDriverTip.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId == R.id.tipYes)
+                if (checkedId == R.id.tipYes) {
                     selectedTip = "1";
-                else if (checkedId == R.id.tipNo)
+                    etDriverTip.setVisibility(View.VISIBLE);
+                } else if (checkedId == R.id.tipNo) {
                     selectedTip = "0";
+                    etDriverTip.setVisibility(View.GONE);
+                }
 
             }
         });
