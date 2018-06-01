@@ -3,19 +3,26 @@ package com.yberry.dinehawaii.Customer.Fragment;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -24,7 +31,6 @@ import com.paypal.android.sdk.payments.PayPalConfiguration;
 import com.paypal.android.sdk.payments.PayPalPayment;
 import com.paypal.android.sdk.payments.PayPalService;
 import com.paypal.android.sdk.payments.PaymentConfirmation;
-import com.yberry.dinehawaii.Customer.Activity.EGiftApproved;
 import com.yberry.dinehawaii.R;
 import com.yberry.dinehawaii.RetrofitClasses.ApiClient;
 import com.yberry.dinehawaii.RetrofitClasses.MyApiEndpointInterface;
@@ -33,6 +39,7 @@ import com.yberry.dinehawaii.Util.AppPreferences;
 import com.yberry.dinehawaii.Util.FragmentIntraction;
 import com.yberry.dinehawaii.Util.Function;
 import com.yberry.dinehawaii.Util.ProgressHUD;
+import com.yberry.dinehawaii.Util.Util;
 import com.yberry.dinehawaii.customview.CustomEditText;
 import com.yberry.dinehawaii.customview.CustomTextView;
 
@@ -55,16 +62,19 @@ public class SendEGiftVoucher extends Fragment {
             // or live (ENVIRONMENT_PRODUCTION)
             .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
             .clientId(AppConstants.PAYPAL_CLIENT_ID);
-    String amount, message, transaction_ID, intent, createTime, paymentState;
     Button submitPayment, search;
-    String send_UserId = "0",send_user_type = "";;
+    String send_UserId = "0", send_user_type = "", total_wallet_amt = "", used_wallet_amt = "0", paypal_amt = "0",
+            amount, message="", transaction_ID="", intent, createTime="", paymentState="";
     CustomEditText amountEditText, usernameEditText, messageEditText;
     LinearLayout giftLinear;
     FragmentIntraction intraction;
+    int remaining_amount;
+    boolean isWalletUsed = false;
     private CustomTextView tvTotalBal;
+    private Dialog balancePopup;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_send_egift_voucher, container, false);
         LinearLayout mainView = (LinearLayout) view.findViewById(R.id.activity_send_egift_voucher);
         if (intraction != null) {
@@ -101,7 +111,10 @@ public class SendEGiftVoucher extends Fragment {
                 if (Function.isEmailNotValid(usernameEditText)) {
                     usernameEditText.setError("Enter Email Id");
                 } else {
-                    searchUser();
+                    if (Util.isNetworkAvailable(getActivity()))
+                        searchUser();
+                    else
+                        Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.msg_no_internet), Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -116,7 +129,6 @@ public class SendEGiftVoucher extends Fragment {
                     Toast.makeText(getActivity(), "Please enter Amount !!", Toast.LENGTH_SHORT).show();
                 } else {
                     showConfirmationAlert("Are you sure you want to send E-Gift Card");
-
                 }
             }
         });
@@ -129,8 +141,11 @@ public class SendEGiftVoucher extends Fragment {
         confirm_alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-//                giftLinear.setVisibility(View.VISIBLE);
-                openDialog();
+                if (AppPreferences.getEmailSetting(getActivity()).equalsIgnoreCase(usernameEditText.getText().toString())) {
+                    isWalletUsed = false;
+                    getPayment(new BigDecimal(String.valueOf(amountEditText.getText().toString())));
+                } else
+                    openDialog();
             }
         });
         confirm_alert.setNegativeButton("NO", new DialogInterface.OnClickListener() {
@@ -142,7 +157,41 @@ public class SendEGiftVoucher extends Fragment {
         confirm_alert.show();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (Util.isNetworkAvailable(getActivity()))
+            getBalance();
+        else
+            Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.msg_no_internet), Toast.LENGTH_SHORT).show();
+
+    }
+
     private void openDialog() {
+        final String grpname[] = {"Use EGift Balance", "Purchase via PayPal"};
+        AlertDialog.Builder alt_bld = new AlertDialog.Builder(getActivity());
+        alt_bld.setTitle("Send E-GIFT");
+        alt_bld.setSingleChoiceItems(grpname, -1, new DialogInterface
+                .OnClickListener() {
+            public void onClick(DialogInterface dialog, int item) {
+                dialog.dismiss();
+                if (item == 0) {
+                    if (tvTotalBal.getText().toString().equalsIgnoreCase("0")) {
+                        showAlert("You dont have egift balance");
+                    } else {
+                        showGiftBalanceDialog();
+                    }
+                } else if (item == 1) {
+                    isWalletUsed = false;
+                    getPayment(new BigDecimal(String.valueOf(amountEditText.getText().toString())));
+                }
+            }
+        });
+        AlertDialog alert = alt_bld.create();
+        alert.show();
+    }
+/*
+ private void openDialog() {
         final String grpname[] = {"Use EGift Balance", "Purchase via PayPal"};
         AlertDialog.Builder alt_bld = new AlertDialog.Builder(getActivity());
         alt_bld.setTitle("Send E-GIFT");
@@ -165,6 +214,7 @@ public class SendEGiftVoucher extends Fragment {
         AlertDialog alert = alt_bld.create();
         alert.show();
     }
+*/
 
     private void showAlert(String msg) {
         new AlertDialog.Builder(getActivity())
@@ -183,6 +233,7 @@ public class SendEGiftVoucher extends Fragment {
                 .setPositiveButton("PAYPAl", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        isWalletUsed = true;
                         getPayment(new BigDecimal(remaining_amount));
                     }
                 }).setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
@@ -211,8 +262,8 @@ public class SendEGiftVoucher extends Fragment {
 
     private void getBalance() {
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.CUSTOMER_USER.CHECK_EMAILID);
-        jsonObject.addProperty(AppConstants.KEY_EMAILID, usernameEditText.getText().toString());
+        jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.CUSTOMER_USER.USEREGIFTWALLET);
+        jsonObject.addProperty("user_id", AppPreferences.getCustomerid(getActivity()));
 
         Log.e(TAG, "getBalance json" + jsonObject.toString());
 
@@ -225,7 +276,7 @@ public class SendEGiftVoucher extends Fragment {
 
         MyApiEndpointInterface apiService =
                 ApiClient.getClient().create(MyApiEndpointInterface.class);
-        Call<JsonObject> call = apiService.normalUserSendGift(jsonObject);
+        Call<JsonObject> call = apiService.user_send_e_gift_new(jsonObject);
         call.enqueue(new Callback<JsonObject>() {
             @SuppressLint("LongLogTag")
             @Override
@@ -238,10 +289,10 @@ public class SendEGiftVoucher extends Fragment {
                     if (jsonObject.getString("status").equalsIgnoreCase("200")) {
                         JSONArray result = jsonObject.getJSONArray("result");
                         JSONObject res = result.getJSONObject(0);
-
-                    } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
+                        total_wallet_amt = res.getString("wallet");
+                        tvTotalBal.setText(res.getString("wallet"));
                     } else {
-                        Toast.makeText(getActivity().getApplicationContext(), "Something went wrong !!", Toast.LENGTH_SHORT).show();
+                        showBalanceAlert();
                     }
 
                 } catch (JSONException e) {
@@ -255,9 +306,51 @@ public class SendEGiftVoucher extends Fragment {
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Log.e(TAG, "error :- " + Log.getStackTraceString(t));
                 progressHD.dismiss();
-                Toast.makeText(getActivity().getApplicationContext(), "Server not responding!!", Toast.LENGTH_SHORT).show();
+                showBalanceAlert();
             }
         });
+    }
+
+    private void showGiftBalanceDialog() {
+        balancePopup = new Dialog(getActivity());
+        balancePopup.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        balancePopup.setCancelable(false);
+        balancePopup.setCanceledOnTouchOutside(false);
+        balancePopup.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        balancePopup.setContentView(R.layout.egift_wallet_dialog);
+        final CustomEditText etbalance_amt = (CustomEditText) balancePopup.findViewById(R.id.etbalance_amt);
+        final CustomTextView tvAmtToPay = (CustomTextView) balancePopup.findViewById(R.id.tvAmtToPay);
+        final CustomTextView tvBalance = (CustomTextView) balancePopup.findViewById(R.id.tvBalance);
+        tvBalance.setText("Your Egift Balance : $" + total_wallet_amt);
+        tvAmtToPay.setText("Amount to be paid : $" + amount);
+        etbalance_amt.setFilters(new InputFilter[]{new InputFilterMinMax("1", total_wallet_amt)});
+        balancePopup.findViewById(R.id.popupclose).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                balancePopup.dismiss();
+            }
+        });
+
+        balancePopup.findViewById(R.id.btnSubmit).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (TextUtils.isEmpty(etbalance_amt.getText().toString()))
+                    Toast.makeText(getActivity(), "Enter Amount", Toast.LENGTH_SHORT).show();
+                else if (Integer.parseInt(etbalance_amt.getText().toString()) < Integer.parseInt(amount)) {
+                    remaining_amount = Integer.parseInt(amount) - Integer.parseInt(etbalance_amt.getText().toString());
+                    used_wallet_amt = etbalance_amt.getText().toString();
+                    paypal_amt = String.valueOf(remaining_amount);
+                    showAlert1("You Need $" + remaining_amount + " more. You can purchase it", remaining_amount);
+                } else {
+                    used_wallet_amt = etbalance_amt.getText().toString();
+                    paypal_amt = String.valueOf(remaining_amount);
+                    message = messageEditText.getText().toString();
+                    submitEGift(amount, message);
+                }
+            }
+
+        });
+        balancePopup.show();
     }
 
     @Override
@@ -308,8 +401,6 @@ public class SendEGiftVoucher extends Fragment {
                         JSONObject res = result.getJSONObject(0);
                         send_UserId = res.getString("id");
                         send_user_type = "reg";
-                        //showConfirmationAlert("Are you sure you want to send an E-Gift card");
-//                        showConfirmationAlert("Are you sure you want to send an E-Gift card to "+res.getString("") );
                         giftLinear.setVisibility(View.VISIBLE);
                     } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
                         send_user_type = "non";
@@ -379,14 +470,20 @@ public class SendEGiftVoucher extends Fragment {
                             paymentState = jsonResponse.getString("state");
                             Log.e(TAG, "RESPO :- \n" + "Trans_ID :- " + transaction_ID + "\nCreate Time :- " + createTime +
                                     "\nIntent :- " + intent + "\nPayment State :- " + paymentState);
-                            amount = amountEditText.getText().toString().trim();
-                            message = messageEditText.getText().toString().trim();
-                            submitEGift(amount, message);
+                            amount = amountEditText.getText().toString();
+                            message = messageEditText.getText().toString();
+                            if (!isWalletUsed) {
+                                paypal_amt = amount;
+                                submitEGift(amount, message);
+                            } else {
+                                submitEGift(amount, message);
+                            }
                         } catch (JSONException e) {
                             Toast.makeText(getActivity(), "Sorry The Payment has been terminated", Toast.LENGTH_SHORT).show();
                         }
                     } catch (JSONException e) {
                         Log.e("paymentExample", "an extremely unlikely failure occurred: ", e);
+                        Toast.makeText(getActivity(), "Sorry The Payment has been terminated", Toast.LENGTH_SHORT).show();
                     }
                 }
             } else if (resultCode == Activity.RESULT_CANCELED) {
@@ -395,6 +492,7 @@ public class SendEGiftVoucher extends Fragment {
 
 
             } else if (resultCode == com.paypal.android.sdk.payments.PaymentActivity.RESULT_EXTRAS_INVALID) {
+                Toast.makeText(getActivity(), "Sorry The Payment has been terminated", Toast.LENGTH_SHORT).show();
                 Log.i("paymentExample", "An invalid Payment or PayPalConfiguration was submitted. Please see the docs.");
             }
         }
@@ -414,15 +512,10 @@ public class SendEGiftVoucher extends Fragment {
         jsonObject.addProperty("currency_code", "$");
         jsonObject.addProperty("email_id", usernameEditText.getText().toString());
         jsonObject.addProperty("gift_send_type", send_user_type);
+        jsonObject.addProperty("wallet_amount", used_wallet_amt);
+        jsonObject.addProperty("paypal_amount", paypal_amt);
 
         Log.e(TAG, "egift submit json :- " + jsonObject.toString());
-
-        submit_EGiftTask(jsonObject);
-
-    }
-
-    private void submit_EGiftTask(JsonObject jsonObject) {
-
         final ProgressHUD progressHD = ProgressHUD.show(getActivity(), "Please wait...", true, false, new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
@@ -432,7 +525,7 @@ public class SendEGiftVoucher extends Fragment {
 
         MyApiEndpointInterface apiService =
                 ApiClient.getClient().create(MyApiEndpointInterface.class);
-        Call<JsonObject> call = apiService.normalUserSendGift(jsonObject);
+        Call<JsonObject> call = apiService.user_send_e_gift_new(jsonObject);
         call.enqueue(new Callback<JsonObject>() {
             @SuppressLint("LongLogTag")
             @Override
@@ -443,14 +536,9 @@ public class SendEGiftVoucher extends Fragment {
                 try {
                     JSONObject jsonObject = new JSONObject(s);
                     if (jsonObject.getString("status").equalsIgnoreCase("200")) {
-                        JSONArray result = jsonObject.getJSONArray("result");
-                        for (int i = 0; i < result.length(); i++) {
-                            JSONObject res = result.getJSONObject(i);
-                            send_UserId = res.getString("send_user_id");
-                        }
-                        Intent intent = new Intent(getActivity(), EGiftApproved.class);
-                        intent.putExtra("send_UserEmailId", send_UserId);
-                        startActivity(intent);
+                        if (balancePopup != null && balancePopup.isShowing())
+                            balancePopup.dismiss();
+                        showThankYouAlert();
                     } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
                         Toast.makeText(getActivity().getApplicationContext(), "Error in sending e-Gift !!!", Toast.LENGTH_SHORT).show();
                     }
@@ -469,9 +557,7 @@ public class SendEGiftVoucher extends Fragment {
                 alertDialog.setMessage("Server not responding..");
                 alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        amount = amountEditText.getText().toString().trim();
-                        message = messageEditText.getText().toString().trim();
-                        submitEGift(amount, message);
+                        submitEGift(amountEditText.getText().toString(), messageEditText.getText().toString());
                     }
                 });
 
@@ -487,5 +573,55 @@ public class SendEGiftVoucher extends Fragment {
 
     }
 
+    private void showThankYouAlert() {
+        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(getActivity());
+        builder.setTitle("Thank You!");
+        builder.setCancelable(false);
+        builder.setMessage("E-Gift Sent Successfully");
+        ImageView img = new ImageView(getActivity());
+        img.setImageResource(R.drawable.thanks);
+        builder.setView(img);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+             /*   Intent intent = new Intent(getActivity(), CustomerNaviDrawer.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                getActivity().finish();*/
+            }
+        });
+
+        builder.show();
+    }
+
+    public class InputFilterMinMax implements InputFilter {
+
+        private double min, max;
+
+        public InputFilterMinMax(int min, int max) {
+            this.min = min;
+            this.max = max;
+        }
+
+        public InputFilterMinMax(String min, String max) {
+            this.min = Double.parseDouble(min);
+            this.max = Double.parseDouble(max);
+        }
+
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+            try {
+                double input = Double.parseDouble(dest.toString() + source.toString());
+                if (isInRange(min, max, input))
+                    return null;
+            } catch (NumberFormatException nfe) {
+            }
+            return "";
+        }
+
+        private boolean isInRange(double a, double b, double c) {
+            return b > a ? c >= a && c <= b : c >= b && c <= a;
+        }
+    }
 
 }

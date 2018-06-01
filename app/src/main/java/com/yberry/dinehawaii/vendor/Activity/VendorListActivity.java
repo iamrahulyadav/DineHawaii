@@ -5,7 +5,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -21,14 +20,11 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.OvershootInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
@@ -247,12 +243,12 @@ public class VendorListActivity extends AppCompatActivity implements View.OnClic
             public void onItemClick(View view, int position) {
                 VendorMasterData model = sublist.get(position);
                 floatingActionMenu.close(true);
-                    Intent intent = new Intent(context, OrderItemListActivity.class);
-                    intent.putExtra("vendor_id", model.getSub_vendor_id());
-                    startActivity(intent);
-                    Log.e(TAG, "onItemClick: " + model.getSub_vendor_id());
-                    Log.e(TAG, "onItemClick: " + model.getSub_vendor_busname());
-                    mDialog.cancel();
+                Intent intent = new Intent(context, OrderItemListActivity.class);
+                intent.putExtra("vendor_id", model.getSub_vendor_id());
+                startActivity(intent);
+                Log.e(TAG, "onItemClick: " + model.getSub_vendor_id());
+                Log.e(TAG, "onItemClick: " + model.getSub_vendor_busname());
+                mDialog.cancel();
 
             }
 
@@ -321,7 +317,8 @@ public class VendorListActivity extends AppCompatActivity implements View.OnClic
                             model.setMaster_vendor_id(objresult.getString("cat_id"));
                             model.setMaster_vendor_addedon(objresult.getString("addedOn"));
                             model.setMaster_vendor_name(objresult.getString("name"));
-                            masterlist.add(model);
+                            if (!objresult.getString("name").equalsIgnoreCase("Delivery Vendor"))
+                                masterlist.add(model);
                         }
                     } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
 
@@ -342,44 +339,6 @@ public class VendorListActivity extends AppCompatActivity implements View.OnClic
         });
     }
 
-    private void showVendorTypeDialog() {
-
-        final AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-        dialog.setCancelable(false);
-        dialog.setTitle("Select Vendor");
-        final RadioGroup group = new RadioGroup(this);
-        for (int i = 0; i < masterlist.size(); i++) {
-            RadioButton button = new RadioButton(context);
-            button.setId(Integer.parseInt(masterlist.get(i).getMaster_vendor_id()));
-            button.setText(masterlist.get(i).getMaster_vendor_name());
-            RadioGroup.LayoutParams params = new RadioGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            params.setMargins(10, 10, 0, 0);
-            button.setLayoutParams(params);
-            group.addView(button);
-        }
-
-        dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                Log.e(TAG, "onClick: " + group.getCheckedRadioButtonId());
-                selectedVendorId = String.valueOf(group.getCheckedRadioButtonId());
-                if (selectedVendorId.equalsIgnoreCase("") || selectedVendorId.equalsIgnoreCase("-1"))
-                    Toast.makeText(context, "Please Select Vendor Type", Toast.LENGTH_SHORT).show();
-
-                else {
-                    dialogInterface.cancel();
-                    Intent intent = new Intent(context, BidItemListActivity.class);
-                    intent.putExtra("vendor_id", selectedVendorId);
-                    startActivity(intent);
-                }
-            }
-        });
-
-
-        dialog.setView(group);
-        dialog.show();
-
-    }
 
     private void openVendorCatDialog() {
         final Dialog mDialog;
@@ -412,10 +371,10 @@ public class VendorListActivity extends AppCompatActivity implements View.OnClic
                 VendorMasterData model = masterlist.get(position);
                 floatingActionMenu.close(true);
 
-                    Intent intent = new Intent(context, BidItemListActivity.class);
-                    intent.putExtra("vendor_id", model.getMaster_vendor_id());
-                    startActivity(intent);
-                    mDialog.cancel();
+                Intent intent = new Intent(context, BidItemListActivity.class);
+                intent.putExtra("vendor_id", model.getMaster_vendor_id());
+                startActivity(intent);
+                mDialog.cancel();
 
             }
 
@@ -459,7 +418,6 @@ public class VendorListActivity extends AppCompatActivity implements View.OnClic
             });
             button4.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    //showVendorTypeDialog();
                     if (masterlist != null && !masterlist.isEmpty())
                         openVendorCatDialog();
                     else

@@ -66,6 +66,7 @@ public class VendorMultipleChoiceAdapter extends BaseAdapter {
         return checkedItemList;
     }
 
+
    /* public int getTotalCapacity() {
         int total = 0;
         for (VendorBidItemModel item : mItemList) {

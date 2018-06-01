@@ -281,7 +281,7 @@
                 android:drawableLeft="@drawable/drawable_green_dot"
                 android:drawablePadding="@dimen/_5sdp"
                 android:gravity="center"
-                android:text="Driver Tip"
+                android:text="Driver Tip(in %)"
                 android:textColor="@color/colorGreen"
                 app:edittextfont="@string/raleway_bold" />
             <RadioGroup

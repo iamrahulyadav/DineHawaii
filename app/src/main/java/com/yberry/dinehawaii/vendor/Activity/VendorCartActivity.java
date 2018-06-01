@@ -159,8 +159,6 @@ public class VendorCartActivity extends AppCompatActivity implements View.OnClic
     public void onClick(View v) {
         if (v.getId() == R.id.btnPlaceOrder) {
             showOrderAlert();
-        } else if (v.getId() == R.id.fabadditem) {
-            finish();
         }
     }
 

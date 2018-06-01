@@ -161,8 +161,6 @@ public class BidCartActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View v) {
         if (v.getId() == R.id.btnPlaceBid) {
             showOrderAlert();
-        } else if (v.getId() == R.id.fabadditem) {
-            finish();
         }
     }
 

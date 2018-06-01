@@ -25,8 +25,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -107,8 +105,8 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
             .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
             .clientId(AppConstants.PAYPAL_CLIENT_ID);
     CustomTextView tvTotalPaidAmount, loylityBal, tvGETaxAmount, CustPhn, CustAddr, CustOrTime, CustOrDate, tvTotalAmt, tvTotalPaidAmount2,
-            food_prepration_time, tvGETaxValue, tvDriverTipAmt, tvDriverTipVal;
-    CustomEditText loyality_apply, giftcouponcode, custName, couponCodeText, daddress;
+            food_prepration_time, tvGETaxValue, tvDriverTipAmt, tvDriverTipVal, tvegiftBal;
+    CustomEditText loyality_apply, etEgiftAmt, custName, etCouponCode, daddress;
     CustomButton applygiftbtn, removeegift, applyLoyaltyPoints, removePoints, apply_coupon, remove_coupon;
     double totalAmount = 0.0;
     double totalPaidAmount = 0.0;
@@ -123,9 +121,9 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
     RadioGroup radioGroup, radioCredits;
     String timeInhouse = "", timeTakeout = "", timeCatering = "", timeDelivery = "", order_type = "0", radioValue = "0", minOrderValue = "0", takeOut_lead_time, catering_lead_days,
             egiftamount = "0", egiftcoupon = "", egiftid = "", order_timings = "", amount = "0", driverArrivalTime = "", coupon_type, coupon_name, coupon_id = "0", setDefault = "0",
-            minDeliveryAmt = "";
+            minDeliveryAmt = "", total_wallet_amt = "", usedWalletAmt = "";
     int loyalityTotal = 0;
-    LinearLayout custNmLayout, custPhnLayout, custTimeLayout, custDtLayout, custAddLayout, custPreptimeLayout, llloyaltypt;
+    LinearLayout custNmLayout, custPhnLayout, custTimeLayout, custDtLayout, custAddLayout, custPreptimeLayout, llloyaltypt, llegiftbal;
     double pointsloyalty, amountofPoints;
     Context context;
     OffersAdapter couponAdapter;
@@ -136,7 +134,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
     int PLACE_PICKER_REQUEST = 1, deliveryArea = 0;
     private ArrayList<OrderItemsDetailsModel> cartItems;
     private CustomCheckBox cbDefaultAddr;
-    private CustomTextView tvDeliveryText,tvDriverTipText, tvDelChargeAmount;
+    private CustomTextView tvDeliveryText, tvDriverTipText, tvDelChargeAmount;
     private double delChargeAmount = 0.0, geTaxAmount = 0.0, totalPaidAmountBase = 0.0, cust_latitude = 0.0, cust_longitude = 0.0;
     private DecimalFormat decimalFormat;
 
@@ -233,12 +231,12 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
             Log.e(TAG, "init: totalAmount" + totalAmount);
             tvTotalAmt.setText("$" + totalAmount);
         }
-        couponCodeText = (CustomEditText) findViewById(R.id.couponCodeText);
+        etCouponCode = (CustomEditText) findViewById(R.id.couponCodeText);
         tvGETaxAmount = (CustomTextView) findViewById(R.id.tvGETaxAmount);
         food_prepration_time = (CustomTextView) findViewById(R.id.prepTime);
         loylityBal = (CustomTextView) findViewById(R.id.loylityBal);
         loyality_apply = (CustomEditText) findViewById(R.id.loyaliy_apply);
-        giftcouponcode = (CustomEditText) findViewById(R.id.couponApplied);
+        etEgiftAmt = (CustomEditText) findViewById(R.id.couponApplied);
         applygiftbtn = (CustomButton) findViewById(R.id.applygift);
         removeegift = (CustomButton) findViewById(R.id.removeEgift);
         applyLoyaltyPoints = (CustomButton) findViewById(R.id.applypoints);
@@ -265,9 +263,11 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         tvGETaxValue = (CustomTextView) findViewById(R.id.tvGETaxValue);
         CustPhn = (CustomTextView) findViewById(R.id.custContact);
         CustAddr = (CustomTextView) findViewById(R.id.custAddress);
+        tvegiftBal = (CustomTextView) findViewById(R.id.tvegiftBal);
         CustOrTime = (CustomTextView) findViewById(R.id.custTime);
         CustOrDate = (CustomTextView) findViewById(R.id.custDate);
         llloyaltypt = (LinearLayout) findViewById(R.id.llloyalty);
+        llegiftbal = (LinearLayout) findViewById(R.id.llegiftbal);
         rlloyalty = (LinearLayout) findViewById(R.id.relloyalty);
         rlegiftcard = (LinearLayout) findViewById(R.id.relegift);
         rlcoupons = (LinearLayout) findViewById(R.id.relcoupon);
@@ -316,30 +316,37 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                 if (checkedId == R.id.radio_loyalty) {
                     llloyaltypt.setVisibility(View.VISIBLE);
                     rlloyalty.setVisibility(View.VISIBLE);
-                    giftcouponcode.setText("");
-                    couponCodeText.setText("");
+                    etEgiftAmt.setText("");
+                    etCouponCode.setText("");
                     rlcoupons.setVisibility(View.GONE);
+                    llegiftbal.setVisibility(View.GONE);
                     rlegiftcard.setVisibility(View.GONE);
                 } else if (checkedId == R.id.radio_egift) {
                     rlegiftcard.setVisibility(View.VISIBLE);
+                    llegiftbal.setVisibility(View.VISIBLE);
                     llloyaltypt.setVisibility(View.GONE);
                     rlloyalty.setVisibility(View.GONE);
                     loyality_apply.setText("");
-                    couponCodeText.setText("");
+                    etCouponCode.setText("");
                     rlcoupons.setVisibility(View.GONE);
                 } else if (checkedId == R.id.radio_coupon) {
                     rlcoupons.setVisibility(View.VISIBLE);
+                    llegiftbal.setVisibility(View.GONE);
                     rlegiftcard.setVisibility(View.GONE);
-                    giftcouponcode.setText("");
+                    etEgiftAmt.setText("");
                     loyality_apply.setText("");
                     llloyaltypt.setVisibility(View.GONE);
                     rlloyalty.setVisibility(View.GONE);
                 }
             }
         });
-        getAllEgifts();
-        getAllCoupons();
-        giftcouponcode.setOnClickListener(new View.OnClickListener() {
+        // getAllEgifts();
+        if (Util.isNetworkAvailable(context)) {
+            getEgiftBalance();
+            getAllCoupons();
+        }
+
+       /*   etEgiftAmt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (egiftModelsList.isEmpty() || egiftModelsList == null) {
@@ -350,8 +357,8 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                     mRecyclerView.setAdapter(couponAdapter);
                 }
             }
-        });
-        couponCodeText.setOnClickListener(new View.OnClickListener() {
+        });*/
+        etCouponCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (couponsModelsList.isEmpty() || couponsModelsList == null) {
@@ -380,6 +387,61 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         });
     }
 
+    private void getEgiftBalance() {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.CUSTOMER_USER.USEREGIFTWALLET);
+        jsonObject.addProperty("user_id", AppPreferences.getCustomerid(context));
+
+        Log.e(TAG, "getBalance json" + jsonObject.toString());
+
+        final ProgressHUD progressHD = ProgressHUD.show(context, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                // TODO Auto-generated method stub
+            }
+        });
+
+        MyApiEndpointInterface apiService =
+                ApiClient.getClient().create(MyApiEndpointInterface.class);
+        Call<JsonObject> call = apiService.user_send_e_gift_new(jsonObject);
+        call.enqueue(new Callback<JsonObject>() {
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                Log.e(TAG, " getBalance response" + response.body().toString());
+                String s = response.body().toString();
+
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    if (jsonObject.getString("status").equalsIgnoreCase("200")) {
+                        JSONArray result = jsonObject.getJSONArray("result");
+                        JSONObject res = result.getJSONObject(0);
+                        total_wallet_amt = res.getString("wallet");
+
+                        if (!total_wallet_amt.equalsIgnoreCase("0") && !total_wallet_amt.equalsIgnoreCase("")) {
+                            etEgiftAmt.setFilters(new InputFilter[]{new InputFilterMinMax("1", total_wallet_amt)});
+                            tvegiftBal.setText(total_wallet_amt);
+                        } else {
+                            etEgiftAmt.setEnabled(false);
+                            tvegiftBal.setText(total_wallet_amt);
+                        }
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                progressHD.dismiss();
+            }
+
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.e(TAG, "error :- " + Log.getStackTraceString(t));
+                progressHD.dismiss();
+            }
+        });
+    }
+
     public void offersDialog() {
         final Dialog mDialog;
         mDialog = new Dialog(context);
@@ -401,13 +463,13 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                 CustomerModel model;
                 if (radioCredits.getCheckedRadioButtonId() == R.id.radio_egift) {
                     model = egiftModelsList.get(position);
-                    giftcouponcode.setText(model.getOffer_name());
+                    etEgiftAmt.setText(model.getOffer_name());
                 } else if (radioCredits.getCheckedRadioButtonId() == R.id.radio_coupon) {
                     model = couponsModelsList.get(position);
                     minOrderValue = model.getMinOrderAmt();
 
                     if (Double.parseDouble(amount) >= Double.parseDouble(minOrderValue))
-                        couponCodeText.setText(model.getOffer_name());
+                        etCouponCode.setText(model.getOffer_name());
                     else
                         Snackbar.make(findViewById(android.R.id.content), "This coupon can't be applied min order amount must be $" + minOrderValue, Snackbar.LENGTH_INDEFINITE).setAction("Ok", new View.OnClickListener() {
                             @Override
@@ -472,7 +534,8 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                 setTimePicker();
                 break;
             case R.id.applygift:
-                applyEgift();
+                // applyEgift();
+                applyEgiftNew();
                 break;
             case R.id.removeEgift:
                 removeEgiftMethod();
@@ -494,9 +557,25 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    private void applyEgiftNew() {
+        if (Double.parseDouble(etEgiftAmt.getText().toString()) < Double.parseDouble(tvTotalPaidAmount.getText().toString())) {
+            rd_loylty.setEnabled(false);
+            rd_coupon.setEnabled(false);
+            etEgiftAmt.setEnabled(false);
+            removeegift.setVisibility(View.VISIBLE);
+            applygiftbtn.setVisibility(View.GONE);
+            usedWalletAmt = etEgiftAmt.getText().toString();
+            double amt = totalPaidAmount - Double.parseDouble(usedWalletAmt);
+            double total_amount = Double.valueOf(decimalFormat.format(amt));
+            tvTotalPaidAmount.setText("" + total_amount);
+            totalPaidAmount = total_amount;
+        } else
+            Toast.makeText(context, "Your total amount is less than applied balance", Toast.LENGTH_LONG).show();
+    }
+
     private void removeCouponCode() {
-        couponCodeText.setText("");
-        couponCodeText.setEnabled(true);
+        etCouponCode.setText("");
+        etCouponCode.setEnabled(true);
         apply_coupon.setVisibility(View.VISIBLE);
         remove_coupon.setVisibility(View.GONE);
         rd_loylty.setEnabled(true);
@@ -505,7 +584,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void applyCouponCode() {
-        if (TextUtils.isEmpty(couponCodeText.getText().toString())) {
+        if (TextUtils.isEmpty(etCouponCode.getText().toString())) {
             Toast.makeText(context, "Select Coupon Code", Toast.LENGTH_LONG).show();
         } else {
             if (Util.isNetworkAvailable(context)) {
@@ -513,7 +592,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                 jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.GENERALAPI.CHECK_COUPON);
                 jsonObject.addProperty("user_id", AppPreferences.getCustomerid(context));
                 jsonObject.addProperty("business_id", AppPreferences.getBusiID(context));
-                jsonObject.addProperty("coupon_code", couponCodeText.getText().toString());
+                jsonObject.addProperty("coupon_code", etCouponCode.getText().toString());
                 Log.e(TAG, "coupon apply json" + jsonObject.toString());
                 final ProgressHUD progressHD = ProgressHUD.show(context, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
                     @Override
@@ -542,13 +621,13 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                                 coupon_name = jsonObject1.getString("coupon_code");
                                 coupon_id = jsonObject1.getString("coupon_id");
                                 if (Double.parseDouble(coupon_amount) < Double.parseDouble(tvTotalPaidAmount.getText().toString())) {
-                                    couponCodeText.setText(coupon_name + "( $" + coupon_amount + " )");
-                                    couponCodeText.setEnabled(false);
+                                    etCouponCode.setText(coupon_name + "( $" + coupon_amount + " )");
+                                    etCouponCode.setEnabled(false);
                                     remove_coupon.setVisibility(View.VISIBLE);
                                     apply_coupon.setVisibility(View.GONE);
                                     if (coupon_type.equalsIgnoreCase("Discount Percentage")) {
                                         double couponTotal = Double.parseDouble(coupon_amount.replace("%", ""));
-                                        couponCodeText.setText(coupon_name + "( " + coupon_amount + "% )");
+                                        etCouponCode.setText(coupon_name + "( " + coupon_amount + "% )");
                                         Log.d("demo", String.valueOf(couponTotal));
                                         Log.d("couponTotal", String.valueOf(couponTotal));
 
@@ -693,14 +772,14 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void applyEgift() {
-        if (TextUtils.isEmpty(giftcouponcode.getText().toString())) {
+        if (TextUtils.isEmpty(etEgiftAmt.getText().toString())) {
             Toast.makeText(context, "Select E-Gift Card", Toast.LENGTH_LONG).show();
         } else {
             if (Util.isNetworkAvailable(context)) {
                 JsonObject jsonObject = new JsonObject();
                 jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.KEY_EGIFT_APPLY);
                 jsonObject.addProperty("user_id", AppPreferences.getCustomerid(context));
-                jsonObject.addProperty("coupon_code", giftcouponcode.getText().toString());
+                jsonObject.addProperty("coupon_code", etEgiftAmt.getText().toString());
                 Log.e(TAG, "egift apply json" + jsonObject.toString());
                 final ProgressHUD progressHD = ProgressHUD.show(context, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
                     @Override
@@ -730,8 +809,8 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                                 egiftcoupon = jsonObject1.getString("coupon_code");
                                 egiftid = jsonObject1.getString("id");
                                 if (Double.parseDouble(egiftamount) < Double.parseDouble(tvTotalPaidAmount.getText().toString())) {
-                                    giftcouponcode.setText(egiftcoupon + "( $" + egiftamount + " )");
-                                    giftcouponcode.setEnabled(false);
+                                    etEgiftAmt.setText(egiftcoupon + "( $" + egiftamount + " )");
+                                    etEgiftAmt.setEnabled(false);
                                     removeegift.setVisibility(View.VISIBLE);
                                     applygiftbtn.setVisibility(View.GONE);
                                     double amt = Double.parseDouble(tvTotalPaidAmount.getText().toString()) - Double.parseDouble(egiftamount);
@@ -886,11 +965,15 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void removeEgiftMethod() {
-        giftcouponcode.setText("");
-        giftcouponcode.setEnabled(true);
+        etEgiftAmt.setText("");
+        etEgiftAmt.setEnabled(true);
         removeegift.setVisibility(View.GONE);
         applygiftbtn.setVisibility(View.VISIBLE);
-        tvTotalPaidAmount.setText("" + Double.parseDouble(tvTotalPaidAmount.getText().toString()) + Double.parseDouble(egiftamount));
+        double amt = totalPaidAmount + Double.parseDouble(usedWalletAmt);
+        double total_amount = Double.valueOf(decimalFormat.format(amt));
+        tvTotalPaidAmount.setText(total_amount + "");
+        totalPaidAmount = total_amount;
+        usedWalletAmt = "";
         rd_loylty.setEnabled(true);
         rd_coupon.setEnabled(true);
     }
@@ -1063,43 +1146,55 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                         SimpleDateFormat parseFormat = new SimpleDateFormat("hh:mm a");
                         Calendar c = Calendar.getInstance();
                         String currentTime = parseFormat.format(c.getTime());
-                        try {
-                            Date currentTime24 = parseFormat.parse(currentTime);
-                            Date selectedTime24 = parseFormat.parse(selectedTime);
-                            Log.e(TAG, "onCreate: currentTime24 >> " + displayFormat.format(currentTime24));
-                            Log.e(TAG, "onCreate: selectedTime24 >> " + displayFormat.format(selectedTime24));
-                            c.add(Calendar.MINUTE, Integer.parseInt(takeOut_lead_time));
+                        if (order_type.equalsIgnoreCase("1")) {
+                            custTimeLayout.setVisibility(View.VISIBLE);
+                            custPhnLayout.setVisibility(View.GONE);
+                            custAddLayout.setVisibility(View.GONE);
+                            custDtLayout.setVisibility(View.GONE);
+                            custPreptimeLayout.setVisibility(View.VISIBLE);
+                            custNmLayout.setVisibility(View.VISIBLE);
+                            custName.setText(AppPreferences.getCustomername(context));
+                            custName.setSelection(custName.length());
+                            CustOrTime.setText(order_timings);
+                            setFoodPrepTime(order_type);
+                        } else {
+                            try {
+                                Date currentTime24 = parseFormat.parse(currentTime);
+                                Date selectedTime24 = parseFormat.parse(selectedTime);
+                                Log.e(TAG, "onCreate: currentTime24 >> " + displayFormat.format(currentTime24));
+                                Log.e(TAG, "onCreate: selectedTime24 >> " + displayFormat.format(selectedTime24));
+                                c.add(Calendar.MINUTE, Integer.parseInt(takeOut_lead_time));
 
-                            String newTime = parseFormat.format(c.getTime());
-                            Date finalCurrentTime = parseFormat.parse(newTime);
-                            Log.e(TAG, "onCreate: finalCurrentTime >> " + displayFormat.format(finalCurrentTime));
+                                String newTime = parseFormat.format(c.getTime());
+                                Date finalCurrentTime = parseFormat.parse(newTime);
+                                Log.e(TAG, "onCreate: finalCurrentTime >> " + displayFormat.format(finalCurrentTime));
 
-                            if (finalCurrentTime.compareTo(selectedTime24) > 0) {
-                                Log.e(TAG, "onTimeSet: selected time is greater than current time");
-                                order_type = "0";
-                                order_timings = "";
-                                inhouse_btn.setChecked(false);
-                                take_way_btn.setChecked(false);
-                                showAlertDialog("TakeOut time must be after " + takeOut_lead_time + " mins of order timing");
-                            } else {
-                                order_timings = AppPreferences.getOrderTime(context);
-                                Log.d("ORDERTIME>>", order_timings);
-                                custTimeLayout.setVisibility(View.VISIBLE);
-                                custPhnLayout.setVisibility(View.GONE);
-                                custAddLayout.setVisibility(View.GONE);
-                                custDtLayout.setVisibility(View.GONE);
-                                custPreptimeLayout.setVisibility(View.VISIBLE);
-                                custNmLayout.setVisibility(View.VISIBLE);
-                                custName.setText(AppPreferences.getCustomername(context));
-                                custName.setSelection(custName.length());
-                                CustOrTime.setText(order_timings);
-                                setFoodPrepTime(order_type);
+                                if (finalCurrentTime.compareTo(selectedTime24) > 0) {
+                                    Log.e(TAG, "onTimeSet: selected time is greater than current time");
+                                    order_type = "0";
+                                    order_timings = "";
+                                    inhouse_btn.setChecked(false);
+                                    take_way_btn.setChecked(false);
+                                    showAlertDialog("TakeOut time must be after " + takeOut_lead_time + " mins of order timing");
+                                } else {
+                                    order_timings = AppPreferences.getOrderTime(context);
+                                    Log.d("ORDERTIME>>", order_timings);
+                                    custTimeLayout.setVisibility(View.VISIBLE);
+                                    custPhnLayout.setVisibility(View.GONE);
+                                    custAddLayout.setVisibility(View.GONE);
+                                    custDtLayout.setVisibility(View.GONE);
+                                    custPreptimeLayout.setVisibility(View.VISIBLE);
+                                    custNmLayout.setVisibility(View.VISIBLE);
+                                    custName.setText(AppPreferences.getCustomername(context));
+                                    custName.setSelection(custName.length());
+                                    CustOrTime.setText(order_timings);
+                                    setFoodPrepTime(order_type);
+                                }
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
                         }
-
                     }
                 }, mHour, mMinute, false);
         timePickerDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
@@ -1525,7 +1620,9 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         object.addProperty("currency_code", "");
         object.addProperty("payment_status", "pending");
         object.addProperty("e_gift_balance", egiftamount);
-        object.addProperty("e_gift_id", egiftid);
+        object.addProperty("e_gift_id", "0");
+        object.addProperty("e_gift_wallet_amount  ", usedWalletAmt);
+//        object.addProperty("e_gift_id", egiftid);
         object.addProperty("grandtotal", AppPreferencesBuss.getGrandTotal(context));
         object.addProperty("loyalty_points", (AppPreferencesBuss.getFinalLoyalityPoint(context)));
         object.addProperty("gratuity", (AppPreferencesBuss.getGratuity(context)));
@@ -1694,7 +1791,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                                 String cost_flat = object.getString("cost_flat");
                                 String cost_range = object.getString("cost_range");
                                 String cost_percent = object.getString("cost_percent");
-                               // String driver_tip = object.getString("");
+                                // String driver_tip = object.getString("");
                                 tvDeliveryText.setTextColor(getResources().getColor(R.color.blue));
                               /*  if (driver_tip.equalsIgnoreCase("0")) {
                                     tvDriverTipText.setText("Please Tip driver generously.");
@@ -1734,7 +1831,8 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                                     } else if (totalAmount >= Double.parseDouble(object.getString("between_val1")) && totalAmount <= Double.parseDouble(object.getString("between_val2"))) {
                                         delChargeAmount = Double.parseDouble(object.getString("between_amt"));
                                     } else {
-                                        delChargeAmount = Double.parseDouble(object.getString("min_food_cost"));
+                                        //delChargeAmount = Double.parseDouble(object.getString("min_food_cost"));
+                                        delChargeAmount = 0.0;
                                     }
                                 }
 

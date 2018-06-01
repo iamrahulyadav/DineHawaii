@@ -22,7 +22,7 @@
         android:paddingLeft="@dimen/_10sdp"
         android:paddingRight="@dimen/_10sdp"
         android:paddingTop="@dimen/_5sdp"
-        android:text="No items"
+        android:text="No items found"
         android:visibility="gone"
         app:edittextfont="Raleway-Regular.ttf" />
 

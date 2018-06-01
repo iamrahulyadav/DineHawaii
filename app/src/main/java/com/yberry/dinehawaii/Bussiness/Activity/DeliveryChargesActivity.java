@@ -39,7 +39,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class DeliveryChargesActivity extends AppCompatActivity implements View.OnClickListener {
-    String TAG = "";
+    String TAG = "DeliveryCharges";
     CustomEditText etDeliveryArea, etDriverArrivalTime, etFlatamt, etPercent, etminrangeamt, etlessthn_amnt, etlesssthn_value, etbtwn1, etbtwn2, etbtwnamt, etDriverTip;
     LinearLayout llRange, mainLayout;
     RadioGroup rgDeliveryCost, rgDriverTip;
@@ -117,6 +117,9 @@ public class DeliveryChargesActivity extends AppCompatActivity implements View.O
                             etDriverTip.setVisibility(View.GONE);
                             rdTipNo.setChecked(true);
                         }
+
+                        if (!object.getString("driver_tip_amt").equalsIgnoreCase("") && !object.getString("driver_tip_amt").equalsIgnoreCase("0"))
+                            etDriverTip.setText(object.getString("driver_tip_amt"));
 
                         if (object.getString("cost_flat").equalsIgnoreCase("1"))
                             radiodFlatAmt.setChecked(true);
@@ -350,6 +353,7 @@ public class DeliveryChargesActivity extends AppCompatActivity implements View.O
         jsonObject.addProperty("between_val1", btw1);
         jsonObject.addProperty("between_val2", btw2);
         jsonObject.addProperty("driver_tip", selectedTip);
+        jsonObject.addProperty("driver_tip_amt", etDriverTip.getText().toString());
         Log.e(TAG, "setDeliveryCharges Json" + jsonObject.toString());
         setDeliveryChargesApi(jsonObject);
     }

@@ -67,8 +67,8 @@ public interface MyApiEndpointInterface {
     @POST(AppConstants.ENDPOINT.BUSINESS_FEEDBACK_AND_MARKETING_API)
     Call<JsonObject> business_feedback_and_marketing_api(@Body JsonObject jsonObject);
 
-    @POST(AppConstants.ENDPOINT.DELIVERY_FOOD_SERVICE_API)
-    Call<JsonObject> delivery_food_service_api(@Body JsonObject jsonObject);
+    @POST(AppConstants.ENDPOINT.USER_SEND_E_GIFT_NEW)
+    Call<JsonObject> user_send_e_gift_new(@Body JsonObject jsonObject);
 
     @POST(AppConstants.ENDPOINT.NORMAL_BUSINESS_API)
     Call<JsonObject> normalUserBusinessApi(@Body JsonObject jsonObject);

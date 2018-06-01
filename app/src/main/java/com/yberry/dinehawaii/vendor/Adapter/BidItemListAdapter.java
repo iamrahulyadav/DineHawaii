@@ -25,7 +25,7 @@ public class BidItemListAdapter extends RecyclerView.Adapter<BidItemListAdapter.
     Context context;
     ArrayList<VendorBidItemModel> vendorModelArrayList;
 
-    public BidItemListAdapter(Context context, ArrayList<VendorBidItemModel> reservList, String vendor_id) {
+    public BidItemListAdapter(Context context, ArrayList<VendorBidItemModel> reservList) {
         this.context = context;
         this.vendorModelArrayList = reservList;
     }
@@ -102,7 +102,7 @@ public class BidItemListAdapter extends RecyclerView.Adapter<BidItemListAdapter.
         });
     }
 
-    private void showVendorDialog(ArrayList<VendorBidItemModel> other_vendors_list) {
+    private void showVendorDialog(final ArrayList<VendorBidItemModel> other_vendors_list) {
         if (vendorModelArrayList != null && !vendorModelArrayList.isEmpty()) {
             final VendorMultipleChoiceAdapter adapter = new VendorMultipleChoiceAdapter(context, other_vendors_list);
             new AlertDialog.Builder(context).setTitle("Add To Cart")
@@ -113,7 +113,7 @@ public class BidItemListAdapter extends RecyclerView.Adapter<BidItemListAdapter.
 
                         }
                     })
-                    .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                    .setNegativeButton("SELECT ALL", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                         }

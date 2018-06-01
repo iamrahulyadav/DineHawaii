@@ -96,6 +96,7 @@ public class AppConstants {
         String VENDOR_LIST_API = "business_user/N_Business_vendors_Api.php";
         String N_BUSINESS_NEW_API = "business_user/N_Business_New_Api.php";
         String N_BUSINESS_USER_API = "normal_user/N_Business_User_Api.php";
+        String USER_SEND_E_GIFT_NEW = "normal_user/user_send_e_gift_new.php";
         /**/
     }
 
@@ -314,6 +315,7 @@ public class AppConstants {
         String REMOVEFAV = "RemoveFavourite";
         String ORDER_FEEDBACK = "order_feedback";
         String RESERV_DETAILS = "reservationDetailList";
+        String USEREGIFTWALLET = "UserEgiftWallet";
     }
 
     public interface REPORT {

@@ -53,7 +53,7 @@ public class BidItemListActivity extends AppCompatActivity {
     String category_id;
     private RecyclerView recycler_view;
     private BidItemListAdapter adapter;
-    private CustomTextView tvCountBadge;
+    private CustomTextView tvCountBadge,noData;
     private CartItemReciver reciver;
 
     @Override
@@ -126,7 +126,7 @@ public class BidItemListActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if (Util.isNetworkAvailable(context)) {
-            getAllVendorsFood();
+            getAllVendorsItems();
         } else
             Toast.makeText(context, getResources().getString(R.string.msg_no_internet), Toast.LENGTH_SHORT).show();
         if (tvCountBadge != null)
@@ -140,7 +140,7 @@ public class BidItemListActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void getAllVendorsFood() {
+    private void getAllVendorsItems() {
         final ProgressHUD progressHD = ProgressHUD.show(context, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
@@ -168,6 +168,7 @@ public class BidItemListActivity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(resp);
                     if (jsonObject.getString("status").equalsIgnoreCase("200")) {
                         list.clear();
+                        noData.setVisibility(View.GONE);
                         JSONArray jsonArray = jsonObject.getJSONArray("result");
                         for (int i = 0; i < jsonArray.length(); i++) {
                             VendorBidItemModel model = new VendorBidItemModel();
@@ -205,10 +206,11 @@ public class BidItemListActivity extends AppCompatActivity {
                         }
                     } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
                         list.clear();
-                        Toast.makeText(context, "no record found", Toast.LENGTH_SHORT).show();
+                        noData.setVisibility(View.VISIBLE);
                     }
                     adapter.notifyDataSetChanged();
                 } catch (JSONException e) {
+                    noData.setVisibility(View.VISIBLE);
                     Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
@@ -220,6 +222,7 @@ public class BidItemListActivity extends AppCompatActivity {
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Log.e(TAG, "error :- " + Log.getStackTraceString(t));
                 progressHD.dismiss();
+                noData.setVisibility(View.VISIBLE);
                 Toast.makeText(context, "Server not Responding", Toast.LENGTH_SHORT).show();
             }
         });
@@ -229,11 +232,12 @@ public class BidItemListActivity extends AppCompatActivity {
     private void init() {
         context = this;
         recycler_view = (RecyclerView) findViewById(R.id.recycler_view);
+        noData = (CustomTextView) findViewById(R.id.noData);
     }
 
     private void setAdapter() {
         recycler_view.setLayoutManager(new LinearLayoutManager(context));
-        adapter = new BidItemListAdapter(context, list, category_id);
+        adapter = new BidItemListAdapter(context, list);
         recycler_view.setAdapter(adapter);
     }
 
