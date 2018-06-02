@@ -290,6 +290,13 @@ public class Function {
         return strDate;
     }
 
+  public static String getCurrentDateNew() {
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+        String strDate = sdf.format(c.getTime());
+        return strDate;
+    }
+
     public static String getDate() {
         Calendar c = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");

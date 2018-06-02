@@ -14,49 +14,46 @@ import com.yberry.dinehawaii.customview.CustomTextView;
 import java.util.List;
 
 
-public class CouponAvailableAdapter extends RecyclerView.Adapter<CouponAvailableAdapter.ViewHolder> {
+public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.ViewHolder> {
 
     Context context;
     private List<CustomerModel> availablecouponlist;
 
-    public CouponAvailableAdapter(Context context, List<CustomerModel> availablecouponlist) {
+    public CouponAdapter(Context context, List<CustomerModel> availablecouponlist) {
         this.context = context;
         this.availablecouponlist = availablecouponlist;
     }
 
-    public CouponAvailableAdapter(Context context) {
-    }
 
     @Override
-    public CouponAvailableAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public CouponAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.avail_coupon, parent, false);
         ViewHolder viewHolder = new ViewHolder(v);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(final CouponAvailableAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(final CouponAdapter.ViewHolder holder, int position) {
         final CustomerModel model = availablecouponlist.get(position);
-        if (model.getCoupon_code().equalsIgnoreCase("")) {
-            holder.coupon_code.setText("NA");
-        } else {
+        holder.status.setVisibility(View.GONE);
+        if (!model.getCoupon_code().equalsIgnoreCase("")) {
             holder.coupon_code.setText(model.getCoupon_code());
         }
-        if (model.getAmount().equalsIgnoreCase("")) {
-            holder.amount.setText("NA");
-        } else {
-            holder.amount.setText(model.getAmount());
+        if (!model.getAmount().equalsIgnoreCase("")) {
+            if (model.getCouponType().equalsIgnoreCase("Discount Amount"))
+                holder.amount.setText(model.getAmount()+"$");
+            else if (model.getCouponType().equalsIgnoreCase("Discount Percentage"))
+                holder.amount.setText(model.getAmount()+"%");
+            else
+                holder.amount.setText(model.getAmount()+"$");
         }
-        if (model.getEnd_date().equalsIgnoreCase("")) {
-            holder.d_end.setText("NA");
-        } else {
+        if (!model.getEnd_date().equalsIgnoreCase("")) {
             holder.d_end.setText(model.getEnd_date());
         }
-        if (model.getCoupon_status().equalsIgnoreCase("")) {
-            holder.status.setText("NA");
-        } else {
+        if (!model.getCoupon_status().equalsIgnoreCase("")) {
             holder.status.setText(model.getCoupon_status());
         }
+
     }
 
 
@@ -67,7 +64,7 @@ public class CouponAvailableAdapter extends RecyclerView.Adapter<CouponAvailable
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        CustomTextView coupon_code, amount,  d_end, status;
+        CustomTextView coupon_code, amount, d_end, status;
 
         public ViewHolder(View itemView) {
             super(itemView);

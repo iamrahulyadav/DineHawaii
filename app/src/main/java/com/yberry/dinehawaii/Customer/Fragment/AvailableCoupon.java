@@ -11,11 +11,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
-import com.yberry.dinehawaii.Customer.Adapter.CouponAvailableAdapter;
+import com.yberry.dinehawaii.Customer.Adapter.AllEgiftAdapter;
 import com.yberry.dinehawaii.Model.CustomerModel;
 import com.yberry.dinehawaii.R;
 import com.yberry.dinehawaii.RetrofitClasses.ApiClient;
@@ -44,7 +43,7 @@ public class AvailableCoupon extends Fragment {
     private static final String TAG = "Available EGiftAndCoupons";
     Context context;
     public static List<CustomerModel> list = new ArrayList<>();
-    public static CouponAvailableAdapter adapter;
+    public static AllEgiftAdapter adapter;
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
     private View rootView;
@@ -69,7 +68,7 @@ public class AvailableCoupon extends Fragment {
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_coupon);
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        adapter = new CouponAvailableAdapter(context, list);
+        adapter = new AllEgiftAdapter(context, list);
         mRecyclerView.setAdapter(adapter);
 
 

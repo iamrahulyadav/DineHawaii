@@ -75,7 +75,7 @@ public class MakingReservationActivity extends AppCompatActivity implements Time
     String selectedTableID = "";
     String partySizeS, dateString, timeString, userNameString, mobileNoString, emailString, noofadultsString, noofchildString;
     String name, i, table_id, selected_table;
-    ArrayList<TableData> tableDataList = new ArrayList<TableData>();
+    ArrayList<TableData> tableDataList;
     private boolean isWaitList = false;
     private String combinetable = "";
     private String reserve_lead_time;
@@ -175,6 +175,7 @@ public class MakingReservationActivity extends AppCompatActivity implements Time
     }
 
     private void initViews() {
+        tableDataList = new ArrayList<TableData>();
         btn_BookTable = (CustomTextView) findViewById(R.id.btn_bookTable);
         llTableBook = (LinearLayout) findViewById(R.id.llTableBook);
         complete = (CustomButton) findViewById(R.id.complete);

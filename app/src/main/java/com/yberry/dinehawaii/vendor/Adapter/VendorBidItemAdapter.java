@@ -36,14 +36,12 @@ public class VendorBidItemAdapter extends RecyclerView.Adapter<VendorBidItemAdap
     private static final String TAG = "CartItemAdapter";
     ArrayList<VendorBidItemModel> list;
     VendorBidDBHandler mydb;
-    CustomTextView total_amount;
     private Context mContext;
     private String temp;
 
-    public VendorBidItemAdapter(Context mContext, ArrayList<VendorBidItemModel> list, CustomTextView total_amount/*, String str*/) {
+    public VendorBidItemAdapter(Context mContext, ArrayList<VendorBidItemModel> list/*, String str*/) {
         this.mContext = mContext;
         this.list = list;
-        this.total_amount = total_amount;
 
     }
 

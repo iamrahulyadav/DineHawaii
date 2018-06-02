@@ -323,7 +323,7 @@ public class SendEGiftVoucher extends Fragment {
         final CustomTextView tvBalance = (CustomTextView) balancePopup.findViewById(R.id.tvBalance);
         tvBalance.setText("Your Egift Balance : $" + total_wallet_amt);
         tvAmtToPay.setText("Amount to be paid : $" + amount);
-        etbalance_amt.setFilters(new InputFilter[]{new InputFilterMinMax("1", total_wallet_amt)});
+        etbalance_amt.setFilters(new InputFilter[]{new InputFilterMinMax("1", amount)});
         balancePopup.findViewById(R.id.popupclose).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -584,6 +584,9 @@ public class SendEGiftVoucher extends Fragment {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                getBalance();
+                giftLinear.setVisibility(View.GONE);
+                usernameEditText.setText("");
              /*   Intent intent = new Intent(getActivity(), CustomerNaviDrawer.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);

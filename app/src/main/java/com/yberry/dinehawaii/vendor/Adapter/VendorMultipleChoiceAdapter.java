@@ -66,16 +66,13 @@ public class VendorMultipleChoiceAdapter extends BaseAdapter {
         return checkedItemList;
     }
 
-
-   /* public int getTotalCapacity() {
-        int total = 0;
-        for (VendorBidItemModel item : mItemList) {
-            if (item.isSelected()) {
-                total=total+Integer.parseInt(item.get());
-            }
+    public void selectAllCheckbox() {
+        for (int i = 0; i < mItemList.size(); i++) {
+            mItemList.get(i).setSelected(true);
+            new VendorBidDBHandler(context).insertVendorOrderCartItem(mItemList.get(i));
+            LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent("update_cart"));
         }
-        return total;
-    }*/
+    }
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {

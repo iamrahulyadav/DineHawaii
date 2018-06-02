@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
-import com.yberry.dinehawaii.Customer.Adapter.CouponAvailableAdapter;
+import com.yberry.dinehawaii.Customer.Adapter.CouponAdapter;
 import com.yberry.dinehawaii.Model.CustomerModel;
 import com.yberry.dinehawaii.R;
 import com.yberry.dinehawaii.RetrofitClasses.ApiClient;
@@ -42,15 +42,16 @@ import retrofit2.Response;
  * A simple {@link Fragment} subclass.
  */
 public class CouponOffersFragment extends Fragment {
+    public static List<CustomerModel> list = new ArrayList<>();
+    public static CouponAdapter adapter;
     String TAG = "CouponOffersFragment";
     Context context;
-    private View rootView;
-    public static List<CustomerModel> list = new ArrayList<>();
-    public static CouponAvailableAdapter adapter;
-    private RecyclerView mRecyclerView;
-    private LinearLayoutManager mLayoutManager;
     FragmentIntraction intraction;
     CustomTextView nodata;
+    private View rootView;
+    private RecyclerView mRecyclerView;
+    private LinearLayoutManager mLayoutManager;
+
     public CouponOffersFragment() {
         // Required empty public constructor
     }
@@ -68,6 +69,7 @@ public class CouponOffersFragment extends Fragment {
         getAllCoupons();
         return rootView;
     }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -78,11 +80,13 @@ public class CouponOffersFragment extends Fragment {
                     + " must implement OnFragmentInteractionListener");
         }
     }
+
     @Override
     public void onDetach() {
         super.onDetach();
         intraction = null;
     }
+
     private void initComponent() {
         context = getActivity();
         nodata = (CustomTextView) rootView.findViewById(R.id.nodata);
@@ -90,11 +94,12 @@ public class CouponOffersFragment extends Fragment {
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_coupon);
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        adapter = new CouponAvailableAdapter(context, list);
+        adapter = new CouponAdapter(context, list);
         mRecyclerView.setAdapter(adapter);
 
 
     }
+
     private void getAllCoupons() {
         if (Util.isNetworkAvailable(context)) {
             JsonObject jsonObject = new JsonObject();
@@ -142,6 +147,7 @@ public class CouponOffersFragment extends Fragment {
                             customerModel.setStart_date(object.getString("coupon_s_date"));
                             customerModel.setCoupon_msg(object.getString("coupon_description"));
                             customerModel.setCoupon_status("");
+                            customerModel.setCouponType(object.getString("coupon_type"));
                             list.add(customerModel);
 
                         }
@@ -150,9 +156,6 @@ public class CouponOffersFragment extends Fragment {
                         JSONArray jsonArray = jsonObject.getJSONArray("result");
                         JSONObject object = jsonArray.getJSONObject(0);
                         nodata.setVisibility(View.VISIBLE);
-
-                        //    Toast.makeText(getActivity(), object.getString("msg"), Toast.LENGTH_LONG).show();
-//                        Log.d("onResponse", jsonObject.getString("msg"));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

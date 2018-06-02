@@ -1077,14 +1077,15 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
 
                     Log.e(TAG, "onTimeSet: final date>>>>>   " + finalCurrentTime);
                     if (!catering_lead_days.equalsIgnoreCase("") && !catering_lead_days.equalsIgnoreCase("0")) {
-                        if (finalCurrentTime.compareTo(selectedTime24) > 0 || finalCurrentTime.compareTo(selectedTime24) == 0) {
+//                        if (finalCurrentTime.compareTo(selectedTime24) > 0 || finalCurrentTime.compareTo(selectedTime24) == 0) {
+                        if (finalCurrentTime.compareTo(selectedTime24) >0) {
                             timePickerDialog.dismiss();
                             order_type = "0";
                             order_timings = "";
                             catering_btn.setChecked(false);
                             showAlertDialog("Catering Order Requires " + catering_lead_days + " days prior booking");
                             Log.e(TAG, "onTimeSet: current time is less than/equals selected time");
-                        } else if (finalCurrentTime.compareTo(selectedTime24) < 0) {
+                        } else if (finalCurrentTime.compareTo(selectedTime24) <= 0) {
                             Log.e(TAG, "onTimeSet: current time is greater than selected time");
                             order_timings = cateringDateTime + "," + selectedTime;
                             AppPreferences.setOrderTime(context, order_timings);
@@ -1127,7 +1128,91 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         builder.show();
     }
 
-    private void setTimePicker() {
+
+ private void setTimePicker() {
+
+         final Calendar c = Calendar.getInstance();
+         int mHour = c.get(Calendar.HOUR_OF_DAY);
+         int mMinute = c.get(Calendar.MINUTE);
+
+         TimePickerDialog timePickerDialog = new TimePickerDialog(context,
+                 new TimePickerDialog.OnTimeSetListener() {
+                     @Override
+                     public void onTimeSet(TimePicker view, int hourOfDay,
+                                           int minute) {
+                         boolean isPM = (hourOfDay >= 12);
+                         String selectedTime = String.format("%02d:%02d %s", (hourOfDay == 12 || hourOfDay == 0) ? 12 : hourOfDay % 12, minute, isPM ? "PM" : "AM");
+                         AppPreferences.setOrderTime(context, selectedTime);
+
+                         SimpleDateFormat displayFormat = new SimpleDateFormat("HH:mm:ss");
+                         SimpleDateFormat parseFormat = new SimpleDateFormat("hh:mm a");
+                         Calendar c = Calendar.getInstance();
+                         String currentTime = parseFormat.format(c.getTime());
+                         if (order_type.equalsIgnoreCase("1")) {
+                             order_timings = AppPreferences.getOrderTime(context);
+                             custTimeLayout.setVisibility(View.VISIBLE);
+                             custPhnLayout.setVisibility(View.GONE);
+                             custAddLayout.setVisibility(View.GONE);
+                             custDtLayout.setVisibility(View.GONE);
+                             custPreptimeLayout.setVisibility(View.VISIBLE);
+                             custNmLayout.setVisibility(View.VISIBLE);
+                             custName.setText(AppPreferences.getCustomername(context));
+                             custName.setSelection(custName.length());
+                             CustOrTime.setText(order_timings);
+                             setFoodPrepTime(order_type);
+                         } else {
+                             try {
+                                 Date currentTime24 = parseFormat.parse(currentTime);
+                                 Date selectedTime24 = parseFormat.parse(selectedTime);
+                                 Log.e(TAG, "onCreate: currentTime24 >> " + displayFormat.format(currentTime24));
+                                 Log.e(TAG, "onCreate: selectedTime24 >> " + displayFormat.format(selectedTime24));
+                                 c.add(Calendar.MINUTE, Integer.parseInt(takeOut_lead_time));
+
+                                 String newTime = parseFormat.format(c.getTime());
+                                 Date finalCurrentTime = parseFormat.parse(newTime);
+                                 Log.e(TAG, "onCreate: finalCurrentTime >> " + displayFormat.format(finalCurrentTime));
+
+                                 if (finalCurrentTime.compareTo(selectedTime24) > 0) {
+                                     Log.e(TAG, "onTimeSet: selected time is greater than current time");
+                                     order_type = "0";
+                                     order_timings = "";
+                                     inhouse_btn.setChecked(false);
+                                     take_way_btn.setChecked(false);
+                                     showAlertDialog("TakeOut time must be after " + takeOut_lead_time + " mins of order timing");
+                                 } else {
+                                     order_timings = AppPreferences.getOrderTime(context);
+                                     Log.d("ORDERTIME>>", order_timings);
+                                     custTimeLayout.setVisibility(View.VISIBLE);
+                                     custPhnLayout.setVisibility(View.GONE);
+                                     custAddLayout.setVisibility(View.GONE);
+                                     custDtLayout.setVisibility(View.GONE);
+                                     custPreptimeLayout.setVisibility(View.VISIBLE);
+                                     custNmLayout.setVisibility(View.VISIBLE);
+                                     custName.setText(AppPreferences.getCustomername(context));
+                                     custName.setSelection(custName.length());
+                                     CustOrTime.setText(order_timings);
+                                     setFoodPrepTime(order_type);
+                                 }
+
+                             } catch (Exception e) {
+                                 e.printStackTrace();
+                             }
+                         }
+                     }
+                 }, mHour, mMinute, false);
+         timePickerDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+             @Override
+             public void onCancel(DialogInterface dialog) {
+                 order_type = "0";
+                 order_timings = "";
+                 inhouse_btn.setChecked(false);
+                 take_way_btn.setChecked(false);
+             }
+         });
+         timePickerDialog.show();
+     }
+
+  /*  private void setTimePicker() {
 
         final Calendar c = Calendar.getInstance();
         int mHour = c.get(Calendar.HOUR_OF_DAY);
@@ -1142,59 +1227,51 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                         String selectedTime = String.format("%02d:%02d %s", (hourOfDay == 12 || hourOfDay == 0) ? 12 : hourOfDay % 12, minute, isPM ? "PM" : "AM");
                         AppPreferences.setOrderTime(context, selectedTime);
 
+                        order_timings = AppPreferences.getOrderTime(context);
+                        Log.d("ORDERTIME>>", order_timings);
+                        custTimeLayout.setVisibility(View.VISIBLE);
+                        custPhnLayout.setVisibility(View.GONE);
+                        custAddLayout.setVisibility(View.GONE);
+                        custDtLayout.setVisibility(View.GONE);
+                        custPreptimeLayout.setVisibility(View.VISIBLE);
+                        custNmLayout.setVisibility(View.VISIBLE);
+                        custName.setText(AppPreferences.getCustomername(context));
+                        custName.setSelection(custName.length());
+                        CustOrTime.setText(order_timings);
+                        setFoodPrepTime(order_type);
+
                         SimpleDateFormat displayFormat = new SimpleDateFormat("HH:mm:ss");
                         SimpleDateFormat parseFormat = new SimpleDateFormat("hh:mm a");
                         Calendar c = Calendar.getInstance();
                         String currentTime = parseFormat.format(c.getTime());
-                        if (order_type.equalsIgnoreCase("1")) {
-                            custTimeLayout.setVisibility(View.VISIBLE);
-                            custPhnLayout.setVisibility(View.GONE);
-                            custAddLayout.setVisibility(View.GONE);
-                            custDtLayout.setVisibility(View.GONE);
-                            custPreptimeLayout.setVisibility(View.VISIBLE);
-                            custNmLayout.setVisibility(View.VISIBLE);
-                            custName.setText(AppPreferences.getCustomername(context));
-                            custName.setSelection(custName.length());
-                            CustOrTime.setText(order_timings);
-                            setFoodPrepTime(order_type);
-                        } else {
-                            try {
-                                Date currentTime24 = parseFormat.parse(currentTime);
-                                Date selectedTime24 = parseFormat.parse(selectedTime);
-                                Log.e(TAG, "onCreate: currentTime24 >> " + displayFormat.format(currentTime24));
-                                Log.e(TAG, "onCreate: selectedTime24 >> " + displayFormat.format(selectedTime24));
-                                c.add(Calendar.MINUTE, Integer.parseInt(takeOut_lead_time));
+                        try {
+                            Date currentTime24 = parseFormat.parse(currentTime);
+                            Date selectedTime24 = parseFormat.parse(selectedTime);
+                            Log.e(TAG, "onCreate: currentTime24 >> " + displayFormat.format(currentTime24));
+                            Log.e(TAG, "onCreate: selectedTime24 >> " + displayFormat.format(selectedTime24));
+                            c.add(Calendar.MINUTE, Integer.parseInt(takeOut_lead_time));
 
-                                String newTime = parseFormat.format(c.getTime());
-                                Date finalCurrentTime = parseFormat.parse(newTime);
-                                Log.e(TAG, "onCreate: finalCurrentTime >> " + displayFormat.format(finalCurrentTime));
+                            String newTime = parseFormat.format(c.getTime());
+                            Date finalCurrentTime = parseFormat.parse(newTime);
+                            Log.e(TAG, "onCreate: finalCurrentTime >> " + displayFormat.format(finalCurrentTime));
 
-                                if (finalCurrentTime.compareTo(selectedTime24) > 0) {
-                                    Log.e(TAG, "onTimeSet: selected time is greater than current time");
-                                    order_type = "0";
-                                    order_timings = "";
-                                    inhouse_btn.setChecked(false);
-                                    take_way_btn.setChecked(false);
-                                    showAlertDialog("TakeOut time must be after " + takeOut_lead_time + " mins of order timing");
-                                } else {
-                                    order_timings = AppPreferences.getOrderTime(context);
-                                    Log.d("ORDERTIME>>", order_timings);
-                                    custTimeLayout.setVisibility(View.VISIBLE);
-                                    custPhnLayout.setVisibility(View.GONE);
-                                    custAddLayout.setVisibility(View.GONE);
-                                    custDtLayout.setVisibility(View.GONE);
-                                    custPreptimeLayout.setVisibility(View.VISIBLE);
-                                    custNmLayout.setVisibility(View.VISIBLE);
-                                    custName.setText(AppPreferences.getCustomername(context));
-                                    custName.setSelection(custName.length());
-                                    CustOrTime.setText(order_timings);
-                                    setFoodPrepTime(order_type);
-                                }
-
-                            } catch (Exception e) {
-                                e.printStackTrace();
+                            if (finalCurrentTime.compareTo(selectedTime24) > 0) {
+                                Log.e(TAG, "onTimeSet: selected time is greater than current time");
+                                order_type = "0";
+                                order_timings = "";
+                                inhouse_btn.setChecked(false);
+                                take_way_btn.setChecked(false);
+                                showAlertDialog("Take-out order requires minimum " + takeOut_lead_time + " mins before pickup time");
+                            } else if (finalCurrentTime.compareTo(selectedTime24) < 0) {
+                                Log.e(TAG, "onTimeSet: selected time is less than currect time");
+                            } else if (finalCurrentTime.compareTo(selectedTime24) == 0) {
+                                Log.e(TAG, "onTimeSet: current time is equal selected time");
                             }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
+
                     }
                 }, mHour, mMinute, false);
         timePickerDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
@@ -1207,7 +1284,8 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
             }
         });
         timePickerDialog.show();
-    }
+    }*/
+
 
     @SuppressLint("RestrictedApi")
     public void updateHomeDeliveryInfo() {
@@ -1621,7 +1699,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         object.addProperty("payment_status", "pending");
         object.addProperty("e_gift_balance", egiftamount);
         object.addProperty("e_gift_id", "0");
-        object.addProperty("e_gift_wallet_amount  ", usedWalletAmt);
+        object.addProperty("e_gift_wallet_amount", usedWalletAmt);
 //        object.addProperty("e_gift_id", egiftid);
         object.addProperty("grandtotal", AppPreferencesBuss.getGrandTotal(context));
         object.addProperty("loyalty_points", (AppPreferencesBuss.getFinalLoyalityPoint(context)));
@@ -1791,29 +1869,26 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                                 String cost_flat = object.getString("cost_flat");
                                 String cost_range = object.getString("cost_range");
                                 String cost_percent = object.getString("cost_percent");
-                                // String driver_tip = object.getString("");
+                                 String driver_tip = object.getString("driver_tip");
                                 tvDeliveryText.setTextColor(getResources().getColor(R.color.blue));
-                              /*  if (driver_tip.equalsIgnoreCase("0")) {
+                                if (driver_tip.equalsIgnoreCase("0")) {
+                                    tvDriverTipText.setVisibility(View.VISIBLE);
                                     tvDriverTipText.setText("Please Tip driver generously.");
                                 } else if (driver_tip.equalsIgnoreCase("1")) {
-                                    tvDriverTipVal.setText("Driver Tip : " + object.getString(""));
-                                    double geTaxPer = Double.parseDouble(object.getString("").replace("%", ""));
-                                    Log.e(TAG, "DriverTip: getTip% >> " + geTaxPer);
-
-                                    Double percentAmt = totalPaidAmount * geTaxPer / 100;
-                                    Log.e(TAG, "DriverTip: geTaxAmount >> " + geTaxAmount);
-
-                                    totalPaidAmount = percentAmt + totalPaidAmount;
+                                    tvDriverTipText.setVisibility(View.VISIBLE);
+                                    tvDriverTipText.setText("Driver Tip is included");
+                                    double tipAmt = Double.parseDouble(object.getString("driver_tip_amt"));
+                                    totalPaidAmount = tipAmt + totalPaidAmount;
                                     totalPaidAmountBase = totalPaidAmount;
                                     Log.e(TAG, "DriverTip: totalPaidAmount >> " + totalPaidAmount);
 
-                                    percentAmt = Double.valueOf(decimalFormat.format(percentAmt));
+                                    tipAmt = Double.valueOf(decimalFormat.format(tipAmt));
                                     totalPaidAmount = Double.valueOf(decimalFormat.format(totalPaidAmount));
 
                                     tvTotalPaidAmount.setText("" + totalPaidAmount);
                                     tvTotalPaidAmount2.setText("$" + totalPaidAmount);
-                                    tvDriverTipAmt.setText("$" + percentAmt);
-                                }*/
+                                    tvDriverTipAmt.setText("$" + tipAmt);
+                                }
                                 if (cost_flat.equalsIgnoreCase("1")) {
                                     tvDeliveryText.setText("Delivery Fee: Flat $" + object.getString("flat_amt") + " on every order.");
                                     delChargeAmount = Double.parseDouble(object.getString("flat_amt"));

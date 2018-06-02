@@ -59,6 +59,7 @@ public class CustomerModel implements Parcelable{
     String offer_type;
     String offer_decp;
     String minOrderAmt;
+    String couponType;
 
     public String getOffer_name() {
         return offer_name;
@@ -174,6 +175,7 @@ public class CustomerModel implements Parcelable{
         offer_id = in.readString();
         offer_decp = in.readString();
         minOrderAmt = in.readString();
+        couponType = in.readString();
     }
 
     public static final Creator<CustomerModel> CREATOR = new Creator<CustomerModel>() {
@@ -243,6 +245,7 @@ public class CustomerModel implements Parcelable{
                 ", offer_amount='" + offer_amount + '\'' +
                 ", offer_type='" + offer_type + '\'' +
                 ", offer_decp='" + offer_decp + '\'' +
+                ", couponType='" + couponType + '\'' +
                 ", minOrderAmt='" + minOrderAmt + '\'' +
                 '}';
     }
@@ -261,6 +264,14 @@ public class CustomerModel implements Parcelable{
 
     public void setMinOrderAmt(String minOrderAmt) {
         this.minOrderAmt = minOrderAmt;
+    }
+
+    public String getCouponType() {
+        return couponType;
+    }
+
+    public void setCouponType(String couponType) {
+        this.couponType = couponType;
     }
 
     @Override
@@ -310,6 +321,7 @@ public class CustomerModel implements Parcelable{
         parcel.writeString(offer_id);
         parcel.writeString(offer_decp);
         parcel.writeString(minOrderAmt);
+        parcel.writeString(couponType);
     }
     public CustomerModel() {
 

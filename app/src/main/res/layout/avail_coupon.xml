@@ -131,7 +131,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="0.5"
                     android:layout_height="wrap_content"
-                    android:text="Status : "
+                    android:text="Status"
                     style="@style/TextAppearance.AppCompat.Subhead"
                     app:edittextfont="Raleway-Regular.ttf"/>
                 <com.yberry.dinehawaii.customview.CustomTextView

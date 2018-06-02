@@ -281,7 +281,7 @@
                 android:drawableLeft="@drawable/drawable_green_dot"
                 android:drawablePadding="@dimen/_5sdp"
                 android:gravity="center"
-                android:text="Driver Tip(in %)"
+                android:text="Driver Tip"
                 android:textColor="@color/colorGreen"
                 app:edittextfont="@string/raleway_bold" />
             <RadioGroup
@@ -314,7 +314,7 @@
                 style="@style/TextAppearance.AppCompat.Subhead"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter Tip (%)"
+                android:hint="Enter Tip"
                 android:visibility="gone"
                 android:maxLength="2"
                 android:inputType="number"

@@ -116,6 +116,8 @@ public class BidItemListAdapter extends RecyclerView.Adapter<BidItemListAdapter.
                     .setNegativeButton("SELECT ALL", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
+                            adapter.selectAllCheckbox();
+                            adapter.notifyDataSetChanged();
                         }
                     }).show();
         }
