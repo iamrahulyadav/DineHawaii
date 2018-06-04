@@ -56,7 +56,7 @@ public class BidItemDetailsActivity extends AppCompatActivity implements View.On
     String bid_id = "";
     ArrayList<BidDetailsModel> modelsList;
     String TAG = "BidItemDetailsActivity";
-    CustomTextView tvbidUid, tvBidStatus, tvBidDate, items, basicinfo;
+    CustomTextView tvbidUid, tvBidStatus, tvBidDate, items, basicinfo,tvBidFreq,tvStartDate,tvEndDate,tvTermsCondt;
     LinearLayout llBasic, llitems;
     private LinearLayoutManager mLayoutManager;
     private RecyclerView mRecyclerView;
@@ -438,6 +438,10 @@ public class BidItemDetailsActivity extends AppCompatActivity implements View.On
         context = this;
         modelsList = new ArrayList<>();
         tvBidDate = (CustomTextView) findViewById(R.id.tvDateTime);
+        tvBidFreq = (CustomTextView) findViewById(R.id.tvBidFreq);
+        tvStartDate = (CustomTextView) findViewById(R.id.tvStartDate);
+        tvTermsCondt = (CustomTextView) findViewById(R.id.tvTermsCondt);
+        tvEndDate = (CustomTextView) findViewById(R.id.tvEndDate);
         tvBidStatus = (CustomTextView) findViewById(R.id.tvBidStatus);
         llBasic = (LinearLayout) findViewById(R.id.llBasic);
         llitems = (LinearLayout) findViewById(R.id.llitems);
@@ -488,6 +492,10 @@ public class BidItemDetailsActivity extends AppCompatActivity implements View.On
                         tvBidDate.setText(object.getString("date_time"));
                         tvbidUid.setText(object.getString("bid_unique_id"));
                         tvBidStatus.setText(object.getString("bid_status"));
+                        tvBidFreq.setText(object.getString("bid_frequency"));
+                        tvStartDate.setText(object.getString("start_date"));
+                        tvEndDate.setText(object.getString("end_date"));
+                        tvTermsCondt.setText(object.getString("terms_conditions"));
                     } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
                         modelsList.clear();
                         Toast.makeText(context, "no record found", Toast.LENGTH_SHORT).show();

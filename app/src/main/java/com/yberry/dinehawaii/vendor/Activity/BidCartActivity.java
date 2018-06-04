@@ -82,8 +82,9 @@ public class BidCartActivity extends AppCompatActivity implements View.OnClickLi
         }
     };
     private ArrayList<VendorBidItemModel> updatedcartItems;
-    private CustomEditText etEndDate;
+    private CustomEditText etEndDate,etTermsCondt,etOrderFreq,etStartDate;
     private Dialog otherDetailsDialog;
+
 
     @SuppressLint("LongLogTag")
     @Override
@@ -185,10 +186,10 @@ public class BidCartActivity extends AppCompatActivity implements View.OnClickLi
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         lp.gravity = Gravity.CENTER;
         otherDetailsDialog.getWindow().setAttributes(lp);
-        final CustomEditText etOrderFreq = (CustomEditText) otherDetailsDialog.findViewById(R.id.etOrderFreq);
-        CustomEditText etStartDate = (CustomEditText) otherDetailsDialog.findViewById(R.id.etStartDate);
+        etOrderFreq = (CustomEditText) otherDetailsDialog.findViewById(R.id.etOrderFreq);
+        etStartDate = (CustomEditText) otherDetailsDialog.findViewById(R.id.etStartDate);
         etEndDate = (CustomEditText) otherDetailsDialog.findViewById(R.id.etEndDate);
-        final CustomEditText etTermsCondt = (CustomEditText) otherDetailsDialog.findViewById(R.id.etTermsCondt);
+        etTermsCondt = (CustomEditText) otherDetailsDialog.findViewById(R.id.etTermsCondt);
         CustomButton btnSubmitBid = (CustomButton) otherDetailsDialog.findViewById(R.id.btnSubmitBid);
 
         etStartDate.setText(Function.getCurrentDateNew() + "");
@@ -235,8 +236,7 @@ public class BidCartActivity extends AppCompatActivity implements View.OnClickLi
         order_alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                updatedcartItems = new VendorBidDBHandler(context).getfinalBidCartItems();  //database data
-                Log.e(TAG, "onClick: updatedcartItems>>>>>" + updatedcartItems.toString());
+                updatedcartItems = new VendorBidDBHandler(context).getBidCartItems();  //database data
                 placeBid();
             }
         });
@@ -253,6 +253,10 @@ public class BidCartActivity extends AppCompatActivity implements View.OnClickLi
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("method", AppConstants.BUSINESS_VENDOR_API.PLACEBID);
         jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(context));
+        jsonObject.addProperty("start_date", etStartDate.getText().toString());
+        jsonObject.addProperty("end_date", etEndDate.getText().toString());
+        jsonObject.addProperty("terms_conditions", etTermsCondt.getText().toString());
+        jsonObject.addProperty("bid_frequency", etOrderFreq.getText().toString());
         JsonArray jsonArray = new JsonArray();
         for (int i = 0; i < updatedcartItems.size(); i++) {
             VendorBidItemModel model = updatedcartItems.get(i);
@@ -270,7 +274,7 @@ public class BidCartActivity extends AppCompatActivity implements View.OnClickLi
         }
 
         jsonObject.add("bidDetails", jsonArray);
-
+        Log.e(TAG, "placeBid: json"+jsonObject.toString() );
         final ProgressHUD progressHD = ProgressHUD.show(context, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
@@ -286,7 +290,7 @@ public class BidCartActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
 
-                Log.e(TAG, "Response Place Order >>> " + response.body().toString());
+                Log.e(TAG, "placeBid: request >>> " + response.body().toString());
                 String s = response.body().toString();
 
                 try {

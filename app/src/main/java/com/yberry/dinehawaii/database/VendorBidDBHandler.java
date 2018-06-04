@@ -85,6 +85,25 @@ public class VendorBidDBHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(KEY_VENDOR_ITEMQUANTITY, qty);
+       // values.put(KEY_VENDOR_ITEMTOTALCOST, item_total);
+        boolean bb = db.update(TABLE_CART_BID, values, KEY_ITEMID + "=?", new String[]{item_id}) > 0;
+        Log.e(TAG, "updateOrderItemQty: updated >> " + bb);
+        db.close();
+    }
+
+    public void updateBusTotalItemCost(String item_id, String item_total, String vendor_id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_BUSINESS_ITEMTOTALCOST, item_total);
+        boolean bb = db.update(TABLE_CART_BID, values, KEY_ITEMID + "=?", new String[]{item_id}) > 0;
+        Log.e(TAG, "updateBusTotalItemCost: updated >> " + bb);
+        db.close();
+    }
+/*
+ public void updateOrderItemQty(String qty, String item_id, String item_total, String vendor_id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_VENDOR_ITEMQUANTITY, qty);
         values.put(KEY_VENDOR_ITEMTOTALCOST, item_total);
         boolean bb = db.update(TABLE_CART_BID, values, KEY_ITEMID + "=? and " + KEY_VENDOR_ID + "=?", new String[]{item_id, vendor_id}) > 0;
 //        boolean bb = db.update(TABLE_CART_BID, values, KEY_ITEMID + "=?", new String[]{item_id}) > 0;
@@ -101,6 +120,7 @@ public class VendorBidDBHandler extends SQLiteOpenHelper {
         Log.e(TAG, "updateBusTotalItemCost: updated >> " + bb);
         db.close();
     }
+*/
 
     public String existItemIdOrder(String item_id, String vendor_id) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -146,10 +166,11 @@ public class VendorBidDBHandler extends SQLiteOpenHelper {
         }
         return modelList;
     }
- public ArrayList<VendorBidItemModel> getfinalBidCartItems() {
+
+    public ArrayList<VendorBidItemModel> getfinalBidCartItems() {
         SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<VendorBidItemModel> modelList = new ArrayList<VendorBidItemModel>();
-        String queary = "SELECT * FROM " + TABLE_CART_BID + " WHERE " + KEY_BUSINESS_ITEMTOTALCOST + " !=''" ;
+        String queary = "SELECT * FROM " + TABLE_CART_BID + " WHERE " + KEY_BUSINESS_ITEMTOTALCOST + " !=''";
         Cursor cursor = db.rawQuery(queary, null);
         Log.e(TAG, "getOrderCartItems: cursor >> " + cursor);
         if (cursor == null) {
@@ -216,14 +237,6 @@ public class VendorBidDBHandler extends SQLiteOpenHelper {
         int rowCount = 0;
         SQLiteDatabase db = this.getWritableDatabase();
         rowCount = db.delete(TABLE_CART_BID, KEY_ITEMID + "=? AND " + KEY_VENDOR_ID + "=?", new String[]{item_id, vendor_id});
-        Log.e(TAG, "deleteCartOrderTtem: rowCount >> " + rowCount);
-        return rowCount;
-    }
-
-    public int deleteVendorCartTtem(String menuid) {
-        int rowCount = 0;
-        SQLiteDatabase db = this.getWritableDatabase();
-        rowCount = db.delete(TABLE_CART_BID, KEY_VENDOR_ID + "=?", new String[]{menuid});
         Log.e(TAG, "deleteCartOrderTtem: rowCount >> " + rowCount);
         return rowCount;
     }

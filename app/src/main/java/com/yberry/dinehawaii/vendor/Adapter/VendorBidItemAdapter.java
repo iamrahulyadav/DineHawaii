@@ -89,19 +89,11 @@ public class VendorBidItemAdapter extends RecyclerView.Adapter<VendorBidItemAdap
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (!myViewHolder.etQuantity.getText().toString().equalsIgnoreCase("") && !myViewHolder.etQuantity.getText().toString().equalsIgnoreCase("0")) {
                     String qty = myViewHolder.etQuantity.getText().toString();
-                 /*   String price = model.getVendor_item_price();
+                    String price = model.getVendor_item_price();
                     int itemTotal = Integer.parseInt(qty) * Integer.parseInt(price);
                     Log.e(TAG, "onTextChanged: itemTotal >> " + itemTotal);
                     new VendorBidDBHandler(mContext).updateOrderItemQty(qty, model.getItem_id(), String.valueOf(itemTotal),model.getVendor_id());
-                    myViewHolder.tvItemTotalPrice.setText(String.valueOf(itemTotal));
-                 //   LocalBroadcastManager.getInstance(mContext).sendBroadcast(new Intent("updateTotalprice"));
-                    */
-                    for (int i = 0; i < list.size(); i++) {
-                        String price = list.get(i).getVendor_item_price();
-                        int itemTotal = Integer.parseInt(qty) * Integer.parseInt(price);
-                        // myViewHolder.tvItemTotalPrice.setText(String.valueOf(itemTotal));
-                        Log.e(TAG, "onTextChanged: itemTotal >> " + itemTotal);
-                    }
+                    //myViewHolder.tvItemTotalPrice.setText(String.valueOf(itemTotal));
                 }
             }
 
@@ -174,15 +166,6 @@ public class VendorBidItemAdapter extends RecyclerView.Adapter<VendorBidItemAdap
         return list;
     }
 
-    public double getTotalCost() {
-        double total_cost = 0;
-        for (VendorBidItemModel models : list) {
-            double cost = Double.parseDouble(models.getVendor_item_total_cost());
-            total_cost = total_cost + cost;
-        }
-        Log.e(TAG, "getTotalCost: total_cost >> " + total_cost);
-        return total_cost;
-    }
 
     public class InputFilters implements InputFilter {
 

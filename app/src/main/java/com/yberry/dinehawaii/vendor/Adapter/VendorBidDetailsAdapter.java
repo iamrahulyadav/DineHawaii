@@ -43,7 +43,6 @@ public class VendorBidDetailsAdapter extends RecyclerView.Adapter<VendorBidDetai
         myViewHolder.tvItemName.setText(model.getItemName());
         myViewHolder.tvVendorName.setText("(" + model.getVendorName() + ")");
         myViewHolder.tvItemQty.setText(model.getItemQuantity());
-        myViewHolder.tvItemTotalPrice.setText(model.getVendorBidAmount());
         myViewHolder.tvyourPrice.setText("$" + model.getBusinessBidAmt());
         myViewHolder.tvFinalPrice.setText("$" + model.getVendorBidFinalAmount());
         myViewHolder.tvItemPrice.setText(model.getItemAmount());

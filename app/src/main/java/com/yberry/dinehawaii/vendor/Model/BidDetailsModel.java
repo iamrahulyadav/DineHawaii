@@ -16,6 +16,26 @@ public class BidDetailsModel {
     @SerializedName("vendor_id")
     @Expose
     private String vendorId;
+
+    @Override
+    public String toString() {
+        return "BidDetailsModel{" +
+                "bidRowId='" + bidRowId + '\'' +
+                ", bidId='" + bidId + '\'' +
+                ", bidStatus='" + bidStatus + '\'' +
+                ", vendorId='" + vendorId + '\'' +
+                ", vendorName='" + vendorName + '\'' +
+                ", itemName='" + itemName + '\'' +
+                ", itemAmount='" + itemAmount + '\'' +
+                ", itemId='" + itemId + '\'' +
+                ", vendorProductId='" + vendorProductId + '\'' +
+                ", itemQuantity='" + itemQuantity + '\'' +
+                ", businessBidAmt='" + businessBidAmt + '\'' +
+                ", vendorBidAmount='" + vendorBidAmount + '\'' +
+                ", vendorBidFinalAmount='" + vendorBidFinalAmount + '\'' +
+                '}';
+    }
+
     @SerializedName("vendor_name")
     @Expose
     private String vendorName;
