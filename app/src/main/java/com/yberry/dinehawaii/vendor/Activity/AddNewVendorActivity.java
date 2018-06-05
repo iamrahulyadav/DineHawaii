@@ -11,10 +11,12 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -47,7 +49,8 @@ public class AddNewVendorActivity extends AppCompatActivity implements View.OnCl
     CustomEditText etname, etcity, etaddress, etcontact, etemail, etbusname, etLastNm, etVendorType;
     String TAG = "AddVendorActivity";
     String vendorText;
-    private String selectedVendorIds="";
+    LinearLayout mainView;
+    private String selectedVendorIds = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,7 +129,17 @@ public class AddNewVendorActivity extends AppCompatActivity implements View.OnCl
         etemail = (CustomEditText) findViewById(R.id.etVendorEmail);
         etbusname = (CustomEditText) findViewById(R.id.etVendorBus);
         etVendorType = (CustomEditText) findViewById(R.id.etVendorType);
+        mainView = (LinearLayout) findViewById(R.id.mainView);
         etVendorType.setOnClickListener(this);
+        mainView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                view = getCurrentFocus();
+                if (view != null)
+                    hideKeyboard();
+                return false;
+            }
+        });
     }
 
     @Override
@@ -268,7 +281,6 @@ public class AddNewVendorActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void showVendorTypeDialog() {
-
         AlertDialog.Builder dialog = new AlertDialog.Builder(AddNewVendorActivity.this);
         dialog.setTitle("Select Vendor");
         final RadioGroup group = new RadioGroup(this);
@@ -277,7 +289,7 @@ public class AddNewVendorActivity extends AppCompatActivity implements View.OnCl
             button.setId(Integer.parseInt(masterlist.get(i).getMaster_vendor_id()));
             button.setText(masterlist.get(i).getMaster_vendor_name());
             RadioGroup.LayoutParams params = new RadioGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            params.setMargins(0, 10, 0, 0);
+            params.setMargins(40, 10, 0, 0);
             button.setLayoutParams(params);
             group.addView(button);
         }

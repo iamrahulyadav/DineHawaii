@@ -87,10 +87,12 @@ public class ManageVendorsFragment extends Fragment implements View.OnClickListe
         recycler_view.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), recycler_view, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Intent intent = new Intent(context, VendorListActivity.class);
-                intent.putExtra("category_id", masterlist.get(position).getMaster_vendor_id());
-                intent.putExtra("category_name", masterlist.get(position).getMaster_vendor_name());
-                context.startActivity(intent);
+                if (masterlist!=null &&!masterlist.isEmpty()) {
+                    Intent intent = new Intent(context, VendorListActivity.class);
+                    intent.putExtra("category_id", masterlist.get(position).getMaster_vendor_id());
+                    intent.putExtra("category_name", masterlist.get(position).getMaster_vendor_name());
+                    context.startActivity(intent);
+                }
             }
 
             @Override

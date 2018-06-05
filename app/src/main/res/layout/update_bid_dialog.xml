@@ -46,26 +46,12 @@
 
         </RelativeLayout>
 
-        <com.yberry.dinehawaii.customview.CustomTextView
-            android:id="@+id/previousBidQuote"
-            style="@style/TextAppearance.AppCompat.Subhead"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/toolbar_bar"
-            android:layout_marginLeft="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_9sdp"
-            android:drawableLeft="@drawable/drawable_green_dot"
-            android:drawablePadding="@dimen/_5sdp"
-            android:gravity="center"
-            android:text="NA"
-            android:textColor="@color/colorGreen"
-            app:edittextfont="Raleway-Bold.ttf" />
 
         <LinearLayout
             android:id="@+id/llitems"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/previousBidQuote"
+            android:layout_below="@id/toolbar_bar"
             android:layout_marginTop="@dimen/_10sdp"
             android:orientation="vertical"
          >

@@ -46,19 +46,6 @@ public class VendorListAdapter extends RecyclerView.Adapter<VendorListAdapter.Vi
         holder.tvBusname.setText(model.getSub_vendor_busname());
         holder.tvVendorcontact.setText(model.getSub_vendor_contact());
         holder.tvtitle.setText(model.getSub_vendor_email());
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (model.getSub_vendor_categ().equalsIgnoreCase("Delivery Vendor")) {
-
-                } else {
-                    Intent intent = new Intent(context, VendorItemListActivity.class);
-                    intent.putExtra("vendor_id", model.getSub_vendor_id());
-                    intent.putExtra("vendor_name", model.getSub_vendor_busname());
-                    context.startActivity(intent);
-                }
-            }
-        });
     }
 
     @Override

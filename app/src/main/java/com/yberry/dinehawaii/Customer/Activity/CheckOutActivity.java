@@ -1876,17 +1876,17 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                                     tvDriverTipText.setText("Please Tip driver generously.");
                                 } else if (driver_tip.equalsIgnoreCase("1")) {
                                     tvDriverTipText.setVisibility(View.VISIBLE);
-                                    tvDriverTipText.setText("Driver Tip is included");
+                                    tvDriverTipText.setText("Driver Tip included");
                                     double tipAmt = Double.parseDouble(object.getString("driver_tip_amt"));
                                     totalPaidAmount = tipAmt + totalPaidAmount;
                                     totalPaidAmountBase = totalPaidAmount;
                                     Log.e(TAG, "DriverTip: totalPaidAmount >> " + totalPaidAmount);
 
                                     tipAmt = Double.valueOf(decimalFormat.format(tipAmt));
-                                    totalPaidAmount = Double.valueOf(decimalFormat.format(totalPaidAmount));
+
 
                                     tvTotalPaidAmount.setText("" + totalPaidAmount);
-                                    tvTotalPaidAmount2.setText("$" + totalPaidAmount);
+                                    tvTotalPaidAmount2.setText("$" + totalPaidAmountBase);
                                     tvDriverTipAmt.setText("$" + tipAmt);
                                 }
                                 if (cost_flat.equalsIgnoreCase("1")) {
@@ -1906,6 +1906,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                                     } else if (totalAmount >= Double.parseDouble(object.getString("between_val1")) && totalAmount <= Double.parseDouble(object.getString("between_val2"))) {
                                         delChargeAmount = Double.parseDouble(object.getString("between_amt"));
                                     } else {
+                                        tvDeliveryText.setText("No Delivery Fee Applied");
                                         //delChargeAmount = Double.parseDouble(object.getString("min_food_cost"));
                                         delChargeAmount = 0.0;
                                     }
@@ -1927,7 +1928,8 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                                 setFoodPrepTime(order_type);
 
                                 tvDelChargeAmount.setText("$" + String.valueOf(delChargeAmount));
-                                totalPaidAmount = totalAmount + delChargeAmount;
+                                totalPaidAmount = totalPaidAmount + delChargeAmount;
+//                                totalPaidAmount = totalAmount + delChargeAmount;
                                 totalPaidAmountBase = totalPaidAmount;
                                 tvTotalPaidAmount.setText(String.valueOf(totalPaidAmount));
                                 tvTotalPaidAmount2.setText("$" + String.valueOf(totalPaidAmount));

@@ -83,11 +83,7 @@ public class VendorListActivity extends AppCompatActivity implements View.OnClic
         init();
         setAdapter();
         setFloatingControls();
-        if (Util.isNetworkAvailable(context)) {
-            getAllVendorsList();
-            getAllMasterVendor();
-        } else
-            Toast.makeText(context, getResources().getString(R.string.msg_no_internet), Toast.LENGTH_SHORT).show();
+
 //        getAllVendorsList();
 
     }
@@ -139,14 +135,21 @@ public class VendorListActivity extends AppCompatActivity implements View.OnClic
                             model.setSub_vendor_categ(jsonObject1.getString("vendor_category"));
                             model.setSub_vendor_contact(jsonObject1.getString("contact_number"));
                             sublist.add(model);
+                            if (jsonObject1.getString("vendor_category").equalsIgnoreCase("Delivery Vendor"))
+                                floatingActionMenu.setVisibility(View.GONE);
+                            else
+                                floatingActionMenu.setVisibility(View.VISIBLE);
                         }
                     } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
                         sublist.clear();
+                        floatingActionMenu.setVisibility(View.GONE);
                         noData.setVisibility(View.VISIBLE);
                     }
                     adapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     noData.setVisibility(View.VISIBLE);
+                    sublist.clear();
+                    floatingActionMenu.setVisibility(View.GONE);
                     Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
@@ -177,6 +180,23 @@ public class VendorListActivity extends AppCompatActivity implements View.OnClic
         recycler_view.setLayoutManager(new LinearLayoutManager(context));
         adapter = new VendorListAdapter(context, sublist);
         recycler_view.setAdapter(adapter);
+        recycler_view.addOnItemTouchListener(new RecyclerItemClickListener(context, recycler_view, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                VendorMasterData model = sublist.get(position);
+                if (!model.getSub_vendor_categ().equalsIgnoreCase("Delivery Vendor")) {
+                    Intent intent = new Intent(context, VendorItemListActivity.class);
+                    intent.putExtra("vendor_id", model.getSub_vendor_id());
+                    intent.putExtra("vendor_name", model.getSub_vendor_busname());
+                    context.startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+
+            }
+        }));
     }
 
     private void setToolbar() {
@@ -200,6 +220,12 @@ public class VendorListActivity extends AppCompatActivity implements View.OnClic
     protected void onResume() {
         super.onResume();
         floatingActionMenu.close(true);
+        if (Util.isNetworkAvailable(context)) {
+            getAllVendorsList();
+            getAllMasterVendor();
+        } else
+            Toast.makeText(context, getResources().getString(R.string.msg_no_internet), Toast.LENGTH_SHORT).show();
+
     }
 
     @Override

@@ -1124,8 +1124,6 @@
                                     android:drawableLeft="@drawable/ic_call_black_drawable"
                                     android:text="NA"
                                     app:edittextfont="Raleway-Regular.ttf" />
-
-
                             </RelativeLayout>
                         </LinearLayout>
 

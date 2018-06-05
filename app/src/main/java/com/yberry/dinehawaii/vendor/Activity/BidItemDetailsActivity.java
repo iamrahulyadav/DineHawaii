@@ -88,7 +88,7 @@ public class BidItemDetailsActivity extends AppCompatActivity implements View.On
     }
 
     private void showbidDialog(final String bidRowId, final BidDetailsModel model) {
-        String[] options = {"Approve Bid", "Reject Bid", "Edit Bid"};
+        String[] options = {"Approve Bid", "Reject Bid", "Update Bid"};
         String[] optionsId = {"0", "1", "2"};
         alertdialog = new AlertDialog.Builder(context);
         alertdialog.setTitle("Choose an Option");
@@ -254,7 +254,6 @@ public class BidItemDetailsActivity extends AppCompatActivity implements View.On
         popup.setCanceledOnTouchOutside(false);
         popup.requestWindowFeature(Window.FEATURE_NO_TITLE);
         popup.setContentView(R.layout.update_bid_dialog);
-        final CustomTextView previousBid = (CustomTextView) popup.findViewById(R.id.previousBidQuote);
         final CustomTextView tvItemName = (CustomTextView) popup.findViewById(R.id.tvItemName);
         final CustomTextView tvItemPrice = (CustomTextView) popup.findViewById(R.id.tvItemPrice);
         final CustomTextView tvItemVendorPrice = (CustomTextView) popup.findViewById(R.id.tvItemVendorPrice);
@@ -262,7 +261,6 @@ public class BidItemDetailsActivity extends AppCompatActivity implements View.On
         final CustomEditText etYourPrice = (CustomEditText) popup.findViewById(R.id.etYourPrice);
         final CustomEditText etQuantity = (CustomEditText) popup.findViewById(R.id.etQuantity);
 
-        previousBid.setText("Previous Offered Price : $" + bidModel.getBusinessBidAmt());
 
         tvItemName.setText(bidModel.getItemName());
         tvItemPrice.setText(bidModel.getItemAmount());

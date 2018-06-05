@@ -165,11 +165,14 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
 
         AlertDialog.Builder builder = new AlertDialog.Builder(OrderDetailActivty.this);
         builder.setTitle("CHANGE ORDER STATUS");
+        builder.setCancelable(false);
         builder.setMessage("ALERT : If you change the order status, a notification will be sent to customer. This can't be undone. Do you want to change status?");
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 new CompleteOrderTask().execute();
+                if (order_type.equalsIgnoreCase("delivery") && status.equalsIgnoreCase("Pending"))
+                    getDeliveryVendors();
 
             }
         });
@@ -206,15 +209,15 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
             new_status = "In-Progress";
             showDialog();
         } else if (view.getId() == R.id.fabPrepared) {
-            //new_status = "Prepared";
-            //showDialog();
-            if (order_type.equalsIgnoreCase("delivery")) {
+            new_status = "Prepared";
+            showDialog();
+         /*   if (order_type.equalsIgnoreCase("delivery")) {
                 getDeliveryVendors();
 
             } else if (order_type.equalsIgnoreCase("pickup")) {
                 new_status = "Prepared";
                 showDialog();
-            }
+            }*/
         } else if (view.getId() == R.id.fabDelPick) {
             Log.e(TAG, "onClick: order_type >> " + order_type);
             if (order_type.equalsIgnoreCase("delivery"))
@@ -228,7 +231,7 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
         }
     }
 
-    private void showDeliveryVendor(ArrayList<VendorModel> vendorList) {
+    private void showDeliveryVendor(final ArrayList<VendorModel> vendorList) {
         Log.e(TAG, "showDeliveryVendor: vendorList.size() >> " + this.vendorList.size());
        /* vendorList = new ArrayList<VendorModel>();
         VendorModel data1 = new VendorModel();
@@ -239,6 +242,7 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
 
         android.app.AlertDialog.Builder dialog = new android.app.AlertDialog.Builder(OrderDetailActivty.this);
         dialog.setTitle("Select Delivery Vendor");
+        dialog.setCancelable(false);
         final RadioGroup group = new RadioGroup(this);
         for (int i = 0; i < this.vendorList.size(); i++) {
             RadioButton button = new RadioButton(OrderDetailActivty.this);
@@ -268,9 +272,24 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
                 assignDelivery(vendorId);
             }
         });
-        dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        dialog.setNegativeButton("Request to all", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                ArrayList<String> items = new ArrayList<>();
+                for (int j = 0; j < vendorList.size(); j++) {
+                    items.add(vendorList.get(j).getVendorId());
+                }
+                Log.e(TAG, "onClick: all>>" + items.toString());
+                String separatedList = items.toString().replace("[", "").replace("]", "");
+//                String separatedList = TextUtils.join(",", items);
+                Log.e(TAG, "onClick: separatedList" + separatedList);
+                assignDelivery(separatedList);
+            }
+        });
+        dialog.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
             }
         });
 
@@ -500,17 +519,25 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
                             JsonObject result = jsonArray.get(i).getAsJsonObject();
                             Log.e("listItemresult", String.valueOf(result));
                             OrderDetails listItem = new Gson().fromJson(result, OrderDetails.class);
-
+                            status = listItem.getOrder_status();
                             if (listItem.getOrder_status().equalsIgnoreCase("Pending")) {
                                 fabPending.setEnabled(false);
+                                fabInProgress.setEnabled(true);
+                                fabPrepared.setEnabled(false);
+                                fabDelPick.setEnabled(false);
+                                fabCompleted.setEnabled(false);
                             } else if (listItem.getOrder_status().equalsIgnoreCase("In-Progress")) {
                                 fabPending.setEnabled(false);
                                 fabInProgress.setEnabled(false);
+                                fabPrepared.setEnabled(true);
+                                fabDelPick.setEnabled(false);
+                                fabCompleted.setEnabled(false);
                                 setInProgress();
                             } else if (listItem.getOrder_status().equalsIgnoreCase("Prepared")) {
                                 fabPending.setEnabled(false);
                                 fabInProgress.setEnabled(false);
-                                fabPrepared.setEnabled(false);
+                                fabPrepared.setEnabled(true);
+                                fabCompleted.setEnabled(true);
                                 setPrepared();
                             } else if (listItem.getOrder_status().equalsIgnoreCase("Delivered") || listItem.getOrder_status().equalsIgnoreCase("Picked-up")) {
                                 fabPending.setEnabled(false);
