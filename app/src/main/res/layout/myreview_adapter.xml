@@ -14,7 +14,6 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:visibility="gone"
-        android:background="@color/lightgray"
         android:id="@+id/linearSortBy"
         android:orientation="horizontal">
         <com.yberry.dinehawaii.customview.CustomTextView
@@ -24,7 +23,7 @@
             android:layout_marginLeft="@dimen/_5sdp"
             app:edittextfont="Raleway-Regular.ttf"
             android:textColor="@color/black"
-            android:text="SORT BY : " />
+            android:text="SORT BY" />
 
         <com.yberry.dinehawaii.customview.CustomCheckBox
             android:layout_width="0dp"
@@ -65,10 +64,6 @@
             android:layout_height="wrap_content"
             android:text="Reviews - Replies"/>
     </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_1sdp"
-        android:background="@color/offwhite"></View>
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -99,15 +94,15 @@
                     <com.yberry.dinehawaii.customview.CustomTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/_11sdp"
-                        android:text="Date :"
+                        android:text="Date"
+                        style="@style/TextAppearance.AppCompat.Subhead"
                         app:edittextfont="Raleway-Bold.ttf" />
 
                     <com.yberry.dinehawaii.customview.CustomTextView
                         android:id="@+id/tvDate"
                         android:layout_width="wrap_content"
-                        android:textSize="@dimen/_11sdp"
                         android:layout_marginTop="@dimen/_5sdp"
+                        style="@style/TextAppearance.AppCompat.Small"
                         android:layout_height="wrap_content"
                         app:edittextfont="Raleway-Regular.ttf"
                         android:text="NA" />
@@ -125,8 +120,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:textSize="@dimen/_11sdp"
-                        android:text="Business :"
+                        style="@style/TextAppearance.AppCompat.Subhead"
+                        android:text="Business"
                         app:edittextfont="Raleway-Bold.ttf"  />
 
                     <com.yberry.dinehawaii.customview.CustomTextView
@@ -135,7 +130,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:layout_marginTop="@dimen/_5sdp"
-                        android:textSize="@dimen/_11sdp"
+                        style="@style/TextAppearance.AppCompat.Small"
                         app:edittextfont="Raleway-Regular.ttf"
                         android:text="NA" />
 
@@ -152,14 +147,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:textSize="@dimen/_11sdp"
-                        android:text="Overall Rating :"
+                        style="@style/TextAppearance.AppCompat.Subhead"
+                        android:text="Overall Rating"
                         app:edittextfont="Raleway-Bold.ttf" />
 
                     <com.yberry.dinehawaii.customview.CustomTextView
                         android:id="@+id/overallRatting"
                         android:layout_width="match_parent"
-                        android:textSize="@dimen/_11sdp"
+                        style="@style/TextAppearance.AppCompat.Small"
                         android:gravity="center"
                         android:layout_marginTop="@dimen/_5sdp"
                         app:edittextfont="Raleway-Regular.ttf"
@@ -175,8 +170,8 @@
             <com.yberry.dinehawaii.customview.CustomTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Details :"
-                android:textSize="@dimen/_11sdp"
+                android:text="Details"
+                style="@style/TextAppearance.AppCompat.Subhead"
                 app:edittextfont="Raleway-Bold.ttf"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginLeft="@dimen/_5sdp"
@@ -185,27 +180,29 @@
                 android:layout_width="match_parent"
                 android:layout_marginLeft="@dimen/_5sdp"
                 android:layout_height="@dimen/_40sdp"
+                android:layout_gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <com.yberry.dinehawaii.customview.CustomTextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
+                    style="@style/TextAppearance.AppCompat.Subhead"
                     android:layout_weight="0.4"
                     app:edittextfont="Raleway-Regular.ttf"
                     android:gravity="center_vertical"
                     android:text="Rating"
-                    android:textSize="@dimen/_11sdp" />
+                    />
 
                 <RatingBar
                     android:id="@+id/rattingbar"
-                    android:layout_width="0dp"
-                    android:layout_weight="0.9"
-                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="@dimen/_10sdp"
                     android:isIndicator="true"
                     android:numStars="5"
-                    android:scaleX=".4"
-                    android:scaleY=".4"
+                    android:scaleX="0.5"
+                    android:scaleY="0.5"
                     android:stepSize="1" />
 
             </LinearLayout>
@@ -232,13 +229,13 @@
                     app:edittextfont="Raleway-Regular.ttf"
                     android:gravity="center_vertical"
                     android:text="Test"
-                    android:textSize="@dimen/_11sdp" />
+                    />
 
                 <com.yberry.dinehawaii.customview.CustomTextView
                     android:id="@+id/etQues1"
                     android:layout_width="0dp"
                     android:layout_weight="0.9"
-                    android:textSize="@dimen/_11sdp"
+                   
                     android:layout_height="match_parent"
                     app:edittextfont="Raleway-Regular.ttf"
                     android:text="test review"

@@ -102,6 +102,12 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
     }
 
     private void init() {
+        view = (View) findViewById(R.id.view_total);
+        tvegiftamt = (CustomTextView) findViewById(R.id.tvegiftamt);
+        tvegiftcode = (CustomTextView) findViewById(R.id.tvegiftcode);
+        tvloyaltypt = (CustomTextView) findViewById(R.id.tvLoyaltyPoints);
+        tvcouponamt = (CustomTextView) findViewById(R.id.tvcouponamt);
+        tvcouponcode = (CustomTextView) findViewById(R.id.tvcouponcode);
         tvOrderId = (CustomTextView) findViewById(R.id.tvOrderId);
         tvDateTime = (CustomTextView) findViewById(R.id.tvDateTime);
         tvOrderStatus = (CustomTextView) findViewById(R.id.tvOrderStatus);
@@ -170,9 +176,11 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                new CompleteOrderTask().execute();
-                if (order_type.equalsIgnoreCase("delivery") && status.equalsIgnoreCase("Pending"))
+                if (order_type.equalsIgnoreCase("delivery") && status.equalsIgnoreCase("Pending")) {
                     getDeliveryVendors();
+                } else
+                    new CompleteOrderTask().execute();
+
 
             }
         });
@@ -270,6 +278,8 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
                 Log.e(TAG, "onClick: " + group.getCheckedRadioButtonId());
                 String vendorId = String.valueOf(group.getCheckedRadioButtonId());
                 assignDelivery(vendorId);
+                new CompleteOrderTask().execute();
+
             }
         });
         dialog.setNegativeButton("Request to all", new DialogInterface.OnClickListener() {
@@ -284,6 +294,7 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
 //                String separatedList = TextUtils.join(",", items);
                 Log.e(TAG, "onClick: separatedList" + separatedList);
                 assignDelivery(separatedList);
+                new CompleteOrderTask().execute();
             }
         });
         dialog.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
@@ -428,7 +439,7 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.BUSSINES_USER_BUSINESSAPI.ALL_DELIVERY_VENDORS);
         jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(OrderDetailActivty.this));
-        jsonObject.addProperty("business_id", AppPreferencesBuss.getUserId(OrderDetailActivty.this));
+        jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(OrderDetailActivty.this));
         Log.e(TAG, "getDeliveryVendors: Request >> " + jsonObject);
 
         MyApiEndpointInterface apiService = ApiClient.getClient().create(MyApiEndpointInterface.class);
@@ -453,7 +464,8 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
                             vendorList.add(model);
                         }
                         showDeliveryVendor(vendorList);
-                    } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
+                    } else {
+                        Toast.makeText(OrderDetailActivty.this, "No delivery vendors available", Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -530,13 +542,14 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
                                 fabPending.setEnabled(false);
                                 fabInProgress.setEnabled(false);
                                 fabPrepared.setEnabled(true);
-                                fabDelPick.setEnabled(false);
-                                fabCompleted.setEnabled(false);
+                                fabDelPick.setEnabled(true);
+                                fabCompleted.setEnabled(true);
                                 setInProgress();
                             } else if (listItem.getOrder_status().equalsIgnoreCase("Prepared")) {
                                 fabPending.setEnabled(false);
                                 fabInProgress.setEnabled(false);
                                 fabPrepared.setEnabled(true);
+                                fabDelPick.setEnabled(true);
                                 fabCompleted.setEnabled(true);
                                 setPrepared();
                             } else if (listItem.getOrder_status().equalsIgnoreCase("Delivered") || listItem.getOrder_status().equalsIgnoreCase("Picked-up")) {
@@ -553,14 +566,14 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
                                 fabCompleted.setEnabled(false);
                                 setCompleted();
                             }
-                            if (listItem.getLoyalty_points().equalsIgnoreCase(""))
+                            if (listItem.getLoyalty_points().equalsIgnoreCase("") && listItem.getLoyalty_points().equalsIgnoreCase("0"))
                                 llloyalty.setVisibility(View.GONE);
                             else {
                                 llloyalty.setVisibility(View.VISIBLE);
                                 view.setVisibility(View.VISIBLE);
                                 tvloyaltypt.setText(listItem.getLoyalty_points());
                             }
-                            if (listItem.getE_gift_code().equalsIgnoreCase("")) {
+                            if (listItem.getE_gift_code().equalsIgnoreCase("") && listItem.getE_gift_code().equalsIgnoreCase("0")) {
                                 llecode.setVisibility(View.GONE);
                                 lleamt.setVisibility(View.GONE);
                             } else {
@@ -570,7 +583,7 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
                                 tvegiftamt.setText(listItem.getE_gift_amount());
                                 tvegiftcode.setText(listItem.getE_gift_code());
                             }
-                            if (listItem.getCoupon_code().equalsIgnoreCase("")) {
+                            if (listItem.getCoupon_code().equalsIgnoreCase("") && listItem.getCoupon_code().equalsIgnoreCase("0")) {
                                 llcamt.setVisibility(View.GONE);
                                 llccode.setVisibility(View.GONE);
                             } else {
@@ -583,8 +596,10 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
 
                             switch (listItem.getOrder_type()) {
                                 case "In-House":
-                                    order_type = "delivery";
+                                    order_type = "inhouse";
                                     tvFabText.setText("Delivered");
+                                    cardDelivery.setVisibility(View.VISIBLE);
+                                    break;
                                 case "Home Delivery":
                                     order_type = "delivery";
                                     tvFabText.setText("Delivered");

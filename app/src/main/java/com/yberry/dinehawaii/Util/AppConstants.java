@@ -231,8 +231,8 @@ public class AppConstants {
         String BID_UPDATE = "Bid_Update";
         String APPROVEBID = "Bid_Approved";
         String REJECTBID = "Bid_Rejected";
-
-
+        String ASSIGN_VENDOR_IN_BUSINESS = "assign_vendor_in_business";
+        String REMOVE_VENDOR_IN_BUSINESS= "remove_vendor_in_business";
     }
 
     public interface BUSINESS_TABLE_SYSTEM_API {

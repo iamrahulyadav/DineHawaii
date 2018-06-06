@@ -134,6 +134,7 @@ public class VendorListActivity extends AppCompatActivity implements View.OnClic
                             model.setSub_vendor_locality(jsonObject1.getString("locality"));
                             model.setSub_vendor_categ(jsonObject1.getString("vendor_category"));
                             model.setSub_vendor_contact(jsonObject1.getString("contact_number"));
+                            model.setVendor_assign_status(jsonObject1.getString("vendor_assign_status"));
                             sublist.add(model);
                             if (jsonObject1.getString("vendor_category").equalsIgnoreCase("Delivery Vendor"))
                                 floatingActionMenu.setVisibility(View.GONE);
@@ -183,12 +184,14 @@ public class VendorListActivity extends AppCompatActivity implements View.OnClic
         recycler_view.addOnItemTouchListener(new RecyclerItemClickListener(context, recycler_view, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                VendorMasterData model = sublist.get(position);
-                if (!model.getSub_vendor_categ().equalsIgnoreCase("Delivery Vendor")) {
-                    Intent intent = new Intent(context, VendorItemListActivity.class);
-                    intent.putExtra("vendor_id", model.getSub_vendor_id());
-                    intent.putExtra("vendor_name", model.getSub_vendor_busname());
-                    context.startActivity(intent);
+                if (!sublist.isEmpty() && sublist != null) {
+                    VendorMasterData model = sublist.get(position);
+                    if (!model.getSub_vendor_categ().equalsIgnoreCase("Delivery Vendor")) {
+                        Intent intent = new Intent(context, VendorItemListActivity.class);
+                        intent.putExtra("vendor_id", model.getSub_vendor_id());
+                        intent.putExtra("vendor_name", model.getSub_vendor_busname());
+                        context.startActivity(intent);
+                    }
                 }
             }
 

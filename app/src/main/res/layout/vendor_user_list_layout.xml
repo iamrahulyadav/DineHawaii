@@ -20,13 +20,26 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <com.yberry.dinehawaii.customview.CustomTextView
-            android:id="@+id/tvBusname"
-            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="NA"
-            app:edittextfont="@string/raleway_regular" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/tvBusname"
+                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="NA"
+                app:edittextfont="@string/raleway_regular" />
+            <android.support.v7.widget.SwitchCompat
+                android:layout_width="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_height="wrap_content"
+                android:id="@+id/switchAdd"
+                android:checked="true"
+                android:text="Added"
+                style="@style/TextAppearance.AppCompat.Subhead"/>
+        </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/llbusnm"

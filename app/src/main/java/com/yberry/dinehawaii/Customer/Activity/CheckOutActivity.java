@@ -144,9 +144,8 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_check_out);
         context = this;
         setToolbar();
-        init();
         decimalFormat = new DecimalFormat("#.##");
-
+        init();
         checkPackage();
         cartItems = new DatabaseHandler(context).getCartItems(AppPreferences.getBusiID(context));  //database data
         Log.e(TAG, "onCreate: cartItems >> " + cartItems);
@@ -205,8 +204,6 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                         timeTakeout = object.getString("takeout_min");
                         takeOut_lead_time = object.getString("takeout_lead_time");
                         catering_lead_days = object.getString("catering_days");
-                    } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
-                    } else {
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -733,7 +730,8 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
 
 
         double grandtotal = Double.valueOf(decimalFormat.format(total));
-        tvTotalPaidAmount.setText("" + String.valueOf(decimalFormat.format(totalPaidAmountBase)));
+        tvTotalPaidAmount.setText("" + grandtotal);
+//        tvTotalPaidAmount.setText("" + String.valueOf(decimalFormat.format(totalPaidAmountBase)));
         loylityBal.setText(balance + "");
         loyality_apply.setText("");
         applyLoyaltyPoints.setVisibility(View.VISIBLE);
@@ -1930,9 +1928,9 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                                 tvDelChargeAmount.setText("$" + String.valueOf(delChargeAmount));
                                 totalPaidAmount = totalPaidAmount + delChargeAmount;
 //                                totalPaidAmount = totalAmount + delChargeAmount;
-                                totalPaidAmountBase = totalPaidAmount;
-                                tvTotalPaidAmount.setText(String.valueOf(totalPaidAmount));
-                                tvTotalPaidAmount2.setText("$" + String.valueOf(totalPaidAmount));
+                                totalPaidAmountBase = Double.parseDouble(decimalFormat.format(totalPaidAmount));
+                                tvTotalPaidAmount.setText(decimalFormat.format(totalPaidAmount)+"");
+                                tvTotalPaidAmount2.setText("$" + totalPaidAmountBase);
 
                             } else {
                                 order_type = "0";
