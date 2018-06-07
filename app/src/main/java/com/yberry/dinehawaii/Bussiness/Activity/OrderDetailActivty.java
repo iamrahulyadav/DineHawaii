@@ -180,8 +180,6 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
                     getDeliveryVendors();
                 } else
                     new CompleteOrderTask().execute();
-
-
             }
         });
 
@@ -566,14 +564,14 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
                                 fabCompleted.setEnabled(false);
                                 setCompleted();
                             }
-                            if (listItem.getLoyalty_points().equalsIgnoreCase("") && listItem.getLoyalty_points().equalsIgnoreCase("0"))
+                            if (listItem.getLoyalty_points().equalsIgnoreCase("") || listItem.getLoyalty_points().equalsIgnoreCase("0"))
                                 llloyalty.setVisibility(View.GONE);
                             else {
                                 llloyalty.setVisibility(View.VISIBLE);
                                 view.setVisibility(View.VISIBLE);
                                 tvloyaltypt.setText(listItem.getLoyalty_points());
                             }
-                            if (listItem.getE_gift_code().equalsIgnoreCase("") && listItem.getE_gift_code().equalsIgnoreCase("0")) {
+                            if (listItem.getE_gift_code().equalsIgnoreCase("") || listItem.getE_gift_code().equalsIgnoreCase("0")) {
                                 llecode.setVisibility(View.GONE);
                                 lleamt.setVisibility(View.GONE);
                             } else {
@@ -583,7 +581,7 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
                                 tvegiftamt.setText(listItem.getE_gift_amount());
                                 tvegiftcode.setText(listItem.getE_gift_code());
                             }
-                            if (listItem.getCoupon_code().equalsIgnoreCase("") && listItem.getCoupon_code().equalsIgnoreCase("0")) {
+                            if (listItem.getCoupon_code().equalsIgnoreCase("") || listItem.getCoupon_code().equalsIgnoreCase("0")) {
                                 llcamt.setVisibility(View.GONE);
                                 llccode.setVisibility(View.GONE);
                             } else {
