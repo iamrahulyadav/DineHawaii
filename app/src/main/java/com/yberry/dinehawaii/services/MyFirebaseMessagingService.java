@@ -126,6 +126,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 String BUSINESS_DELIVERY_PICKEDUP = "" + remoteMessage.getData().get(AppConstants.NOTIFICATION_KEY.BUSINESS_DELIVERY_PICKEDUP);
                 String CUSTOMER_DELIVERY_COMPLETED = "" + remoteMessage.getData().get(AppConstants.NOTIFICATION_KEY.CUSTOMER_DELIVERY_COMPLETED);
                 String CUSTOMER_DELIVERY_PICKEDUP = "" + remoteMessage.getData().get(AppConstants.NOTIFICATION_KEY.CUSTOMER_DELIVERY_PICKEDUP);
+                String DRIVER_ARRIVED = "" + remoteMessage.getData().get(AppConstants.NOTIFICATION_KEY.DRIVER_ARRIVED);
                 if (!BUSINESS_DELIVERY_PICKEDUP.equalsIgnoreCase("null")) {
                     JSONObject jsonObj = null;
                     try {
@@ -154,6 +155,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     JSONObject jsonObj = null;
                     try {
                         jsonObj = new JSONObject(CUSTOMER_DELIVERY_COMPLETED);
+                        sendNotification(new Intent(), jsonObj.getString("msg"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else if (!DRIVER_ARRIVED.equalsIgnoreCase("null")) {
+                    JSONObject jsonObj = null;
+                    try {
+                        jsonObj = new JSONObject(DRIVER_ARRIVED);
                         sendNotification(new Intent(), jsonObj.getString("msg"));
                     } catch (JSONException e) {
                         e.printStackTrace();

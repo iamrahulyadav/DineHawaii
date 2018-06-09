@@ -11,30 +11,37 @@ public class VendorModel implements Serializable {
     private String vendorName;
     @SerializedName("business_name")
     @Expose
-    private String vendorBusName;
-    @SerializedName("contact_no")
-    @Expose
-    private String vendorContact;
-    @SerializedName("business_address")
-    @Expose
-    private String vendorBusAddress;
-    @SerializedName("added_on")
-    @Expose
-    private String vendorAddedOn;
+    private String businessName;
     @SerializedName("vendor_id")
     @Expose
     private String vendorId;
+    @SerializedName("vendor_favorite_status")
+    @Expose
+    private String vendorFavoriteStatus;
 
+    public String getVendorName() {
+        return vendorName;
+    }
+
+    public void setVendorName(String vendorName) {
+        this.vendorName = vendorName;
+    }
+
+    public String getBusinessName() {
+        return businessName;
+    }
+
+    public void setBusinessName(String businessName) {
+        this.businessName = businessName;
+    }
 
     @Override
     public String toString() {
         return "VendorModel{" +
                 "vendorName='" + vendorName + '\'' +
-                ", vendorBusName='" + vendorBusName + '\'' +
-                ", vendorContact='" + vendorContact + '\'' +
-                ", vendorBusAddress='" + vendorBusAddress + '\'' +
-                ", vendorAddedOn='" + vendorAddedOn + '\'' +
+                ", businessName='" + businessName + '\'' +
                 ", vendorId='" + vendorId + '\'' +
+                ", vendorFavoriteStatus='" + vendorFavoriteStatus + '\'' +
                 '}';
     }
 
@@ -46,44 +53,11 @@ public class VendorModel implements Serializable {
         this.vendorId = vendorId;
     }
 
-    public String getVendorName() {
-        return vendorName;
+    public String getVendorFavoriteStatus() {
+        return vendorFavoriteStatus;
     }
 
-    public void setVendorName(String vendorName) {
-        this.vendorName = vendorName;
+    public void setVendorFavoriteStatus(String vendorFavoriteStatus) {
+        this.vendorFavoriteStatus = vendorFavoriteStatus;
     }
-
-    public String getVendorBusAddress() {
-        return vendorBusAddress;
-    }
-
-    public void setVendorBusAddress(String vendorBusAddress) {
-        this.vendorBusAddress = vendorBusAddress;
-    }
-
-    public String getVendorContact() {
-        return vendorContact;
-    }
-
-    public void setVendorContact(String vendorContact) {
-        this.vendorContact = vendorContact;
-    }
-
-    public String getVendorBusName() {
-        return vendorBusName;
-    }
-
-    public void setVendorBusName(String vendorBusName) {
-        this.vendorBusName = vendorBusName;
-    }
-
-    public String getVendorAddedOn() {
-        return vendorAddedOn;
-    }
-
-    public void setVendorAddedOn(String vendorAddedOn) {
-        this.vendorAddedOn = vendorAddedOn;
-    }
-
 }

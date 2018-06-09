@@ -13,6 +13,7 @@ public class VendorMasterData {
     String sub_vendor_locality;
     String sub_vendor_contact;
     String vendor_assign_status;
+    String favorite_del_status;
 
     public String getSub_vendor_contact() {
         return sub_vendor_contact;
@@ -82,6 +83,25 @@ public class VendorMasterData {
         return master_vendor_name;
     }
 
+    @Override
+    public String toString() {
+        return "VendorMasterData{" +
+                "master_vendor_id='" + master_vendor_id + '\'' +
+                ", master_vendor_name='" + master_vendor_name + '\'' +
+                ", master_vendor_addedon='" + master_vendor_addedon + '\'' +
+                ", sub_vendor_id='" + sub_vendor_id + '\'' +
+                ", sub_vendor_email='" + sub_vendor_email + '\'' +
+                ", sub_vendor_fn='" + sub_vendor_fn + '\'' +
+                ", sub_vendor_ln='" + sub_vendor_ln + '\'' +
+                ", sub_vendor_categ='" + sub_vendor_categ + '\'' +
+                ", sub_vendor_busname='" + sub_vendor_busname + '\'' +
+                ", sub_vendor_locality='" + sub_vendor_locality + '\'' +
+                ", sub_vendor_contact='" + sub_vendor_contact + '\'' +
+                ", vendor_assign_status='" + vendor_assign_status + '\'' +
+                ", favorite_del_status='" + favorite_del_status + '\'' +
+                '}';
+    }
+
     public void setMaster_vendor_name(String master_vendor_name) {
         this.master_vendor_name = master_vendor_name;
     }
@@ -103,22 +123,12 @@ public class VendorMasterData {
     }
 
 
-    @Override
-    public String toString() {
-        return "VendorMasterData{" +
-                "master_vendor_id='" + master_vendor_id + '\'' +
-                ", master_vendor_name='" + master_vendor_name + '\'' +
-                ", master_vendor_addedon='" + master_vendor_addedon + '\'' +
-                ", sub_vendor_id='" + sub_vendor_id + '\'' +
-                ", sub_vendor_email='" + sub_vendor_email + '\'' +
-                ", sub_vendor_fn='" + sub_vendor_fn + '\'' +
-                ", sub_vendor_ln='" + sub_vendor_ln + '\'' +
-                ", sub_vendor_categ='" + sub_vendor_categ + '\'' +
-                ", sub_vendor_busname='" + sub_vendor_busname + '\'' +
-                ", sub_vendor_locality='" + sub_vendor_locality + '\'' +
-                ", sub_vendor_contact='" + sub_vendor_contact + '\'' +
-                ", vendor_assign_status='" + vendor_assign_status + '\'' +
-                '}';
+    public String getFavorite_del_status() {
+        return favorite_del_status;
+    }
+
+    public void setFavorite_del_status(String favorite_del_status) {
+        this.favorite_del_status = favorite_del_status;
     }
 
     public String getVendor_assign_status() {

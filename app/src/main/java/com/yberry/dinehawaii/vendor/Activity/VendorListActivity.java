@@ -6,13 +6,16 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -65,6 +68,13 @@ public class VendorListActivity extends AppCompatActivity implements View.OnClic
     private RecyclerView recycler_view;
     private VendorListAdapter adapter;
     private FloatingActionMenu floatingActionMenu;
+    BroadcastReceiver updateData = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            sublist.clear();
+            getAllVendorsList();
+        }
+    };
     private RecyclerView mRecyclerView;
     private String selectedVendorId = "";
 
@@ -83,14 +93,19 @@ public class VendorListActivity extends AppCompatActivity implements View.OnClic
         init();
         setAdapter();
         setFloatingControls();
-
-//        getAllVendorsList();
+        LocalBroadcastManager.getInstance(context).registerReceiver(updateData, new IntentFilter("updateData"));
 
     }
 
     private void setFloatingControls() {
         new FloatingButton().showFloatingButton(context);
         new FloatingButton().setFloatingButtonControls(context);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(updateData);
     }
 
     private void getAllVendorsList() {
@@ -135,6 +150,7 @@ public class VendorListActivity extends AppCompatActivity implements View.OnClic
                             model.setSub_vendor_categ(jsonObject1.getString("vendor_category"));
                             model.setSub_vendor_contact(jsonObject1.getString("contact_number"));
                             model.setVendor_assign_status(jsonObject1.getString("vendor_assign_status"));
+                            model.setFavorite_del_status(jsonObject1.getString("vendor_favorite_status"));
                             sublist.add(model);
                             if (jsonObject1.getString("vendor_category").equalsIgnoreCase("Delivery Vendor"))
                                 floatingActionMenu.setVisibility(View.GONE);
@@ -265,7 +281,13 @@ public class VendorListActivity extends AppCompatActivity implements View.OnClic
         });
         mLayoutManager = new LinearLayoutManager(context);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        SelectVendorTypeAdapter selectVendor = new SelectVendorTypeAdapter(context, sublist, "sub_category");
+        ArrayList<VendorMasterData> ordersList = new ArrayList<>();
+        for (int i = 0; i < sublist.size(); i++) {
+            if (sublist.get(i).getVendor_assign_status().equalsIgnoreCase("1"))
+                ordersList.add(sublist.get(i));
+        }
+        SelectVendorTypeAdapter selectVendor = new SelectVendorTypeAdapter(context, ordersList, "sub_category");
+//        SelectVendorTypeAdapter selectVendor = new SelectVendorTypeAdapter(context, sublist, "sub_category");
         mRecyclerView.setAdapter(selectVendor);
         mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(context, mRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
@@ -275,8 +297,6 @@ public class VendorListActivity extends AppCompatActivity implements View.OnClic
                 Intent intent = new Intent(context, OrderItemListActivity.class);
                 intent.putExtra("vendor_id", model.getSub_vendor_id());
                 startActivity(intent);
-                Log.e(TAG, "onItemClick: " + model.getSub_vendor_id());
-                Log.e(TAG, "onItemClick: " + model.getSub_vendor_busname());
                 mDialog.cancel();
 
             }

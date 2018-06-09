@@ -253,7 +253,7 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
         for (int i = 0; i < this.vendorList.size(); i++) {
             RadioButton button = new RadioButton(OrderDetailActivty.this);
             button.setId(Integer.parseInt(this.vendorList.get(i).getVendorId()));
-            button.setText(this.vendorList.get(i).getVendorBusName());
+            button.setText(this.vendorList.get(i).getBusinessName());
             RadioGroup.LayoutParams params = new RadioGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             params.setMargins(80, 10, 0, 0);
             button.setLayoutParams(params);

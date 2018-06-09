@@ -31,6 +31,24 @@
                 android:layout_height="wrap_content"
                 android:text="NA"
                 app:edittextfont="@string/raleway_regular" />
+            <ImageView
+                android:id="@+id/favBorder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/tvBusname"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:src="@drawable/ic_favorite_border_black_24dp" />
+
+            <ImageView
+                android:layout_toRightOf="@id/tvBusname"
+                android:id="@+id/favVendor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:src="@drawable/ic_favorite_black_24dp"
+                android:visibility="gone" />
             <android.support.v7.widget.SwitchCompat
                 android:layout_width="wrap_content"
                 android:layout_alignParentEnd="true"

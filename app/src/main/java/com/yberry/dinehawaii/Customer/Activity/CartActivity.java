@@ -215,8 +215,8 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                     startActivity(intent);
                 }
             } else if (minAmount.equalsIgnoreCase("$$$$")) {
-                if (totalPrice < 30) {
-                    Toast.makeText(CartActivity.this, "Your order amount should be over 30$", Toast.LENGTH_LONG).show();
+                if (totalPrice < 40) {
+                    Toast.makeText(CartActivity.this, "Your order amount should be over 40$", Toast.LENGTH_LONG).show();
                 } else {
                     Intent intent = new Intent(getApplicationContext(), CheckOutActivity.class);
                     intent.putExtra("totalamount", total_amount.getText().toString());
