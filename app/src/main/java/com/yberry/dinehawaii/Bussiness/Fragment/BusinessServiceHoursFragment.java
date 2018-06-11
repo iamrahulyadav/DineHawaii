@@ -62,10 +62,10 @@ import retrofit2.Response;
 
 public class BusinessServiceHoursFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = "BusinessInfoDayFragment";
-    RadioGroup radioGroup, radio1;
+    RadioGroup radioGroup, radio1, grpDelAssign;
     LinearLayout llYesNo;
     JsonObject jsonObject;
-    CustomRadioButton checkYes, checkNo, checkYes1, checkNo1;
+    CustomRadioButton checkYes, checkNo, checkYes1, checkNo1, rbdelAuto, rbDelManual;
     CustomEditText hoursEditTextValue;
     View rootView;
     FragmentIntraction intraction;
@@ -109,9 +109,7 @@ public class BusinessServiceHoursFragment extends Fragment implements View.OnCli
     private Dialog dialog;
     private Context mContext;
     private int mHour, mMinute;
-    private String next;
-    private String is_reservation_deposit = "1";
-    private String is_loyalalty_program = "1";
+    private String next, is_reservation_deposit = "1", is_loyalalty_program = "1", assign_del_status = "1";
     private CustomEditText etAvgPrice;
     private Spinner spinnerPriceRange;
 
@@ -240,8 +238,11 @@ public class BusinessServiceHoursFragment extends Fragment implements View.OnCli
 
         radioGroup = (RadioGroup) rootView.findViewById(R.id.radiogroup);
         radio1 = (RadioGroup) rootView.findViewById(R.id.radio1);
+        grpDelAssign = (RadioGroup) rootView.findViewById(R.id.grpDelAssign);
 
 
+        rbdelAuto = (CustomRadioButton) rootView.findViewById(R.id.rbdelAuto);
+        rbDelManual = (CustomRadioButton) rootView.findViewById(R.id.rbDelManual);
         checkYes = (CustomRadioButton) rootView.findViewById(R.id.checkYes);
         checkNo = (CustomRadioButton) rootView.findViewById(R.id.checkNo);
         checkYes1 = (CustomRadioButton) rootView.findViewById(R.id.checkYes1);
@@ -375,7 +376,17 @@ public class BusinessServiceHoursFragment extends Fragment implements View.OnCli
                 }
             }
         });
-
+        grpDelAssign.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                if (radioGroup.getCheckedRadioButtonId() == R.id.rbdelAuto)
+                    assign_del_status = "0";
+                else if (radioGroup.getCheckedRadioButtonId() == R.id.rbDelManual)
+                    assign_del_status = "1";
+                else
+                    assign_del_status = "1";
+            }
+        });
 
     }
 
@@ -697,14 +708,11 @@ public class BusinessServiceHoursFragment extends Fragment implements View.OnCli
             object.addProperty("Reservation_Deposit", is_reservation_deposit);
             object.addProperty("Loyalty_Program", is_loyalalty_program);
             object.addProperty("avgPrice", etAvgPrice.getText().toString());
-            Log.d("fcm02", FirebaseInstanceId.getInstance().getToken());
+            object.addProperty("order_assign_status", assign_del_status);
 
-            Log.e("Businessinfoday:", object.toString());
+
+            Log.e(TAG, "updateData request>>>>>:" + object.toString());
             updateData(object);
-
-            //Log.e(TAG, jsonObject.toString());
-            Log.v(TAG, "Request from updateBusiness42D :- " + object);
-
 
         } else {
             Toast.makeText(mContext, "Please Connect Your Internet", Toast.LENGTH_LONG).show();
@@ -727,7 +735,7 @@ public class BusinessServiceHoursFragment extends Fragment implements View.OnCli
             @SuppressLint("LongLogTag")
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                Log.e(TAG, "Response of updateBusiness42F :- " + response.body().toString());
+                Log.e(TAG, "updateData Response>>>>>>> " + response.body().toString());
                 String s = response.body().toString();
 
                 try {
@@ -997,6 +1005,13 @@ public class BusinessServiceHoursFragment extends Fragment implements View.OnCli
                                     spinnerPriceRange.setSelection(2);
                                 else if (avgPrice.equalsIgnoreCase("$$$$"))
                                     spinnerPriceRange.setSelection(3);
+
+                                if (object.getString("order_assign_status").equalsIgnoreCase("0"))
+                                    rbdelAuto.setChecked(true);
+                                else if (object.getString("order_assign_status").equalsIgnoreCase("1"))
+                                    rbDelManual.setChecked(true);
+                              /*  else
+                                    rbDelManual.setChecked(true);*/
                             }
                         } else {
                             Toast.makeText(getActivity(), "No Data found", Toast.LENGTH_SHORT).show();

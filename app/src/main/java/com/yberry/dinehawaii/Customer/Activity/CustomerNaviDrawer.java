@@ -29,6 +29,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.JsonObject;
 import com.squareup.picasso.Picasso;
 import com.yberry.dinehawaii.Customer.Fragment.CouponOffersFragment;
+import com.yberry.dinehawaii.Customer.Fragment.CustResrvFeedbackFragment;
 import com.yberry.dinehawaii.Customer.Fragment.CustomerHomeFragment;
 import com.yberry.dinehawaii.Customer.Fragment.CustomerMyProfile;
 import com.yberry.dinehawaii.Customer.Fragment.EGiftAndCoupons;
@@ -223,6 +224,9 @@ public class CustomerNaviDrawer extends AppCompatActivity implements NavigationV
         } else if (id == R.id.nav_myreview) {
             headText.setText("My Reviews");
             fragment = new MyReviews();
+        }else if (id == R.id.navFeedback) {
+            headText.setText("My Feedbacks");
+            fragment = new CustResrvFeedbackFragment();
         } else if (id == R.id.nav_neworder) {
             headText.setText("New Order");
             fragment = new RestaurantListFragment();

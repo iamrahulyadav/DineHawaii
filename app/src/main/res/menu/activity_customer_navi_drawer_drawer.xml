@@ -36,8 +36,11 @@
         <item
             android:id="@+id/nav_myreview"
             android:icon="@drawable/drawer_icon"
-
             android:title="My Reviews" />
+       <item
+            android:id="@+id/navFeedback"
+            android:icon="@drawable/drawer_icon"
+            android:title="My Feedbacks" />
         <item
             android:id="@+id/nav_neworder"
             android:icon="@drawable/drawer_icon"

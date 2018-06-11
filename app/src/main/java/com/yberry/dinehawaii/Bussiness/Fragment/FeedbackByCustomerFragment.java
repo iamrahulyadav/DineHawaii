@@ -46,8 +46,8 @@ public class FeedbackByCustomerFragment extends Fragment {
         TabLayout tabLayout = (TabLayout)view.findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
 
-        tabLayout.getTabAt(0).setText("Order Feedback");
-        tabLayout.getTabAt(1).setText("Reservation Feedback");
+        tabLayout.getTabAt(0).setText("Orders");
+        tabLayout.getTabAt(1).setText("Reservations");
     }
 
     @Override
@@ -86,7 +86,7 @@ public class FeedbackByCustomerFragment extends Fragment {
                 case 0:
                     return new OrderFeedbackFragment();
                 case 1:
-                    return new ReservFeedbackFragment();
+                    return new ResrvFeedbackFragment();
             }
             return null;
         }

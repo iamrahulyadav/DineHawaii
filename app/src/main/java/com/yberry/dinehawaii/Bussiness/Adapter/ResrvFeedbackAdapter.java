@@ -16,11 +16,11 @@ import java.util.ArrayList;
  * Created by abc on 05-Apr-18.
  */
 
-public class OrderFeedbackAdapter extends RecyclerView.Adapter<OrderFeedbackAdapter.ViewHolder> {
+public class ResrvFeedbackAdapter extends RecyclerView.Adapter<ResrvFeedbackAdapter.ViewHolder> {
     Context context;
     ArrayList<OrderDetails> feedbackData = new ArrayList<OrderDetails>();
 
-    public OrderFeedbackAdapter(Context context, ArrayList<OrderDetails> reservationData) {
+    public ResrvFeedbackAdapter(Context context, ArrayList<OrderDetails> reservationData) {
         this.context = context;
         this.feedbackData = reservationData;
     }
@@ -53,5 +53,7 @@ public class OrderFeedbackAdapter extends RecyclerView.Adapter<OrderFeedbackAdap
             orderid  = (CustomTextView)itemView.findViewById(R.id.orderId);
             message  = (CustomTextView)itemView.findViewById(R.id.msg);
         }
+
+
     }
 }

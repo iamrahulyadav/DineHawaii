@@ -184,6 +184,7 @@ public class AppConstants {
         String MYSERVICES = "myAllServices";
         String SOLDMENUITEM = "getMenuSoldOut";
         String GETORDERFEED = "business_feedback_order_list";
+        String GETRESERVFEED = "getAllReservationFeedBack";
         String SETCHECKEDIN = "setCheckedIn";
         String SETTABLEREADY = "setTableReady";
         String SETSEATEDBY = "setSeatedBy";

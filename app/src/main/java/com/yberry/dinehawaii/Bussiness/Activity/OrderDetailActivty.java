@@ -12,6 +12,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,7 +72,7 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
     private ProgressBar orderProgress;
     private String order_id, status = "", order_type = "", new_status = "";
     private CustomTextView tvFabText, tvVendorContact, tvVendorBusiness, tvVendorName;
-    private String selectedVendorId = "";
+    private String selectedVendorId = "", assignDeliveryStatus = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -461,7 +462,19 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
                             VendorModel model = gson.fromJson(String.valueOf(jsonObject1), VendorModel.class);
                             vendorList.add(model);
                         }
-                        showDeliveryVendor(vendorList);
+                        if (assignDeliveryStatus.equalsIgnoreCase("1"))
+                            showDeliveryVendor(vendorList);
+                        else {
+                            ArrayList<String> items = new ArrayList<>();
+                            for (int j = 0; j < vendorList.size(); j++) {
+                                items.add(vendorList.get(j).getVendorId());
+                            }
+                            Log.e(TAG, "getDeliveryVendors: allvendorIds>>" + items.toString());
+                            String separatedList = TextUtils.join(",", items);
+                            Log.e(TAG, "getDeliveryVendors: separatedList" + separatedList);
+                            assignDelivery(separatedList);
+                            new CompleteOrderTask().execute();
+                        }
                     } else {
                         Toast.makeText(OrderDetailActivty.this, "No delivery vendors available", Toast.LENGTH_SHORT).show();
                     }
@@ -520,7 +533,6 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
             call.enqueue(new Callback<JsonObject>() {
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                    Log.e(TAG, "Request GET ORDER DETAIL >>  " + call.request().toString());
                     Log.e(TAG, "Response GET ORDER DETAIL >> " + response.body().toString());
                     JsonObject jsonObject = response.body();
                     if (jsonObject.get("status").getAsString().equals("200")) {
@@ -633,7 +645,7 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
                             tvDeliveryName.setText(listItem.getDelivery_name());
                             tvDeliveryAddress.setText(listItem.getDelivery_adderess());
                             tvContactNo.setText(listItem.getDelivery_contact_no());
-
+                            assignDeliveryStatus = listItem.getOrder_assign_status();
                             //takeout
                             tvPickupName.setText(listItem.getUser_name());
                             tvPickUpTime.setText(listItem.getDue_time());
