@@ -205,7 +205,7 @@ public class RestaurantListFragment extends Fragment {
             }
         });
 
-        recyclerviewrec.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, true));
+        recyclerviewrec.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         recyclerviewrec.setItemAnimator(new DefaultItemAnimator());
         recyclerviewrec.setNestedScrollingEnabled(false);
         recyclerviewrec.setAdapter(mainScreenAdapter2);

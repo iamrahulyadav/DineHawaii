@@ -1,7 +1,6 @@
 package com.yberry.dinehawaii.Customer.Adapter;
 
 import android.content.Context;
-import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
