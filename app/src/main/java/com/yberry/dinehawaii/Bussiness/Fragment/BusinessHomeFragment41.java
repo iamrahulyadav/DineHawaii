@@ -108,20 +108,26 @@ public class BusinessHomeFragment41 extends Fragment implements View.OnClickList
                 wholestaff.setEnabled(false);
                 dinemsg.setEnabled(false);
                 securityAccess.setEnabled(false);
+                tvVendors.setEnabled(false);
+                vendor_orders_hist.setEnabled(false);
+                vendor_bid_hist.setEnabled(false);
+                tvLeadTime.setEnabled(false);
+                tvBusAreas.setEnabled(false);
+                delivery_charge.setEnabled(false);
+                manage_coupons.setEnabled(false);
 
                 if (duties.contains("1")) ;
 
                 if (duties.contains("2"))
-                    securityAccess.setEnabled(true);
+                    securityAccess.setEnabled(false);
                 if (duties.contains("3"))
-                    securityAccess.setEnabled(true);
+                    securityAccess.setEnabled(false);
                 if (duties.contains("4"))
                     manage_menu.setEnabled(true);
-
-                if (duties.contains("5")) ;
-                manage_menu.setEnabled(true);
-                if (duties.contains("6")) ;
-
+                if (duties.contains("5"))
+                    manage_menu.setEnabled(true);
+                if (duties.contains("6"))
+                    manage_coupons.setEnabled(true);
                 if (duties.contains("7"))
                     reservation_btn.setEnabled(true);
                 if (duties.contains("8"))
@@ -131,10 +137,13 @@ public class BusinessHomeFragment41 extends Fragment implements View.OnClickList
                 if (duties.contains("10"))
                     manage_table.setEnabled(true);
 
-                if (duties.contains("11")) ;
+                if (duties.contains("11"))
+                    manage_table.setEnabled(true);
                 if (duties.contains("12")) ;
-                if (duties.contains("13")) ;
-                if (duties.contains("14")) ;
+                if (duties.contains("13"))
+                    order_btn.setEnabled(true);
+                if (duties.contains("14"))
+                    order_btn.setEnabled(true);
                 if (duties.contains("15")) ;
             }
         }

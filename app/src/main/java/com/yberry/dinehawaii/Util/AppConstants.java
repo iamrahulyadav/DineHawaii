@@ -147,6 +147,7 @@ public class AppConstants {
         String CHECK_COUPON = "CheckCoupon";
         String ADDEMPPOS = "add_emp_position";
         String ADDEMPDUTY = "add_emp_duty";
+        String GETRECOMENDEDBUSINESS = "getRecomendedBusiness";
     }
 
     public interface BUSSINES_USER_BUSINESSAPI {

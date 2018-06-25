@@ -29,6 +29,7 @@ import com.google.gson.JsonObject;
 import com.yberry.dinehawaii.Customer.Activity.CustomerNaviDrawer;
 import com.yberry.dinehawaii.Customer.Activity.MapsActivity;
 import com.yberry.dinehawaii.Customer.Activity.RestaurentDetailActivity;
+import com.yberry.dinehawaii.Customer.Adapter.RecRestaurantListAdapter;
 import com.yberry.dinehawaii.Customer.Adapter.RestaurantListAdapter;
 import com.yberry.dinehawaii.Model.ListItem;
 import com.yberry.dinehawaii.R;
@@ -56,7 +57,7 @@ public class RestaurantListFragment extends Fragment {
     GPSTracker gpsTracker;
     FragmentIntraction intraction;
     private double latitude, longitude;
-    private ArrayList<ListItem> listItems;
+    private ArrayList<ListItem> listItems, listItemsRec;
     private RecyclerView recyclerview;
     private LinearLayoutManager mLayoutManager;
     private RestaurantListAdapter mainScreenAdapter;
@@ -68,6 +69,9 @@ public class RestaurantListFragment extends Fragment {
     private ImageView progressBar;
     private CustomTextView loadMore;
     private ScrollView scrollView;
+    private RecyclerView recyclerviewrec;
+    private RecRestaurantListAdapter mainScreenAdapter2;
+    private CustomTextView tvRecText, tvAllText;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -89,17 +93,22 @@ public class RestaurantListFragment extends Fragment {
         init(view);
         gps();
         new getRestFromServer().execute();
+        new getReccRestFromServer().execute();
         return view;
     }
 
 
     private void init(View rootView) {
         listItems = new ArrayList<ListItem>();
+        listItemsRec = new ArrayList<ListItem>();
         mMap = (FloatingActionButton) rootView.findViewById(R.id.mMap);
         recyclerview = (RecyclerView) rootView.findViewById(R.id.recyclerview);
+        recyclerviewrec = (RecyclerView) rootView.findViewById(R.id.recyclerviewrec);
         tvNoData = (CustomTextView) rootView.findViewById(R.id.mNodata);
         loadMore = (CustomTextView) rootView.findViewById(R.id.loadMore);
         progressBar = (ImageView) rootView.findViewById(R.id.progressBar);
+        tvRecText = (CustomTextView) rootView.findViewById(R.id.tvRecText);
+        tvAllText = (CustomTextView) rootView.findViewById(R.id.tvAllText);
         AnimationDrawable spinner = (AnimationDrawable) progressBar.getBackground();
         spinner.start();
 
@@ -108,6 +117,7 @@ public class RestaurantListFragment extends Fragment {
         recyclerview.setLayoutManager(mLayoutManager);
         recyclerview.setItemAnimator(new DefaultItemAnimator());
         mainScreenAdapter = new RestaurantListAdapter(getActivity(), listItems);
+        mainScreenAdapter2 = new RecRestaurantListAdapter(getActivity(), listItemsRec);
         recyclerview.setNestedScrollingEnabled(false);
         recyclerview.setAdapter(mainScreenAdapter);
         recyclerview.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -170,6 +180,21 @@ public class RestaurantListFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+        mainScreenAdapter2.setOnItemClickListener(new RecRestaurantListAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(ListItem listItem) {
+                AppPreferences.setBussPackageList(getActivity(), listItem.getBusinessPackage());
+                AppPreferences.setBusiID(getActivity(), listItem.getId());
+                AppPreferences.setReservationAmount(getActivity(), listItem.getReservationPrice());
+                Log.e("Sel-Business Id", AppPreferences.getBusiID(getActivity()));
+                Log.e("Sel-Business Packages", AppPreferences.getBussPackageList(getActivity()));
+                Log.e("Sel-Business rAmount", AppPreferences.getReservationAmount(getActivity()));
+                Intent intent = new Intent(getActivity(), RestaurentDetailActivity.class);
+                intent.putExtra("data", listItem);
+                startActivity(intent);
+            }
+        });
         mMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -179,6 +204,11 @@ public class RestaurantListFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+        recyclerviewrec.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, true));
+        recyclerviewrec.setItemAnimator(new DefaultItemAnimator());
+        recyclerviewrec.setNestedScrollingEnabled(false);
+        recyclerviewrec.setAdapter(mainScreenAdapter2);
     }
 
     private void gps() {
@@ -366,7 +396,101 @@ public class RestaurantListFragment extends Fragment {
             }
             if (mainScreenAdapter.getItemCount() == 0) {
                 tvNoData.setText("No record found");
+                tvAllText.setVisibility(View.GONE);
+            } else
+                tvAllText.setVisibility(View.VISIBLE);
+        }
+    }
+
+    class getReccRestFromServer extends AsyncTask<Void, String, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.GENERALAPI.GETRECOMENDEDBUSINESS);
+            jsonObject.addProperty(AppConstants.KEY_USERID, AppPreferences.getCustomerid(getActivity())); //7
+            jsonObject.addProperty(AppConstants.KEY_LATITUDE, latitude);
+            jsonObject.addProperty(AppConstants.KEY_LONGITUDE, longitude);
+            jsonObject.addProperty("distance", "10");
+//            jsonObject.addProperty(AppConstants.KEY_PAGE, current_page);
+            Log.e(TAG, "getReccRestFromServer: Request >> " + jsonObject.toString());
+
+            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+            OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                    .readTimeout(60, TimeUnit.SECONDS)
+                    .writeTimeout(60, TimeUnit.SECONDS)
+                    .connectTimeout(60, TimeUnit.SECONDS)
+                    .addInterceptor(logging)
+                    .build();
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .client(okHttpClient)
+                    .baseUrl(AppConstants.BASEURL.URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+
+            MyApiEndpointInterface apiService =
+                    retrofit.create(MyApiEndpointInterface.class);
+
+
+            Call<JsonObject> call = apiService.requestGeneral(jsonObject);
+            call.enqueue(new Callback<JsonObject>() {
+                @Override
+
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+//                    Log.e(TAG, "Request GET ALL RESTAURANTS >>  " + call.request().toString());
+                    Log.e(TAG, "getReccRestFromServer: Response >> " + response.body().toString());
+                    JsonObject jsonObject = response.body();
+                    if (jsonObject.get("status").getAsString().equals("200")) {
+                        JsonArray jsonArray = jsonObject.getAsJsonArray("result");
+                        for (int i = 0; i < jsonArray.size(); i++) {
+                            JsonObject result = jsonArray.get(i).getAsJsonObject();
+                            Log.e("listItemresult", String.valueOf(result));
+                            ListItem listItem = new Gson().fromJson(result, ListItem.class);
+                            String average = listItem.getAvgPrice();
+                            Log.e("average", average);
+                            listItem.setDisplayLogo(false);
+                            listItemsRec.add(listItem);
+                            Log.e("listItemsRec", String.valueOf(listItemsRec));
+                            Log.e("reseVAmount:", listItem.getReservationPrice());
+                        }
+                        publishProgress("200");
+                    } else if (jsonObject.get("status").getAsString().equals("400")) {
+                        publishProgress("400");
+                    } else if (jsonObject.get("status").getAsString().equals("600")) {
+                        publishProgress("600");
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<JsonObject> call, Throwable t) {
+                    Log.e(TAG, "onFailure: " + t.getMessage());
+                    publishProgress("400");
+                }
+            });
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+            super.onProgressUpdate(values);
+            mainScreenAdapter2.notifyDataSetChanged();
+            if (values[0].equalsIgnoreCase("200")) {
             }
+            if (values[0].equalsIgnoreCase("400")) {
+            } else if (values[0].equalsIgnoreCase("600")) {
+            }
+            if (mainScreenAdapter2.getItemCount() > 0) {
+                tvRecText.setVisibility(View.VISIBLE);
+            } else
+                tvRecText.setVisibility(View.GONE);
         }
     }
 }

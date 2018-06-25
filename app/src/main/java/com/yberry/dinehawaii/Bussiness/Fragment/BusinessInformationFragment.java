@@ -290,26 +290,21 @@ public class BusinessInformationFragment extends Fragment {
                                 if (city_jArry.get(i).toString().equalsIgnoreCase(phy_city))
                                     spinner_city.setSelection(i);
                             }
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
                     }
 
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {
-
                     }
                 });
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
-
     }
 
     private void mailingAddress() {
@@ -341,20 +336,20 @@ public class BusinessInformationFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Log.e(TAG, "onItemSelected: Selected Country >> " + mailCountry.getSelectedItem().toString());
                 Log.e(TAG, "onItemSelected: Set Country >> " + mail_country);
-                try {
-                    JSONObject obj = new JSONObject(Function.loadJSONFromAsset(getActivity(), "state.json"));
-                    JSONObject stateJson = obj.getJSONObject(mailCountry.getSelectedItem().toString());
-                    JSONArray state_jArry = stateJson.getJSONArray("name");
-                    mailstateList.clear();
-                    for (int i = 0; i < state_jArry.length(); i++) {
-                        mailstateList.add(state_jArry.get(i).toString());
-                        stateadapter.notifyDataSetChanged();
-                        if (state_jArry.get(i).toString().equalsIgnoreCase(mail_state))
-                            mailState.setSelection(i);
+                    try {
+                        JSONObject obj = new JSONObject(Function.loadJSONFromAsset(getActivity(), "state.json"));
+                        JSONObject stateJson = obj.getJSONObject(mailCountry.getSelectedItem().toString());
+                        JSONArray state_jArry = stateJson.getJSONArray("name");
+                        mailstateList.clear();
+                        for (int i = 0; i < state_jArry.length(); i++) {
+                            mailstateList.add(state_jArry.get(i).toString());
+                            stateadapter.notifyDataSetChanged();
+                            if (state_jArry.get(i).toString().equalsIgnoreCase(mail_state))
+                                mailState.setSelection(i);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
 
 
                 mailState.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

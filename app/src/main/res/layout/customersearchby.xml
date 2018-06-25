@@ -17,6 +17,56 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/tvRecText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:text="Recommended"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:visibility="gone"
+                app:edittextfont="@string/raleway_regular" />
+
+            <android.support.v4.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:overScrollMode="never"
+                android:scrollbars="none">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recyclerviewrec"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false"
+                        android:overScrollMode="never"
+                        app:reverseLayout="true" />
+                </RelativeLayout>
+            </android.support.v4.widget.NestedScrollView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@color/colorDivider" />
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/tvAllText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:text="Browse More"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:visibility="gone"
+                app:edittextfont="@string/raleway_regular" />
+
             <android.support.v4.widget.NestedScrollView
                 android:id="@+id/nn1"
                 android:layout_width="match_parent"

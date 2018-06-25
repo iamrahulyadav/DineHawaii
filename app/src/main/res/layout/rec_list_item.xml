@@ -2,12 +2,11 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/_120sdp"
-    android:layout_marginLeft="@dimen/_8sdp"
-    android:layout_marginRight="@dimen/_8sdp"
-    android:layout_marginTop="@dimen/_4sdp"
-    android:layout_marginBottom="@dimen/_4sdp"
+    android:layout_width="150dp"
+    android:layout_height="@dimen/_100sdp"
+    android:layout_marginLeft="@dimen/_10sdp"
+    android:layout_marginRight="0dp"
+    android:layout_marginTop="@dimen/_5sdp"
     card_view:cardCornerRadius="@dimen/_5sdp">
 
 
@@ -30,54 +29,44 @@
         android:gravity="center_vertical"
         android:weightSum="1">
 
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.2">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/restLogo"
-                android:layout_width="@dimen/_36sdp"
-                android:layout_height="@dimen/_36sdp"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:background="@drawable/ic_restaurant_grey_24dp" />
-        </RelativeLayout>
-
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.6"
             android:orientation="vertical">
 
             <com.yberry.dinehawaii.customview.CustomTextView
                 android:id="@+id/mName"
                 style="@style/Base.TextAppearance.AppCompat.Subhead"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:maxLines="2"
                 android:text="HAWAIII RESTAURANT"
+                android:textAlignment="center"
                 android:textColor="@color/white"
                 app:edittextfont="@string/raleway_regular" />
 
             <com.yberry.dinehawaii.customview.CustomTextView
                 android:id="@+id/mAddress"
                 style="@style/TextAppearance.AppCompat.Small"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_3sdp"
                 android:maxLines="1"
                 android:text="NA"
+                android:textAlignment="center"
                 android:textColor="#d5ffffff"
+                android:visibility="gone"
                 app:edittextfont="Raleway-Regular.ttf" />
 
 
             <com.yberry.dinehawaii.customview.CustomTextView
                 android:id="@+id/mDistance"
                 style="@style/TextAppearance.AppCompat.Small"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
                 android:text="0 KM"
+                android:textAlignment="center"
                 android:textColor="#d5ffffff"
                 app:edittextfont="Raleway-Regular.ttf" />
 
@@ -86,24 +75,12 @@
                 style="@android:style/Widget.DeviceDefault.RatingBar.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:isIndicator="true"
                 android:numStars="5"
                 android:progressTint="#3aa161" />
             <!--style="?android:attr/ratingBarStyleSmall"-->
         </LinearLayout>
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.2">
-
-            <ImageView
-                android:id="@+id/dinelogo"
-                android:layout_width="@dimen/_48sdp"
-                android:layout_height="@dimen/_48sdp"
-                android:background="@drawable/logo"
-                android:visibility="gone" />
-        </RelativeLayout>
     </LinearLayout>
 </android.support.v7.widget.CardView>
