@@ -126,6 +126,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 String BUSINESS_DELIVERY_PICKEDUP = "" + remoteMessage.getData().get(AppConstants.NOTIFICATION_KEY.BUSINESS_DELIVERY_PICKEDUP);
                 String CUSTOMER_DELIVERY_COMPLETED = "" + remoteMessage.getData().get(AppConstants.NOTIFICATION_KEY.CUSTOMER_DELIVERY_COMPLETED);
                 String CUSTOMER_DELIVERY_PICKEDUP = "" + remoteMessage.getData().get(AppConstants.NOTIFICATION_KEY.CUSTOMER_DELIVERY_PICKEDUP);
+                String CUSTOMER_OTHER_MSG = "" + remoteMessage.getData().get(AppConstants.NOTIFICATION_KEY.CUSTOMER_OTHER_MSG);
                 String DRIVER_ARRIVED = "" + remoteMessage.getData().get(AppConstants.NOTIFICATION_KEY.DRIVER_ARRIVED);
                 if (!BUSINESS_DELIVERY_PICKEDUP.equalsIgnoreCase("null")) {
                     JSONObject jsonObj = null;
@@ -167,6 +168,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                } else if (!CUSTOMER_OTHER_MSG.equalsIgnoreCase("null")) {
+                    JSONObject jsonObj = null;
+                    try {
+                        jsonObj = new JSONObject(CUSTOMER_OTHER_MSG);
+                        sendExNotification(new Intent(), jsonObj.getString("msg_title"), jsonObj.getString("msg_body"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         } catch (JSONException e) {
@@ -183,6 +192,29 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     .setSmallIcon(R.drawable.not_icon)
                     .setContentTitle("Dine Hawaii Notification")
                     .setContentText(messageBody)
+                    .setAutoCancel(true)
+                    .setLargeIcon(BitmapFactory.decodeResource(this.getResources(), R.mipmap.ic_launcher))
+                    .setSound(defaultSoundUri)
+                    .setPriority(Notification.PRIORITY_HIGH)
+                    .setPriority(Notification.PRIORITY_MAX)
+                    .setContentIntent(pendingIntent);
+
+            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.notify(0, notificationBuilder.build());
+        } catch (Exception e) {
+            Log.e("Notification Ex", e.getMessage());
+        }
+    }
+
+    private void sendExNotification(Intent intent, String msg_title, String msg_body) {
+        try {
+            PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent,
+                    PendingIntent.FLAG_UPDATE_CURRENT);
+            Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
+                    .setSmallIcon(R.drawable.not_icon)
+                    .setContentTitle(msg_title)
+                    .setContentText(msg_body)
                     .setAutoCancel(true)
                     .setLargeIcon(BitmapFactory.decodeResource(this.getResources(), R.mipmap.ic_launcher))
                     .setSound(defaultSoundUri)

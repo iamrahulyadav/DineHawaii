@@ -6,8 +6,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.yberry.dinehawaii.Model.ListItem;
 import com.yberry.dinehawaii.R;
 import com.yberry.dinehawaii.customview.CustomTextView;
@@ -52,6 +55,16 @@ public class RecRestaurantListAdapter extends RecyclerView.Adapter<RecRestaurant
             }
         }
 
+
+        if (!listItem.getLogoImg().equalsIgnoreCase("")) {
+            Glide.with(context).load(listItem.getLogoImg())
+                    .thumbnail(0.5f)
+                    .crossFade()
+                    .override(60, 60)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(holder.restLogo);
+        }
+
         holder.mDistance.setText("(" + listItem.getDistance() + " miles away)");
     }
 
@@ -72,6 +85,7 @@ public class RecRestaurantListAdapter extends RecyclerView.Adapter<RecRestaurant
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         CustomTextView name, address, mDistance;
         RatingBar myRatingBar;
+        ImageView restLogo;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -80,6 +94,8 @@ public class RecRestaurantListAdapter extends RecyclerView.Adapter<RecRestaurant
             address = (CustomTextView) itemView.findViewById(R.id.mAddress);
             mDistance = (CustomTextView) itemView.findViewById(R.id.mDistance);
             myRatingBar = (RatingBar) itemView.findViewById(R.id.myRatingBar);
+            restLogo = (ImageView) itemView.findViewById(R.id.restLogo);
+
             itemView.setOnClickListener(this);
         }
 

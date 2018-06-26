@@ -206,6 +206,7 @@ public class AppConstants {
         String GETDELIVERYCHARGES = "getBussDeliveryCharges";
         String ALL_DELIVERY_VENDORS = "All_Delivery_Vendors";
 
+        String POSTDISOUNTEVENT = "postDisountEvent";
     }
 
     public interface BUSINESS_VENDOR_API {
@@ -367,5 +368,6 @@ public class AppConstants {
         public static final String CUSTOMER_DELIVERY_COMPLETED = "customer_driver_complete";
         public static final String CUSTOMER_DELIVERY_PICKEDUP = "customer_driver_picked";
         public static final String DRIVER_ARRIVED  = "driver_arrived";
+        public static final String CUSTOMER_OTHER_MSG = "customer_other_msg";
     }
 }

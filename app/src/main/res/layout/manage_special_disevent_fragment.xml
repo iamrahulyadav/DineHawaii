@@ -107,7 +107,7 @@
 
 
             <com.yberry.dinehawaii.customview.CustomEditText
-                android:id="@+id/etdesrc"
+                android:id="@+id/etDesrc"
                 style="@style/TextAppearance.AppCompat.Subhead"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -115,7 +115,7 @@
                 android:layout_marginRight="@dimen/_10sdp"
                 android:background="@null"
                 android:hint="Enter Desription (max length 200 chars)"
-                android:inputType="textCapWords"
+                android:inputType="textMultiLine"
                 android:maxLength="200"
                 android:maxLines="3"
                 android:padding="@dimen/_5sdp"

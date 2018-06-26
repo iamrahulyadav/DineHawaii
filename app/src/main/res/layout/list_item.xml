@@ -4,10 +4,10 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="@dimen/_120sdp"
+    android:layout_marginBottom="@dimen/_4sdp"
     android:layout_marginLeft="@dimen/_8sdp"
     android:layout_marginRight="@dimen/_8sdp"
     android:layout_marginTop="@dimen/_4sdp"
-    android:layout_marginBottom="@dimen/_4sdp"
     card_view:cardCornerRadius="@dimen/_5sdp">
 
 
@@ -35,13 +35,23 @@
             android:layout_height="match_parent"
             android:layout_weight="0.2">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/restLogo"
-                android:layout_width="@dimen/_36sdp"
-                android:layout_height="@dimen/_36sdp"
+            <android.support.v7.widget.CardView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:background="@drawable/ic_restaurant_grey_24dp" />
+                app:cardBackgroundColor="@android:color/transparent"
+                app:cardCornerRadius="25dp"
+                app:cardElevation="5dp">
+
+                <ImageView
+                    android:id="@+id/restLogo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/logo_placeholder" />
+            </android.support.v7.widget.CardView>
+
         </RelativeLayout>
 
         <LinearLayout

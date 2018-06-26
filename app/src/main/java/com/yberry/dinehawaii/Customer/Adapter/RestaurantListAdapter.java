@@ -10,7 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.yberry.dinehawaii.Model.ListItem;
 import com.yberry.dinehawaii.R;
 import com.yberry.dinehawaii.customview.CustomTextView;
@@ -61,8 +62,26 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
 
         holder.mDistance.setText("(" + listItem.getDistance() + " miles away)");
 
-        //new SetImageTask().execute(listItem.getCoverImage(), listItem.getLogoImg());
+        // new SetImageTask().execute(listItem.getCoverImage(), listItem.getLogoImg());
 
+        if (!listItem.getLogoImg().equalsIgnoreCase("")) {
+            Glide.with(context).load(listItem.getLogoImg())
+                    .thumbnail(0.5f)
+                    .crossFade()
+                    .override(50, 50)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(holder.restLogo);
+        }
+
+        /*if (listItem.getCoverImage() != null)
+            if (!listItem.getCoverImage().equalsIgnoreCase("")) {
+                Picasso.with(context)
+                        .load(listItem.getCoverImage())
+                        .placeholder(R.drawable.ic_restaurant_grey_24dp)
+                        .error(R.drawable.ic_restaurant_grey_24dp)
+                        .into(holder.restLogo);
+            }
+*/
        /* if(position >lastPosition) {
             Animation animation = AnimationUtils.loadAnimation(context, R.anim.up_from_bottom);
             holder.itemView.startAnimation(animation);
@@ -117,22 +136,7 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
         }
 
         private void publishProgress(String logo, String cover) {
-            if (!logo.equalsIgnoreCase("")) {
-                Picasso.with(context)
-                        .load(logo)
-                        .placeholder(R.drawable.background2)
-                        .error(R.drawable.background2)
-                        .into(holder.restLogo);
-            }
 
-            if (cover != null)
-                if (!cover.equalsIgnoreCase("")) {
-                    Picasso.with(context)
-                            .load(cover)
-                            .placeholder(R.drawable.ic_restaurant_grey_24dp)
-                            .error(R.drawable.ic_restaurant_grey_24dp)
-                            .into(holder.restLogo);
-                }
         }
     }
 }
