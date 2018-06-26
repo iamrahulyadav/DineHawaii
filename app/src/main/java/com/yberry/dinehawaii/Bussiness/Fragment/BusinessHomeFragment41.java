@@ -44,13 +44,15 @@ public class BusinessHomeFragment41 extends Fragment implements View.OnClickList
     CustomTextView reservation_btn, table_btn, order_btn, feed_btn, info_btn, packagebtn, maketingoption, staff, wholestaff, dinemsg, delivery_charge,
             service_btn, logo_btn, schedule_btn, manage_table, serviceChargesbtn, employlist, manage_service, tvVendors, vendor_orders_hist, vendor_bid_hist, tvBusAreas;
     FragmentIntraction intraction;
-    private LinearLayout messageLinearLayout, business_setting_tab, other_setting_tab, manage_operation_tab, security_tab, vendors_tab;
-    private ImageView oprationExpand, settingExpand, otherSettingExpand, service_minus, message_minus, securityExpand, vendorsExpand;
+    private LinearLayout messageLinearLayout, business_setting_tab, other_setting_tab, manage_operation_tab, security_tab, vendors_tab, marketing_tab;
+    private ImageView oprationExpand, settingExpand, otherSettingExpand, service_minus, message_minus, securityExpand, vendorsExpand, MarketExpand;
     private String packages = "0";
     private CustomTextView manage_menu;
     private CustomTextView packageAndMarketing, securityAccess;
     private CustomTextView manage_coupons;
     private CustomTextView tvLeadTime;
+    private String options = "0";
+    private CustomTextView tvSpecialDisEve, tvSetupLogo, tvUploadVidPho;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -196,8 +198,23 @@ public class BusinessHomeFragment41 extends Fragment implements View.OnClickList
 
     private void checkPackageOptions() {
         packages = AppPreferencesBuss.getBussiPackagelist(getActivity());
+        options = AppPreferencesBuss.getBussiOptionlist(getActivity());
         Log.e(TAG, "checkPackage: " + packages);
-        Log.e(TAG, "checkOptions: " + AppPreferencesBuss.getBussiOptionlist(getActivity()));
+        Log.e(TAG, "checkOptions: " + options);
+
+        if (!options.contains("1")) {
+            tvSpecialDisEve.setText("Special/Discounts and Events\n (This feature is included in marketing option 1)");
+            tvSpecialDisEve.setEnabled(false);
+        }
+        if (!options.contains("2")) {
+            tvSetupLogo.setText("Setup Logo\n (This feature is included in marketing option 2)");
+            tvSetupLogo.setEnabled(false);
+        }
+        if (!options.contains("3")) {
+            tvUploadVidPho.setText("Upload Video stream and Photos\n (This feature is included in marketing option 3)");
+            tvUploadVidPho.setEnabled(false);
+        }
+
         if (!packages.contains("1")) {
             reservation_btn.setText("Manage Reservation \n (This feature is included in package 1)");
             reservation_btn.setEnabled(false);
@@ -217,6 +234,8 @@ public class BusinessHomeFragment41 extends Fragment implements View.OnClickList
             tvVendors.setEnabled(false);
             vendor_orders_hist.setEnabled(false);
         }
+
+
     }
 
     @Override
@@ -249,6 +268,19 @@ public class BusinessHomeFragment41 extends Fragment implements View.OnClickList
                 } else {
                     vendorsExpand.setImageResource(R.drawable.minus);
                     vendors_tab.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        MarketExpand.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (marketing_tab.getVisibility() == View.VISIBLE) {
+                    MarketExpand.setImageResource(R.drawable.plus);
+                    marketing_tab.setVisibility(View.GONE);
+                } else {
+                    MarketExpand.setImageResource(R.drawable.minus);
+                    marketing_tab.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -496,12 +528,42 @@ public class BusinessHomeFragment41 extends Fragment implements View.OnClickList
             }
         });
 
+        tvSetupLogo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new UploadPhotoLogoFragment();
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.replace(R.id.frame, fragment, fragment.getTag());
+                fragmentTransaction.commitAllowingStateLoss();
+            }
+        });
+
+        tvSpecialDisEve.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new ManageSpecialDisEventFragment();
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.replace(R.id.frame, fragment, fragment.getTag());
+                fragmentTransaction.commitAllowingStateLoss();
+            }
+        });
+
+        tvUploadVidPho.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
         manage_service.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), ManageServiceTypeActivity.class));
             }
         });
+
         delivery_charge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -517,6 +579,7 @@ public class BusinessHomeFragment41 extends Fragment implements View.OnClickList
         service_minus = (ImageView) view.findViewById(R.id.service_minus);
         message_minus = (ImageView) view.findViewById(R.id.message_minus);
         vendorsExpand = (ImageView) view.findViewById(R.id.VendorsExpand);
+        MarketExpand = (ImageView) view.findViewById(R.id.MarketExpand);
 
         manage_menu = (CustomTextView) view.findViewById(R.id.manage_menu);
         manage_table = (CustomTextView) view.findViewById(R.id.manage_table);
@@ -553,7 +616,11 @@ public class BusinessHomeFragment41 extends Fragment implements View.OnClickList
         tvVendors = (CustomTextView) view.findViewById(R.id.tvVendors);
         delivery_charge = (CustomTextView) view.findViewById(R.id.tvDelivery);
         vendors_tab = (LinearLayout) view.findViewById(R.id.vendors_tab);
+        marketing_tab = (LinearLayout) view.findViewById(R.id.marketing_tab);
         tvBusAreas = (CustomTextView) view.findViewById(R.id.tvBusAreas);
+        tvSpecialDisEve = (CustomTextView) view.findViewById(R.id.tvSpecialDisEve);
+        tvSetupLogo = (CustomTextView) view.findViewById(R.id.tvSetupLogo);
+        tvUploadVidPho = (CustomTextView) view.findViewById(R.id.tvUploadVidPho);
 
         vendor_bid_hist.setOnClickListener(this);
 

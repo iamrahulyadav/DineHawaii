@@ -417,6 +417,7 @@
                     android:drawablePadding="@dimen/_5sdp"
                     android:padding="@dimen/_5sdp"
                     android:text="Upload Logo &amp; Photo"
+                    android:visibility="gone"
                     app:edittextfont="Raleway-Regular.ttf" />
 
                 <com.yberry.dinehawaii.customview.CustomTextView
@@ -484,6 +485,99 @@
                     android:visibility="gone"
                     app:edittextfont="Raleway-Regular.ttf" />
 
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.8">
+
+                    <com.yberry.dinehawaii.customview.CustomTextView
+                        style="@style/TextAppearance.AppCompat.Subhead"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:drawableLeft="@drawable/drawable_green_dot"
+                        android:drawablePadding="@dimen/_4sdp"
+                        android:text="Marketing Options"
+                        android:textColor="@color/green"
+                        android:textStyle="bold"
+                        app:edittextfont="Raleway-Bold.ttf" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2">
+
+                    <ImageView
+                        android:id="@+id/MarketExpand"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/minus" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_1sdp"
+                android:background="@color/green"></View>
+
+            <LinearLayout
+                android:id="@+id/marketing_tab"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    android:id="@+id/tvSpecialDisEve"
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/blue"
+                    android:drawableLeft="@drawable/drawable_green_dot"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:padding="@dimen/_5sdp"
+                    android:text="Post Special/Discounts and Events"
+                    app:edittextfont="Raleway-Regular.ttf" />
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    android:id="@+id/tvSetupLogo"
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/blue"
+                    android:drawableLeft="@drawable/drawable_green_dot"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:padding="@dimen/_5sdp"
+                    android:text="Setup Logo"
+                    app:edittextfont="Raleway-Regular.ttf" />
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    android:id="@+id/tvUploadVidPho"
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/blue"
+                    android:drawableLeft="@drawable/drawable_green_dot"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:padding="@dimen/_5sdp"
+                    android:text="Upload Video stream and Photos"
+                    app:edittextfont="Raleway-Regular.ttf" />
 
             </LinearLayout>
 

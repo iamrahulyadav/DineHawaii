@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_food_service"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:context="com.yberry.dinehawaii.activity.FoodService">
+    android:background="@color/white">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -14,77 +12,98 @@
         android:scrollbars="none">
 
         <LinearLayout
-            android:layout_marginLeft="@dimen/_10sdp"
-            android:layout_marginRight="@dimen/_10sdp"
-            android:orientation="vertical"
             android:id="@+id/mainView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:orientation="vertical">
 
             <com.yberry.dinehawaii.customview.CustomTextView
                 android:id="@+id/tvGraphicsMai"
+                style="@style/TextAppearance.AppCompat.Subhead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/llDownload"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:drawableLeft="@drawable/drawable_green_dot"
                 android:drawablePadding="@dimen/_5sdp"
                 android:gravity="center"
-                android:text="Upload Photos"
+                android:text="Business Logo"
                 android:textColor="@color/colorGreen"
-                style="@style/TextAppearance.AppCompat.Subhead"
-                android:layout_marginTop="@dimen/_10sdp"
                 app:edittextfont="Raleway-Bold.ttf" />
 
             <LinearLayout
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginRight="@dimen/_10sdp"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:orientation="vertical">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/imgLogo"
                     android:layout_width="@dimen/_60sdp"
+
                     android:layout_height="@dimen/_60sdp"
+                    android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:src="@drawable/no_image_placholder"
-                    android:scaleType="centerCrop" />
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/no_image_placholder" />
 
                 <com.yberry.dinehawaii.customview.CustomButton
-                    android:layout_marginTop="@dimen/_10sdp"
                     android:id="@+id/btnSetLogo"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_25sdp"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:background="@drawable/plain_green_border"
                     android:gravity="center_horizontal"
                     android:padding="@dimen/_5sdp"
+
                     android:text="Set Logo"
                     android:textAlignment="center"
                     android:textAllCaps="false"
                     android:textColor="@color/colorPrimary"
                     app:edittextfont="Raleway-Regular.ttf" />
 
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/llDownload"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:drawableLeft="@drawable/drawable_green_dot"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:gravity="center"
+                    android:text="Business Logo"
+                    android:textColor="@color/colorGreen"
+                    app:edittextfont="Raleway-Bold.ttf" />
+
                 <ImageView
                     android:id="@+id/imgBusiPhoto"
-                    android:layout_marginTop="@dimen/_20sdp"
                     android:layout_width="160dp"
                     android:layout_height="120dp"
-                    android:src="@drawable/no_image_placholder"
-                    android:scaleType="centerCrop"/>
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:scaleType="centerCrop"
+
+                    android:src="@drawable/no_image_placholder" />
 
 
                 <com.yberry.dinehawaii.customview.CustomButton
-                    android:layout_marginTop="@dimen/_10sdp"
                     android:id="@+id/btnSetBussPhoto"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_25sdp"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:background="@drawable/plain_green_border"
-                    android:text="Set Cover"
-                    android:textAllCaps="false"
-                    android:textColor="@color/colorPrimary"
                     android:paddingLeft="@dimen/_5sdp"
                     android:paddingRight="@dimen/_5sdp"
-                    app:edittextfont="Raleway-Regular.ttf"/>
+                    android:text="Set Cover"
+
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorPrimary"
+                    app:edittextfont="Raleway-Regular.ttf" />
 
             </LinearLayout>
         </LinearLayout>
