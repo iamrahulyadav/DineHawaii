@@ -11,7 +11,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -32,7 +31,6 @@ import android.widget.Toast;
 import com.google.gson.JsonObject;
 import com.squareup.picasso.Picasso;
 import com.yberry.dinehawaii.BuildConfig;
-import com.yberry.dinehawaii.Bussiness.Activity.BusinessNaviDrawer;
 import com.yberry.dinehawaii.R;
 import com.yberry.dinehawaii.RetrofitClasses.ApiClient;
 import com.yberry.dinehawaii.RetrofitClasses.MyApiEndpointInterface;
@@ -65,16 +63,16 @@ public class UploadPhotoLogoFragment extends Fragment {
     private static final int REQUEST_LOAD_IMAGE = REQUEST_IMAGE_CAPTURE + 1;
     private static final int PIC_CROP = REQUEST_LOAD_IMAGE + 1;
     private static final String TAG = "UploadPhotoLogoFragment";
+    String whichPhoto = "";
+    FragmentIntraction intraction;
     private View view1;
     private ImageView imageLogo;
     private ImageView imageBusi;
     private CustomButton btnSetLogo;
     private CustomButton btnSetBussPhoto;
     private String userChoosenTask;
-    String whichPhoto = "";
     private Uri originalImageUri;
     private String base64 = "";
-    FragmentIntraction intraction;
 
     public UploadPhotoLogoFragment() {
     }
@@ -104,6 +102,7 @@ public class UploadPhotoLogoFragment extends Fragment {
         getData();
         return view1;
     }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -157,9 +156,9 @@ public class UploadPhotoLogoFragment extends Fragment {
 
                     if (jsonObject.getString("status").equalsIgnoreCase("200")) {
                         JSONArray jsonArray = jsonObject.getJSONArray("result");
-                        JSONObject jsonObject1= jsonArray.getJSONObject(0);
+                        JSONObject jsonObject1 = jsonArray.getJSONObject(0);
                         String logoImg = jsonObject1.getString("logoImg");
-                        String cover_image= jsonObject1.getString("cover_image");
+                        String cover_image = jsonObject1.getString("cover_image");
 
                         if (!AppPreferencesBuss.getProfileImage(getActivity()).equalsIgnoreCase("")) {
                             Picasso.with(getActivity())
@@ -234,10 +233,10 @@ public class UploadPhotoLogoFragment extends Fragment {
             cropIntent.setDataAndType(Uri.parse(path1), "image/*");
             cropIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
             cropIntent.putExtra("crop", "true");
-            cropIntent.putExtra("aspectX", 4);
-            cropIntent.putExtra("aspectY", 3);
-            cropIntent.putExtra("outputX", 640);
-            cropIntent.putExtra("outputY", 480);
+            cropIntent.putExtra("aspectX", 1);
+            cropIntent.putExtra("aspectY", 1);
+            cropIntent.putExtra("outputX", 100);
+            cropIntent.putExtra("outputY", 100);
             cropIntent.putExtra("return-data", true);
             cropIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             cropIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
@@ -368,7 +367,7 @@ public class UploadPhotoLogoFragment extends Fragment {
                 String croppedfilePath = Environment.getExternalStorageDirectory() + "/activityimage.jpg";
                 Bitmap bitmapImage1 = BitmapFactory.decodeFile(croppedfilePath);
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                bitmapImage1.compress(Bitmap.CompressFormat.PNG, 50, byteArrayOutputStream);
+                bitmapImage1.compress(Bitmap.CompressFormat.PNG, 70, byteArrayOutputStream);
                 byte[] byteArray = byteArrayOutputStream.toByteArray();
                 base64 = Base64.encodeToString(byteArray, Base64.DEFAULT);
                 Log.d(TAG, "Picture Image :-" + base64);

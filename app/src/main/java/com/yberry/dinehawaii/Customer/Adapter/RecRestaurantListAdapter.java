@@ -60,7 +60,7 @@ public class RecRestaurantListAdapter extends RecyclerView.Adapter<RecRestaurant
             Glide.with(context).load(listItem.getLogoImg())
                     .thumbnail(0.5f)
                     .crossFade()
-                    .override(60, 60)
+//                    .override(100, 60)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(holder.restLogo);
         }

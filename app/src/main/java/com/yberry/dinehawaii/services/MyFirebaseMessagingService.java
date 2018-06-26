@@ -127,6 +127,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 String CUSTOMER_DELIVERY_COMPLETED = "" + remoteMessage.getData().get(AppConstants.NOTIFICATION_KEY.CUSTOMER_DELIVERY_COMPLETED);
                 String CUSTOMER_DELIVERY_PICKEDUP = "" + remoteMessage.getData().get(AppConstants.NOTIFICATION_KEY.CUSTOMER_DELIVERY_PICKEDUP);
                 String CUSTOMER_OTHER_MSG = "" + remoteMessage.getData().get(AppConstants.NOTIFICATION_KEY.CUSTOMER_OTHER_MSG);
+                String BUSINESS_OTHER_MSG = "" + remoteMessage.getData().get(AppConstants.NOTIFICATION_KEY.BUSINESS_OTHER_MSG);
                 String DRIVER_ARRIVED = "" + remoteMessage.getData().get(AppConstants.NOTIFICATION_KEY.DRIVER_ARRIVED);
                 if (!BUSINESS_DELIVERY_PICKEDUP.equalsIgnoreCase("null")) {
                     JSONObject jsonObj = null;
@@ -172,6 +173,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     JSONObject jsonObj = null;
                     try {
                         jsonObj = new JSONObject(CUSTOMER_OTHER_MSG);
+                        sendExNotification(new Intent(), jsonObj.getString("msg_title"), jsonObj.getString("msg_body"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else if (!BUSINESS_OTHER_MSG.equalsIgnoreCase("null")) {
+                    JSONObject jsonObj = null;
+                    try {
+                        jsonObj = new JSONObject(BUSINESS_OTHER_MSG);
                         sendExNotification(new Intent(), jsonObj.getString("msg_title"), jsonObj.getString("msg_body"));
                     } catch (JSONException e) {
                         e.printStackTrace();

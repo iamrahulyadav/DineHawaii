@@ -235,7 +235,7 @@ public class AppConstants {
         String APPROVEBID = "Bid_Approved";
         String REJECTBID = "Bid_Rejected";
         String ASSIGN_VENDOR_IN_BUSINESS = "assign_vendor_in_business";
-        String REMOVE_VENDOR_IN_BUSINESS= "remove_vendor_in_business";
+        String REMOVE_VENDOR_IN_BUSINESS = "remove_vendor_in_business";
         String FAVORITE_DELIVERY_VENDOR = "favoriteDeliveryVendor";
     }
 
@@ -367,7 +367,8 @@ public class AppConstants {
         public static final String BUSINESS_DELIVERY_PICKEDUP = "business_driver_picked";
         public static final String CUSTOMER_DELIVERY_COMPLETED = "customer_driver_complete";
         public static final String CUSTOMER_DELIVERY_PICKEDUP = "customer_driver_picked";
-        public static final String DRIVER_ARRIVED  = "driver_arrived";
+        public static final String DRIVER_ARRIVED = "driver_arrived";
         public static final String CUSTOMER_OTHER_MSG = "customer_other_msg";
+        public static final String BUSINESS_OTHER_MSG = "business_other_msg";
     }
 }

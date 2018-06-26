@@ -68,7 +68,7 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
             Glide.with(context).load(listItem.getLogoImg())
                     .thumbnail(0.5f)
                     .crossFade()
-                    .override(50, 50)
+//                    .override(50, 50)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(holder.restLogo);
         }
