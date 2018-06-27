@@ -30,12 +30,14 @@ import com.google.gson.JsonObject;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 import com.yberry.dinehawaii.Model.ReservationDetails;
+import com.yberry.dinehawaii.Model.TableData;
 import com.yberry.dinehawaii.R;
 import com.yberry.dinehawaii.RetrofitClasses.ApiClient;
 import com.yberry.dinehawaii.RetrofitClasses.MyApiEndpointInterface;
 import com.yberry.dinehawaii.Util.AppConstants;
 import com.yberry.dinehawaii.Util.AppPreferencesBuss;
 import com.yberry.dinehawaii.Util.ProgressHUD;
+import com.yberry.dinehawaii.Util.Util;
 import com.yberry.dinehawaii.customview.CustomEditText;
 import com.yberry.dinehawaii.customview.CustomTextView;
 
@@ -45,6 +47,7 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -55,16 +58,17 @@ import retrofit2.Response;
 public class ReservationDeailsActivity extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
     private static final String TAG = "ReservationDetails";
     String tempRDate;
+    ArrayList<TableData> tableDataList = new ArrayList<TableData>();
     private Context context;
     private ImageView back;
     private CustomTextView tvReservationID, tvDateTime, tvDateTime2, tvBookingTime, tvCustomerName, tvTableNo, tvPartySize, tvContactNo, tvEmail;
     private ReservationDetails model;
-    private CustomTextView tvCheckin, tvWaitTime, tvTableReady, tvSeatedBy, tvReschedule, tvConfirmed, tvDeposit, tvClose;
+    private CustomTextView tvCheckin, tvWaitTime, tvTableReady, tvSeatedBy, tvReschedule, tvConfirmed, tvDeposit, tvClose, tvRestore;
     private String reservation_id;
     private String reservation_status = "";
     private String new_date = "", new_time = "";
     private CustomEditText inputReschedule;
-    private LinearLayout llCloseResv;
+    private LinearLayout llCloseResv, llRestore;
     private AlphaAnimation anim;
     private BroadcastReceiver tickReceiver;
     private SimpleDateFormat displayFormat;
@@ -73,6 +77,9 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
     private Date reserTime24hr;
     private Date currentTime24;
     private CustomTextView btnNoShow;
+    private String[] tableDataListString;
+    private String selected_table_id;
+    private String combinetable = "0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,7 +139,9 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
         tvConfirmed = (CustomTextView) findViewById(R.id.tvConfirmed);
         tvDeposit = (CustomTextView) findViewById(R.id.tvDeposit);
         tvClose = (CustomTextView) findViewById(R.id.tvClose);
+        tvRestore = (CustomTextView) findViewById(R.id.tvRestore);
         llCloseResv = (LinearLayout) findViewById(R.id.llCloseResv);
+        llRestore = (LinearLayout) findViewById(R.id.llRestore);
 
         tvCheckin.setOnClickListener(this);
         tvWaitTime.setOnClickListener(this);
@@ -140,6 +149,7 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
         tvSeatedBy.setOnClickListener(this);
         tvReschedule.setOnClickListener(this);
         tvClose.setOnClickListener(this);
+        tvRestore.setOnClickListener(this);
     }
 
     private void init() {
@@ -192,11 +202,33 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
             openRescheduleDialog();
         } else if (v.getId() == R.id.tvClose) {
             openCloseDialog();
+        } else if (v.getId() == R.id.tvRestore) {
+            getBusinessTables();
         } else if (v.getId() == R.id.btnCloseR) {
             closeReservation();
         } else if (v.getId() == R.id.btnNoShow) {
             makeNoShow();
         }
+    }
+
+    private void choseRestoreTable() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(ReservationDeailsActivity.this);
+        builder.setTitle("Restore Reservation");
+        builder.setMessage("Choose a new table to reassign: ");
+        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                //close api
+                closeReservation();
+            }
+        });
+        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        builder.show();
     }
 
     private void makeRservAvailable() {
@@ -250,7 +282,7 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
                         tvEmail.setText(model.getEmailId());
                         reservation_status = model.getReservationStatus();
 
-                        if (getIntent().getAction().equalsIgnoreCase("NOSHOW")) {
+                        if (getIntent().getAction().equalsIgnoreCase("NOSHOW") && model.getSetCheckedIn() != 0) {
                             ((CardView) findViewById(R.id.card_now_show)).setVisibility(View.VISIBLE);
                             ((CardView) findViewById(R.id.card_confirm)).setVisibility(View.GONE);
                             ((CardView) findViewById(R.id.card_make_available)).setVisibility(View.GONE);
@@ -323,6 +355,7 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
                             tvSeatedBy.setEnabled(false);
                             tvReschedule.setEnabled(false);
                             llCloseResv.setVisibility(View.GONE);
+                            llRestore.setVisibility(View.VISIBLE);
                         } else if (reservation_status.contains("Confirm")) {
                             tvCheckin.setEnabled(true);
                             tvWaitTime.setEnabled(true);
@@ -343,6 +376,7 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
                             tvSeatedBy.setEnabled(false);
                             tvReschedule.setEnabled(false);
                             llCloseResv.setVisibility(View.VISIBLE);
+                            llRestore.setVisibility(View.VISIBLE);
                             tvConfirmed.setText("");
                             tvClose.setText("");
                             tvClose.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_done_green_24dp, 0, 0, 0);
@@ -399,6 +433,189 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
             }
         });
     }
+
+    private void getBusinessTables() {
+        if (Util.isNetworkAvailable(ReservationDeailsActivity.this)) {
+            final ProgressHUD progressHD = ProgressHUD.show(ReservationDeailsActivity.this, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    // TODO Auto-generated method stub
+                }
+            });
+
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("method", AppConstants.CUSTOMER_USER.GET_PARTY_SIZE_TABLE);
+            jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(ReservationDeailsActivity.this));
+            jsonObject.addProperty("party_size", "2");
+            jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(ReservationDeailsActivity.this));
+            Log.e(TAG, "Request GET TABLES >> " + jsonObject.toString());
+            MyApiEndpointInterface apiService = ApiClient.getClient().create(MyApiEndpointInterface.class);
+            Call<JsonObject> call = apiService.get_party_size_tables(jsonObject);
+            call.enqueue(new Callback<JsonObject>() {
+                @SuppressLint("LongLogTag")
+                @Override
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                    Log.e(TAG, "Response GET TABLES >> " + response.body().toString());
+                    String s = response.body().toString();
+
+                    try {
+                        JSONObject jsonObject = new JSONObject(s);
+                        tableDataList.clear();
+                        String msg;
+                        if (jsonObject.getString("status").equalsIgnoreCase("200")) {
+                            JSONArray jsonArray = jsonObject.getJSONArray("result");
+                            tableDataListString = new String[jsonArray.length()];
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+                                String id = jsonObject1.getString("id");
+                                String name = jsonObject1.getString("table_name");
+                                combinetable = jsonObject1.getString("combine_table");
+
+                                TableData table = new TableData();
+                                table.setTable_id(id);
+                                table.setTable_name(name);
+                                Log.e("Table Data:", "" + table.toString());
+                                tableDataList.add(table);
+                                tableDataListString[i] = name;
+                            }
+                            Log.e("Table List:", "" + tableDataList);
+                            new AlertDialog.Builder(ReservationDeailsActivity.this)
+                                    .setTitle("Select Re-assign Table")
+                                    .setSingleChoiceItems(tableDataListString, 0, null)
+                                    .setPositiveButton("Select", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int whichButton) {
+                                            dialog.dismiss();
+                                            int selectedPosition = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
+                                            String selected_table = tableDataList.get(selectedPosition).getTable_name();
+                                            selected_table_id = tableDataList.get(selectedPosition).getTable_id();
+
+                                            Log.e(TAG, "onClick: selected_table >> " + selected_table);
+                                            Log.e(TAG, "onClick: selected_table_id >> " + selected_table_id);
+                                            restoreReservation();
+                                        }
+                                    })
+                                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                                        }
+                                    })
+                                    .show();
+
+                        } else if (jsonObject.getString("status").equalsIgnoreCase("300")) {
+                        } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
+                            JSONArray jsonArray = jsonObject.getJSONArray("result");
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(0);
+                            msg = jsonObject1.getString("msg");
+                            Log.e("msg", msg);
+                            new AlertDialog.Builder(context)
+                                    .setMessage(msg)
+                                    .setCancelable(false)
+                                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                                        }
+                                    })
+                                    .show();
+                        }
+                        if (progressHD != null && progressHD.isShowing())
+                            progressHD.dismiss();
+                    } catch (JSONException e) {
+                        if (progressHD != null && progressHD.isShowing())
+                            progressHD.dismiss();
+                        e.printStackTrace();
+                    }
+                }
+
+                @SuppressLint("LongLogTag")
+                @Override
+                public void onFailure(Call<JsonObject> call, Throwable t) {
+                    if (progressHD != null && progressHD.isShowing())
+                        progressHD.dismiss();
+                    Log.e(TAG, "error :- " + Log.getStackTraceString(t));
+                }
+            });
+        } else {
+            Toast.makeText(ReservationDeailsActivity.this, "Please Connect Your Internet", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void restoreReservation() {
+        if (Util.isNetworkAvailable(ReservationDeailsActivity.this)) {
+            final ProgressHUD progressHD = ProgressHUD.show(ReservationDeailsActivity.this, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    // TODO Auto-generated method stub
+                }
+            });
+
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("method", AppConstants.CUSTOMER_USER.RESTORE_RESERVATION);
+            jsonObject.addProperty("reservation_id", reservation_id);
+            jsonObject.addProperty("table_id", selected_table_id);
+            jsonObject.addProperty("combine_table", combinetable);
+            jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(ReservationDeailsActivity.this));
+            jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(ReservationDeailsActivity.this));
+            Log.e(TAG, "restoreReservation : Request >> " + jsonObject.toString());
+            MyApiEndpointInterface apiService = ApiClient.getClient().create(MyApiEndpointInterface.class);
+            Call<JsonObject> call = apiService.business_table_reaservation_api(jsonObject);
+            call.enqueue(new Callback<JsonObject>() {
+                @SuppressLint("LongLogTag")
+                @Override
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                    Log.e(TAG, "restoreReservation: Response >> " + response.body().toString());
+                    String s = response.body().toString();
+
+                    try {
+                        JSONObject jsonObject = new JSONObject(s);
+                        tableDataList.clear();
+                        String msg;
+                        if (jsonObject.getString("status").equalsIgnoreCase("200")) {
+                            msg = jsonObject.getJSONArray("result").getJSONObject(0).getString("msg");
+                            new AlertDialog.Builder(ReservationDeailsActivity.this)
+                                    .setTitle("Message")
+                                    .setMessage(msg)
+                                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int whichButton) {
+                                            getResrvData();
+                                        }
+                                    })
+                                    .show();
+                        } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
+                            msg = jsonObject.getJSONArray("result").getJSONObject(0).getString("msg");
+                            new AlertDialog.Builder(context)
+                                    .setMessage(msg)
+                                    .setCancelable(false)
+                                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                        }
+                                    })
+                                    .show();
+                        }
+                        if (progressHD != null && progressHD.isShowing())
+                            progressHD.dismiss();
+                    } catch (JSONException e) {
+                        if (progressHD != null && progressHD.isShowing())
+                            progressHD.dismiss();
+                        e.printStackTrace();
+                    }
+                }
+
+                @SuppressLint("LongLogTag")
+                @Override
+                public void onFailure(Call<JsonObject> call, Throwable t) {
+                    if (progressHD != null && progressHD.isShowing())
+                        progressHD.dismiss();
+                    Log.e(TAG, "error :- " + Log.getStackTraceString(t));
+                }
+            });
+        } else {
+            Toast.makeText(ReservationDeailsActivity.this, "Please Connect Your Internet", Toast.LENGTH_LONG).show();
+        }
+    }
+
 
     private void setNoShow() {
         Calendar c = Calendar.getInstance();

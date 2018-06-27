@@ -44,13 +44,13 @@
                 android:weightSum="2">
 
                 <com.yberry.dinehawaii.customview.CustomTextView
-                    android:background="@color/red"
                     android:id="@+id/btnNoShow"
                     style="@style/TextAppearance.AppCompat.Subhead"
                     android:layout_width="0dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
                     android:layout_weight="1"
+                    android:background="@color/red"
                     android:gravity="center"
                     android:text="NO-SHOW"
                     android:textColor="@color/white"
@@ -62,13 +62,13 @@
                     android:background="@color/white"></View>
 
                 <com.yberry.dinehawaii.customview.CustomTextView
-                    android:background="@color/colorPrimary"
                     android:id="@+id/btnCloseR"
                     style="@style/TextAppearance.AppCompat.Subhead"
                     android:layout_width="0dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
                     android:layout_weight="1"
+                    android:background="@color/colorPrimary"
                     android:gravity="center"
                     android:text="CLOSE RESERVATION"
                     android:textColor="@color/white"
@@ -293,7 +293,7 @@
                             <RelativeLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="0.5">
+                                android:layout_weight="0.4">
 
                                 <com.yberry.dinehawaii.customview.CustomTextView
                                     android:id="@+id/tvReservationID"
@@ -345,7 +345,7 @@
                             <RelativeLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="0.5">
+                                android:layout_weight="0.4">
 
                                 <com.yberry.dinehawaii.customview.CustomTextView
                                     android:id="@+id/tvDateTime"
@@ -439,7 +439,7 @@
                             <RelativeLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="0.5">
+                                android:layout_weight="0.4">
 
                                 <com.yberry.dinehawaii.customview.CustomTextView
                                     android:id="@+id/tvDateTime2"
@@ -492,7 +492,7 @@
                             <RelativeLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="0.5">
+                                android:layout_weight="0.4">
 
                                 <com.yberry.dinehawaii.customview.CustomTextView
                                     android:id="@+id/tvBookingTime"
@@ -547,7 +547,7 @@
                             <RelativeLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="0.5">
+                                android:layout_weight="0.4">
 
                                 <com.yberry.dinehawaii.customview.CustomTextView
                                     android:id="@+id/tvTableNo"
@@ -601,7 +601,7 @@
                             <RelativeLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="0.5">
+                                android:layout_weight="0.4">
 
                                 <com.yberry.dinehawaii.customview.CustomTextView
                                     android:id="@+id/tvPartySize"
@@ -655,7 +655,7 @@
                             <RelativeLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="0.5">
+                                android:layout_weight="0.4">
 
                                 <com.yberry.dinehawaii.customview.CustomTextView
                                     android:id="@+id/tvPreAmount"
@@ -744,7 +744,7 @@
                             <RelativeLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="0.5">
+                                android:layout_weight="0.4">
 
                                 <com.yberry.dinehawaii.customview.CustomTextView
                                     android:id="@+id/tvCustomerName"
@@ -796,7 +796,7 @@
                             <RelativeLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="0.5">
+                                android:layout_weight="0.4">
 
                                 <com.yberry.dinehawaii.customview.CustomTextView
                                     android:id="@+id/tvContactNo"
@@ -848,7 +848,7 @@
                             <RelativeLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="0.5">
+                                android:layout_weight="0.4">
 
                                 <com.yberry.dinehawaii.customview.CustomTextView
                                     android:id="@+id/tvEmail"
@@ -865,11 +865,11 @@
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
+                android:id="@+id/card_manage_res"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/_5sdp"
                 android:layout_marginLeft="@dimen/_5sdp"
-                android:id="@+id/card_manage_res"
                 android:layout_marginRight="@dimen/_5sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:background="@color/white"
@@ -899,16 +899,16 @@
                         android:orientation="vertical">
 
                         <LinearLayout
+                            android:id="@+id/llconfirm"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/llconfirm"
                             android:orientation="horizontal"
                             android:weightSum="1">
 
                             <RelativeLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="0.4">
+                                android:layout_weight="0.5">
 
                                 <com.yberry.dinehawaii.customview.CustomTextView
                                     style="@style/TextAppearance.AppCompat.Subhead"
@@ -936,7 +936,7 @@
                             <RelativeLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="0.5">
+                                android:layout_weight="0.4">
 
                                 <com.yberry.dinehawaii.customview.CustomTextView
                                     android:id="@+id/tvConfirmed"
@@ -950,16 +950,16 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/llcheckin"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/llcheckin"
                             android:orientation="horizontal"
                             android:weightSum="1">
 
                             <RelativeLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="0.4">
+                                android:layout_weight="0.5">
 
                                 <com.yberry.dinehawaii.customview.CustomTextView
                                     style="@style/TextAppearance.AppCompat.Subhead"
@@ -987,7 +987,7 @@
                             <RelativeLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="0.5">
+                                android:layout_weight="0.4">
 
                                 <com.yberry.dinehawaii.customview.CustomTextView
                                     android:id="@+id/tvCheckin"
@@ -1003,16 +1003,16 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/llwait"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
-                            android:id="@+id/llwait"
                             android:weightSum="1">
 
                             <RelativeLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="0.4">
+                                android:layout_weight="0.5">
 
                                 <com.yberry.dinehawaii.customview.CustomTextView
                                     style="@style/TextAppearance.AppCompat.Subhead"
@@ -1040,7 +1040,7 @@
                             <RelativeLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="0.5">
+                                android:layout_weight="0.4">
 
                                 <com.yberry.dinehawaii.customview.CustomTextView
                                     android:id="@+id/tvWaitTime"
@@ -1056,16 +1056,16 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/lltableready"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
-                            android:id="@+id/lltableready"
                             android:weightSum="1">
 
                             <RelativeLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="0.4">
+                                android:layout_weight="0.5">
 
                                 <com.yberry.dinehawaii.customview.CustomTextView
                                     style="@style/TextAppearance.AppCompat.Subhead"
@@ -1093,7 +1093,7 @@
                             <RelativeLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="0.5">
+                                android:layout_weight="0.4">
 
                                 <com.yberry.dinehawaii.customview.CustomTextView
                                     android:id="@+id/tvTableReady"
@@ -1109,16 +1109,16 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/llseated"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
-                            android:id="@+id/llseated"
                             android:weightSum="1">
 
                             <RelativeLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="0.4">
+                                android:layout_weight="0.5">
 
                                 <com.yberry.dinehawaii.customview.CustomTextView
                                     style="@style/TextAppearance.AppCompat.Subhead"
@@ -1146,7 +1146,7 @@
                             <RelativeLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="0.5">
+                                android:layout_weight="0.4">
 
                                 <com.yberry.dinehawaii.customview.CustomTextView
                                     android:id="@+id/tvSeatedBy"
@@ -1162,16 +1162,16 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/lldeposit"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
-                            android:id="@+id/lldeposit"
                             android:weightSum="1">
 
                             <RelativeLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="0.4">
+                                android:layout_weight="0.5">
 
                                 <com.yberry.dinehawaii.customview.CustomTextView
                                     style="@style/TextAppearance.AppCompat.Subhead"
@@ -1199,7 +1199,7 @@
                             <RelativeLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="0.5">
+                                android:layout_weight="0.4">
 
                                 <com.yberry.dinehawaii.customview.CustomTextView
                                     android:id="@+id/tvDeposit"
@@ -1213,16 +1213,16 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/llnoshow"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
-                            android:id="@+id/llnoshow"
                             android:weightSum="1">
 
                             <RelativeLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="0.4">
+                                android:layout_weight="0.5">
 
                                 <com.yberry.dinehawaii.customview.CustomTextView
                                     style="@style/TextAppearance.AppCompat.Subhead"
@@ -1250,7 +1250,8 @@
                             <RelativeLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="0.5">
+                                android:layout_weight="0.4">
+
                                 <com.yberry.dinehawaii.customview.CustomTextView
                                     android:id="@+id/tvNoShow"
                                     style="@style/TextAppearance.AppCompat.Subhead"
@@ -1263,16 +1264,16 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/llreschedule"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
-                            android:id="@+id/llreschedule"
                             android:weightSum="1">
 
                             <RelativeLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="0.4">
+                                android:layout_weight="0.5">
 
                                 <com.yberry.dinehawaii.customview.CustomTextView
                                     style="@style/TextAppearance.AppCompat.Subhead"
@@ -1300,7 +1301,7 @@
                             <RelativeLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="0.5">
+                                android:layout_weight="0.4">
 
                                 <com.yberry.dinehawaii.customview.CustomTextView
                                     android:id="@+id/tvReschedule"
@@ -1314,18 +1315,19 @@
                                     app:edittextfont="Raleway-Regular.ttf" />
                             </RelativeLayout>
                         </LinearLayout>
+
                         <LinearLayout
-                            android:visibility="gone"
                             android:id="@+id/llCloseResv"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
+                            android:visibility="gone"
                             android:weightSum="1">
 
                             <RelativeLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="0.4">
+                                android:layout_weight="0.5">
 
                                 <com.yberry.dinehawaii.customview.CustomTextView
                                     style="@style/TextAppearance.AppCompat.Subhead"
@@ -1353,10 +1355,63 @@
                             <RelativeLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="0.5">
+                                android:layout_weight="0.4">
 
                                 <com.yberry.dinehawaii.customview.CustomTextView
                                     android:id="@+id/tvClose"
+                                    style="@style/TextAppearance.AppCompat.Subhead"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="@dimen/_5sdp"
+                                    android:drawablePadding="@dimen/_10sdp"
+                                    android:drawableRight="@drawable/ic_edit_black_24dp"
+                                    android:text="NA"
+                                    app:edittextfont="Raleway-Regular.ttf" />
+                            </RelativeLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/llRestore"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:visibility="gone"
+                            android:weightSum="1">
+
+                            <RelativeLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.5">
+
+                                <com.yberry.dinehawaii.customview.CustomTextView
+                                    style="@style/TextAppearance.AppCompat.Subhead"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="@dimen/_5sdp"
+                                    android:text="Restore Reservation"
+                                    app:edittextfont="Raleway-Regular.ttf" />
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.1">
+
+                                <com.yberry.dinehawaii.customview.CustomTextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="@dimen/_5sdp"
+                                    android:text=":"
+                                    app:edittextfont="Raleway-Regular.ttf" />
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.4">
+
+                                <com.yberry.dinehawaii.customview.CustomTextView
+                                    android:id="@+id/tvRestore"
                                     style="@style/TextAppearance.AppCompat.Subhead"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"

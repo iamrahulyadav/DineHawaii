@@ -320,6 +320,7 @@ public class AppConstants {
         String ORDER_FEEDBACK = "order_feedback";
         String RESERV_DETAILS = "reservationDetailList";
         String USEREGIFTWALLET = "UserEgiftWallet";
+        String RESTORE_RESERVATION = "restore_reservation";
     }
 
     public interface REPORT {
