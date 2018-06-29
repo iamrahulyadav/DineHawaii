@@ -5,430 +5,430 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background2">
+
     <include
         android:id="@+id/toolbar_bar"
         layout="@layout/toolbar" />
 
-    <LinearLayout
-        android:layout_marginLeft="@dimen/_10sdp"
-        android:layout_marginRight="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <ScrollView
         android:layout_below="@+id/toolbar_bar"
-        android:orientation="vertical">
-
-        <com.yberry.dinehawaii.customview.CustomTextView
-            android:id="@+id/setup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:layout_centerHorizontal="true"
-            android:text="@string/tittle"
-            android:textColor="@color/offwhite"
-            style="@style/TextAppearance.AppCompat.Subhead"
-            app:edittextfont="@string/raleway_bold" />
-
-        <com.yberry.dinehawaii.customview.CustomTextView
-            android:id="@+id/user"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/food"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:drawableLeft="@drawable/greendot"
-            android:drawablePadding="@dimen/_5sdp"
-            android:gravity="center_vertical"
-            android:text="Enter Email"
-            android:textColor="@color/green"
-            style="@style/TextAppearance.AppCompat.Subhead"
-            app:edittextfont="@string/raleway_bold" />
-
-
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never">
 
         <LinearLayout
-            android:id="@+id/llpass"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/user"
-
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_8sdp"
             android:orientation="vertical">
 
-            <com.yberry.dinehawaii.customview.CustomEditText
-                android:id="@+id/password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/name"
-                android:layout_alignStart="@+id/name"
-                android:layout_marginLeft="@dimen/_15sdp"
-                android:layout_marginRight="@dimen/_15sdp"
-                android:background="@null"
-                android:hint="Enter unique email"
-                android:inputType="textEmailAddress"
-                android:paddingBottom="@dimen/_8sdp"
-                android:paddingTop="@dimen/_8sdp"
-                android:imeOptions="actionNext"
-                android:textColor="@color/white"
-                android:singleLine="true"
-                android:textColorHint="@color/offwhite"
+             <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/user"
                 style="@style/TextAppearance.AppCompat.Subhead"
-                app:edittextfont="Raleway-Regular.ttf" />
-
-            <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scaleType="fitXY"
+                android:layout_below="@+id/food"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:drawableLeft="@drawable/greendot"
+                android:drawablePadding="@dimen/_5sdp"
+                android:gravity="center_vertical"
+                android:text="Enter Email"
+                android:textColor="@color/green"
+                app:edittextfont="@string/raleway_bold" />
 
-                android:src="@drawable/lines" />
-
-        </LinearLayout>
-
-        <com.yberry.dinehawaii.customview.CustomTextView
-            android:id="@+id/pass"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/llpass"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:drawableLeft="@drawable/greendot"
-            android:drawablePadding="@dimen/_5sdp"
-            android:gravity="center_vertical"
-            android:text="Enter Password"
-            android:textColor="@color/green"
-            style="@style/TextAppearance.AppCompat.Subhead"
-            app:edittextfont="@string/raleway_bold" />
-
-        <LinearLayout
-            android:id="@+id/llEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/pass"
-            android:orientation="vertical">
-
-            <com.yberry.dinehawaii.customview.CustomEditText
-                android:id="@+id/name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_15sdp"
-                android:layout_marginRight="@dimen/_15sdp"
-
-                android:background="@null"
-                android:hint="Enter password"
-                android:inputType="textPassword"
-                android:paddingBottom="@dimen/_8sdp"
-                android:paddingTop="@dimen/_8sdp"
-                android:singleLine="true"
-                android:imeOptions="actionNext"
-                android:textColor="@color/white"
-                android:textColorHint="@color/offwhite"
-                style="@style/TextAppearance.AppCompat.Subhead"
-                app:edittextfont="Raleway-Regular.ttf" />
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scaleType="fitXY"
-
-                android:src="@drawable/lines" />
-
-        </LinearLayout>
-
-        <com.yberry.dinehawaii.customview.CustomTextView
-            android:id="@+id/mobileNoTV"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/llpass"
-            
-            android:layout_marginTop="@dimen/_10sdp"
-            android:drawableLeft="@drawable/greendot"
-            android:drawablePadding="@dimen/_5sdp"
-            android:gravity="center_vertical"
-            android:text="Enter Mobile no"
-            android:textColor="@color/green"
-            style="@style/TextAppearance.AppCompat.Subhead"
-            app:edittextfont="@string/raleway_bold" />
-
-        <LinearLayout
-            android:id="@+id/llPhoneNo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/pass"
-            android:layout_marginLeft="@dimen/_12sdp"
-            android:layout_marginRight="@dimen/_15sdp"
-            android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/llpass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <com.yberry.dinehawaii.cpp.CountryCodePicker
-                    android:id="@+id/ccp"
-                    android:layout_width="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    app:contentColor="@color/white"
-                    app:textSize="@dimen/_12sdp"
-                    app:defaultNameCode="US"
-                    android:textColor="@color/white"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_height="wrap_content" />
+                android:layout_below="@+id/user"
+
+                android:orientation="vertical">
+
                 <com.yberry.dinehawaii.customview.CustomEditText
-                    android:id="@+id/mobileNo"
+                    android:id="@+id/password"
+                    style="@style/TextAppearance.AppCompat.Subhead"
                     android:layout_width="match_parent"
-                    android:layout_marginTop="@dimen/_10sdp"
                     android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/name"
+                    android:layout_alignStart="@+id/name"
+                    android:layout_marginLeft="@dimen/_15sdp"
+                    android:layout_marginRight="@dimen/_15sdp"
                     android:background="@null"
-                    android:hint="Enter phone no."
-                    android:inputType="number"
+                    android:hint="Enter unique email"
+                    android:imeOptions="actionNext"
+                    android:inputType="textEmailAddress"
                     android:paddingBottom="@dimen/_8sdp"
                     android:paddingTop="@dimen/_8sdp"
                     android:singleLine="true"
                     android:textColor="@color/white"
-                    android:imeOptions="actionDone"
                     android:textColorHint="@color/offwhite"
-                    style="@style/TextAppearance.AppCompat.Subhead"
                     app:edittextfont="Raleway-Regular.ttf" />
-            </LinearLayout>
-
-        </LinearLayout>
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scaleType="fitXY"
-
-            android:src="@drawable/lines" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:weightSum="3">
-
-
-            <com.yberry.dinehawaii.customview.CustomTextView
-                style="@style/TextAppearance.AppCompat.Subhead"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/drawable_green_dot"
-                android:drawablePadding="@dimen/_5sdp"
-                android:text="GE Tax Exemption"
-                android:textColor="@color/colorGreen"
-                app:edittextfont="@string/raleway_bold" />
-
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:background="@drawable/help"
-                android:visibility="gone" />
-        </LinearLayout>
-
-        <RadioGroup
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/rgExemption"
-            android:layout_marginTop="@dimen/_4sdp"
-            android:layout_marginLeft="@dimen/_10sdp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/rbexemptYes"
-                style="@style/TextAppearance.AppCompat.Subhead"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:buttonTint="@color/colorPrimary"
-                android:text="@string/yes"
-                android:textColor="@color/offwhite" />
-
-            <RadioButton
-                android:id="@+id/rbexemptNo"
-                style="@style/TextAppearance.AppCompat.Subhead"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:buttonTint="@color/colorPrimary"
-                android:checked="true"
-                android:text="@string/no"
-                android:textColor="@color/offwhite" />
-        </RadioGroup>
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:scaleType="fitXY"
-            android:src="@drawable/lines" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:id="@+id/llGetax"
-            android:visibility="gone"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <com.yberry.dinehawaii.customview.CustomTextView
-                    style="@style/TextAppearance.AppCompat.Subhead"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:drawableLeft="@drawable/drawable_green_dot"
-                    android:drawablePadding="@dimen/_5sdp"
-                    android:gravity="center"
-                    android:text="GE Tax No"
-                    android:textColor="@color/colorGreen"
-                    app:edittextfont="@string/raleway_bold" />
-
-                <ImageView
-                    android:id="@+id/tvGETaxNumb_pop"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:src="@drawable/help"
-                    android:visibility="gone" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <com.yberry.dinehawaii.customview.CustomEditText
-                    android:id="@+id/etGeTaxNo"
-                    style="@style/TextAppearance.AppCompat.Subhead"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_12sdp"
-                    android:background="@null"
-                    android:enabled="true"
-                    android:hint="Enter GE Tax No"
-                    android:imeOptions="actionDone"
-                    android:inputType="textCapWords"
-                    android:paddingBottom="@dimen/_8sdp"
-                    android:paddingTop="@dimen/_5sdp"
-                    android:singleLine="true"
-                    android:textColor="@color/white"
-                    android:textColorHint="@color/offwhite"
-                    app:edittextfont="@string/raleway_regular" />
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:scaleType="fitXY"
+
                     android:src="@drawable/lines" />
 
             </LinearLayout>
-        </LinearLayout>
-        <com.yberry.dinehawaii.customview.CustomTextView
-            android:layout_marginTop="@dimen/_8sdp"
 
-            android:id="@+id/customTextView13"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/drawable_green_dot"
-            android:drawablePadding="@dimen/_5sdp"
-            android:gravity="center"
-            android:text="Geographic Area"
-            android:textColor="@color/green"
-            style="@style/TextAppearance.AppCompat.Subhead"
-            android:textStyle="bold"
-            app:edittextfont="@string/raleway_bold" />
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/pass"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/llpass"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:drawableLeft="@drawable/greendot"
+                android:drawablePadding="@dimen/_5sdp"
+                android:gravity="center_vertical"
+                android:text="Enter Password"
+                android:textColor="@color/green"
+                app:edittextfont="@string/raleway_bold" />
 
-        <Spinner
-            android:id="@+id/geographic_area"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Select Area "
-            android:layout_marginLeft="@dimen/_10sdp"
-            android:layout_marginRight="@dimen/_10sdp"
-            style="@style/TextAppearance.AppCompat.Subhead" />
+            <LinearLayout
+                android:id="@+id/llEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/pass"
+                android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scaleType="fitXY"
-            android:src="@drawable/lines" />
-        <com.yberry.dinehawaii.customview.CustomTextView
-            android:id="@+id/save"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/llEmail"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:drawableLeft="@drawable/greendot"
-            android:drawablePadding="@dimen/_5sdp"
-            android:gravity="center_vertical"
-            android:text="@string/id"
-            android:textColor="@color/green"
-            style="@style/TextAppearance.AppCompat.Subhead"
-            app:edittextfont="@string/raleway_bold" />
+                <com.yberry.dinehawaii.customview.CustomEditText
+                    android:id="@+id/name"
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_15sdp"
 
-        <LinearLayout
-            android:id="@+id/linear"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/save"
-            android:orientation="vertical"
-            android:layout_marginLeft="@dimen/_15sdp"
-            android:layout_marginRight="@dimen/_15sdp"
-            >
+                    android:layout_marginRight="@dimen/_15sdp"
+                    android:background="@null"
+                    android:hint="Enter password"
+                    android:imeOptions="actionNext"
+                    android:inputType="textPassword"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:singleLine="true"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/offwhite"
+                    app:edittextfont="Raleway-Regular.ttf" />
 
-            <RadioGroup
-                android:id="@+id/radioGroup"
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitXY"
+
+                    android:src="@drawable/lines" />
+
+            </LinearLayout>
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/mobileNoTV"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+
+                android:layout_below="@+id/llpass"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:drawableLeft="@drawable/greendot"
+                android:drawablePadding="@dimen/_5sdp"
+                android:gravity="center_vertical"
+                android:text="Enter Mobile no"
+                android:textColor="@color/green"
+                app:edittextfont="@string/raleway_bold" />
+
+            <LinearLayout
+                android:id="@+id/llPhoneNo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/pass"
+                android:layout_marginLeft="@dimen/_12sdp"
+                android:layout_marginRight="@dimen/_15sdp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.yberry.dinehawaii.cpp.CountryCodePicker
+                        android:id="@+id/ccp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:textColor="@color/white"
+                        app:contentColor="@color/white"
+                        app:defaultNameCode="US"
+                        app:textSize="@dimen/_12sdp" />
+
+                    <com.yberry.dinehawaii.customview.CustomEditText
+                        android:id="@+id/mobileNo"
+                        style="@style/TextAppearance.AppCompat.Subhead"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:background="@null"
+                        android:hint="Enter phone no."
+                        android:imeOptions="actionDone"
+                        android:inputType="number"
+                        android:paddingBottom="@dimen/_8sdp"
+                        android:paddingTop="@dimen/_8sdp"
+                        android:singleLine="true"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/offwhite"
+                        app:edittextfont="Raleway-Regular.ttf" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+
+                android:src="@drawable/lines" />
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="@dimen/_5sdp">
+                android:layout_marginTop="@dimen/_10sdp"
+                android:weightSum="3">
 
-                <RadioButton
-                    android:id="@+id/yes"
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    style="@style/TextAppearance.AppCompat.Subhead"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:buttonTint="@color/colorPrimary"
-                    android:text="Yes"
-                    android:textColor="@color/offwhite"
-                    style="@style/TextAppearance.AppCompat.Subhead" />
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/drawable_green_dot"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:text="GE Tax Exemption"
+                    android:textColor="@color/colorGreen"
+                    app:edittextfont="@string/raleway_bold" />
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@drawable/help"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <RadioGroup
+                android:id="@+id/rgExemption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:orientation="horizontal">
 
                 <RadioButton
+                    android:id="@+id/rbexemptYes"
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/colorPrimary"
+                    android:text="@string/yes"
+                    android:textColor="@color/offwhite" />
+
+                <RadioButton
+                    android:id="@+id/rbexemptNo"
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/colorPrimary"
                     android:checked="true"
-                    android:id="@+id/no"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:buttonTint="@color/colorPrimary"
-                    android:text="No"
-                    android:textColor="@color/offwhite"
-                    style="@style/TextAppearance.AppCompat.Subhead" />
-
+                    android:text="@string/no"
+                    android:textColor="@color/offwhite" />
             </RadioGroup>
 
-        </LinearLayout>
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:scaleType="fitXY"
-            android:src="@drawable/lines" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:scaleType="fitXY"
+                android:src="@drawable/lines" />
 
-        <com.yberry.dinehawaii.customview.CustomButton
-            android:id="@+id/submitButton"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/_35sdp"
-            android:layout_gravity="center"
-            android:layout_margin="@dimen/_10sdp"
-            android:background="@drawable/greenborder"
-            android:drawableLeft="@drawable/stickicon"
-            android:drawablePadding="@dimen/_5sdp"
-            android:paddingLeft="@dimen/_5sdp"
-            android:paddingRight="@dimen/_15sdp"
-            android:text="Submit"
-            android:textAlignment="gravity"
-            android:textColor="#fff"
-            app:edittextfont="@string/raleway_bold"/>
-    </LinearLayout>
+            <LinearLayout
+                android:id="@+id/llGetax"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.yberry.dinehawaii.customview.CustomTextView
+                        style="@style/TextAppearance.AppCompat.Subhead"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:drawableLeft="@drawable/drawable_green_dot"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:gravity="center"
+                        android:text="GE Tax No"
+                        android:textColor="@color/colorGreen"
+                        app:edittextfont="@string/raleway_bold" />
+
+                    <ImageView
+                        android:id="@+id/tvGETaxNumb_pop"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:src="@drawable/help"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.yberry.dinehawaii.customview.CustomEditText
+                        android:id="@+id/etGeTaxNo"
+                        style="@style/TextAppearance.AppCompat.Subhead"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_12sdp"
+                        android:background="@null"
+                        android:enabled="true"
+                        android:hint="Enter GE Tax No"
+                        android:imeOptions="actionDone"
+                        android:inputType="textCapWords"
+                        android:paddingBottom="@dimen/_8sdp"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:singleLine="true"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/offwhite"
+                        app:edittextfont="@string/raleway_regular" />
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/lines" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/customTextView13"
+
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:drawableLeft="@drawable/drawable_green_dot"
+                android:drawablePadding="@dimen/_5sdp"
+                android:gravity="center"
+                android:text="Geographic Area"
+                android:textColor="@color/green"
+                android:textStyle="bold"
+                app:edittextfont="@string/raleway_bold" />
+
+            <Spinner
+                android:id="@+id/geographic_area"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:hint="Select Area " />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:src="@drawable/lines" />
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/save"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/llEmail"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:drawableLeft="@drawable/greendot"
+                android:drawablePadding="@dimen/_5sdp"
+                android:gravity="center_vertical"
+                android:text="@string/id"
+                android:textColor="@color/green"
+                app:edittextfont="@string/raleway_bold" />
+
+            <LinearLayout
+                android:id="@+id/linear"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/save"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:layout_marginRight="@dimen/_15sdp"
+                android:orientation="vertical">
+
+                <RadioGroup
+                    android:id="@+id/radioGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/_5sdp">
+
+                    <RadioButton
+                        android:id="@+id/yes"
+                        style="@style/TextAppearance.AppCompat.Subhead"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:buttonTint="@color/colorPrimary"
+                        android:text="Yes"
+                        android:textColor="@color/offwhite" />
+
+                    <RadioButton
+                        android:id="@+id/no"
+                        style="@style/TextAppearance.AppCompat.Subhead"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:buttonTint="@color/colorPrimary"
+                        android:checked="true"
+                        android:text="No"
+                        android:textColor="@color/offwhite" />
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:scaleType="fitXY"
+                android:src="@drawable/lines" />
+
+            <com.yberry.dinehawaii.customview.CustomButton
+                android:id="@+id/submitButton"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/_10sdp"
+                android:background="@drawable/greenborder"
+                android:drawableLeft="@drawable/stickicon"
+                android:drawablePadding="@dimen/_5sdp"
+                android:paddingLeft="@dimen/_5sdp"
+                android:paddingRight="@dimen/_15sdp"
+                android:text="Submit"
+                android:textAlignment="gravity"
+                android:textColor="#fff"
+                app:edittextfont="@string/raleway_bold" />
+        </LinearLayout>
+    </ScrollView>
 </RelativeLayout>

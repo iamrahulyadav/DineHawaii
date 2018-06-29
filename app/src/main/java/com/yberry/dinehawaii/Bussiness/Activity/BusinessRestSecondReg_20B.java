@@ -56,7 +56,7 @@ public class BusinessRestSecondReg_20B extends AppCompatActivity implements View
     String multisite;
     BusinessDetails businessDetails;
     CountryCodePicker ccp;
-    String exemptValue="0";
+    String exemptValue = "0";
     LinearLayout llGetax;
     ArrayList<String> geographic_list;
     ArrayList<String> geographic_id_list;
@@ -223,7 +223,6 @@ public class BusinessRestSecondReg_20B extends AppCompatActivity implements View
         });
     }
 
-
     @SuppressLint("LongLogTag")
     @Override
     public void onClick(View v) {
@@ -247,7 +246,8 @@ public class BusinessRestSecondReg_20B extends AppCompatActivity implements View
             else {
                 if (Util.isNetworkAvailable(mContext)) {
                     JsonObject jsonObject = new JsonObject();
-                    jsonObject.addProperty("method", AppConstants.REGISTRATION.BUSINESSREGISTRATIONWITHID);
+//                    jsonObject.addProperty("method", AppConstants.REGISTRATION.BUSINESSREGISTRATIONWITHID);
+                    jsonObject.addProperty("method", "check_business_user_new");
                     jsonObject.addProperty("business_name", businessName);
                     jsonObject.addProperty("business_fein_no", federalNo);
                     jsonObject.addProperty("business_level", multisite);
@@ -256,7 +256,7 @@ public class BusinessRestSecondReg_20B extends AppCompatActivity implements View
                     jsonObject.addProperty("phone_no", bussiPhoneNo);
                     jsonObject.addProperty("business_get_tax_exemption", exemptValue);
                     jsonObject.addProperty("business_exemption_no", etGeTaxNo.getText().toString());
-                    jsonObject.addProperty("geo_graphic_area",selected_geographic_id);
+                    jsonObject.addProperty("geo_graphic_area", selected_geographic_id);
                     jsonObject.addProperty("fcm_id", FirebaseInstanceId.getInstance().getToken());
                     Log.e(TAG, jsonObject.toString());
                     JsonCallMethod(jsonObject);

@@ -52,7 +52,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -100,11 +99,12 @@ public class BusinessNaviDrawer extends AppCompatActivity implements NavigationV
         Log.e("nameof person", AppPreferencesBuss.getfirstname(BusinessNaviDrawer.this));
         mUserImage = (ImageView) headerView.findViewById(R.id.mUserImage);
 
-        if (!AppPreferencesBuss.getfirstname(BusinessNaviDrawer.this).equalsIgnoreCase("")) {
+        customerName.setText(AppPreferencesBuss.getBussiName(BusinessNaviDrawer.this));
+      /*  if (!AppPreferencesBuss.getfirstname(BusinessNaviDrawer.this).equalsIgnoreCase("")) {
             customerName.setText(AppPreferencesBuss.getfirstname(BusinessNaviDrawer.this) + "\n"
                     + AppPreferencesBuss.getEmpPosition(BusinessNaviDrawer.this));
         } else
-            customerName.setText("No Name");
+            customerName.setText("No Name");*/
         setProfileImage();
         Log.e(TAG, "onCreate: BusinessID >> " + AppPreferencesBuss.getBussiId(this));
         Log.e(TAG, "onCreate: UserID >> " + AppPreferencesBuss.getUserId(this));
@@ -114,6 +114,13 @@ public class BusinessNaviDrawer extends AppCompatActivity implements NavigationV
         } else if (AppPreferences.getUserType(this).equalsIgnoreCase(AppConstants.BUSS_LOGIN_TYPE.BUSSINESS_LOCAL_USER)) {
             checkLoggedInUser();
             callToDefault();
+        }
+
+
+        //show/hide multiside menu
+        if (AppPreferencesBuss.getIsMultisite(this)) {
+            Menu nav_Menu = navigationView.getMenu();
+            nav_Menu.findItem(R.id.nav_my_business).setVisible(true);
         }
     }
 
@@ -125,7 +132,15 @@ public class BusinessNaviDrawer extends AppCompatActivity implements NavigationV
         String duties = AppPreferencesBuss.getAllottedDuties(BusinessNaviDrawer.this);
         if (AppPreferences.getUserType(BusinessNaviDrawer.this).equalsIgnoreCase(AppConstants.BUSS_LOGIN_TYPE.BUSSINESS_LOCAL_USER)) {
             if (!TextUtils.isEmpty(duties)) {
+
+                if (!AppPreferencesBuss.getfirstname(BusinessNaviDrawer.this).equalsIgnoreCase("")) {
+                    customerName.setText(AppPreferencesBuss.getfirstname(BusinessNaviDrawer.this)
+                            + "(" + AppPreferencesBuss.getEmpPosition(BusinessNaviDrawer.this) + ")");
+                } else
+                    customerName.setText("No Name");
+
                 Menu nav_Menu = navigationView.getMenu();
+                nav_Menu.findItem(R.id.nav_my_business).setVisible(false);
                 nav_Menu.findItem(R.id.nav_e_gift).setVisible(false);
                 nav_Menu.findItem(R.id.nav_neworder).setVisible(false);
                 nav_Menu.findItem(R.id.nav_edit_reservation).setVisible(false);
@@ -234,6 +249,8 @@ public class BusinessNaviDrawer extends AppCompatActivity implements NavigationV
         if (id == R.id.nav_home) {
             headText.setText("Home");
             fragment = new BusinessHomeFragment41();
+        } else if (id == R.id.nav_my_business) {
+            startActivity(new Intent(BusinessNaviDrawer.this, MyBusinessListActivity.class));
         } else if (id == R.id.nav_orderhistory) {
             headText.setText("Reports");
             fragment = new ReportsFragment();

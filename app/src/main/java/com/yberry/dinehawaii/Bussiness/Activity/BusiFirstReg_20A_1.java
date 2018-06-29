@@ -58,6 +58,8 @@ public class BusiFirstReg_20A_1 extends AppCompatActivity implements View.OnClic
     private CustomEditText fein_id_ET;
     private BusinessDetails businessDetails;
     private ArrayList<String> businessNameArrayList;
+    private LinearLayout llCorporateEntry;
+    private CustomEditText tvCoEntityName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +91,8 @@ public class BusiFirstReg_20A_1 extends AppCompatActivity implements View.OnClic
         //multiSite_txt.setOnClickListener(this);
         businessNameArrayList = new ArrayList<>();
         businessName.setText(business_name);
+        llCorporateEntry = (LinearLayout) findViewById(R.id.llCorporateEntry);
+        tvCoEntityName = (CustomEditText) findViewById(R.id.tvCoEntityName);
 
     }
 
@@ -99,8 +103,10 @@ public class BusiFirstReg_20A_1 extends AppCompatActivity implements View.OnClic
                 if (checkedId == R.id.yesradioMultiSiteBusiness) {
                     value = "1";
                     multisite = "yes";
+                    llCorporateEntry.setVisibility(View.VISIBLE);
                 } else if (checkedId == R.id.noradioMultiSiteBusiness) {
-                    value = "0";
+                    llCorporateEntry.setVisibility(View.GONE);
+                        value = "0";
                     multisite = "no";
                 }
             }
@@ -123,15 +129,18 @@ public class BusiFirstReg_20A_1 extends AppCompatActivity implements View.OnClic
                 getBusinessName = businessName.getText().toString().trim();
                 getfederalNo = fein_id_ET.getText().toString().trim();
 
-                if (!TextUtils.isEmpty(fein_id_ET.getText())) {
-                    if (Util.isNetworkAvailable(mContext)) {
-                        search_submit_business();
-                    } else {
-                        Toast.makeText(mContext, "Please Connect Your Internet", Toast.LENGTH_LONG).show();
-                    }
-                } else
-                    fein_id_ET.setError("Enter FEIN No");
+                if (TextUtils.isEmpty(getBusinessName))
+                    businessName.setError("Enter Business Name");
+                else if (TextUtils.isEmpty(fein_id_ET.getText()))
+                    fein_id_ET.setError("Enter FEIN No.");
+                else if (multisite.equalsIgnoreCase("yes") && TextUtils.isEmpty(tvCoEntityName.getText().toString())) {
+                    fein_id_ET.setError("Enter Corporate Entity");
+                } else if (!Util.isNetworkAvailable(mContext)) {
+                    search_submit_business();
 
+                } else {
+                    Toast.makeText(mContext, "Please Connect Your Internet", Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
@@ -163,6 +172,7 @@ public class BusiFirstReg_20A_1 extends AppCompatActivity implements View.OnClic
         jsonObject.addProperty("method", AppConstants.GENERALAPI.SEARCH_SUBMIT_BUSINESS);
         jsonObject.addProperty("business_name", businessName.getText().toString().trim());
         jsonObject.addProperty("fein_number", feinId);
+        jsonObject.addProperty("corporate_entity_name", tvCoEntityName.getText().toString());
         jsonObject.addProperty("multisite", value);
         jsonObject.addProperty("permit_no", permit_no);
         jsonObject.addProperty("type", "search");

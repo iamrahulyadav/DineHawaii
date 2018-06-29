@@ -7,6 +7,11 @@
             android:icon="@drawable/drawer_icon"
             android:title="Home" />
         <item
+            android:id="@+id/nav_my_business"
+            android:icon="@drawable/drawer_icon"
+            android:title="My Business"
+            android:visible="false" />
+        <item
             android:id="@+id/nav_e_gift"
             android:icon="@drawable/drawer_icon"
             android:title="Orders" />

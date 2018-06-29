@@ -318,6 +318,7 @@
         <activity android:name=".vendor.Activity.VendorListActivity" />
         <activity android:name=".vendor.Activity.BidItemListActivity" />
         <activity android:name=".vendor.Activity.VendorItemListActivity" />
+        <activity android:name=".Bussiness.Activity.MyBusinessListActivity" />
         <activity android:name=".Bussiness.Activity.DeliveryChargesActivity" />
         <activity
             android:name=".vendor.Activity.BidListActivity"

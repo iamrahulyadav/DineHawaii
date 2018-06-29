@@ -8,11 +8,13 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -22,7 +24,6 @@ import com.google.gson.JsonObject;
 import com.yberry.dinehawaii.R;
 import com.yberry.dinehawaii.RetrofitClasses.ApiClient;
 import com.yberry.dinehawaii.RetrofitClasses.MyApiEndpointInterface;
-import com.yberry.dinehawaii.Util.AppConstants;
 import com.yberry.dinehawaii.Util.AppPreferencesBuss;
 import com.yberry.dinehawaii.Util.ProgressHUD;
 import com.yberry.dinehawaii.Util.Util;
@@ -48,6 +49,8 @@ public class BusiFirstReg_20A_2 extends AppCompatActivity implements View.OnClic
     private RelativeLayout mainView;
     private CustomEditText fein_id_ET;
     private String business_name = "";
+    private LinearLayout llCorporateEntry;
+    private CustomEditText tvCoEntityName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +80,8 @@ public class BusiFirstReg_20A_2 extends AppCompatActivity implements View.OnClic
         multiSite_txt = (ImageView) findViewById(R.id.multiSite_txt);
         tvFederalIdNumb_pop.setOnClickListener(this);
         multiSite_txt.setOnClickListener(this);
+        llCorporateEntry = (LinearLayout) findViewById(R.id.llCorporateEntry);
+        tvCoEntityName = (CustomEditText) findViewById(R.id.tvCoEntityName);
     }
 
     private void setListener() {
@@ -86,9 +91,13 @@ public class BusiFirstReg_20A_2 extends AppCompatActivity implements View.OnClic
                 if (checkedId == R.id.yesradioMultiSiteBusiness) {
                     value = "1";
                     multisite = "yes";
+                    llCorporateEntry.setVisibility(View.VISIBLE);
+
                 } else if (checkedId == R.id.noradioMultiSiteBusiness) {
                     value = "0";
                     multisite = "no";
+                    llCorporateEntry.setVisibility(View.GONE);
+
                 }
             }
         });
@@ -110,15 +119,25 @@ public class BusiFirstReg_20A_2 extends AppCompatActivity implements View.OnClic
             public void onClick(View v) {
                 getBusinessName = editTextBusiName.getText().toString().trim();
                 getfederalNo = fein_id_ET.getText().toString().trim();
-                if (getBusinessName.equalsIgnoreCase("")) {
-                    editTextBusiName.setError("Enter business name");
-                } else if (fein_id_ET.getText().toString().equalsIgnoreCase("")) {
-                    fein_id_ET.setError("Enter FEIN No");
+                if (TextUtils.isEmpty(getBusinessName))
+                    editTextBusiName.setError("Enter Business Name");
+                else if (TextUtils.isEmpty(fein_id_ET.getText()))
+                    fein_id_ET.setError("Enter FEIN No.");
+                else if (multisite.equalsIgnoreCase("yes") && TextUtils.isEmpty(tvCoEntityName.getText().toString())) {
+                    fein_id_ET.setError("Enter Corporate Entity");
                 } else if (Util.isNetworkAvailable(mContext)) {
                     businessRegisration();
                 } else {
                     Toast.makeText(mContext, "Please Connect Your Internet", Toast.LENGTH_LONG).show();
                 }
+                /*if (getBusinessName.equalsIgnoreCase("")) {
+                    editTextBusiName.setError("Enter business name");
+                } else if (fein_id_ET.getText().toString().equalsIgnoreCase("")) {
+                    fein_id_ET.setError("Enter FEIN No");
+                } else if (Util.isNetworkAvailable(mContext)) {
+                } else {
+                    Toast.makeText(mContext, "Please Connect Your Internet", Toast.LENGTH_LONG).show();
+                }*/
             }
         });
     }
@@ -145,9 +164,12 @@ public class BusiFirstReg_20A_2 extends AppCompatActivity implements View.OnClic
 
     private void businessRegisration() {
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("method", AppConstants.REGISTRATION.BUSINESSREGISTRATION);
+//        jsonObject.addProperty("method", AppConstants.REGISTRATION.BUSINESSREGISTRATION);
+        jsonObject.addProperty("method", "business_registration_new");
         jsonObject.addProperty("business_name", getBusinessName);
         jsonObject.addProperty("business_fein_no", getfederalNo);
+        jsonObject.addProperty("multisite", value);
+        jsonObject.addProperty("corporate_entity_name", tvCoEntityName.getText().toString());
         jsonObject.addProperty("type", "new");
         Log.e(TAG, jsonObject.toString());
         Log.v(TAG, "REQUEST SUBMIT BUTTON >> " + jsonObject.toString());

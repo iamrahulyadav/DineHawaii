@@ -21,6 +21,7 @@ import com.google.gson.JsonObject;
 import com.yberry.dinehawaii.Bussiness.Activity.BusiSelectPackageActivity;
 import com.yberry.dinehawaii.Bussiness.Activity.DeliveryChargesActivity;
 import com.yberry.dinehawaii.Bussiness.Activity.ManageServiceTypeActivity;
+import com.yberry.dinehawaii.Bussiness.Activity.MyBusinessListActivity;
 import com.yberry.dinehawaii.R;
 import com.yberry.dinehawaii.RetrofitClasses.ApiClient;
 import com.yberry.dinehawaii.RetrofitClasses.MyApiEndpointInterface;
@@ -53,6 +54,7 @@ public class BusinessHomeFragment41 extends Fragment implements View.OnClickList
     private CustomTextView tvLeadTime;
     private String options = "0";
     private CustomTextView tvSpecialDisEve, tvSetupLogo, tvUploadVidPho;
+    private LinearLayout llMyBusiness;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -117,6 +119,9 @@ public class BusinessHomeFragment41 extends Fragment implements View.OnClickList
                 tvBusAreas.setEnabled(false);
                 delivery_charge.setEnabled(false);
                 manage_coupons.setEnabled(false);
+                tvUploadVidPho.setEnabled(false);
+                tvSetupLogo.setEnabled(false);
+                tvSpecialDisEve.setEnabled(false);
 
                 if (duties.contains("1")) ;
 
@@ -621,8 +626,15 @@ public class BusinessHomeFragment41 extends Fragment implements View.OnClickList
         tvSpecialDisEve = (CustomTextView) view.findViewById(R.id.tvSpecialDisEve);
         tvSetupLogo = (CustomTextView) view.findViewById(R.id.tvSetupLogo);
         tvUploadVidPho = (CustomTextView) view.findViewById(R.id.tvUploadVidPho);
+        llMyBusiness = (LinearLayout) view.findViewById(R.id.llMyBusiness);
 
         vendor_bid_hist.setOnClickListener(this);
+        llMyBusiness.setOnClickListener(this);
+
+        if (AppPreferencesBuss.getIsMultisite(getActivity()))
+            llMyBusiness.setVisibility(View.VISIBLE);
+        else
+            llMyBusiness.setVisibility(View.GONE);
 
     }
 
@@ -631,6 +643,9 @@ public class BusinessHomeFragment41 extends Fragment implements View.OnClickList
         switch (view.getId()) {
             case R.id.vendor_bid_hist:
                 startActivity(new Intent(getActivity(), BidListActivity.class));
+                break;
+            case R.id.llMyBusiness:
+                startActivity(new Intent(getActivity(), MyBusinessListActivity.class));
                 break;
         }
     }

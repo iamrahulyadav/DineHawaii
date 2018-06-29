@@ -59,6 +59,7 @@ public class AppPreferencesBuss {
     private static final String EMP_POSITION_NAME = "emp_position_name";
     private static final String EMP_POSITION = "emp_position";
     private static final String USERTYPEID = "user_type_id";
+    private static final String IS_MULTISITE = "is_multisite";
     private final SharedPreferences sharedPreferences;
     private final Editor editor;
 
@@ -762,6 +763,21 @@ public class AppPreferencesBuss {
         SharedPreferences pereference = context.getSharedPreferences(MBPREFERENCES, 0);
         return pereference.getString(EMP_POSITION, "");
     }
+
+    public static void setIsMultisite(Context context, boolean value) {
+        SharedPreferences preferences = context.getSharedPreferences(
+                MBPREFERENCES, 0);
+        Editor editor = preferences.edit();
+        editor.putBoolean(IS_MULTISITE, value);
+        editor.commit();
+    }
+
+    public static boolean getIsMultisite(Context context) {
+        SharedPreferences pereference = context.getSharedPreferences(
+                MBPREFERENCES, 0);
+        return pereference.getBoolean(IS_MULTISITE, false);
+    }
+
 
 }
 

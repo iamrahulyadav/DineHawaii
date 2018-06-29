@@ -32,7 +32,6 @@ import com.yberry.dinehawaii.customview.CustomButton;
 import com.yberry.dinehawaii.customview.CustomCheckBox;
 import com.yberry.dinehawaii.customview.CustomEditText;
 import com.yberry.dinehawaii.customview.CustomTextView;
-import com.yberry.dinehawaii.vendor.Activity.VendorLoginWebViewActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -219,6 +218,12 @@ public class BusinessLoginActivity extends AppCompatActivity implements View.OnC
                         AppPreferencesBuss.setfirstname(BusinessLoginActivity.this, jsonObject1.getString("first_name"));
                         AppPreferencesBuss.setBussiPhoneNo(BusinessLoginActivity.this, jsonObject1.getString("contact_no"));
                         AppPreferencesBuss.setUsertypeid(BusinessLoginActivity.this, jsonObject1.getString("user_type"));
+
+                        if (jsonObject1.getString("multisite").equalsIgnoreCase("1"))
+                            AppPreferencesBuss.setIsMultisite(BusinessLoginActivity.this, true);
+                        else
+                            AppPreferencesBuss.setIsMultisite(BusinessLoginActivity.this, false);
+
                         AppPreferences.setUserType(mContext, AppConstants.BUSS_LOGIN_TYPE.BUSINESS_USER);
 
                         if (jsonObject1.getString("admin_approval").equalsIgnoreCase("1"))
@@ -292,7 +297,7 @@ public class BusinessLoginActivity extends AppCompatActivity implements View.OnC
                         Intent intent = new Intent(getApplicationContext(), VendorLoginWebViewActivity.class);
                         intent.putExtra("vendor_url", jsonObject1.getString("VENDOR_ADMIN_Url"));
                         startActivity(intent);
-                    } */else {
+                    } */ else {
                         Intent intent = new Intent(getApplicationContext(), BusinessLoginError.class);
                         startActivity(intent);
                     }

@@ -79,69 +79,6 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <com.yberry.dinehawaii.customview.CustomTextView
-                        android:id="@+id/tvFederalIdNumb"
-                        style="@style/TextAppearance.AppCompat.Subhead"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/llayoutSearch"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:drawableLeft="@drawable/drawable_green_dot"
-                        android:drawablePadding="@dimen/_5sdp"
-                        android:gravity="center"
-                        android:text="@string/federalIdNo"
-                        android:textColor="@color/colorGreen"
-                        app:edittextfont="@string/raleway_bold" />
-
-                    <ImageView
-                        android:id="@+id/tvFederalIdNumb_pop"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:src="@drawable/help"
-                        android:visibility="gone" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/llFedralNO"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvFederalIdNumb"
-                    android:orientation="vertical">
-
-                    <com.yberry.dinehawaii.customview.CustomEditText
-                        android:id="@+id/enterFeinHere"
-                        style="@style/TextAppearance.AppCompat.Subhead"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_12sdp"
-                        android:background="@null"
-                        android:enabled="true"
-                        android:hint="@string/enterFein"
-                        android:imeOptions="actionDone"
-                        android:inputType="textCapWords"
-                        android:paddingBottom="@dimen/_8sdp"
-                        android:paddingTop="@dimen/_5sdp"
-                        android:singleLine="true"
-                        android:textColor="@color/white"
-                        android:textColorHint="@color/offwhite"
-                        app:edittextfont="@string/raleway_regular" />
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/lines" />
-
-                </LinearLayout>
-
-
-                <LinearLayout
                     android:id="@+id/llBussiness"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -224,6 +161,137 @@
                         android:scaleType="fitXY"
                         android:src="@drawable/lines" />
                 </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llCorporateEntry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            style="@style/TextAppearance.AppCompat.Subhead"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/llayoutSearch"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:drawableLeft="@drawable/drawable_green_dot"
+                            android:drawablePadding="@dimen/_5sdp"
+                            android:gravity="center"
+                            android:text="Corporate Entity Name"
+                            android:textColor="@color/colorGreen"
+                            app:edittextfont="@string/raleway_bold" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:src="@drawable/help"
+                            android:visibility="gone" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvFederalIdNumb"
+                        android:orientation="vertical">
+
+                        <com.yberry.dinehawaii.customview.CustomEditText
+                            android:id="@+id/tvCoEntityName"
+                            style="@style/TextAppearance.AppCompat.Subhead"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_12sdp"
+                            android:background="@null"
+                            android:enabled="true"
+                            android:hint="Enter Corporate Entity Name’"
+                            android:imeOptions="actionDone"
+                            android:inputType="textCapWords"
+                            android:paddingBottom="@dimen/_8sdp"
+                            android:paddingTop="@dimen/_5sdp"
+                            android:singleLine="true"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/offwhite"
+                            app:edittextfont="@string/raleway_regular" />
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/lines" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.yberry.dinehawaii.customview.CustomTextView
+                        android:id="@+id/tvFederalIdNumb"
+                        style="@style/TextAppearance.AppCompat.Subhead"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/llayoutSearch"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:drawableLeft="@drawable/drawable_green_dot"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:gravity="center"
+                        android:text="@string/federalIdNo"
+                        android:textColor="@color/colorGreen"
+                        app:edittextfont="@string/raleway_bold" />
+
+                    <ImageView
+                        android:id="@+id/tvFederalIdNumb_pop"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:src="@drawable/help"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llFedralNO"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvFederalIdNumb"
+                    android:orientation="vertical">
+
+                    <com.yberry.dinehawaii.customview.CustomEditText
+                        android:id="@+id/enterFeinHere"
+                        style="@style/TextAppearance.AppCompat.Subhead"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_12sdp"
+                        android:background="@null"
+                        android:enabled="true"
+                        android:hint="@string/enterFein"
+                        android:imeOptions="actionDone"
+                        android:inputType="textCapWords"
+                        android:paddingBottom="@dimen/_8sdp"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:singleLine="true"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/offwhite"
+                        app:edittextfont="@string/raleway_regular" />
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/lines" />
+
+                </LinearLayout>
+
 
                 <com.yberry.dinehawaii.customview.CustomButton
                     android:id="@+id/submitButton"
