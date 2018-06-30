@@ -131,7 +131,7 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
         final EditText input = (EditText) viewInflated.findViewById(R.id.input);
         builder.setView(viewInflated);
 
-        builder.setPositiveButton("Login Continue", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Continue Login", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String pass = input.getText().toString();
