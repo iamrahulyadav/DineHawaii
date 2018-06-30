@@ -59,8 +59,6 @@ public class SplashActivity extends AppCompatActivity {
                 checkLogin();
             }
         }, SPLASHTIMEOUT);
-
-
     }
 
     private void checkLogin() {

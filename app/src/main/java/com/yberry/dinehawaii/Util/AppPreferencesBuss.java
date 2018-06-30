@@ -60,6 +60,8 @@ public class AppPreferencesBuss {
     private static final String EMP_POSITION = "emp_position";
     private static final String USERTYPEID = "user_type_id";
     private static final String IS_MULTISITE = "is_multisite";
+    private static final String IS_SUB_BUSINESS = "is_sub_business";
+    private static final String MAIN_BUSINESS_EMAIL = "main_business_email";
     private final SharedPreferences sharedPreferences;
     private final Editor editor;
 
@@ -778,7 +780,33 @@ public class AppPreferencesBuss {
         return pereference.getBoolean(IS_MULTISITE, false);
     }
 
+    public static void setIsSubBusiness(Context context, boolean value) {
+        SharedPreferences preferences = context.getSharedPreferences(
+                MBPREFERENCES, 0);
+        Editor editor = preferences.edit();
+        editor.putBoolean(IS_SUB_BUSINESS, value);
+        editor.commit();
+    }
 
+    public static boolean getIsSubBusiness(Context context) {
+        SharedPreferences pereference = context.getSharedPreferences(
+                MBPREFERENCES, 0);
+        return pereference.getBoolean(IS_SUB_BUSINESS, false);
+    }
+
+    public static void setMainBusinessEmail(Context context, String value) {
+        SharedPreferences preferences = context.getSharedPreferences(
+                MBPREFERENCES, 0);
+        Editor editor = preferences.edit();
+        editor.putString(MAIN_BUSINESS_EMAIL, value);
+        editor.commit();
+    }
+
+    public static String getMainBusinessEmail(Context context) {
+        SharedPreferences pereference = context.getSharedPreferences(
+                MBPREFERENCES, 0);
+        return pereference.getString(MAIN_BUSINESS_EMAIL, "");
+    }
 }
 
 

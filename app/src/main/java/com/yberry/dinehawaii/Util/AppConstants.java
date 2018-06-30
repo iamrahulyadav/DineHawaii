@@ -208,7 +208,9 @@ public class AppConstants {
 
         String POSTDISOUNTEVENT = "postDisountEvent";
         String GET_MY_BUSINESS = "get_my_business";
+        String GET_MY_DISABLED_BUSINESS = "get_my_disabled_business";
         String DISABLE_MY_BUSSINESS = "disable_my_bussiness";
+        String ENABLE_MY_BUSSINESS = "enable_my_bussiness";
     }
 
     public interface BUSINESS_VENDOR_API {

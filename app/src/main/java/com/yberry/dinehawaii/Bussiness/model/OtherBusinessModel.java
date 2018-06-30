@@ -24,6 +24,18 @@ public class OtherBusinessModel {
     @Expose
     private String businessAddress;
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    @SerializedName("status")
+    @Expose
+    private String status;
+
     public String getId() {
         return id;
     }

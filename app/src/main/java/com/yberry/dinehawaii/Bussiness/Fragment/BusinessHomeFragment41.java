@@ -20,8 +20,8 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.JsonObject;
 import com.yberry.dinehawaii.Bussiness.Activity.BusiSelectPackageActivity;
 import com.yberry.dinehawaii.Bussiness.Activity.DeliveryChargesActivity;
+import com.yberry.dinehawaii.Bussiness.Activity.ManageBusinessActivity;
 import com.yberry.dinehawaii.Bussiness.Activity.ManageServiceTypeActivity;
-import com.yberry.dinehawaii.Bussiness.Activity.MyBusinessListActivity;
 import com.yberry.dinehawaii.R;
 import com.yberry.dinehawaii.RetrofitClasses.ApiClient;
 import com.yberry.dinehawaii.RetrofitClasses.MyApiEndpointInterface;
@@ -645,7 +645,7 @@ public class BusinessHomeFragment41 extends Fragment implements View.OnClickList
                 startActivity(new Intent(getActivity(), BidListActivity.class));
                 break;
             case R.id.llMyBusiness:
-                startActivity(new Intent(getActivity(), MyBusinessListActivity.class));
+                startActivity(new Intent(getActivity(), ManageBusinessActivity.class));
                 break;
         }
     }

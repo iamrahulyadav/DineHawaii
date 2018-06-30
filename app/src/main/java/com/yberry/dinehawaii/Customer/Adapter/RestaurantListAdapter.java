@@ -64,14 +64,15 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
 
         // new SetImageTask().execute(listItem.getCoverImage(), listItem.getLogoImg());
 
-        if (!listItem.getLogoImg().equalsIgnoreCase("")) {
-            Glide.with(context).load(listItem.getLogoImg())
-                    .thumbnail(0.5f)
-                    .crossFade()
+        if (listItem.getLogoImg() != null)
+            if (!listItem.getLogoImg().equalsIgnoreCase("")) {
+                Glide.with(context).load(listItem.getLogoImg())
+                        .thumbnail(0.5f)
+                        .crossFade()
 //                    .override(50, 50)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(holder.restLogo);
-        }
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(holder.restLogo);
+            }
 
         /*if (listItem.getCoverImage() != null)
             if (!listItem.getCoverImage().equalsIgnoreCase("")) {

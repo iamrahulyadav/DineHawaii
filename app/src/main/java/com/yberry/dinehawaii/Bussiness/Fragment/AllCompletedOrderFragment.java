@@ -38,7 +38,6 @@ public class AllCompletedOrderFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_open_close, container, false);
         packages = AppPreferencesBuss.getBussiPackagelist(getActivity());
         Log.e(TAG, "onCreateView >> " + packages);
-
         setTabLayout(view);
         return view;
     }

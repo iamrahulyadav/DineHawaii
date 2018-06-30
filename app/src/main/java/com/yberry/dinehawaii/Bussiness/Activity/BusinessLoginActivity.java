@@ -243,6 +243,7 @@ public class BusinessLoginActivity extends AppCompatActivity implements View.OnC
                         } else {
                         }
 
+
                         AppPreferencesBuss.setSaveIdPass(BusinessLoginActivity.this, edittext_id.getText().toString(), edittext_pass.getText().toString());
                         Intent intent1 = new Intent(getApplicationContext(), BusinessNaviDrawer.class);
                         intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

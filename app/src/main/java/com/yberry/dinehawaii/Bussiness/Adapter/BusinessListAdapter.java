@@ -86,9 +86,21 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
         holder.tvRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dialogRemove(model, position);
+
+                if (model.getStatus().equalsIgnoreCase("A"))
+                    dialogDisable(model, position);
+                else
+                    dialogEnable(model, position);
             }
         });
+
+        if (model.getStatus().equalsIgnoreCase("A")) {
+            holder.tvLogin.setVisibility(View.VISIBLE);
+            holder.tvRemove.setText("Make Inactive");
+        } else {
+            holder.tvLogin.setVisibility(View.GONE);
+            holder.tvRemove.setText("Make Active");
+        }
 
         if (!model.getBusinessLogo().equalsIgnoreCase("")) {
             Glide.with(context).load(model.getBusinessName())
@@ -100,7 +112,7 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
         }
     }
 
-    private void dialogRemove(final OtherBusinessModel model, final int position) {
+    private void dialogDisable(final OtherBusinessModel model, final int position) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Disable " + model.getBusinessName());
         builder.setMessage("Do you want to disable this business?");
@@ -109,6 +121,26 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 disableBusiness(model.getId(), position);
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+
+        builder.show();
+    }
+
+    private void dialogEnable(final OtherBusinessModel model, final int position) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Enable " + model.getBusinessName());
+        builder.setMessage("Do you want to enable this business?");
+        builder.setCancelable(false);
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                enableBusiness(model.getId(), position );
             }
         });
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -199,6 +231,10 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
                     try {
                         JSONObject jsonObject = new JSONObject(s);
                         if (jsonObject.getString("status").equalsIgnoreCase("200")) {
+
+                            AppPreferencesBuss.setIsSubBusiness(context, true);
+                            AppPreferencesBuss.setMainBusinessEmail(context, AppPreferencesBuss.getBussiEmilid(context));
+
                             JSONArray jsonArray = jsonObject.getJSONArray("result");
                             JSONObject jsonObject1 = jsonArray.getJSONObject(0);
 
@@ -309,6 +345,58 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
         if (Util.isNetworkAvailable(context)) {
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("method", AppConstants.BUSSINES_USER_BUSINESSAPI.DISABLE_MY_BUSSINESS);
+            jsonObject.addProperty("other_business_id", id);
+            jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(context));
+            Log.e(TAG, "disableBusiness: Request >> " + jsonObject.toString());
+            final ProgressHUD progressHD = ProgressHUD.show(context, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    // TODO Auto-generated method stub
+                }
+            });
+            MyApiEndpointInterface apiService = ApiClient.getClient().create(MyApiEndpointInterface.class);
+            Call<JsonObject> call = apiService.n_business_new_api(jsonObject);
+            call.enqueue(new Callback<JsonObject>() {
+                @SuppressLint("LongLogTag")
+                @Override
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                    Log.e(TAG, "disableBusiness: Response >> " + response.body().toString());
+                    String s = response.body().toString();
+                    try {
+                        JSONObject jsonObject = new JSONObject(s);
+                        if (jsonObject.getString("status").equalsIgnoreCase("200")) {
+                            JSONArray jsonArray = jsonObject.getJSONArray("result");
+                            removeAt(position);
+                        } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
+                            JSONArray jsonArray = jsonObject.getJSONArray("result");
+                            JSONObject jsonObject12 = jsonArray.getJSONObject(0);
+                            Log.d("onResponse", jsonObject12.getString("msg"));
+                            Toast.makeText(context, jsonObject12.getString("msg"), Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException e) {
+                        progressHD.dismiss();
+                        e.printStackTrace();
+                    }
+                    progressHD.dismiss();
+                }
+
+                @SuppressLint("LongLogTag")
+                @Override
+                public void onFailure(Call<JsonObject> call, Throwable t) {
+                    Log.e(TAG, " Error :- " + Log.getStackTraceString(t));
+                    progressHD.dismiss();
+                }
+            });
+
+        } else {
+            Toast.makeText(context, "Please Connect Your Internet", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void enableBusiness(String id, final int position) {
+        if (Util.isNetworkAvailable(context)) {
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("method", AppConstants.BUSSINES_USER_BUSINESSAPI.ENABLE_MY_BUSSINESS);
             jsonObject.addProperty("other_business_id", id);
             jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(context));
             Log.e(TAG, "disableBusiness: Request >> " + jsonObject.toString());

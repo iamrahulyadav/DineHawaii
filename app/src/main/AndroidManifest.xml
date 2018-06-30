@@ -324,7 +324,11 @@
             android:name=".vendor.Activity.BidListActivity"
             android:label="@string/title_activity_bid_list"
             android:theme="@style/AppTheme" />
-        <activity android:name=".vendor.Activity.BidItemDetailsActivity"></activity>
+        <activity android:name=".vendor.Activity.BidItemDetailsActivity" />
+        <activity
+            android:name=".Bussiness.Activity.ManageBusinessActivity"
+            android:label="@string/title_activity_manage_business"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

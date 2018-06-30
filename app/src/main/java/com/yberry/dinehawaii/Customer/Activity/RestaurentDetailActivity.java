@@ -133,8 +133,8 @@ public class RestaurentDetailActivity extends AppCompatActivity {
         } else if (listItem.getType().equalsIgnoreCase("0")) {
             viewLayout.setVisibility(View.GONE);
         }
-        checkPackage();
         setValues(listItem);
+        checkPackage();
         getMenus();
         getHours();
         getServices();
@@ -587,8 +587,8 @@ public class RestaurentDetailActivity extends AppCompatActivity {
         business_name = listItem.getBusinessName();
         healt_status = listItem.getHealthCardStstus();
         average_price = listItem.getAvgPrice();
-//        average_price = listItem.getAvgPrice().equals("") ? 0 : Double.parseDouble(listItem.getAvgPrice());
-        AppPreferencesBuss.setAveragePrice(context, average_price);
+        Log.e(TAG, "setValues: average_price >> " + average_price);
+        AppPreferencesBuss.setAveragePrice(context, listItem.getAvgPrice());
         tvDeparment.setText("Department of health report card : " + healt_status);
         tvAverage.setText("Average Price Range : " + average_price);
     }
@@ -697,8 +697,7 @@ public class RestaurentDetailActivity extends AppCompatActivity {
                 // TODO Auto-generated method stub
             }
         });
-        MyApiEndpointInterface apiService =
-                ApiClient.getClient().create(MyApiEndpointInterface.class);
+        MyApiEndpointInterface apiService = ApiClient.getClient().create(MyApiEndpointInterface.class);
         Call<JsonObject> call = apiService.normalUserBusinessApi(jsonObject);
         call.enqueue(new Callback<JsonObject>() {
             @Override

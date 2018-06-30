@@ -19,15 +19,21 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.JsonObject;
 import com.squareup.picasso.Picasso;
 import com.yberry.dinehawaii.Bussiness.Fragment.BusinessHomeFragment41;
@@ -46,6 +52,7 @@ import com.yberry.dinehawaii.Util.AppPreferences;
 import com.yberry.dinehawaii.Util.AppPreferencesBuss;
 import com.yberry.dinehawaii.Util.FragmentIntraction;
 import com.yberry.dinehawaii.Util.ProgressHUD;
+import com.yberry.dinehawaii.Util.Util;
 import com.yberry.dinehawaii.customview.CustomTextView;
 
 import org.json.JSONArray;
@@ -118,9 +125,13 @@ public class BusinessNaviDrawer extends AppCompatActivity implements NavigationV
 
 
         //show/hide multiside menu
+        Menu nav_Menu = navigationView.getMenu();
         if (AppPreferencesBuss.getIsMultisite(this)) {
-            Menu nav_Menu = navigationView.getMenu();
             nav_Menu.findItem(R.id.nav_my_business).setVisible(true);
+            nav_Menu.findItem(R.id.nav_switch_business).setVisible(false);
+        } else if (AppPreferencesBuss.getIsSubBusiness(this) == true && !AppPreferencesBuss.getMainBusinessEmail(this).equalsIgnoreCase("")) {
+            nav_Menu.findItem(R.id.nav_my_business).setVisible(false);
+            nav_Menu.findItem(R.id.nav_switch_business).setVisible(true);
         }
     }
 
@@ -250,7 +261,7 @@ public class BusinessNaviDrawer extends AppCompatActivity implements NavigationV
             headText.setText("Home");
             fragment = new BusinessHomeFragment41();
         } else if (id == R.id.nav_my_business) {
-            startActivity(new Intent(BusinessNaviDrawer.this, MyBusinessListActivity.class));
+            startActivity(new Intent(BusinessNaviDrawer.this, ManageBusinessActivity.class));
         } else if (id == R.id.nav_orderhistory) {
             headText.setText("Reports");
             fragment = new ReportsFragment();
@@ -274,6 +285,8 @@ public class BusinessNaviDrawer extends AppCompatActivity implements NavigationV
         } else if (id == R.id.notification) {
             headText.setText("Notifications");
             fragment = new NotificationBusinessFragment();
+        } else if (id == R.id.nav_switch_business) {
+            dialogLogin();
         } else if (id == R.id.nav_logout) {
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(BusinessNaviDrawer.this);
             alertDialog.setMessage("Do you want to logout?");
@@ -335,8 +348,6 @@ public class BusinessNaviDrawer extends AppCompatActivity implements NavigationV
                     if (jsonObject.getString("status").equalsIgnoreCase("200")) {
                         AppPreferences.clearPreference(BusinessNaviDrawer.this);
                         AppPreferencesBuss.clearPreference(BusinessNaviDrawer.this);
-                        AppPreferences.clearPreference(BusinessNaviDrawer.this);
-                        AppPreferencesBuss.clearPreference(BusinessNaviDrawer.this);
                         Toast.makeText(BusinessNaviDrawer.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(BusinessNaviDrawer.this, HomeScreenActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -364,6 +375,190 @@ public class BusinessNaviDrawer extends AppCompatActivity implements NavigationV
                 Toast.makeText(BusinessNaviDrawer.this, "Server not Responding", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void dialogLogin() {
+        final android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(BusinessNaviDrawer.this);
+        builder.setTitle("Switch Business");
+        builder.setMessage("Do you want to login into main business"
+                + ", you will be logged out from your current account."
+                + "\n\nEnter password");
+        builder.setCancelable(false);
+        View viewInflated = LayoutInflater.from(BusinessNaviDrawer.this).inflate(R.layout.text_input_password, (ViewGroup) findViewById(android.R.id.content), false);
+        final EditText input = (EditText) viewInflated.findViewById(R.id.input);
+        builder.setView(viewInflated);
+
+        builder.setPositiveButton("Continue Login", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String pass = input.getText().toString();
+                Log.e(TAG, "onClick: pass >> " + pass);
+                loginApi(AppPreferencesBuss.getMainBusinessEmail(BusinessNaviDrawer.this), pass);
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+
+        final AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+        alertDialog.getButton(AlertDialog.BUTTON1).setEnabled(false);
+        input.addTextChangedListener(new TextWatcher() {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // TODO Auto-generated method stub
+                if (input.length() > 2) {
+                    alertDialog.getButton(AlertDialog.BUTTON1).setEnabled(true);
+                } else {
+                    alertDialog.getButton(AlertDialog.BUTTON1).setEnabled(false);
+                }
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+
+    }
+
+    private void loginApi(final String email, final String password) {
+        if (Util.isNetworkAvailable(BusinessNaviDrawer.this)) {
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("method", AppConstants.REGISTRATION.BUSINESSUSERLOGIN);
+            jsonObject.addProperty("email_id", email);
+            jsonObject.addProperty("password", password);
+            jsonObject.addProperty("fcm_id", FirebaseInstanceId.getInstance().getToken());
+            Log.e(TAG, "Request BUSINESS LOGIN >> " + jsonObject.toString());
+            final ProgressHUD progressHD = ProgressHUD.show(BusinessNaviDrawer.this, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    // TODO Auto-generated method stub
+                }
+            });
+            MyApiEndpointInterface apiService =
+                    ApiClient.getClient().create(MyApiEndpointInterface.class);
+            Call<JsonObject> call = apiService.requestBusinessUrl(jsonObject);
+            call.enqueue(new Callback<JsonObject>() {
+                @SuppressLint("LongLogTag")
+                @Override
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                    Log.e(TAG, "Response BUSINESS LOGIN >> " + response.body().toString());
+                    String s = response.body().toString();
+                    try {
+                        JSONObject jsonObject = new JSONObject(s);
+                        if (jsonObject.getString("status").equalsIgnoreCase("200")) {
+
+                            AppPreferencesBuss.setIsSubBusiness(BusinessNaviDrawer.this, false);
+                            AppPreferencesBuss.setMainBusinessEmail(BusinessNaviDrawer.this, "");
+
+                            JSONArray jsonArray = jsonObject.getJSONArray("result");
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(0);
+
+                            //AppPreferences.setCustomerid(BusinessNaviDrawer.this, jsonObject1.getString("user_id"));
+                            AppPreferencesBuss.setUserId(BusinessNaviDrawer.this, jsonObject1.getString("user_id"));
+                            AppPreferencesBuss.setBussiEmilid(BusinessNaviDrawer.this, jsonObject1.getString("email_id"));
+                            AppPreferencesBuss.setBussiName(BusinessNaviDrawer.this, jsonObject1.getString("bussiness_name"));
+                            AppPreferencesBuss.setBussiFein(BusinessNaviDrawer.this, jsonObject1.getString("bussiness_fein"));
+                            AppPreferencesBuss.setBussiId(BusinessNaviDrawer.this, jsonObject1.getString("bussiness_id"));
+                            AppPreferencesBuss.setBussiPackagelist(BusinessNaviDrawer.this, jsonObject1.getString("package_id"));
+                            AppPreferencesBuss.setBussiOptionlist(BusinessNaviDrawer.this, jsonObject1.getString("option_id"));
+                            AppPreferencesBuss.setfirstname(BusinessNaviDrawer.this, jsonObject1.getString("first_name"));
+                            AppPreferencesBuss.setBussiPhoneNo(BusinessNaviDrawer.this, jsonObject1.getString("contact_no"));
+                            AppPreferencesBuss.setUsertypeid(BusinessNaviDrawer.this, jsonObject1.getString("user_type"));
+
+                            if (jsonObject1.getString("multisite").equalsIgnoreCase("1"))
+                                AppPreferencesBuss.setIsMultisite(BusinessNaviDrawer.this, true);
+                            else
+                                AppPreferencesBuss.setIsMultisite(BusinessNaviDrawer.this, false);
+
+                            AppPreferences.setUserType(BusinessNaviDrawer.this, AppConstants.BUSS_LOGIN_TYPE.BUSINESS_USER);
+
+                            if (jsonObject1.getString("admin_approval").equalsIgnoreCase("1"))
+                                AppPreferencesBuss.setVerified_status(BusinessNaviDrawer.this, true);
+                            else
+                                AppPreferencesBuss.setVerified_status(BusinessNaviDrawer.this, false);
+
+                            if (jsonObject1.getString("user_image").length() == 0) {
+                                AppPreferencesBuss.setProfileImage(BusinessNaviDrawer.this, "");
+                            } else {
+                                AppPreferencesBuss.setProfileImage(BusinessNaviDrawer.this, jsonObject1.getString("user_image"));
+                            }
+
+                            String admin_approval = jsonObject1.getString("admin_approval");
+                            if (admin_approval.equalsIgnoreCase("0")) {
+                                Toast.makeText(BusinessNaviDrawer.this, "After admin approval, your business details will be displayed to the users", Toast.LENGTH_LONG).show();
+                            } else {
+                            }
+
+                            AppPreferencesBuss.setSaveIdPass(BusinessNaviDrawer.this, email, password);
+                            Intent intent1 = new Intent(BusinessNaviDrawer.this, BusinessNaviDrawer.class);
+                            intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            BusinessNaviDrawer.this.startActivity(intent1);
+                        } else if (jsonObject.getString("status").equalsIgnoreCase("300")) {
+                            JSONArray jsonArray = jsonObject.getJSONArray("result");
+                            Log.e(TAG, "onResponse: " + jsonArray);
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(0);
+                            AppPreferencesBuss.setfirstname(BusinessNaviDrawer.this, jsonObject1.getString("emp_name"));
+                            AppPreferencesBuss.setBussiId(BusinessNaviDrawer.this, jsonObject1.getString("emp_business"));
+                            AppPreferencesBuss.setAllottedDuties(BusinessNaviDrawer.this, jsonObject1.getString("emp_duties"));
+                            AppPreferencesBuss.setBussiPackagelist(BusinessNaviDrawer.this, jsonObject1.getString("package_id"));
+                            AppPreferencesBuss.setBussiOptionlist(BusinessNaviDrawer.this, jsonObject1.getString("package_id"));
+                            AppPreferencesBuss.setUserId(BusinessNaviDrawer.this, jsonObject1.getString("user_id"));
+                            AppPreferencesBuss.setBussiEmilid(BusinessNaviDrawer.this, jsonObject1.getString("emp_email"));
+                            AppPreferencesBuss.setBussiPhoneNo(BusinessNaviDrawer.this, jsonObject1.getString("emp_contact"));
+                            AppPreferencesBuss.setBussiFein(BusinessNaviDrawer.this, jsonObject1.getString("emp_dine_app_id"));
+                            AppPreferences.setUserType(BusinessNaviDrawer.this, AppConstants.BUSS_LOGIN_TYPE.BUSSINESS_LOCAL_USER);
+                            AppPreferencesBuss.setEmpPosition(BusinessNaviDrawer.this, jsonObject1.getString("emp_position_name"));
+                            AppPreferencesBuss.setEmpPositionId(BusinessNaviDrawer.this, jsonObject1.getString("emp_position"));
+                            AppPreferencesBuss.setUsertypeid(BusinessNaviDrawer.this, jsonObject1.getString("user_type"));
+                            AppPreferencesBuss.setSaveIdPass(BusinessNaviDrawer.this, email, password);
+                            Intent intent1 = new Intent(BusinessNaviDrawer.this, BusinessNaviDrawer.class);
+                            intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            BusinessNaviDrawer.this.startActivity(intent1);
+                        } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
+                            JSONArray jsonArray = jsonObject.getJSONArray("result");
+                            JSONObject jsonObject12 = jsonArray.getJSONObject(0);
+                            Log.d("onResponse", jsonObject12.getString("msg"));
+                            Toast.makeText(BusinessNaviDrawer.this, jsonObject12.getString("msg"), Toast.LENGTH_SHORT).show();
+                        } /*else if (jsonObject.getString("status").equalsIgnoreCase("700")) {
+                        AppPreferences.setUserType(BusinessNaviDrawer.this, AppConstants.BUSS_LOGIN_TYPE.VENDOR_USER);
+                        JSONArray jsonArray = jsonObject.getJSONArray("result");
+                        JSONObject jsonObject1 = jsonArray.getJSONObject(0);
+                        AppPreferencesBuss.setfirstname(BusinessNaviDrawer.this, jsonObject1.getString("first_name") + " " + jsonObject1.getString("last_name"));
+                        AppPreferencesBuss.setUsertypeid(BusinessNaviDrawer.this, jsonObject1.getString("user_type"));
+                        AppPreferencesBuss.setVendorUrl(BusinessNaviDrawer.this, jsonObject1.getString("VENDOR_ADMIN_Url"));
+                        AppPreferencesBuss.setUserId(BusinessNaviDrawer.this, jsonObject1.getString("user_id"));
+                        Intent intent = new Intent(getApplicationContext(), VendorLoginWebViewActivity.class);
+                        intent.putExtra("vendor_url", jsonObject1.getString("VENDOR_ADMIN_Url"));
+                        startActivity(intent);
+                    } */ else {
+                            Intent intent = new Intent(BusinessNaviDrawer.this, BusinessLoginError.class);
+                            BusinessNaviDrawer.this.startActivity(intent);
+                        }
+                    } catch (JSONException e) {
+                        progressHD.dismiss();
+                        e.printStackTrace();
+                    }
+                    progressHD.dismiss();
+                }
+
+                @SuppressLint("LongLogTag")
+                @Override
+                public void onFailure(Call<JsonObject> call, Throwable t) {
+                    Log.e(TAG, " Error :- " + Log.getStackTraceString(t));
+                    progressHD.dismiss();
+                }
+            });
+
+        } else {
+            Toast.makeText(BusinessNaviDrawer.this, "Please Connect Your Internet", Toast.LENGTH_SHORT).show();
+        }
     }
 
     class Receiver extends BroadcastReceiver {
