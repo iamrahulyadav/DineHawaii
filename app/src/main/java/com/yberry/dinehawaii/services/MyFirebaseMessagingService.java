@@ -244,8 +244,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     .setPriority(Notification.PRIORITY_MAX)
                     .setContentIntent(pendingIntent).setStyle(new NotificationCompat.BigTextStyle()
                             .bigText(messageBody));
-
-
             NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.notify(0, notificationBuilder.build());
         } catch (Exception e) {
