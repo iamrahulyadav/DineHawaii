@@ -17,10 +17,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <View
             android:layout_width="3dp"
             android:layout_height="match_parent"
-            android:background="@color/colorPrimary"/>
+            android:background="@color/colorPrimary" />
+
         <LinearLayout
             android:id="@+id/recycler_item"
             android:layout_width="match_parent"
@@ -28,29 +30,40 @@
             android:orientation="vertical"
             android:padding="@dimen/_10sdp">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <com.yberry.dinehawaii.customview.CustomTextView
+                    android:id="@+id/orderId"
                     style="@style/TextAppearance.AppCompat.Subhead"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:id="@+id/orderId"
-                    android:textColor="@color/colorPrimary"
                     android:text="#00"
+                    android:textColor="@color/colorPrimary"
                     android:textStyle="bold"
                     app:edittextfont="Raleway-Bold.ttf" />
 
-            </LinearLayout>
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    android:id="@+id/tvSendReply"
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:drawableLeft="@drawable/ic_reply_green_24dp"
+                    android:drawablePadding="@dimen/_2sdp"
+                    android:text="Reply"
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold"
+                    app:edittextfont="Raleway-Bold.ttf" />
+
+            </RelativeLayout>
 
             <LinearLayout
+                android:id="@+id/llName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/llName"
                 android:layout_marginTop="@dimen/_2sdp"
                 android:orientation="horizontal">
 
@@ -61,7 +74,7 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:text="Customer Name : "
+                    android:text="Customer : "
                     app:edittextfont="Raleway-Bold.ttf" />
 
                 <com.yberry.dinehawaii.customview.CustomTextView
@@ -94,7 +107,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:text="Message : "
+                        android:text="Feedback : "
                         app:edittextfont="Raleway-Bold.ttf" />
 
                     <com.yberry.dinehawaii.customview.CustomTextView

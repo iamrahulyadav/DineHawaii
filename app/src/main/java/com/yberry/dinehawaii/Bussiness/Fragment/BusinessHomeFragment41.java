@@ -53,7 +53,7 @@ public class BusinessHomeFragment41 extends Fragment implements View.OnClickList
     private CustomTextView manage_coupons;
     private CustomTextView tvLeadTime;
     private String options = "0";
-    private CustomTextView tvSpecialDisEve, tvSetupLogo, tvUploadVidPho;
+    private CustomTextView tvSpecialDisEve, tvCustFeedback, tvSetupLogo, tvUploadVidPho;
     private LinearLayout llMyBusiness;
 
     @Override
@@ -122,6 +122,7 @@ public class BusinessHomeFragment41 extends Fragment implements View.OnClickList
                 tvUploadVidPho.setEnabled(false);
                 tvSetupLogo.setEnabled(false);
                 tvSpecialDisEve.setEnabled(false);
+                tvCustFeedback.setEnabled(false);
 
                 if (duties.contains("1")) ;
 
@@ -146,7 +147,8 @@ public class BusinessHomeFragment41 extends Fragment implements View.OnClickList
 
                 if (duties.contains("11"))
                     manage_table.setEnabled(true);
-                if (duties.contains("12")) ;
+                if (duties.contains("12"))
+                    tvCustFeedback.setEnabled(true);
                 if (duties.contains("13"))
                     order_btn.setEnabled(true);
                 if (duties.contains("14"))
@@ -555,6 +557,17 @@ public class BusinessHomeFragment41 extends Fragment implements View.OnClickList
             }
         });
 
+        tvCustFeedback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new FeedbackByCustomerFragment();
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.replace(R.id.frame, fragment, fragment.getTag());
+                fragmentTransaction.commitAllowingStateLoss();
+            }
+        });
+
         tvUploadVidPho.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -624,6 +637,7 @@ public class BusinessHomeFragment41 extends Fragment implements View.OnClickList
         marketing_tab = (LinearLayout) view.findViewById(R.id.marketing_tab);
         tvBusAreas = (CustomTextView) view.findViewById(R.id.tvBusAreas);
         tvSpecialDisEve = (CustomTextView) view.findViewById(R.id.tvSpecialDisEve);
+        tvCustFeedback = (CustomTextView) view.findViewById(R.id.tvCustFeedback);
         tvSetupLogo = (CustomTextView) view.findViewById(R.id.tvSetupLogo);
         tvUploadVidPho = (CustomTextView) view.findViewById(R.id.tvUploadVidPho);
         llMyBusiness = (LinearLayout) view.findViewById(R.id.llMyBusiness);

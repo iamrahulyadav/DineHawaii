@@ -211,6 +211,8 @@ public class AppConstants {
         String GET_MY_DISABLED_BUSINESS = "get_my_disabled_business";
         String DISABLE_MY_BUSSINESS = "disable_my_bussiness";
         String ENABLE_MY_BUSSINESS = "enable_my_bussiness";
+        String SEND_REPLY_TO_ORDERS = "send_reply_to_orders";
+        String SEND_REPLY_TO_RESERVATION = "send_reply_to_reservation";
     }
 
     public interface BUSINESS_VENDOR_API {
@@ -375,5 +377,9 @@ public class AppConstants {
         public static final String DRIVER_ARRIVED = "driver_arrived";
         public static final String CUSTOMER_OTHER_MSG = "customer_other_msg";
         public static final String BUSINESS_OTHER_MSG = "business_other_msg";
+        public static final String REPLY_ORDER = "reply_order";
+        public static final String REPLY_RESERVATION = "reply_reservation";
+        public static final String NEW_ORDER_FEEDBACK = "new_order_feedback";
+        public static final String NEW_RESERVATION_FEEDBACK = "new_reservation_feedback";
     }
 }

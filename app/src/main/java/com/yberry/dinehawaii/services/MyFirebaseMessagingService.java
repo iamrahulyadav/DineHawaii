@@ -129,6 +129,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 String CUSTOMER_OTHER_MSG = "" + remoteMessage.getData().get(AppConstants.NOTIFICATION_KEY.CUSTOMER_OTHER_MSG);
                 String BUSINESS_OTHER_MSG = "" + remoteMessage.getData().get(AppConstants.NOTIFICATION_KEY.BUSINESS_OTHER_MSG);
                 String DRIVER_ARRIVED = "" + remoteMessage.getData().get(AppConstants.NOTIFICATION_KEY.DRIVER_ARRIVED);
+                String REPLY_ORDER = "" + remoteMessage.getData().get(AppConstants.NOTIFICATION_KEY.REPLY_ORDER);
+                String REPLY_RESERVATION = "" + remoteMessage.getData().get(AppConstants.NOTIFICATION_KEY.REPLY_RESERVATION);
+                String NEW_ORDER_FEEDBACK = "" + remoteMessage.getData().get(AppConstants.NOTIFICATION_KEY.NEW_ORDER_FEEDBACK);
+                String NEW_RESERVATION_FEEDBACK = "" + remoteMessage.getData().get(AppConstants.NOTIFICATION_KEY.NEW_RESERVATION_FEEDBACK);
                 if (!BUSINESS_DELIVERY_PICKEDUP.equalsIgnoreCase("null")) {
                     JSONObject jsonObj = null;
                     try {
@@ -185,6 +189,38 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                } else if (!REPLY_ORDER.equalsIgnoreCase("null")) {
+                    JSONObject jsonObj = null;
+                    try {
+                        jsonObj = new JSONObject(REPLY_ORDER);
+                        sendExNotification(new Intent(), jsonObj.getString("msg_title"), jsonObj.getString("msg_body"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else if (!REPLY_RESERVATION.equalsIgnoreCase("null")) {
+                    JSONObject jsonObj = null;
+                    try {
+                        jsonObj = new JSONObject(REPLY_RESERVATION);
+                        sendExNotification(new Intent(), jsonObj.getString("msg_title"), jsonObj.getString("msg_body"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else if (!NEW_ORDER_FEEDBACK.equalsIgnoreCase("null")) {
+                    JSONObject jsonObj = null;
+                    try {
+                        jsonObj = new JSONObject(NEW_ORDER_FEEDBACK);
+                        sendExNotification(new Intent(), jsonObj.getString("msg_title"), jsonObj.getString("msg_body"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else if (!NEW_RESERVATION_FEEDBACK.equalsIgnoreCase("null")) {
+                    JSONObject jsonObj = null;
+                    try {
+                        jsonObj = new JSONObject(NEW_RESERVATION_FEEDBACK);
+                        sendExNotification(new Intent(), jsonObj.getString("msg_title"), jsonObj.getString("msg_body"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         } catch (JSONException e) {
@@ -206,7 +242,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     .setSound(defaultSoundUri)
                     .setPriority(Notification.PRIORITY_HIGH)
                     .setPriority(Notification.PRIORITY_MAX)
-                    .setContentIntent(pendingIntent);
+                    .setContentIntent(pendingIntent).setStyle(new NotificationCompat.BigTextStyle()
+                            .bigText(messageBody));
+
 
             NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.notify(0, notificationBuilder.build());
@@ -229,7 +267,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     .setSound(defaultSoundUri)
                     .setPriority(Notification.PRIORITY_HIGH)
                     .setPriority(Notification.PRIORITY_MAX)
-                    .setContentIntent(pendingIntent);
+                    .setContentIntent(pendingIntent)
+                    .setStyle(new NotificationCompat.BigTextStyle()
+                            .bigText(msg_body));
 
             NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.notify(0, notificationBuilder.build());
