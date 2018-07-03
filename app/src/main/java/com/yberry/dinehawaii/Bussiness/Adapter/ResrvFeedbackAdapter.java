@@ -155,7 +155,7 @@ public class ResrvFeedbackAdapter extends RecyclerView.Adapter<ResrvFeedbackAdap
 
 
         MyApiEndpointInterface apiService = ApiClient.getClient().create(MyApiEndpointInterface.class);
-        Call<JsonObject> call = apiService.business_feedback_and_marketing_api(jsonObject);
+        Call<JsonObject> call = apiService.n_business_new_api(jsonObject);
 
         call.enqueue(new Callback<JsonObject>() {
             @SuppressLint("LongLogTag")
@@ -166,8 +166,8 @@ public class ResrvFeedbackAdapter extends RecyclerView.Adapter<ResrvFeedbackAdap
                 try {
                     JSONObject jsonObject = new JSONObject(resp);
                     if (jsonObject.getString("status").equalsIgnoreCase("200")) {
-
-
+                        String msg = jsonObject.getJSONArray("result").getJSONObject(0).getString("msg");
+                        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                     } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
                         String msg = jsonObject.getJSONArray("result").getJSONObject(0).getString("msg");
                         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
@@ -199,11 +199,6 @@ public class ResrvFeedbackAdapter extends RecyclerView.Adapter<ResrvFeedbackAdap
             orderid = (CustomTextView) itemView.findViewById(R.id.orderId);
             message = (CustomTextView) itemView.findViewById(R.id.msg);
             tvSendReply = (CustomTextView) itemView.findViewById(R.id.tvSendReply);
-
-
         }
-
-
     }
-
 }

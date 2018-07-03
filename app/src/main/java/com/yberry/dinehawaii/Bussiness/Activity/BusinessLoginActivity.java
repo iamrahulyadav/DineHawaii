@@ -245,10 +245,17 @@ public class BusinessLoginActivity extends AppCompatActivity implements View.OnC
 
 
                         AppPreferencesBuss.setSaveIdPass(BusinessLoginActivity.this, edittext_id.getText().toString(), edittext_pass.getText().toString());
-                        Intent intent1 = new Intent(getApplicationContext(), BusinessNaviDrawer.class);
-                        intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent1);
+                        Intent intent = new Intent(getApplicationContext(), BusinessNaviDrawer.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+
+                       /* Intent intent2 = null;
+                        if (AppPreferencesBuss.getIsMultisite(BusinessLoginActivity.this))
+                            intent2 = new Intent(getApplicationContext(), BusinessNaviDrawer.class);*/
+
+                        /*if (intent2 != null)
+                            startActivity(intent2);*/
                         finish();
 
                     } else if (jsonObject.getString("status").equalsIgnoreCase("300")) {

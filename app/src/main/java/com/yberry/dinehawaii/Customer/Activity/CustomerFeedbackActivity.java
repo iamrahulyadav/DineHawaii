@@ -3,6 +3,7 @@ package com.yberry.dinehawaii.Customer.Activity;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -130,8 +131,7 @@ public class CustomerFeedbackActivity extends AppCompatActivity implements View.
         });
 
 
-        MyApiEndpointInterface apiService =
-                ApiClient.getClient().create(MyApiEndpointInterface.class);
+        MyApiEndpointInterface apiService = ApiClient.getClient().create(MyApiEndpointInterface.class);
         Call<JsonObject> call = apiService.order_details(jsonObject);
 
         call.enqueue(new Callback<JsonObject>() {
@@ -144,19 +144,22 @@ public class CustomerFeedbackActivity extends AppCompatActivity implements View.
                     JSONObject jsonObject = new JSONObject(resp);
                     if (jsonObject.getString("status").equalsIgnoreCase("200")) {
                         Toast.makeText(CustomerFeedbackActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
-                        finish();
+                        startActivity(new Intent(CustomerFeedbackActivity.this, CustomerNaviDrawer.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
                     } else if (jsonObject.getString("status").equals("400")) {
-
                         Toast.makeText(CustomerFeedbackActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(CustomerFeedbackActivity.this, CustomerNaviDrawer.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
                     } else {
                         Toast.makeText(CustomerFeedbackActivity.this, "Server not Responding", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(CustomerFeedbackActivity.this, CustomerNaviDrawer.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
                     }
 
+                    progressHD.dismiss();
 
                 } catch (JSONException e) {
+                    progressHD.dismiss();
                     e.printStackTrace();
+                    startActivity(new Intent(CustomerFeedbackActivity.this, CustomerNaviDrawer.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
                 }
-                progressHD.dismiss();
             }
 
             @SuppressLint("LongLogTag")
@@ -165,6 +168,7 @@ public class CustomerFeedbackActivity extends AppCompatActivity implements View.
                 Log.e(TAG, "error :- " + Log.getStackTraceString(t));
                 progressHD.dismiss();
                 Toast.makeText(CustomerFeedbackActivity.this, "Server not Responding", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(CustomerFeedbackActivity.this, CustomerNaviDrawer.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
             }
         });
     }
@@ -198,12 +202,8 @@ public class CustomerFeedbackActivity extends AppCompatActivity implements View.
             jsonObject.addProperty("user_id", AppPreferences.getCustomerid(CustomerFeedbackActivity.this));
             Log.e(TAG, "OrderFeedbackJson :- " + jsonObject.toString());
             feedbackData(jsonObject);
-
         } else {
             Toast.makeText(CustomerFeedbackActivity.this, "Please Connect Your Internet", Toast.LENGTH_LONG).show();
-
         }
     }
-
-
 }

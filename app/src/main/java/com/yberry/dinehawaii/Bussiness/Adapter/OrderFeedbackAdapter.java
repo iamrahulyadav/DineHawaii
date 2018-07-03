@@ -157,7 +157,7 @@ public class OrderFeedbackAdapter extends RecyclerView.Adapter<OrderFeedbackAdap
 
 
         MyApiEndpointInterface apiService = ApiClient.getClient().create(MyApiEndpointInterface.class);
-        Call<JsonObject> call = apiService.business_feedback_and_marketing_api(jsonObject);
+        Call<JsonObject> call = apiService.n_business_new_api(jsonObject);
 
         call.enqueue(new Callback<JsonObject>() {
             @SuppressLint("LongLogTag")
@@ -168,7 +168,8 @@ public class OrderFeedbackAdapter extends RecyclerView.Adapter<OrderFeedbackAdap
                 try {
                     JSONObject jsonObject = new JSONObject(resp);
                     if (jsonObject.getString("status").equalsIgnoreCase("200")) {
-
+                        String msg = jsonObject.getJSONArray("result").getJSONObject(0).getString("msg");
+                        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
 
                     } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
                         String msg = jsonObject.getJSONArray("result").getJSONObject(0).getString("msg");
