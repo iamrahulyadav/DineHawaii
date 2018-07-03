@@ -142,9 +142,7 @@ public class ResrvFeedbackAdapter extends RecyclerView.Adapter<ResrvFeedbackAdap
                 }
             }
         });
-
         deliveryDialog.show();
-
     }
 
     private void replyApi(JsonObject jsonObject) {
