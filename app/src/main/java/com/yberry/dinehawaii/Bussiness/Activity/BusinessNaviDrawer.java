@@ -133,6 +133,11 @@ public class BusinessNaviDrawer extends AppCompatActivity implements NavigationV
             nav_Menu.findItem(R.id.nav_my_business).setVisible(false);
             nav_Menu.findItem(R.id.nav_switch_business).setVisible(true);
         }
+
+        if (getIntent().hasExtra("multisite")) {
+            Intent intent = new Intent(BusinessNaviDrawer.this, ManageBusinessActivity.class);
+            startActivity(intent);
+        }
     }
 
     private void checkPaymentStatus() {

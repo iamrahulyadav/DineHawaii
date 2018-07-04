@@ -133,7 +133,6 @@ public class ManageBusinessInactive extends Fragment {
                     progressHD.dismiss();
                 }
             });
-
         } else {
             Toast.makeText(getActivity(), "Please Connect Your Internet", Toast.LENGTH_SHORT).show();
         }

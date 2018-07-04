@@ -103,6 +103,14 @@ public class ManageBusinessActive extends Fragment {
                     Log.e(TAG, "getData: Response >> " + response.body().toString());
                     String s = response.body().toString();
                     list.clear();
+                    OtherBusinessModel model1 = new OtherBusinessModel();
+                    model1.setBusinessName(AppPreferencesBuss.getBussiName(context));
+                    model1.setStatus("LIN");
+                    model1.setBusinessContactNo(AppPreferencesBuss.getBussiPhoneNo(context));
+                    model1.setBusinessEmail(AppPreferencesBuss.getBussiEmilid(context));
+                    model1.setBusinessLogo("");
+                    model1.setBusinessAddress("");
+                    list.add(model1);
                     try {
                         JSONObject jsonObject = new JSONObject(s);
                         if (jsonObject.getString("status").equalsIgnoreCase("200")) {

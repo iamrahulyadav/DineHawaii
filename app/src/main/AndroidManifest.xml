@@ -215,6 +215,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Bussiness.Activity.BusinessNaviDrawer"
+
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
@@ -327,7 +328,9 @@
         <activity android:name=".vendor.Activity.BidItemDetailsActivity" />
         <activity
             android:name=".Bussiness.Activity.ManageBusinessActivity"
+            android:clearTaskOnLaunch="true"
             android:label="@string/title_activity_manage_business"
+            android:launchMode="singleTask"
             android:theme="@style/AppTheme"></activity>
     </application>
 

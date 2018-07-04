@@ -248,14 +248,10 @@ public class BusinessLoginActivity extends AppCompatActivity implements View.OnC
                         Intent intent = new Intent(getApplicationContext(), BusinessNaviDrawer.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        if (AppPreferencesBuss.getIsMultisite(BusinessLoginActivity.this))
+                            intent.putExtra("multisite", "yes");
                         startActivity(intent);
 
-                       /* Intent intent2 = null;
-                        if (AppPreferencesBuss.getIsMultisite(BusinessLoginActivity.this))
-                            intent2 = new Intent(getApplicationContext(), BusinessNaviDrawer.class);*/
-
-                        /*if (intent2 != null)
-                            startActivity(intent2);*/
                         finish();
 
                     } else if (jsonObject.getString("status").equalsIgnoreCase("300")) {

@@ -73,7 +73,10 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
     public void onBindViewHolder(final BusinessListAdapter.ViewHolder holder, final int position) {
         final OtherBusinessModel model = reservList.get(position);
         holder.tvBussName.setText(model.getBusinessName());
-        holder.tvBussAddr.setText("Address : " + model.getBusinessAddress());
+        if (model.getBusinessAddress().equalsIgnoreCase(""))
+            holder.tvBussAddr.setVisibility(View.GONE);
+        else
+            holder.tvBussAddr.setText("Address : " + model.getBusinessAddress());
         holder.tvEmail.setText("Email: " + model.getBusinessEmail());
         holder.tvContactNo.setText("Contact No : " + model.getBusinessContactNo());
 
@@ -97,9 +100,15 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
         if (model.getStatus().equalsIgnoreCase("A")) {
             holder.tvLogin.setVisibility(View.VISIBLE);
             holder.tvRemove.setText("Make Inactive");
-        } else {
+        } else if (model.getStatus().equalsIgnoreCase("I")) {
             holder.tvLogin.setVisibility(View.GONE);
             holder.tvRemove.setText("Make Active");
+        } else if (model.getStatus().equalsIgnoreCase("LIN")) {
+            holder.tvRemove.setVisibility(View.GONE);
+            holder.tvLogin.setVisibility(View.VISIBLE);
+            holder.tvLogin.setText("Already Logged-in");
+            holder.tvLogin.setBackgroundColor(context.getResources().getColor(R.color.fab_gray));
+            holder.tvLogin.setOnClickListener(null);
         }
 
         if (!model.getBusinessLogo().equalsIgnoreCase("")) {
@@ -140,7 +149,7 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                enableBusiness(model.getId(), position );
+                enableBusiness(model.getId(), position);
             }
         });
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
