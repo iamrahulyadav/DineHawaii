@@ -115,7 +115,7 @@ public class BusinessListAdapter extends RecyclerView.Adapter<BusinessListAdapte
             Glide.with(context).load(model.getBusinessName())
                     .thumbnail(0.5f)
                     .crossFade()
-//                    .override(50, 50)
+                    //.override(50, 50)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(holder.restLogo);
         }
