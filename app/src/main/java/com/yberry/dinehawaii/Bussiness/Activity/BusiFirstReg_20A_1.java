@@ -106,7 +106,7 @@ public class BusiFirstReg_20A_1 extends AppCompatActivity implements View.OnClic
                     llCorporateEntry.setVisibility(View.VISIBLE);
                 } else if (checkedId == R.id.noradioMultiSiteBusiness) {
                     llCorporateEntry.setVisibility(View.GONE);
-                        value = "0";
+                    value = "0";
                     multisite = "no";
                 }
             }
@@ -135,9 +135,8 @@ public class BusiFirstReg_20A_1 extends AppCompatActivity implements View.OnClic
                     fein_id_ET.setError("Enter FEIN No.");
                 else if (multisite.equalsIgnoreCase("yes") && TextUtils.isEmpty(tvCoEntityName.getText().toString())) {
                     fein_id_ET.setError("Enter Corporate Entity");
-                } else if (!Util.isNetworkAvailable(mContext)) {
+                } else if (Util.isNetworkAvailable(mContext)) {
                     search_submit_business();
-
                 } else {
                     Toast.makeText(mContext, "Please Connect Your Internet", Toast.LENGTH_LONG).show();
                 }

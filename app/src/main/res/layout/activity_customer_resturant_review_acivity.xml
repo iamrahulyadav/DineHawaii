@@ -3,29 +3,43 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/relative_layout_address"
     android:layout_width="match_parent"
-    android:background="@color/activityBackground"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
     <include
         android:id="@+id/toolbar_bar"
         layout="@layout/toolbar" />
+
     <android.support.v7.widget.RecyclerView
-        android:layout_below="@+id/toolbar_bar"
         android:id="@+id/recycler_view_reservation"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar_bar" />
 
 
     <com.yberry.dinehawaii.customview.CustomTextView
         android:id="@+id/dataId"
-        android:layout_centerInParent="true"
-        android:gravity="center"
-        android:visibility="gone"
-        android:textAllCaps="true"
-        app:edittextfont="Raleway-Regular.ttf"
+        style="@style/TextAppearance.AppCompat.Small"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/TextAppearance.AppCompat.Small"
-        android:text="No Data found"/>
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:text="No Data found"
+        android:textAllCaps="true"
+        android:visibility="gone"
+        app:edittextfont="Raleway-Regular.ttf" />
+
+    <com.yberry.dinehawaii.customview.CustomTextView
+        android:id="@+id/tvSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:text="Rate"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+        android:textColor="@color/white"
+        app:edittextfont="@string/raleway_bold" />
 </RelativeLayout>
 
 

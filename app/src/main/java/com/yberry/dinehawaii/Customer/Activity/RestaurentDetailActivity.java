@@ -598,6 +598,7 @@ public class RestaurentDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(RestaurentDetailActivity.this, CustomerResturantReviewAcivity.class);
+                intent.putExtra("business_name", mName.getText().toString());
                 startActivity(intent);
             }
         });

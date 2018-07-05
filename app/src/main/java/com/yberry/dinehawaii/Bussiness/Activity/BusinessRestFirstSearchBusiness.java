@@ -17,12 +17,9 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 import com.yberry.dinehawaii.R;
@@ -124,8 +121,6 @@ public class BusinessRestFirstSearchBusiness extends AppCompatActivity {
         });
 
 
-
-
     }
 
     private void setAdapter() {
@@ -140,7 +135,7 @@ public class BusinessRestFirstSearchBusiness extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                isFound = false;
+                Log.e(TAG, "onTextChanged: isFound >> " + isFound);
                 count = s.length();
                 if (count > 1) {
                     String business_name = s.toString();
@@ -230,7 +225,7 @@ public class BusinessRestFirstSearchBusiness extends AppCompatActivity {
                                 businessNameArrayList.add(bussiness_name.replaceAll("amp;", "").trim());
 //                                arrayAdapter.notifyDataSetChanged();
                             }
-                            Log.e(TAG, "onResponse: businessNameArrayList >> "+businessNameArrayList );
+                            Log.e(TAG, "onResponse: businessNameArrayList >> " + businessNameArrayList);
                             arrayAdapter = new ArrayAdapter<String>(BusinessRestFirstSearchBusiness.this, android.R.layout.simple_dropdown_item_1line, businessNameArrayList);
                             spinSelectBusiness.setAdapter(arrayAdapter);
 

@@ -42,7 +42,7 @@ public class PreviousResListAdapter extends RecyclerView.Adapter<PreviousResList
 
     @Override
     public PreviousResListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_table_managment_items, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.prev_reserv_item_layout, parent, false);
         ViewHolder viewHolder = new ViewHolder(v);
         return viewHolder;
     }

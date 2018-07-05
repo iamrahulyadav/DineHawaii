@@ -4,122 +4,77 @@
     android:id="@+id/user_post"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/_4sdp"
-    android:elevation="5dp"
+    android:elevation="0dp"
     android:foreground="?android:attr/selectableItemBackground"
-    android:padding="@dimen/_10sdp">
+    app:cardBackgroundColor="@android:color/transparent"
+    app:cardElevation="0dp"
+    app:contentPadding="@dimen/_10sdp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-
-        >
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@color/babypink"
-            android:gravity="center">
-
-            <ImageView
-                android:id="@+id/resturant_logo"
-                android:layout_width="100dp"
-                android:layout_height="140dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:src="@drawable/restlogo" />
-        </LinearLayout>
+        android:orientation="vertical">
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="7dp"
-            android:layout_marginTop="7dp"
             android:orientation="vertical">
 
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5">
+
+                    <RatingBar
+                        android:id="@+id/ratingBar"
+                        style="@style/Widget.AppCompat.RatingBar.Small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:numStars="5"
+                        android:rating="5" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.5">
+
+                    <com.yberry.dinehawaii.customview.CustomTextView
+                        android:id="@+id/customer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                </RelativeLayout>
+
+            </LinearLayout>
 
             <com.yberry.dinehawaii.customview.CustomTextView
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawablePadding="45dp"
-                android:gravity="center"
-                android:padding="@dimen/_2sdp"
-                android:text="Name"
-                android:textSize="@dimen/_10sdp"
-                app:edittextfont="ROBOTO-REGULAR.TTF" />
+                android:layout_marginTop="@dimen/_6sdp"
+                android:text="NA"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:textColor="@color/blue"
+                android:textStyle="italic" />
 
-
-            <com.yberry.dinehawaii.customview.CustomTextView
-                android:id="@+id/business_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:gravity="left"
-                android:text="Review :jffjgjgjhg   uuet hnhgjhvgjnbhgt jgkgkgkgkgkgkgkgkgkgkgksbmnbjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhg h hjjjjjjjjjjjjjjjjjj  slhlsjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhjhslhjjjjjjjjjjjjjjjjjjjjjjjjjnb jjjjjghsulghlsghluuuuuuuuuuuuuuuuuuuuuuuuh"
-                android:textSize="@dimen/_10sdp"
-                app:edittextfont="ROBOTO-REGULAR.TTF" />
-
-
-            <com.yberry.dinehawaii.customview.CustomTextView
-                android:id="@+id/coupon_code"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:drawablePadding="45dp"
-                android:gravity="center"
-                android:maxLength="22"
-                android:padding="@dimen/_2sdp"
-                android:singleLine="true"
-                android:text="Date"
-                android:textSize="@dimen/_10sdp"
-                app:edittextfont="ROBOTO-REGULAR.TTF" />
-
-            <!--     <com.yberry.dinehawaii.customview.CustomTextView
-                     android:id="@+id/amt"
-                     android:layout_width="wrap_content"
-                     android:singleLine="true"
-                     android:maxLength="22"
-
-                     android:layout_height="wrap_content"
-                     android:drawablePadding="45dp"
-                     android:gravity="center"
-                     android:text="gdfggggggggggggggggggggggggggggg"
-
-                     android:padding="@dimen/_2sdp"
-                     android:textSize="@dimen/_10sdp"
-                     app:edittextfont="ROBOTO-REGULAR.TTF" />
-
-
-                 <com.yberry.dinehawaii.customview.CustomTextView
-                     android:id="@+id/d_start"
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:drawablePadding="45dp"
-                     android:gravity="center"
-                     android:padding="@dimen/_2sdp"
-                     android:textSize="@dimen/_10sdp"
-                     android:text="gdfggggggggggggggggggggggggggggg"
-
-                     app:edittextfont="ROBOTO-REGULAR.TTF" />
-                 <com.yberry.dinehawaii.customview.CustomTextView
-                     android:id="@+id/d_end"
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:drawablePadding="45dp"
-                     android:gravity="center"
-                     android:text="gdfggggggggggggggggggggggggggggg"
-
-                     android:padding="@dimen/_2sdp"
-                     android:textSize="@dimen/_10sdp"
-                     app:edittextfont="ROBOTO-REGULAR.TTF" />
-     -->
 
         </LinearLayout>
 
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@color/colorDivider" />
     </LinearLayout>
 
 

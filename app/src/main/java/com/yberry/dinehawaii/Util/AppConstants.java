@@ -327,6 +327,8 @@ public class AppConstants {
         String RESERV_DETAILS = "reservationDetailList";
         String USEREGIFTWALLET = "UserEgiftWallet";
         String RESTORE_RESERVATION = "restore_reservation";
+        String SUBMIT_RATING ="submit_rating" ;
+        String ALL_RATING_REVIEW = "all_rating_review";
     }
 
     public interface REPORT {

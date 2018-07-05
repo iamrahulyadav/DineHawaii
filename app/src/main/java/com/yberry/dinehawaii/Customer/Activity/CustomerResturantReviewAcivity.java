@@ -3,6 +3,7 @@ package com.yberry.dinehawaii.Customer.Activity;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -45,19 +46,24 @@ public class CustomerResturantReviewAcivity extends AppCompatActivity {
     CustomTextView dataId;
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
+    private CustomTextView tvSubmit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_resturant_review_acivity);
         setToolbar();
-        dataAvailableReview();
         initComponent();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        dataAvailableReview();
 
     }
 
     private void setToolbar() {
-
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar_bar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -73,22 +79,31 @@ public class CustomerResturantReviewAcivity extends AppCompatActivity {
 
     private void initComponent() {
         dataId = (CustomTextView) findViewById(R.id.dataId);
+        tvSubmit = (CustomTextView) findViewById(R.id.tvSubmit);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_reservation);
-
         mLayoutManager = new LinearLayoutManager(context);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
+        if (getIntent().hasExtra("business_name")) {
+            tvSubmit.setText("Rate " + getIntent().getStringExtra("business_name"));
+        }
 
+        tvSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(CustomerResturantReviewAcivity.this, RatingActivity.class).putExtra("business_id", AppPreferences.getBusiID(CustomerResturantReviewAcivity.this)));
+            }
+        });
     }
 
     @SuppressLint("LongLogTag")
     private void dataAvailableReview() {
         if (Util.isNetworkAvailable(CustomerResturantReviewAcivity.this)) {
             JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("method", AppConstants.CUSTOMER_USER.RESERVATION_REVIEW_LIST);
+            jsonObject.addProperty("method", AppConstants.CUSTOMER_USER.ALL_RATING_REVIEW);
             jsonObject.addProperty("business_id", AppPreferences.getBusiID(CustomerResturantReviewAcivity.this));   //AppPreferences.getBusiID(CustomerResturantReviewAcivity.this)
-            jsonObject.addProperty("reservation_id", AppPreferences.getReservationId(CustomerResturantReviewAcivity.this)); //AppPreferences.getReservationId(CustomerResturantReviewAcivity.this)
-            Log.e(TAG, "Package request :- " + jsonObject.toString());
+            jsonObject.addProperty("user_id", AppPreferences.getCustomerid(CustomerResturantReviewAcivity.this)); //AppPreferences.getReservationId(CustomerResturantReviewAcivity.this)
+            Log.e(TAG, "Request :- " + jsonObject.toString());
             getDataFromServerReview(jsonObject);
 
         } else {
@@ -100,51 +115,46 @@ public class CustomerResturantReviewAcivity extends AppCompatActivity {
         final ProgressHUD progressHD = ProgressHUD.show(CustomerResturantReviewAcivity.this, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
-
-
                 // TODO Auto-generated method stub
             }
         });
         MyApiEndpointInterface apiService =
                 ApiClient.getClient().create(MyApiEndpointInterface.class);
-        Call<JsonObject> call = apiService.order_details(jsonObject);
+        Call<JsonObject> call = apiService.n_business_new_api(jsonObject);
         call.enqueue(new Callback<JsonObject>() {
             @SuppressLint("LongLogTag")
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                Log.e(TAG, "Json Response :- " + response.body().toString());
+                Log.e(TAG, "Response :- " + response.body().toString());
                 String resp = response.body().toString();
                 try {
                     JSONObject jsonObject = new JSONObject(resp);
                     if (jsonObject.getString("status").equalsIgnoreCase("200")) {
-                        JSONArray jsonArray1 = jsonObject.getJSONArray("result");
-                        JSONArray jsonArray = jsonArray1.getJSONArray(0);
+                        JSONArray jsonArray = jsonObject.getJSONArray("result");
                         list.clear();
                         for (int i = 0; i < jsonArray.length(); i++) {
                             ReviewModel reviewModel = new ReviewModel();
                             JSONObject object = jsonArray.getJSONObject(i);
-                            reviewModel.setImage(object.getString("image"));
-                            reviewModel.setReview_message(object.getString("review_message"));
-                            reviewModel.setTime(object.getString("time"));
-                            reviewModel.setReview_question(object.getString("review_question"));
+                            reviewModel.setRating(object.getString("rating"));
+                            reviewModel.setReview_message(object.getString("review"));
+                            reviewModel.setReview_question(object.getString("customer_name"));
                             list.add(reviewModel);
-
                         }
                         adapter = new CustomerResturantAdapter(context, list);
                         mRecyclerView.setAdapter(adapter);
                         adapter.notifyDataSetChanged();
                     } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
-                        JSONArray jsonArray2 = jsonObject.getJSONArray("result");
-                        JSONObject jsonObject1 = jsonArray2.getJSONObject(0);
+                        String msg = jsonObject.getJSONArray("result").getJSONObject(0).getString("msg");
                         dataId.setVisibility(View.VISIBLE);
-                        dataId.setText(jsonObject1.getString("msg"));
-
+                        dataId.setText(msg);
                     } else {
                         dataId.setVisibility(View.VISIBLE);
-
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    progressHD.dismiss();
+                    Toast.makeText(CustomerResturantReviewAcivity.this, "Server not Responding", Toast.LENGTH_SHORT).show();
+
                 }
                 progressHD.dismiss();
             }

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".Customer.Activity.RatingActivity">
+
+    <include
+        android:id="@+id/toolbar_bar"
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar_bar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_40sdp"
+        android:numStars="5"
+        android:rating="1"
+        android:stepSize="1" />
+
+    <com.yberry.dinehawaii.customview.CustomEditText
+        android:id="@+id/etReview"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@id/ratingBar"
+        android:layout_margin="@dimen/_20sdp"
+        android:background="@drawable/edittext_border"
+        android:gravity="start"
+        android:hint="Write your review here..."
+        android:imeOptions="actionDone"
+        android:inputType="textMultiLine|textCapSentences"
+        android:maxLength="100"
+        android:padding="@dimen/_5sdp"
+        app:edittextfont="@string/raleway_regular" />
+
+    <com.yberry.dinehawaii.customview.CustomButton
+        android:id="@+id/btnSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etReview"
+        android:layout_marginLeft="@dimen/_20sdp"
+        android:layout_marginRight="@dimen/_20sdp"
+        android:background="@color/colorPrimary"
+        android:text="Submit"
+        android:textColor="@color/white"
+        app:edittextfont="@string/raleway_bold"></com.yberry.dinehawaii.customview.CustomButton>
+</RelativeLayout>

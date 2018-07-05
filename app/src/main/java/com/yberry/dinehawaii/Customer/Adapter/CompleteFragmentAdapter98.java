@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.google.gson.JsonObject;
 import com.yberry.dinehawaii.Customer.Activity.CartActivity;
 import com.yberry.dinehawaii.Customer.Activity.CustomerOrderDetailActivity;
+import com.yberry.dinehawaii.Customer.Activity.RatingActivity;
 import com.yberry.dinehawaii.Model.CustomerModel;
 import com.yberry.dinehawaii.Model.OrderItemsDetailsModel;
 import com.yberry.dinehawaii.R;
@@ -222,6 +223,16 @@ public class CompleteFragmentAdapter98 extends RecyclerView.Adapter<CompleteFrag
                 context.startActivity(detail);
             }
         });
+
+        holder.btnRating.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent detail = new Intent(context, RatingActivity.class);
+                detail.putExtra("business_id", model.getBusiness_id());
+                detail.putExtra("business_name", model.getBusiness_name());
+                context.startActivity(detail);
+            }
+        });
     }
 
     private void removeFavApi(JsonObject jsonObject) {
@@ -333,7 +344,7 @@ public class CompleteFragmentAdapter98 extends RecyclerView.Adapter<CompleteFrag
     public class ViewHolder extends RecyclerView.ViewHolder {
         CustomTextView orderid, orderdate, total_price;
         RecyclerView reycler_customizationOrder;
-        CustomButton btnRepeatOrder, viewdetail;
+        CustomButton btnRepeatOrder, viewdetail, btnRating;
         LinearLayout tabContent, mainlayout;
         View view1;
         ImageView imgArrow, fav_border_img, fav_img;
@@ -352,6 +363,7 @@ public class CompleteFragmentAdapter98 extends RecyclerView.Adapter<CompleteFrag
             imgArrow = (ImageView) itemView.findViewById(R.id.imgArrow);
             fav_border_img = (ImageView) itemView.findViewById(R.id.favBorder);
             fav_img = (ImageView) itemView.findViewById(R.id.favorder);
+            btnRating = (CustomButton) itemView.findViewById(R.id.btnRating);
             // view1 = (View) itemView.findViewById(R.id.view1);
 
         }
