@@ -184,7 +184,7 @@ public class BusinessNaviDrawer extends AppCompatActivity implements NavigationV
                 if (duties.contains("9"))
                     nav_Menu.findItem(R.id.nav_edit_reservation).setVisible(false);
                 if (duties.contains("10"))
-                   // manage_table.setEnabled(true);
+                   //  manage_table.setEnabled(true);
 
                 if (duties.contains("11"));
                 if (duties.contains("12"));
