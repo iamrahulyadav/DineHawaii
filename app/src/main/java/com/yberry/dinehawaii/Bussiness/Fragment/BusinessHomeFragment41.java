@@ -53,7 +53,7 @@ public class BusinessHomeFragment41 extends Fragment implements View.OnClickList
     private CustomTextView manage_coupons;
     private CustomTextView tvLeadTime;
     private String options = "0";
-    private CustomTextView tvSpecialDisEve, tvCustFeedback, tvSetupLogo, tvUploadVidPho;
+    private CustomTextView tvSpecialDisEve, tvCustFeedback, tvCustReviews, tvSetupLogo, tvUploadVidPho;
     private LinearLayout llMyBusiness;
 
     @Override
@@ -123,6 +123,7 @@ public class BusinessHomeFragment41 extends Fragment implements View.OnClickList
                 tvSetupLogo.setEnabled(false);
                 tvSpecialDisEve.setEnabled(false);
                 tvCustFeedback.setEnabled(false);
+                tvCustReviews.setEnabled(false);
 
                 if (duties.contains("1")) ;
 
@@ -568,6 +569,17 @@ public class BusinessHomeFragment41 extends Fragment implements View.OnClickList
             }
         });
 
+        tvCustReviews.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new ReviewsByCustomerFragment();
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.replace(R.id.frame, fragment, fragment.getTag());
+                fragmentTransaction.commitAllowingStateLoss();
+            }
+        });
+
         tvUploadVidPho.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -638,6 +650,7 @@ public class BusinessHomeFragment41 extends Fragment implements View.OnClickList
         tvBusAreas = (CustomTextView) view.findViewById(R.id.tvBusAreas);
         tvSpecialDisEve = (CustomTextView) view.findViewById(R.id.tvSpecialDisEve);
         tvCustFeedback = (CustomTextView) view.findViewById(R.id.tvCustFeedback);
+        tvCustReviews = (CustomTextView) view.findViewById(R.id.tvCustReviews);
         tvSetupLogo = (CustomTextView) view.findViewById(R.id.tvSetupLogo);
         tvUploadVidPho = (CustomTextView) view.findViewById(R.id.tvUploadVidPho);
         llMyBusiness = (LinearLayout) view.findViewById(R.id.llMyBusiness);

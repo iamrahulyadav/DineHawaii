@@ -14,6 +14,33 @@ public class ReviewModel {
     String resv_id;
     String date;
     String rating;
+    String customer_id;
+    String business_reply = "";
+    String business_id;
+
+    public String getBusiness_reply() {
+        return business_reply;
+    }
+
+    public void setBusiness_reply(String business_reply) {
+        this.business_reply = business_reply;
+    }
+
+    public String getBusiness_id() {
+        return business_id;
+    }
+
+    public void setBusiness_id(String business_id) {
+        this.business_id = business_id;
+    }
+
+    public String getCustomer_id() {
+        return customer_id;
+    }
+
+    public void setCustomer_id(String customer_id) {
+        this.customer_id = customer_id;
+    }
 
     public String getRating() {
         return rating;

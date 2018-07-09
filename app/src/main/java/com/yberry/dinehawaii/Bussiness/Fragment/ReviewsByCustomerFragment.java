@@ -1,27 +1,28 @@
-package com.yberry.dinehawaii.Customer.Activity;
+package com.yberry.dinehawaii.Bussiness.Fragment;
+
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
-import com.yberry.dinehawaii.Customer.Adapter.CustomerResturantAdapter;
+import com.yberry.dinehawaii.Bussiness.Adapter.BusinessReviewAdapter;
 import com.yberry.dinehawaii.Model.ReviewModel;
 import com.yberry.dinehawaii.R;
 import com.yberry.dinehawaii.RetrofitClasses.ApiClient;
 import com.yberry.dinehawaii.RetrofitClasses.MyApiEndpointInterface;
 import com.yberry.dinehawaii.Util.AppConstants;
-import com.yberry.dinehawaii.Util.AppPreferences;
+import com.yberry.dinehawaii.Util.AppPreferencesBuss;
+import com.yberry.dinehawaii.Util.FragmentIntraction;
 import com.yberry.dinehawaii.Util.ProgressHUD;
 import com.yberry.dinehawaii.Util.Util;
 import com.yberry.dinehawaii.customview.CustomTextView;
@@ -37,82 +38,78 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CustomerResturantReviewAcivity extends AppCompatActivity {
-    private static final String TAG = "CustomerResturantReviewAcivity";
-
-    public static CustomerResturantAdapter adapter;
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class ReviewsByCustomerFragment extends Fragment {
+    private static final String TAG = "ReviewsByCustomerFragment";
+    public static BusinessReviewAdapter adapter;
     public static List<ReviewModel> list = new ArrayList<>();
+    FragmentIntraction intraction;
     Context context;
     CustomTextView dataId;
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
     private CustomTextView tvSubmit;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_customer_resturant_review_acivity);
-        setToolbar();
-        initComponent();
+    public ReviewsByCustomerFragment() {
+        // Required empty public constructor
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_reviews_by_customer, container, false);
+        if (intraction != null) {
+            intraction.actionbarsetTitle("Customer Reviews");
+        }
+        context = getActivity();
+        init(view);
         dataAvailableReview();
-
+        return view;
     }
 
-    private void setToolbar() {
-        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar_bar);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        ((CustomTextView) findViewById(R.id.headet_text)).setText("Reviews");
-        ImageView back = (ImageView) findViewById(R.id.back);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-    }
-
-    private void initComponent() {
-        dataId = (CustomTextView) findViewById(R.id.dataId);
-        tvSubmit = (CustomTextView) findViewById(R.id.tvSubmit);
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_reservation);
+    private void init(View view) {
+        dataId = (CustomTextView) view.findViewById(R.id.dataId);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_reservation);
         mLayoutManager = new LinearLayoutManager(context);
         mRecyclerView.setLayoutManager(mLayoutManager);
+    }
 
-        if (getIntent().hasExtra("business_name")) {
-            tvSubmit.setText("Rate " + getIntent().getStringExtra("business_name"));
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof FragmentIntraction) {
+            intraction = (FragmentIntraction) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
         }
+    }
 
-        tvSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(CustomerResturantReviewAcivity.this, RatingActivity.class).putExtra("business_id", AppPreferences.getBusiID(CustomerResturantReviewAcivity.this)));
-            }
-        });
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        intraction = null;
     }
 
     @SuppressLint("LongLogTag")
     private void dataAvailableReview() {
-        if (Util.isNetworkAvailable(CustomerResturantReviewAcivity.this)) {
+        if (Util.isNetworkAvailable(context)) {
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("method", AppConstants.CUSTOMER_USER.ALL_RATING_REVIEW);
-            jsonObject.addProperty("business_id", AppPreferences.getBusiID(CustomerResturantReviewAcivity.this));   //AppPreferences.getBusiID(CustomerResturantReviewAcivity.this)
-            jsonObject.addProperty("user_id", AppPreferences.getCustomerid(CustomerResturantReviewAcivity.this)); //AppPreferences.getReservationId(CustomerResturantReviewAcivity.this)
+            jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(context));   //AppPreferences.getBusiID(context)
+            jsonObject.addProperty("user_id", ""); //AppPreferences.getReservationId(context)
             Log.e(TAG, "Request :- " + jsonObject.toString());
             getDataFromServerReview(jsonObject);
 
         } else {
-            Toast.makeText(CustomerResturantReviewAcivity.this, "Please Connect Your Internet", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "Please Connect Your Internet", Toast.LENGTH_LONG).show();
         }
     }
 
     private void getDataFromServerReview(JsonObject jsonObject) {
-        final ProgressHUD progressHD = ProgressHUD.show(CustomerResturantReviewAcivity.this, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
+        final ProgressHUD progressHD = ProgressHUD.show(context, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
                 // TODO Auto-generated method stub
@@ -138,10 +135,10 @@ public class CustomerResturantReviewAcivity extends AppCompatActivity {
                             reviewModel.setRating(object.getString("rating"));
                             reviewModel.setReview_message(object.getString("review"));
                             reviewModel.setReview_question(object.getString("customer_name"));
-                            reviewModel.setBusiness_reply(object.getString("business_response"));
+                            reviewModel.setCustomer_id(object.getString("customer_id"));
                             list.add(reviewModel);
                         }
-                        adapter = new CustomerResturantAdapter(context, list);
+                        adapter = new BusinessReviewAdapter(context, list);
                         mRecyclerView.setAdapter(adapter);
                         adapter.notifyDataSetChanged();
                     } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
@@ -154,7 +151,7 @@ public class CustomerResturantReviewAcivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                     progressHD.dismiss();
-                    Toast.makeText(CustomerResturantReviewAcivity.this, "Server not Responding", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Server not Responding", Toast.LENGTH_SHORT).show();
 
                 }
                 progressHD.dismiss();
@@ -165,18 +162,8 @@ public class CustomerResturantReviewAcivity extends AppCompatActivity {
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Log.e(TAG, "error :- " + Log.getStackTraceString(t));
                 progressHD.dismiss();
-                Toast.makeText(CustomerResturantReviewAcivity.this, "Server not Responding", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Server not Responding", Toast.LENGTH_SHORT).show();
             }
         });
     }
-
 }
-
-
-
-
-
-
-
-
-

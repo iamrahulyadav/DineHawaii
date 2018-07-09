@@ -129,6 +129,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 String CUSTOMER_OTHER_MSG = "" + remoteMessage.getData().get(AppConstants.NOTIFICATION_KEY.CUSTOMER_OTHER_MSG);
                 String BUSINESS_OTHER_MSG = "" + remoteMessage.getData().get(AppConstants.NOTIFICATION_KEY.BUSINESS_OTHER_MSG);
                 String DRIVER_ARRIVED = "" + remoteMessage.getData().get(AppConstants.NOTIFICATION_KEY.DRIVER_ARRIVED);
+                String REPLY_REVIEW = "" + remoteMessage.getData().get(AppConstants.NOTIFICATION_KEY.REPLY_REVIEW);
                 String REPLY_ORDER = "" + remoteMessage.getData().get(AppConstants.NOTIFICATION_KEY.REPLY_ORDER);
                 String REPLY_RESERVATION = "" + remoteMessage.getData().get(AppConstants.NOTIFICATION_KEY.REPLY_RESERVATION);
                 String NEW_ORDER_FEEDBACK = "" + remoteMessage.getData().get(AppConstants.NOTIFICATION_KEY.NEW_ORDER_FEEDBACK);
@@ -217,6 +218,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     JSONObject jsonObj = null;
                     try {
                         jsonObj = new JSONObject(NEW_RESERVATION_FEEDBACK);
+                        sendExNotification(new Intent(), jsonObj.getString("msg_title"), jsonObj.getString("msg_body"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }else if (!REPLY_REVIEW.equalsIgnoreCase("null")) {
+                    JSONObject jsonObj = null;
+                    try {
+                        jsonObj = new JSONObject(REPLY_REVIEW);
                         sendExNotification(new Intent(), jsonObj.getString("msg_title"), jsonObj.getString("msg_body"));
                     } catch (JSONException e) {
                         e.printStackTrace();

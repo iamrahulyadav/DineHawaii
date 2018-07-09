@@ -213,6 +213,7 @@ public class AppConstants {
         String ENABLE_MY_BUSSINESS = "enable_my_bussiness";
         String SEND_REPLY_TO_ORDERS = "send_reply_to_orders";
         String SEND_REPLY_TO_RESERVATION = "send_reply_to_reservation";
+        String SEND_REPLY_TO_REVIEW = "send_reply_to_review";
     }
 
     public interface BUSINESS_VENDOR_API {
@@ -327,7 +328,7 @@ public class AppConstants {
         String RESERV_DETAILS = "reservationDetailList";
         String USEREGIFTWALLET = "UserEgiftWallet";
         String RESTORE_RESERVATION = "restore_reservation";
-        String SUBMIT_RATING ="submit_rating" ;
+        String SUBMIT_RATING = "submit_rating";
         String ALL_RATING_REVIEW = "all_rating_review";
     }
 
@@ -383,5 +384,6 @@ public class AppConstants {
         public static final String REPLY_RESERVATION = "reply_reservation";
         public static final String NEW_ORDER_FEEDBACK = "new_order_feedback";
         public static final String NEW_RESERVATION_FEEDBACK = "new_reservation_feedback";
+        public static final String REPLY_REVIEW = "reply_review";
     }
 }

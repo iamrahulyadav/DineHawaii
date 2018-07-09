@@ -28,9 +28,8 @@
                 android:orientation="horizontal">
 
                 <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.5">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
                     <RatingBar
                         android:id="@+id/ratingBar"
@@ -39,44 +38,45 @@
                         android:layout_height="wrap_content"
                         android:numStars="5"
                         android:rating="5" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1.5">
 
                     <com.yberry.dinehawaii.customview.CustomTextView
-                        android:id="@+id/customer"
+                        android:id="@+id/tvSendReply"
+                        style="@style/TextAppearance.AppCompat.Subhead"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                        android:drawableLeft="@drawable/ic_reply_green_24dp"
+                        android:drawablePadding="@dimen/_2sdp"
+                        android:text="Reply"
+                        android:textColor="@color/colorPrimary"
+                        android:textStyle="bold"
+                        app:edittextfont="Raleway-Bold.ttf" />
                 </RelativeLayout>
 
+
             </LinearLayout>
+
 
             <com.yberry.dinehawaii.customview.CustomTextView
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_6sdp"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:text="NA"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                 android:textColor="@color/blue"
-                android:textStyle="italic" />
+                android:textStyle="normal" />
 
             <com.yberry.dinehawaii.customview.CustomTextView
-                android:id="@+id/tvResponse"
+                android:id="@+id/customer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_6sdp"
-                android:text=""
-                android:textAppearance="@style/TextAppearance.AppCompat.Notification.Time"
-                android:textColor="@color/blue"
-                android:textStyle=""
-                android:visibility="gone" />
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="end"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:gravity="end"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
         </LinearLayout>
 
 

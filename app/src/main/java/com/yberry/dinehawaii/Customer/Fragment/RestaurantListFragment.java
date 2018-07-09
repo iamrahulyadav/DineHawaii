@@ -237,6 +237,7 @@ public class RestaurantListFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        setHasOptionsMenu(true);
         if (context instanceof FragmentIntraction) {
             intraction = (FragmentIntraction) context;
         } else {
@@ -253,13 +254,21 @@ public class RestaurantListFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.filter_list, menu);
-        MenuItem menuItem = menu.findItem(R.id.filter_list);
-        MenuItem menuItem2 = menu.findItem(R.id.reset_filter);
-        menuItem.setVisible(true);
-        menuItem2.setVisible(false);
         super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
+        inflater.inflate(R.menu.filter_list, menu);
     }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        MenuItem item = menu.findItem(R.id.filter_list);
+        if (item != null) item.setVisible(true);
+        MenuItem filter_cancel = menu.findItem(R.id.filter_cancel);
+        if (item != null) filter_cancel.setVisible(false);
+        MenuItem cancel = menu.findItem(R.id.filter_cancel);
+        if (cancel != null) cancel.setVisible(false);
+    }
+
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

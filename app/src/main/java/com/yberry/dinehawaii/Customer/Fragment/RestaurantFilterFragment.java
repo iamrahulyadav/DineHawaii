@@ -452,16 +452,17 @@ public class RestaurantFilterFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.filter_list, menu);
         super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
+        inflater.inflate(R.menu.filter_list, menu);
     }
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
         MenuItem item = menu.findItem(R.id.filter_list);
-        item.setVisible(false);
+        if (item != null) item.setVisible(false);
         MenuItem cancel = menu.findItem(R.id.filter_cancel);
-        cancel.setVisible(true);
+        if (cancel != null) cancel.setVisible(true);
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {

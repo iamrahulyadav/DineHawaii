@@ -50,7 +50,10 @@ public class CustomerResturantAdapter extends RecyclerView.Adapter<CustomerRestu
             holder.ratingBar.setRating(Float.parseFloat(model.getRating()));
         holder.customer.setText("by " + model.getReview_question());
         holder.title.setText(model.getReview_message());
-
+        if (!model.getBusiness_reply().equalsIgnoreCase("")) {
+            holder.tvResponse.setVisibility(View.VISIBLE);
+            holder.tvResponse.setText("(Reply: " + model.getBusiness_reply()+")");
+        }
     }
 
 
@@ -62,7 +65,7 @@ public class CustomerResturantAdapter extends RecyclerView.Adapter<CustomerRestu
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         CardView user_post;
-        CustomTextView title, customer;
+        CustomTextView title, customer, tvResponse;
         RatingBar ratingBar;
 
         public ViewHolder(View itemView) {
@@ -71,6 +74,7 @@ public class CustomerResturantAdapter extends RecyclerView.Adapter<CustomerRestu
             ratingBar = (RatingBar) itemView.findViewById(R.id.ratingBar);
             title = (CustomTextView) itemView.findViewById(R.id.title);
             customer = (CustomTextView) itemView.findViewById(R.id.customer);
+            tvResponse = (CustomTextView) itemView.findViewById(R.id.tvResponse);
         }
     }
 }

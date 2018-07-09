@@ -132,9 +132,9 @@ public class CustomerConfirmreservationActivity extends AppCompatActivity implem
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                            }
-                        });
+                    public void onClick(DialogInterface dialog, int id) {
+                    }
+                });
         final android.support.v7.app.AlertDialog alert = builder.create();
         alert.show();
     }
@@ -329,8 +329,6 @@ public class CustomerConfirmreservationActivity extends AppCompatActivity implem
                 Toast.makeText(CustomerConfirmreservationActivity.this, "Server not Responding", Toast.LENGTH_SHORT).show();
             }
         });
-
-
     }
 
     private void showThankYouAlert() {

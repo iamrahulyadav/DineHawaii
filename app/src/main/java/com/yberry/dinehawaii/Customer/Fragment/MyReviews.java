@@ -38,14 +38,14 @@ import retrofit2.Response;
 
 public class MyReviews extends Fragment {
     private static final String TAG = "My Reviews";
-    private View rootView;
-    private RecyclerView mRecyclerView;
-    private LinearLayoutManager mLayoutManager;
     MyReviewsAdapter reviewsAdapter;
     ArrayList<ReviewModel> reviewModelArrayList;
     Context context;
     CustomTextView noreview;
     FragmentIntraction intraction;
+    private View rootView;
+    private RecyclerView mRecyclerView;
+    private LinearLayoutManager mLayoutManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -59,6 +59,7 @@ public class MyReviews extends Fragment {
         myReview();
         return rootView;
     }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -69,6 +70,7 @@ public class MyReviews extends Fragment {
                     + " must implement OnFragmentInteractionListener");
         }
     }
+
     @Override
     public void onDetach() {
         super.onDetach();
@@ -78,8 +80,8 @@ public class MyReviews extends Fragment {
 
     private void initComponent() {
         context = getActivity();
-        reviewModelArrayList  = new ArrayList<ReviewModel>();
-        noreview = (CustomTextView)rootView.findViewById(R.id.noreviews);
+        reviewModelArrayList = new ArrayList<ReviewModel>();
+        noreview = (CustomTextView) rootView.findViewById(R.id.noreviews);
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.review_recycler);
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -131,28 +133,28 @@ public class MyReviews extends Fragment {
                         for (int i = 0; i < jsonArray.length(); i++) {
                             ReviewModel reviewModel = new ReviewModel();
                             JSONObject object = jsonArray.getJSONObject(i);
+                            reviewModel.setRating(object.getString("rate"));
                             reviewModel.setReview_message(object.getString("review_message"));
                             reviewModel.setBussName(object.getString("Buss_name"));
+                            reviewModel.setBusiness_id(object.getString("business_id"));
                             reviewModel.setDate(object.getString("date"));
-                            reviewModel.setReview_question(object.getString("review_question"));
-                            reviewModel.setResv_id(object.getString("reservation_id"));
-                            reviewModel.setRating(object.getString("rate"));
-
                             reviewModelArrayList.add(reviewModel);
                         }
 
-                    }else if (jsonObject.getString("status").equalsIgnoreCase("400")){
+                    } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
                         JSONArray jsonArray = jsonObject.getJSONArray("result");
                         JSONObject object = jsonArray.getJSONObject(0);
-                        //Toast.makeText(getActivity(), object.getString("msg"), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), object.getString("msg"), Toast.LENGTH_SHORT).show();
                         noreview.setVisibility(View.VISIBLE);
-                    }else{
+                    } else {
                         noreview.setVisibility(View.VISIBLE);
                     }
                     reviewsAdapter.notifyDataSetChanged();
 
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    progressHD.dismiss();
+                    Toast.makeText(getActivity(), "Server not Responding", Toast.LENGTH_SHORT).show();
                 }
                 progressHD.dismiss();
             }

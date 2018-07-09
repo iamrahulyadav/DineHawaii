@@ -3,14 +3,10 @@ package com.yberry.dinehawaii.Customer.Activity;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -18,14 +14,12 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -61,6 +55,7 @@ public class CustomerResDetailActivity extends AppCompatActivity implements View
     private static final int MAKE_CALL_PERMISSION_REQUEST_CODE = 100;
     RelativeLayout statusLayout, histLayout;
     View view1, view2;
+    FloatingActionButton callRestbtn;
     private CustomTextView tvReservationID, tvDateTime, tvBookingDate, tvBookingTime, tvCustomerName, tvTableNo, tvPartySize,
             tvContactNo, tvEmail, tvBusName, btnUpdate, btnConfirm, btnCancel, btnFeedback, btnReview;
     private CustomTextView tvCheckin, tvWaitTime, tvTableReady, tvSeatedBy, tvReschedule, tvConfirmed, tvDeposit, tvClose;
@@ -69,7 +64,6 @@ public class CustomerResDetailActivity extends AppCompatActivity implements View
     private String buss_id = "";
     private CustomEditText inputReschedule;
     private String new_date, new_time;
-    FloatingActionButton callRestbtn;
     private ReservationDetails model;
 
 
@@ -115,6 +109,7 @@ public class CustomerResDetailActivity extends AppCompatActivity implements View
         }
         getResrvData();
     }
+
     private boolean checkPermission(String permission) {
         return ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED;
     }
@@ -130,6 +125,7 @@ public class CustomerResDetailActivity extends AppCompatActivity implements View
                 return;
         }
     }
+
     private void init() {
         tvBusName = (CustomTextView) findViewById(R.id.tvBusName);
         tvReservationID = (CustomTextView) findViewById(R.id.tvReservationID);
@@ -190,9 +186,12 @@ public class CustomerResDetailActivity extends AppCompatActivity implements View
                 startActivity(intent);
                 break;
             case R.id.tvreview:
-                Intent intent1 = new Intent(CustomerResDetailActivity.this, CustomerReviewActivity.class);
+                /*Intent intent1 = new Intent(CustomerResDetailActivity.this, CustomerReviewActivity.class);
                 intent1.putExtra("Resv_id", reservation_id);
                 intent1.putExtra("Bussiness_id", buss_id);
+                startActivity(intent1);*/
+                Intent intent1 = new Intent(CustomerResDetailActivity.this, RatingActivity.class);
+                intent1.putExtra("business_id", buss_id);
                 startActivity(intent1);
                 break;
             case R.id.fab_call_rest:
@@ -424,7 +423,7 @@ public class CustomerResDetailActivity extends AppCompatActivity implements View
                             JSONArray jsonArray = jsonObject.getJSONArray("result");
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-                               getResrvData();
+                                getResrvData();
                                 Toast.makeText(CustomerResDetailActivity.this, "Updated successfully", Toast.LENGTH_LONG).show();
                             }
                         } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
