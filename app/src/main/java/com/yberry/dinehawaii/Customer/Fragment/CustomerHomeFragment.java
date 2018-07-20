@@ -204,7 +204,7 @@ public class CustomerHomeFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        menu.clear();
+//        menu.clear();
     }
 
     private void setFloatingButton() {

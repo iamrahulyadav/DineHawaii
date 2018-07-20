@@ -179,6 +179,56 @@
                 android:drawableLeft="@drawable/drawable_green_dot"
                 android:drawablePadding="@dimen/_5sdp"
                 android:gravity="center"
+                android:text="Allow Bid"
+                android:textColor="@color/colorGreen"
+                app:edittextfont="Raleway-Bold.ttf" />
+
+
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:focusableInTouchMode="false"
+                android:orientation="horizontal"
+                android:padding="@dimen/_5sdp">
+
+                <com.yberry.dinehawaii.customview.CustomRadioButton
+                    android:id="@+id/rbYes"
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="Yes"
+                    app:edittextfont="@string/raleway_regular" />
+
+                <com.yberry.dinehawaii.customview.CustomRadioButton
+                    android:id="@+id/rbNo"
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_15sdp"
+                    android:text="No"
+                    app:edittextfont="@string/raleway_regular" />
+            </RadioGroup>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:background="@color/colorDivider" />
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvSelectService"
+                android:layout_marginTop="@dimen/_9sdp"
+                android:drawableLeft="@drawable/drawable_green_dot"
+                android:drawablePadding="@dimen/_5sdp"
+                android:gravity="center"
                 android:text="Email"
                 android:textColor="@color/colorGreen"
                 app:edittextfont="Raleway-Bold.ttf" />

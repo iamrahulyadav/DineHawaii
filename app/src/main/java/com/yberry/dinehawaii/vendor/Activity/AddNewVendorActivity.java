@@ -51,6 +51,8 @@ public class AddNewVendorActivity extends AppCompatActivity implements View.OnCl
     String vendorText;
     LinearLayout mainView;
     private String selectedVendorIds = "";
+    private RadioGroup radioGroup;
+    private String allow_bid = "1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,6 +132,7 @@ public class AddNewVendorActivity extends AppCompatActivity implements View.OnCl
         etbusname = (CustomEditText) findViewById(R.id.etVendorBus);
         etVendorType = (CustomEditText) findViewById(R.id.etVendorType);
         mainView = (LinearLayout) findViewById(R.id.mainView);
+        radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
         etVendorType.setOnClickListener(this);
         mainView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -183,9 +186,13 @@ public class AddNewVendorActivity extends AppCompatActivity implements View.OnCl
         else if (TextUtils.isEmpty(etaddress.getText().toString()))
             Toast.makeText(this, "Enter Address", Toast.LENGTH_SHORT).show();
         else {
-            if (Util.isNetworkAvailable(this))
+            if (Util.isNetworkAvailable(this)) {
+                if (radioGroup.getCheckedRadioButtonId() == R.id.rbYes)
+                    allow_bid = "1";
+                else if (radioGroup.getCheckedRadioButtonId() == R.id.rbNo)
+                    allow_bid = "0";
                 AddVendor();
-            else
+            } else
                 Toast.makeText(this, getResources().getString(R.string.msg_no_internet), Toast.LENGTH_SHORT).show();
         }
 
@@ -211,6 +218,7 @@ public class AddNewVendorActivity extends AppCompatActivity implements View.OnCl
         jsonObject.addProperty("vendor_city", etcity.getText().toString());
         jsonObject.addProperty("vendor_address", etaddress.getText().toString());
         jsonObject.addProperty("vendor_buss_name", etbusname.getText().toString());
+        jsonObject.addProperty("allow_bid", allow_bid);
         Log.e(TAG, "getAllVendors: Request >> " + jsonObject);
 
         MyApiEndpointInterface apiService = ApiClient.getClient().create(MyApiEndpointInterface.class);
@@ -305,6 +313,7 @@ public class AddNewVendorActivity extends AppCompatActivity implements View.OnCl
 
             }
         });
+
         dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {

@@ -261,12 +261,12 @@ public class RestaurantListFragment extends Fragment {
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
-        MenuItem item = menu.findItem(R.id.filter_list);
-        if (item != null) item.setVisible(true);
+        MenuItem filter_list = menu.findItem(R.id.filter_list);
+        if (filter_list != null) filter_list.setVisible(true);
         MenuItem filter_cancel = menu.findItem(R.id.filter_cancel);
-        if (item != null) filter_cancel.setVisible(false);
-        MenuItem cancel = menu.findItem(R.id.filter_cancel);
-        if (cancel != null) cancel.setVisible(false);
+        if (filter_cancel != null) filter_cancel.setVisible(false);
+        MenuItem reset_filter = menu.findItem(R.id.reset_filter);
+        if (reset_filter != null) reset_filter.setVisible(false);
     }
 
 
@@ -470,6 +470,7 @@ public class RestaurantListFragment extends Fragment {
                             Log.e("listItemsRec", String.valueOf(listItemsRec));
                             Log.e("reseVAmount:", listItem.getReservationPrice());
                         }
+
                         publishProgress("200");
                     } else if (jsonObject.get("status").getAsString().equals("400")) {
                         publishProgress("400");

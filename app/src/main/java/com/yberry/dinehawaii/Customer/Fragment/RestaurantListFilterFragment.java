@@ -60,6 +60,7 @@ public class RestaurantListFilterFragment extends Fragment {
     private LinearLayoutManager mLayoutManager;
     private String pricerange = "";
     private CustomTextView tvNoData;
+    private MenuItem reset_filter, filter_list, filter_cancel;
 
     public RestaurantListFilterFragment() {
         // Required empty public constructor
@@ -78,10 +79,10 @@ public class RestaurantListFilterFragment extends Fragment {
         if (intraction != null) {
             intraction.actionbarsetTitle("Restaurants");
         }
+        setHasOptionsMenu(true);
 
         init();
         gps();
-        setHasOptionsMenu(true);
         new getRestFilterFromServer().execute();
         return rootView;
     }
@@ -90,7 +91,6 @@ public class RestaurantListFilterFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         setHasOptionsMenu(true);
-
         if (context instanceof FragmentIntraction) {
             intraction = (FragmentIntraction) context;
         } else {
@@ -103,6 +103,9 @@ public class RestaurantListFilterFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         intraction = null;
+       /* if (filter_list != null) filter_list.setVisible(false);
+        if (filter_cancel != null) filter_cancel.setVisible(false);
+        if (reset_filter != null) reset_filter.setVisible(false);*/
     }
 
     private void init() {
@@ -146,18 +149,18 @@ public class RestaurantListFilterFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        menu.clear();
-        inflater.inflate(R.menu.filter_list, menu);
-        MenuItem menuItem = menu.findItem(R.id.reset_filter);
-        menuItem.setVisible(true);
+        //menu.clear();
+        // inflater.inflate(R.menu.filter_list, menu);
+    }
 
-        MenuItem item = menu.findItem(R.id.filter_list);
-        if (item != null) item.setVisible(false);
-
-        MenuItem filter_cancel = menu.findItem(R.id.filter_cancel);
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        filter_list = menu.findItem(R.id.filter_list);
+        if (filter_list != null) filter_list.setVisible(true);
+        filter_cancel = menu.findItem(R.id.filter_cancel);
         if (filter_cancel != null) filter_cancel.setVisible(false);
-
-
+        reset_filter = menu.findItem(R.id.reset_filter);
+        if (reset_filter != null) reset_filter.setVisible(false);
     }
 
     @Override

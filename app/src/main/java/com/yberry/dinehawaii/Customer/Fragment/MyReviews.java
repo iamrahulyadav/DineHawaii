@@ -54,6 +54,7 @@ public class MyReviews extends Fragment {
         if (intraction != null) {
             intraction.actionbarsetTitle("My Reviews");
         }
+
         context = getActivity();
         initComponent();
         myReview();
