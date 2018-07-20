@@ -1,6 +1,7 @@
 package com.yberry.dinehawaii.Bussiness.Activity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.ColorStateList;
 import android.os.AsyncTask;
@@ -54,13 +55,12 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.yberry.dinehawaii.Util.Util.context;
 
 public class OrderDetailActivty extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "OrderDetailActivty";
     public ItemAdapter itemAdapter;
     LinearLayout llVendor, llBasic, llItems, llDelivery, llloyalty, llOthers, lleamt, llecode, llccode, llcamt;
-    ArrayList<OrderDetailItemData> itemList;
+    ArrayList<OrderDetailItemData> itemList = new ArrayList<OrderDetailItemData>();
     View view;
     ArrayList<VendorModel> vendorList;
     private ImageView back;
@@ -73,15 +73,16 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
     private String order_id, status = "", order_type = "", new_status = "";
     private CustomTextView tvFabText, tvVendorContact, tvVendorBusiness, tvVendorName;
     private String selectedVendorId = "", assignDeliveryStatus = "";
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_detail_activty);
         setToolbar();
+        context = this;
         vendorList = new ArrayList<VendorModel>();
         init();
-        setAdapter();
 
         order_id = getIntent().getStringExtra("order_id");
         Log.e(TAG, "onCreate: order_id >> " + order_id);
@@ -194,11 +195,10 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
     }
 
     private void setAdapter() {
-        itemList = new ArrayList<OrderDetailItemData>();
         mrecycler = (RecyclerView) findViewById(R.id.recycler_view);
         mrecycler.setLayoutManager(new LinearLayoutManager(OrderDetailActivty.this));
         mrecycler.setHasFixedSize(true);
-        itemAdapter = new ItemAdapter(context, itemList);
+        itemAdapter = new ItemAdapter(context, itemList, order_type);
         mrecycler.setAdapter(itemAdapter);
     }
 
@@ -660,7 +660,8 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
                                 Log.e(TAG, i + ", itemDetail: >> " + model);
                                 itemList.add(model);
                             }
-                            itemAdapter.notifyDataSetChanged();
+                            setAdapter();
+
                         }
                     } else {
                         JsonObject result = jsonObject.getAsJsonObject("result");

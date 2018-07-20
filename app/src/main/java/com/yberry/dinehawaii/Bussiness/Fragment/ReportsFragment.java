@@ -34,6 +34,7 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
     private CustomTextView tvAmtEgiftUsed, tvTotalFeedback, tvFeedbackResolved, tvAvgRating, tvRating1to2, tvRating3, tvRating4to5;
     private Context mContext;
     private CustomTextView tvTotalInHouse, tvTotalTakeout, tvTotalCatering, tvTotalDelivery, tvTotalReservations, tvReservationCanceled, tvReservationFilled;
+    private CustomTextView tvTotalReservationsAmt, tvReservationCanceledAmt, tvReservationFilledAmt, tvTotalPendingAmt, tvTotalCompletedAmt, tvTotalInHouseAmt, tvTotalTakeoutAmt, tvTotalCateringAmt, tvTotalDeliveryAmt, tvPointsEarnedAmt, tvPointsIssuedAmt, tvPointsTransAmt;
 
     public ReportsFragment() {
     }
@@ -75,6 +76,21 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
         tvRating1to2 = (CustomTextView) view.findViewById(R.id.tvRating1to2);
         tvRating3 = (CustomTextView) view.findViewById(R.id.tvRating3);
         tvRating4to5 = (CustomTextView) view.findViewById(R.id.tvRating4to5);
+
+
+        tvTotalReservationsAmt = (CustomTextView) view.findViewById(R.id.tvTotalReservationsAmt);
+        tvReservationCanceledAmt = (CustomTextView) view.findViewById(R.id.tvReservationCanceledAmt);
+        tvReservationFilledAmt = (CustomTextView) view.findViewById(R.id.tvReservationFilledAmt);
+        tvTotalPendingAmt = (CustomTextView) view.findViewById(R.id.tvTotalPendingAmt);
+        tvTotalCompletedAmt = (CustomTextView) view.findViewById(R.id.tvTotalCompletedAmt);
+        tvTotalInHouseAmt = (CustomTextView) view.findViewById(R.id.tvTotalInHouseAmt);
+        tvTotalTakeoutAmt = (CustomTextView) view.findViewById(R.id.tvTotalTakeoutAmt);
+        tvTotalCateringAmt = (CustomTextView) view.findViewById(R.id.tvTotalCateringAmt);
+        tvTotalDeliveryAmt = (CustomTextView) view.findViewById(R.id.tvTotalDeliveryAmt);
+        tvPointsEarnedAmt = (CustomTextView) view.findViewById(R.id.tvPointsEarnedAmt);
+        tvPointsIssuedAmt = (CustomTextView) view.findViewById(R.id.tvPointsIssuedAmt);
+        tvPointsTransAmt = (CustomTextView) view.findViewById(R.id.tvPointsTransAmt);
+
     }
 
     @Override
@@ -107,19 +123,32 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
                     JSONObject jsonObject = new JSONObject(s);
                     if (jsonObject.getString("status").equalsIgnoreCase("200")) {
                         tvTotalReservations.setText(jsonObject.getString("total_reservation"));
+//                        tvTotalReservationsAmt.setText(jsonObject.getString("total_reservation_amt"));
                         tvReservationCanceled.setText(jsonObject.getString("total_reservation_cancelled"));
+//                        tvReservationCanceledAmt.setText(jsonObject.getString("total_reservation_cancelled_amt"));
                         tvReservationFilled.setText(jsonObject.getString("total_reservation_filled"));
+//                        tvReservationFilledAmt.setText(jsonObject.getString("total_reservation_filled_amt"));
                         tvCustomerFilled.setText(jsonObject.getString("total_customer_filled"));
+//                        tvCustomerFilledAmt.setText(jsonObject.getString("total_customer_filled_amt"));
                         tvTotalNoShows.setText(jsonObject.getString("total_no_shows"));
                         tvTotalPending.setText(jsonObject.getString("orders_pending"));
+//                        tvTotalPendingAmt.setText(jsonObject.getString("orders_pending_amt"));
                         tvTotalCompleted.setText(jsonObject.getString("orders_completed"));
+//                        tvTotalCompletedAmt.setText(jsonObject.getString("orders_completed_amt"));
                         tvTotalInHouse.setText(jsonObject.getString("total_order_inhouse"));
+//                        tvTotalInHouseAmt.setText(jsonObject.getString("total_order_inhouse_amt"));
                         tvTotalTakeout.setText(jsonObject.getString("total_order_takeout"));
+//                        tvTotalTakeoutAmt.setText(jsonObject.getString("total_order_takeout_amt"));
                         tvTotalCatering.setText(jsonObject.getString("total_order_catering"));
+//                        tvTotalCateringAmt.setText(jsonObject.getString("total_order_catering_amt"));
                         tvTotalDelivery.setText(jsonObject.getString("total_order_home_delivery"));
+//                        tvTotalDeliveryAmt.setText(jsonObject.getString("total_order_home_delivery_amt"));
                         tvPointsEarned.setText(jsonObject.getString("loyalty_point_earned"));
+//                        tvPointsEarnedAmt.setText(jsonObject.getString("loyalty_point_earned_amt"));
                         tvPointsIssued.setText(jsonObject.getString("loyalty_point_issued"));
+//                        tvPointsIssuedAmt.setText(jsonObject.getString("loyalty_point_issued_amt"));
                         tvPointsTrans.setText(jsonObject.getString("loyalty_point_transferred"));
+//                        tvPointsTransAmt.setText(jsonObject.getString("loyalty_point_transferred_amt"));
                         tvEgiftUsed.setText(jsonObject.getString("no_of_egift_used"));
                         tvAmtEgiftUsed.setText(jsonObject.getString("amount_of_total_egift_used"));
                         tvTotalFeedback.setText(jsonObject.getString("feedback_total"));

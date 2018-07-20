@@ -162,7 +162,7 @@ public class CustomerOrderDetailActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(CustomerOrderDetailActivity.this);
         mrecycler.setLayoutManager(mLayoutManager);
         mrecycler.setHasFixedSize(true);
-        itemAdapter = new ItemAdapter(context, itemList);
+        itemAdapter = new ItemAdapter(context, itemList, order_type);
         mrecycler.setAdapter(itemAdapter);
     }
 
