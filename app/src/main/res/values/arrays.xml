@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="reports_days_filter">
+        <item>All</item>
+        <item>Today</item>
+        <item>Last 7 Days</item>
+        <item>Last 15 Days</item>
+        <item>Last 30 Days</item>
+        <item>Custom</item>
+    </string-array>
+</resources>

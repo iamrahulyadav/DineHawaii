@@ -9,6 +9,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
@@ -35,6 +38,9 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
     private Context mContext;
     private CustomTextView tvTotalInHouse, tvTotalTakeout, tvTotalCatering, tvTotalDelivery, tvTotalReservations, tvReservationCanceled, tvReservationFilled;
     private CustomTextView tvTotalReservationsAmt, tvReservationCanceledAmt, tvReservationFilledAmt, tvTotalPendingAmt, tvTotalCompletedAmt, tvTotalInHouseAmt, tvTotalTakeoutAmt, tvTotalCateringAmt, tvTotalDeliveryAmt, tvPointsEarnedAmt, tvPointsIssuedAmt, tvPointsTransAmt;
+    private String days = "0";
+    private LinearLayout llCustomFilter;
+    private Spinner spinnerFilter;
 
     public ReportsFragment() {
     }
@@ -91,6 +97,26 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
         tvPointsIssuedAmt = (CustomTextView) view.findViewById(R.id.tvPointsIssuedAmt);
         tvPointsTransAmt = (CustomTextView) view.findViewById(R.id.tvPointsTransAmt);
 
+        spinnerFilter = (Spinner) view.findViewById(R.id.spinnerFilter);
+        llCustomFilter = (LinearLayout) view.findViewById(R.id.llCustomFilter);
+
+        spinnerFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int index, long l) {
+                if (index == 5)
+                    llCustomFilter.setVisibility(View.VISIBLE);
+                else {
+                    llCustomFilter.setVisibility(View.GONE);
+
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
     }
 
     @Override
@@ -109,6 +135,7 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
         jsonObject.addProperty("method", AppConstants.BUSSINES_USER_BUSINESSAPI.ALLBUSINESSREPORT);
         jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(getActivity()));
         jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(getActivity()));
+        jsonObject.addProperty("days", days);
         Log.e(TAG, "getData: Request >> " + jsonObject.toString());
 
         MyApiEndpointInterface apiService = ApiClient.getClient().create(MyApiEndpointInterface.class);
