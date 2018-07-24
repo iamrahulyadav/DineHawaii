@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.yberry.dinehawaii.RetrofitClasses.MyApiEndpointInterface;
 import com.yberry.dinehawaii.Util.AppConstants;
 import com.yberry.dinehawaii.Util.AppPreferencesBuss;
 import com.yberry.dinehawaii.Util.ProgressHUD;
+import com.yberry.dinehawaii.customview.CustomEditText;
 import com.yberry.dinehawaii.customview.CustomTextView;
 
 import org.json.JSONException;
@@ -41,6 +43,8 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
     private String days = "0";
     private LinearLayout llCustomFilter;
     private Spinner spinnerFilter;
+    private CustomTextView tvApply;
+    private CustomEditText etDays;
 
     public ReportsFragment() {
     }
@@ -99,15 +103,25 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
 
         spinnerFilter = (Spinner) view.findViewById(R.id.spinnerFilter);
         llCustomFilter = (LinearLayout) view.findViewById(R.id.llCustomFilter);
+        tvApply = (CustomTextView) view.findViewById(R.id.tvApply);
+        etDays = (CustomEditText) view.findViewById(R.id.etDays);
+        tvApply.setOnClickListener(this);
 
         spinnerFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int index, long l) {
-                if (index == 5)
+                if (index == 1)
+                    days = "1";
+                else if (index == 7)
+                    days = "7";
+                else if (index == 15)
+                    days = "15";
+                else if (index == 30)
+                    days = "30";
+                else if (index == 5)
                     llCustomFilter.setVisibility(View.VISIBLE);
                 else {
                     llCustomFilter.setVisibility(View.GONE);
-
                 }
             }
 
@@ -122,6 +136,15 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.tvApply:
+                if (TextUtils.isEmpty(etDays.getText().toString()))
+                    etDays.setError("Enter Days");
+                else {
+                    days = etDays.getText().toString();
+                    Log.e(TAG, "onClick: days >> " + days);
+                    getData();
+                }
+                break;
         }
     }
 
@@ -202,5 +225,4 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
             }
         });
     }
-
 }

@@ -57,6 +57,7 @@
                 android:visibility="gone">
 
                 <com.yberry.dinehawaii.customview.CustomEditText
+                    android:id="@+id/etDays"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
@@ -71,6 +72,7 @@
                     app:edittextfont="@string/raleway_regular" />
 
                 <com.yberry.dinehawaii.customview.CustomTextView
+                    android:id="@+id/tvApply"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
