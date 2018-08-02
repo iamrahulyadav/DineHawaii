@@ -48,7 +48,8 @@ public class AppConstants {
 
     public interface BASEURL {
         //String URL = "http://truckslogistics.com/Projects-Work/Hawaii/web/APP/";
-        String URL = "http://take007.co.in/Projects-Work/Hawaii/APP/";
+//        String URL = "http://take007.co.in/Projects-Work/Hawaii/APP/";
+        String URL = "https://take007.co.in/Projects-Work/Hawaii/APP/";
         //String URL = "http://take007.co.in/Projects-Work/Hawaii/Beta-Test/APP/";
     }
 
@@ -78,11 +79,9 @@ public class AppConstants {
         String DELETE_RESERVATION = "normal_user/order_detail_api.php";
         String CONFIRM_RESERVATION = "normal_user/order_detail_api.php";
         String CUSTOMIZATION_NORMALUSER = "normal_user/business_api.php";
-        ;
         String SUBMIT_NEWORDER = "normal_user/business_api.php";
         String BUSSINES_USER_OLD_TAKE_OUT_FRAGMENT = "business_user/business_orders_api.php";
         String ALL_NOTIFICATION = "normal_user/business_api.php";
-        ;
         String BUSINESS_ORDER_REPORTS = "business_user/business_reports_graph_api.php";
         String ADDEDIT_MENU_URL = "business_user/Add_Edit_Food_API.php";
         String BUSS_SERVICE_URL = "business_user/business_service_api.php";
@@ -97,7 +96,6 @@ public class AppConstants {
         String N_BUSINESS_NEW_API = "business_user/N_Business_New_Api.php";
         String N_BUSINESS_USER_API = "normal_user/N_Business_User_Api.php";
         String USER_SEND_E_GIFT_NEW = "normal_user/user_send_e_gift_new.php";
-        /**/
     }
 
     public interface REGISTRATION {
@@ -345,7 +343,6 @@ public class AppConstants {
         String WAITLIST_RESERVATION = "normal_user/order_detail_api.php";
         String SEND_GIFT = "normal_user/user_send_gift_voucher_api.php";
         String TAX = "normal_user/user_send_gift_voucher_api.php";
-
     }
 
     //  http://truckslogistics.com/Projects-Work/Hawaii/web/APP/normal_user/general_api.php

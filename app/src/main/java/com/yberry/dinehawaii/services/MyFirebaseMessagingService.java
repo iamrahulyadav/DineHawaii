@@ -46,11 +46,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     Intent intent = new Intent(this, OrderDetailActivty.class);
                     intent.putExtra("order_id", order_id);
                     sendNotification(intent, messageBody);
-
                 } else if (jsonObject1.has("Approve_UnApprove_Notify")) {
                     messageBody = jsonObject1.getString("Approve_UnApprove_Notify");
                     sendNotification(new Intent(), messageBody);
-
                 } else if (jsonObject1.has("new_reservation")) {
                     messageBody = jsonObject1.getString("new_reservation");
                     reserv_id = jsonObject1.getString("reserv_id");
@@ -222,7 +220,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                }else if (!REPLY_REVIEW.equalsIgnoreCase("null")) {
+                } else if (!REPLY_REVIEW.equalsIgnoreCase("null")) {
                     JSONObject jsonObj = null;
                     try {
                         jsonObj = new JSONObject(REPLY_REVIEW);
