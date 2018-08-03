@@ -412,7 +412,6 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
                             tvReschedule.setTextColor(context.getResources().getColor(R.color.colorPrimary));
                             tvReschedule.setTypeface(Typeface.createFromAsset(context.getAssets(), "Raleway-Bold.ttf"));
                         }
-
                         tvDeposit.setText("$ " + model.getReservation_amount());
                         tvDeposit.setTextColor(context.getResources().getColor(R.color.colorPrimary));
                         tvDeposit.setTypeface(Typeface.createFromAsset(context.getAssets(), "Raleway-Bold.ttf"));
