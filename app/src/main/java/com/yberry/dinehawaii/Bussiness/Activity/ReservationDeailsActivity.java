@@ -339,12 +339,14 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
                             tvTableReady.setEnabled(false);
                             tvSeatedBy.setEnabled(false);
                             tvReschedule.setEnabled(false);
-                            llCloseResv.setVisibility(View.GONE);
+                            llCloseResv.setVisibility(View.VISIBLE);
+                            llRestore.setVisibility(View.GONE);
                         } else if (reservation_status.equalsIgnoreCase("Waiting")) {
                             tvConfirmed.setText("NO");
                             ((CardView) findViewById(R.id.card_confirm)).setVisibility(View.GONE);
                             ((CardView) findViewById(R.id.card_make_available)).setVisibility(View.VISIBLE);
                             ((CardView) findViewById(R.id.card_manage_res)).setVisibility(View.GONE);
+
                         } else if (reservation_status.equalsIgnoreCase("Cancelled")) {
                             tvConfirmed.setText("NA");
                             ((CardView) findViewById(R.id.card_confirm)).setVisibility(View.GONE);
@@ -355,7 +357,7 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
                             tvSeatedBy.setEnabled(false);
                             tvReschedule.setEnabled(false);
                             llCloseResv.setVisibility(View.GONE);
-                            llRestore.setVisibility(View.VISIBLE);
+                            llRestore.setVisibility(View.GONE);
                         } else if (reservation_status.contains("Confirm")) {
                             tvCheckin.setEnabled(true);
                             tvWaitTime.setEnabled(true);
@@ -363,11 +365,15 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
                             tvSeatedBy.setEnabled(true);
                             tvReschedule.setEnabled(true);
                             tvConfirmed.setText("");
+                            llRestore.setVisibility(View.GONE);
                             tvConfirmed.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_done_green_24dp, 0, 0, 0);
                             ((CardView) findViewById(R.id.card_make_available)).setVisibility(View.GONE);
                             ((CardView) findViewById(R.id.card_confirm)).setVisibility(View.GONE);
                             llCloseResv.setVisibility(View.VISIBLE);
                         } else if (reservation_status.equalsIgnoreCase("Closed")) {
+                            if (getIntent().getAction().equalsIgnoreCase("PREVIOUS"))
+                                llRestore.setVisibility(View.GONE);
+                            else llRestore.setVisibility(View.VISIBLE);
                             ((CardView) findViewById(R.id.card_confirm)).setVisibility(View.GONE);
                             ((CardView) findViewById(R.id.card_make_available)).setVisibility(View.GONE);
                             tvCheckin.setEnabled(false);
@@ -375,8 +381,8 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
                             tvTableReady.setEnabled(false);
                             tvSeatedBy.setEnabled(false);
                             tvReschedule.setEnabled(false);
-                            llCloseResv.setVisibility(View.VISIBLE);
-                            llRestore.setVisibility(View.VISIBLE);
+                            llCloseResv.setVisibility(View.GONE);
+
                             tvConfirmed.setText("");
                             tvClose.setText("");
                             tvClose.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_done_green_24dp, 0, 0, 0);
