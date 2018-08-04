@@ -346,7 +346,6 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
                             ((CardView) findViewById(R.id.card_confirm)).setVisibility(View.GONE);
                             ((CardView) findViewById(R.id.card_make_available)).setVisibility(View.VISIBLE);
                             ((CardView) findViewById(R.id.card_manage_res)).setVisibility(View.GONE);
-
                         } else if (reservation_status.equalsIgnoreCase("Cancelled")) {
                             tvConfirmed.setText("NA");
                             ((CardView) findViewById(R.id.card_confirm)).setVisibility(View.GONE);
@@ -382,12 +381,10 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
                             tvSeatedBy.setEnabled(false);
                             tvReschedule.setEnabled(false);
                             llCloseResv.setVisibility(View.GONE);
-
                             tvConfirmed.setText("");
                             tvClose.setText("");
                             tvClose.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_done_green_24dp, 0, 0, 0);
                         }
-
 
                         if (model.getSetCheckedIn() == 1) {
                             tvCheckin.setText("");
@@ -1183,7 +1180,6 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
                     JSONObject jsonObject = new JSONObject(resp);
                     if (jsonObject.getString("status").equalsIgnoreCase("200")) {
                         getResrvData();
-
                     } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
                         JSONArray jsonArray2 = jsonObject.getJSONArray("result");
                         JSONObject jsonObject1 = jsonArray2.getJSONObject(0);
@@ -1234,7 +1230,6 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
                     JSONObject jsonObject = new JSONObject(resp);
                     if (jsonObject.getString("status").equalsIgnoreCase("200")) {
                         getResrvData();
-
                     } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
                         JSONArray jsonArray2 = jsonObject.getJSONArray("result");
                         JSONObject jsonObject1 = jsonArray2.getJSONObject(0);
@@ -1279,5 +1274,4 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
         timePickerDialog.setCancelColor(getResources().getColor(R.color.colorPrimary));
         timePickerDialog.setOkColor(getResources().getColor(R.color.colorPrimary));
     }
-
 }
