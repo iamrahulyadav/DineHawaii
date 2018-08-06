@@ -54,7 +54,7 @@ public class CompletedInHouseFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.d("pppp","dsafga");
+        Log.d("pppp", "dsafga");
         //Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_today_in_house, container, false);
         initComponent();
@@ -142,7 +142,7 @@ public class CompletedInHouseFragment extends Fragment {
                                 orderModel.setOrder_id(object.getString("order_id"));
                                 orderModel.setDate(object.getString("date"));
                                 orderModel.setBusiness_name(object.getString("business_name"));
-                                orderModel.setTotal_price("$"+object.getString("total_price"));
+                                orderModel.setTotal_price("$" + object.getString("total_price"));
                                 orderModel.setDelivery_adderess(object.getString("delivery_adderess"));
                                 orderModel.setDelivery_name(object.getString("delivery_name"));
                                 orderModel.setDelivery_contact_no(object.getString("delivery_contact_no"));
