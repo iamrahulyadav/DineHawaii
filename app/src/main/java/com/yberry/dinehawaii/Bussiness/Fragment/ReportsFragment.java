@@ -45,6 +45,7 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
     private Spinner spinnerFilter;
     private CustomTextView tvApply;
     private CustomEditText etDays;
+    private CustomTextView tvCustomerFilledAmt;
 
     public ReportsFragment() {
     }
@@ -67,6 +68,7 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
         tvTotalReservations = (CustomTextView) view.findViewById(R.id.tvTotalReservations);
         tvReservationCanceled = (CustomTextView) view.findViewById(R.id.tvReservationCanceled);
         tvReservationFilled = (CustomTextView) view.findViewById(R.id.tvReservationFilled);
+        tvCustomerFilledAmt = (CustomTextView) view.findViewById(R.id.tvCustomerFilledAmt);
         tvCustomerFilled = (CustomTextView) view.findViewById(R.id.tvCustomerFilled);
         tvTotalNoShows = (CustomTextView) view.findViewById(R.id.tvTotalNoShows);
         tvTotalPending = (CustomTextView) view.findViewById(R.id.tvTotalPending);
@@ -86,7 +88,6 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
         tvRating1to2 = (CustomTextView) view.findViewById(R.id.tvRating1to2);
         tvRating3 = (CustomTextView) view.findViewById(R.id.tvRating3);
         tvRating4to5 = (CustomTextView) view.findViewById(R.id.tvRating4to5);
-
 
         tvTotalReservationsAmt = (CustomTextView) view.findViewById(R.id.tvTotalReservationsAmt);
         tvReservationCanceledAmt = (CustomTextView) view.findViewById(R.id.tvReservationCanceledAmt);
@@ -110,18 +111,23 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
         spinnerFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int index, long l) {
-                if (index == 1)
+                if (index == 1) {
                     days = "1";
-                else if (index == 7)
+                    getData();
+                } else if (index == 7) {
                     days = "7";
-                else if (index == 15)
+                    getData();
+                } else if (index == 15) {
                     days = "15";
-                else if (index == 30)
+                    getData();
+                } else if (index == 30) {
                     days = "30";
-                else if (index == 5)
+                    getData();
+                } else if (index == 5) {
                     llCustomFilter.setVisibility(View.VISIBLE);
-                else {
+                } else {
                     llCustomFilter.setVisibility(View.GONE);
+                    getData();
                 }
             }
 
@@ -172,33 +178,34 @@ public class ReportsFragment extends Fragment implements View.OnClickListener {
                 try {
                     JSONObject jsonObject = new JSONObject(s);
                     if (jsonObject.getString("status").equalsIgnoreCase("200")) {
+                        JSONObject total_users_obj = jsonObject.getJSONObject("total_users");
                         tvTotalReservations.setText(jsonObject.getString("total_reservation"));
-//                        tvTotalReservationsAmt.setText(jsonObject.getString("total_reservation_amt"));
+                        tvTotalReservationsAmt.setText(total_users_obj.getString("total_reservation_amt"));
                         tvReservationCanceled.setText(jsonObject.getString("total_reservation_cancelled"));
-//                        tvReservationCanceledAmt.setText(jsonObject.getString("total_reservation_cancelled_amt"));
+                        tvReservationCanceledAmt.setText(total_users_obj.getString("total_reservation_cancelled_amt"));
                         tvReservationFilled.setText(jsonObject.getString("total_reservation_filled"));
-//                        tvReservationFilledAmt.setText(jsonObject.getString("total_reservation_filled_amt"));
+                        tvReservationFilledAmt.setText(total_users_obj.getString("total_reservation_filled_amt"));
                         tvCustomerFilled.setText(jsonObject.getString("total_customer_filled"));
-//                        tvCustomerFilledAmt.setText(jsonObject.getString("total_customer_filled_amt"));
+                        tvCustomerFilledAmt.setText(total_users_obj.getString("total_customer_filled_amt"));
                         tvTotalNoShows.setText(jsonObject.getString("total_no_shows"));
                         tvTotalPending.setText(jsonObject.getString("orders_pending"));
-//                        tvTotalPendingAmt.setText(jsonObject.getString("orders_pending_amt"));
+                        tvTotalPendingAmt.setText(total_users_obj.getString("orders_pending_amt"));
                         tvTotalCompleted.setText(jsonObject.getString("orders_completed"));
-//                        tvTotalCompletedAmt.setText(jsonObject.getString("orders_completed_amt"));
+                        tvTotalCompletedAmt.setText(total_users_obj.getString("orders_completed_amt"));
                         tvTotalInHouse.setText(jsonObject.getString("total_order_inhouse"));
-//                        tvTotalInHouseAmt.setText(jsonObject.getString("total_order_inhouse_amt"));
+                        tvTotalInHouseAmt.setText(total_users_obj.getString("total_order_inhouse_amt"));
                         tvTotalTakeout.setText(jsonObject.getString("total_order_takeout"));
-//                        tvTotalTakeoutAmt.setText(jsonObject.getString("total_order_takeout_amt"));
+                        // tvTotalTakeoutAmt.setText(total_users_obj.getString("total_order_takeout_amt"));
                         tvTotalCatering.setText(jsonObject.getString("total_order_catering"));
-//                        tvTotalCateringAmt.setText(jsonObject.getString("total_order_catering_amt"));
+                        tvTotalCateringAmt.setText(total_users_obj.getString("total_order_catering_amt"));
                         tvTotalDelivery.setText(jsonObject.getString("total_order_home_delivery"));
-//                        tvTotalDeliveryAmt.setText(jsonObject.getString("total_order_home_delivery_amt"));
+                        tvTotalDeliveryAmt.setText(total_users_obj.getString("total_order_home_delivery_amt"));
                         tvPointsEarned.setText(jsonObject.getString("loyalty_point_earned"));
-//                        tvPointsEarnedAmt.setText(jsonObject.getString("loyalty_point_earned_amt"));
+                        tvPointsEarnedAmt.setText(total_users_obj.getString("loyalty_point_earned_amt"));
                         tvPointsIssued.setText(jsonObject.getString("loyalty_point_issued"));
-//                        tvPointsIssuedAmt.setText(jsonObject.getString("loyalty_point_issued_amt"));
+                        tvPointsIssuedAmt.setText(total_users_obj.getString("loyalty_point_issued_amt"));
                         tvPointsTrans.setText(jsonObject.getString("loyalty_point_transferred"));
-//                        tvPointsTransAmt.setText(jsonObject.getString("loyalty_point_transferred_amt"));
+                        tvPointsTransAmt.setText(total_users_obj.getString("loyalty_point_transferred_amt"));
                         tvEgiftUsed.setText(jsonObject.getString("no_of_egift_used"));
                         tvAmtEgiftUsed.setText(jsonObject.getString("amount_of_total_egift_used"));
                         tvTotalFeedback.setText(jsonObject.getString("feedback_total"));
