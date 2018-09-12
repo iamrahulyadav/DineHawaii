@@ -96,8 +96,8 @@ public class RestaurantListFragment extends Fragment {
         gps();
         /*Kaka'ako
         Honolulu, HI, USA*/
-        latitude = 21.295575;
-        longitude = -157.850968;
+       /* latitude = 21.295575;
+        longitude = -157.850968;*/
         new getRestFromServer().execute();
         new getReccRestFromServer().execute();
         return view;

@@ -649,9 +649,11 @@ public class MakingReservationActivity extends AppCompatActivity implements Time
             }
         });
 
-        builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+
+        builder.setNegativeButton("Choose Alternate", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                startActivity(new Intent(MakingReservationActivity.this, AlternateBusinessActivity.class));
             }
         });
 

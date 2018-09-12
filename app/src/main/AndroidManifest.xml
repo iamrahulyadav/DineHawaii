@@ -331,6 +331,12 @@
             android:label="@string/title_activity_manage_business"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Customer.Activity.AlternateBusinessActivity"
+            android:clearTaskOnLaunch="true"
+            android:label="Altername Business   "
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme" />
         <activity android:name=".Customer.Activity.RatingActivity"></activity>
     </application>
 

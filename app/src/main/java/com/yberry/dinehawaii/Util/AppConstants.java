@@ -212,6 +212,7 @@ public class AppConstants {
         String SEND_REPLY_TO_ORDERS = "send_reply_to_orders";
         String SEND_REPLY_TO_RESERVATION = "send_reply_to_reservation";
         String SEND_REPLY_TO_REVIEW = "send_reply_to_review";
+        String GET_ALTERNATE_BUSINESS ="get_alternate_business" ;
     }
 
     public interface BUSINESS_VENDOR_API {

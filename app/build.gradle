@@ -14,7 +14,6 @@ repositories {
     maven { url 'https://maven.fabric.io/public' }
 }
 
-
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.1"
@@ -36,7 +35,6 @@ android {
         preDexLibraries = false
         javaMaxHeapSize "4g"
     }
-
 }
 
 dependencies {
@@ -44,7 +42,6 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-
 
     compile 'com.android.support:design:26.0.1'
     compile 'com.android.support:support-v4:26.0.1'
@@ -67,6 +64,7 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.github.clans:fab:1.6.2'
     compile 'com.github.bumptech.glide:glide:3.7.0'
+
 
     testCompile 'junit:junit:4.12'
     compile('com.crashlytics.sdk.android:crashlytics:2.9.1@aar') {
