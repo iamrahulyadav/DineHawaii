@@ -664,16 +664,17 @@ public class MakingReservationActivity extends AppCompatActivity implements Time
         AlertDialog.Builder builder = new AlertDialog.Builder(MakingReservationActivity.this);
         builder.setTitle("Tables Not Available");
         builder.setMessage("We are sorry, there are no table available for reservations");
-        builder.setPositiveButton("GO BACK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                finish();
-            }
-        });
 
         builder.setNegativeButton("CALL RESTAURANT", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+            }
+        });
+
+        builder.setNegativeButton("Choose Alternate", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                startActivity(new Intent(MakingReservationActivity.this, AlternateBusinessActivity.class));
             }
         });
 

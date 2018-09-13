@@ -1,6 +1,7 @@
 package com.yberry.dinehawaii.Bussiness.Activity;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,8 +9,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -25,6 +29,7 @@ import com.yberry.dinehawaii.Util.AppConstants;
 import com.yberry.dinehawaii.Util.AppPreferences;
 import com.yberry.dinehawaii.Util.AppPreferencesBuss;
 import com.yberry.dinehawaii.Util.Function;
+import com.yberry.dinehawaii.Util.JustifiedTextView;
 import com.yberry.dinehawaii.Util.ProgressHUD;
 import com.yberry.dinehawaii.Util.SaveDataPreference;
 import com.yberry.dinehawaii.Util.Util;
@@ -192,8 +197,7 @@ public class BusinessLoginActivity extends AppCompatActivity implements View.OnC
                 // TODO Auto-generated method stub
             }
         });
-        MyApiEndpointInterface apiService =
-                ApiClient.getClient().create(MyApiEndpointInterface.class);
+        MyApiEndpointInterface apiService = ApiClient.getClient().create(MyApiEndpointInterface.class);
         Call<JsonObject> call = apiService.requestBusinessUrl(jsonObject);
         call.enqueue(new Callback<JsonObject>() {
             @SuppressLint("LongLogTag")
@@ -205,54 +209,94 @@ public class BusinessLoginActivity extends AppCompatActivity implements View.OnC
                     JSONObject jsonObject = new JSONObject(s);
                     if (jsonObject.getString("status").equalsIgnoreCase("200")) {
                         JSONArray jsonArray = jsonObject.getJSONArray("result");
-                        JSONObject jsonObject1 = jsonArray.getJSONObject(0);
+                        final JSONObject jsonObject1 = jsonArray.getJSONObject(0);
+                        final Dialog paymentDialog = new Dialog(BusinessLoginActivity.this);
+                        paymentDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                        paymentDialog.setCancelable(true);
+                        paymentDialog.setContentView(R.layout.business_t_n_c);
+                        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                        lp.copyFrom(paymentDialog.getWindow().getAttributes());
+                        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+                        lp.gravity = Gravity.CENTER;
+                        paymentDialog.getWindow().setAttributes(lp);
+
+                        JustifiedTextView justifytxt = (JustifiedTextView) paymentDialog.findViewById(R.id.justifytxt);
+                        final CustomButton accept = (CustomButton) paymentDialog.findViewById(R.id.accept);
+                        final CustomButton reject = (CustomButton) paymentDialog.findViewById(R.id.reject);
+                        justifytxt.setText(getResources().getString(R.string.text_21B) + " " + getResources().getString(R.string.text_21B));
+
+                        accept.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                try {
+
+                                    AppPreferencesBuss.setUserId(BusinessLoginActivity.this, jsonObject1.getString("user_id"));
+                                    AppPreferencesBuss.setBussiEmilid(BusinessLoginActivity.this, jsonObject1.getString("email_id"));
+                                    AppPreferencesBuss.setBussiName(BusinessLoginActivity.this, jsonObject1.getString("bussiness_name"));
+                                    AppPreferencesBuss.setBussiFein(BusinessLoginActivity.this, jsonObject1.getString("bussiness_fein"));
+                                    AppPreferencesBuss.setBussiId(BusinessLoginActivity.this, jsonObject1.getString("bussiness_id"));
+                                    AppPreferencesBuss.setBussiPackagelist(BusinessLoginActivity.this, jsonObject1.getString("package_id"));
+                                    AppPreferencesBuss.setBussiOptionlist(BusinessLoginActivity.this, jsonObject1.getString("option_id"));
+                                    AppPreferencesBuss.setfirstname(BusinessLoginActivity.this, jsonObject1.getString("first_name"));
+                                    AppPreferencesBuss.setBussiPhoneNo(BusinessLoginActivity.this, jsonObject1.getString("contact_no"));
+                                    AppPreferencesBuss.setUsertypeid(BusinessLoginActivity.this, jsonObject1.getString("user_type"));
+
+                                    if (jsonObject1.getString("multisite").equalsIgnoreCase("1"))
+                                        AppPreferencesBuss.setIsMultisite(BusinessLoginActivity.this, true);
+                                    else
+                                        AppPreferencesBuss.setIsMultisite(BusinessLoginActivity.this, false);
+
+                                    AppPreferences.setUserType(mContext, AppConstants.BUSS_LOGIN_TYPE.BUSINESS_USER);
+
+                                    if (jsonObject1.getString("admin_approval").equalsIgnoreCase("1"))
+                                        AppPreferencesBuss.setVerified_status(BusinessLoginActivity.this, true);
+                                    else
+                                        AppPreferencesBuss.setVerified_status(BusinessLoginActivity.this, false);
+
+                                    if (jsonObject1.getString("user_image").length() == 0) {
+                                        AppPreferencesBuss.setProfileImage(BusinessLoginActivity.this, "");
+                                    } else {
+                                        AppPreferencesBuss.setProfileImage(BusinessLoginActivity.this, jsonObject1.getString("user_image"));
+                                    }
+
+
+                                    admin_approval = jsonObject1.getString("admin_approval");
+                                    if (admin_approval.equalsIgnoreCase("0")) {
+                                        Toast.makeText(getApplicationContext(), "After admin approval, your business details will be displayed to the users", Toast.LENGTH_LONG).show();
+                                    } else {
+                                    }
+
+
+                                    AppPreferencesBuss.setSaveIdPass(BusinessLoginActivity.this, edittext_id.getText().toString(), edittext_pass.getText().toString());
+                                    Intent intent = new Intent(getApplicationContext(), BusinessNaviDrawer.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    if (AppPreferencesBuss.getIsMultisite(BusinessLoginActivity.this))
+                                        intent.putExtra("multisite", "yes");
+                                    startActivity(intent);
+
+                                    finish();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+
+                        reject.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                if (paymentDialog.isShowing()) paymentDialog.dismiss();
+                            }
+                        });
+                        paymentDialog.show();
+
+                        /*if (!isFinishing())
+                            paymentDialog.show();
+*/
 
                         //AppPreferences.setCustomerid(BusinessLoginActivity.this, jsonObject1.getString("user_id"));
-                        AppPreferencesBuss.setUserId(BusinessLoginActivity.this, jsonObject1.getString("user_id"));
-                        AppPreferencesBuss.setBussiEmilid(BusinessLoginActivity.this, jsonObject1.getString("email_id"));
-                        AppPreferencesBuss.setBussiName(BusinessLoginActivity.this, jsonObject1.getString("bussiness_name"));
-                        AppPreferencesBuss.setBussiFein(BusinessLoginActivity.this, jsonObject1.getString("bussiness_fein"));
-                        AppPreferencesBuss.setBussiId(BusinessLoginActivity.this, jsonObject1.getString("bussiness_id"));
-                        AppPreferencesBuss.setBussiPackagelist(BusinessLoginActivity.this, jsonObject1.getString("package_id"));
-                        AppPreferencesBuss.setBussiOptionlist(BusinessLoginActivity.this, jsonObject1.getString("option_id"));
-                        AppPreferencesBuss.setfirstname(BusinessLoginActivity.this, jsonObject1.getString("first_name"));
-                        AppPreferencesBuss.setBussiPhoneNo(BusinessLoginActivity.this, jsonObject1.getString("contact_no"));
-                        AppPreferencesBuss.setUsertypeid(BusinessLoginActivity.this, jsonObject1.getString("user_type"));
 
-                        if (jsonObject1.getString("multisite").equalsIgnoreCase("1"))
-                            AppPreferencesBuss.setIsMultisite(BusinessLoginActivity.this, true);
-                        else
-                            AppPreferencesBuss.setIsMultisite(BusinessLoginActivity.this, false);
-
-                        AppPreferences.setUserType(mContext, AppConstants.BUSS_LOGIN_TYPE.BUSINESS_USER);
-
-                        if (jsonObject1.getString("admin_approval").equalsIgnoreCase("1"))
-                            AppPreferencesBuss.setVerified_status(BusinessLoginActivity.this, true);
-                        else
-                            AppPreferencesBuss.setVerified_status(BusinessLoginActivity.this, false);
-
-                        if (jsonObject1.getString("user_image").length() == 0) {
-                            AppPreferencesBuss.setProfileImage(BusinessLoginActivity.this, "");
-                        } else {
-                            AppPreferencesBuss.setProfileImage(BusinessLoginActivity.this, jsonObject1.getString("user_image"));
-                        }
-
-                        admin_approval = jsonObject1.getString("admin_approval");
-                        if (admin_approval.equalsIgnoreCase("0")) {
-                            Toast.makeText(getApplicationContext(), "After admin approval, your business details will be displayed to the users", Toast.LENGTH_LONG).show();
-                        } else {
-                        }
-
-
-                        AppPreferencesBuss.setSaveIdPass(BusinessLoginActivity.this, edittext_id.getText().toString(), edittext_pass.getText().toString());
-                        Intent intent = new Intent(getApplicationContext(), BusinessNaviDrawer.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        if (AppPreferencesBuss.getIsMultisite(BusinessLoginActivity.this))
-                            intent.putExtra("multisite", "yes");
-                        startActivity(intent);
-
-                        finish();
 
                     } else if (jsonObject.getString("status").equalsIgnoreCase("300")) {
                        /* if (jsonObject1.getString("email_id").equalsIgnoreCase("test12345@gmail.com")) {
