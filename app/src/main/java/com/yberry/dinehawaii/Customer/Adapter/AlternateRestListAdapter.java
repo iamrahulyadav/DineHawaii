@@ -3,6 +3,7 @@ package com.yberry.dinehawaii.Customer.Adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +11,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.yberry.dinehawaii.Model.ListItem;
+import com.yberry.dinehawaii.Model.LIstItemAlternate;
 import com.yberry.dinehawaii.R;
 import com.yberry.dinehawaii.customview.CustomTextView;
 
@@ -20,10 +21,10 @@ import java.util.ArrayList;
 public class AlternateRestListAdapter extends RecyclerView.Adapter<AlternateRestListAdapter.ViewHolder> {
     private static final String TAG = "CouponAdapter";
     Context context;
-    ArrayList<ListItem> reservList;
+    ArrayList<LIstItemAlternate> reservList;
     private Activity activity;
 
-    public AlternateRestListAdapter(Activity activity, Context context, ArrayList<ListItem> reservList) {
+    public AlternateRestListAdapter(Activity activity, Context context, ArrayList<LIstItemAlternate> reservList) {
         this.activity = activity;
         this.context = context;
         this.reservList = reservList;
@@ -43,23 +44,25 @@ public class AlternateRestListAdapter extends RecyclerView.Adapter<AlternateRest
 
     @Override
     public void onBindViewHolder(final AlternateRestListAdapter.ViewHolder holder, final int position) {
-        final ListItem model = reservList.get(position);
+        final LIstItemAlternate model = reservList.get(position);
+
+        Log.d(TAG, "onBindViewHolder: model >> " + model);
         holder.tvBussName.setText(model.getBusinessName());
-        if (model.getBusinessAddress().equalsIgnoreCase(""))
-            holder.tvBussAddr.setVisibility(View.GONE);
-        else
-            holder.tvBussAddr.setText("Address : " + model.getBusinessAddress());
-        holder.tvDistance.setText("Distance: " + model.getDistance() + "km away");
-        holder.tvContactNo.setText("Contact No : " + model.getBusinessContactNo());
+       /* if (holder.tvBussAddr != null)
+            if (model.getBusinessAddress().equalsIgnoreCase(""))
+                holder.tvBussAddr.setVisibility(View.GONE);
+            else*/
+        holder.tvBussAddr.setText("Address : " + model.getBusinessAddress());
+        holder.tvDistance.setText("Distance : " + model.getDistance() + " miles away");
+        holder.tvTable.setText("Available Table : " + model.getTableName());
 
         /*if (model.getDisplayLogo() != null)
             if (model.getDisplayLogo() == true)
                 holder.restLogo.setVisibility(View.VISIBLE);
             else holder.restLogo.setVisibility(View.GONE);*/
 
-        holder.tvDistance.setText("(" + model.getDistance() + " miles away)");
+        //holder.tvDistance.setText("(" + model.getDistance() + " miles away)");
 
-        // new SetImageTask().execute(listItem.getCoverImage(), listItem.getLogoImg());
 
         if (model.getLogoImg() != null)
             if (!model.getLogoImg().equalsIgnoreCase("")) {
@@ -79,7 +82,7 @@ public class AlternateRestListAdapter extends RecyclerView.Adapter<AlternateRest
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        CustomTextView tvBussName, tvBussAddr, tvDistance, tvContactNo;
+        CustomTextView tvBussName, tvBussAddr, tvDistance, tvTable;
         ImageView restLogo;
 
         public ViewHolder(View itemView) {
@@ -87,7 +90,7 @@ public class AlternateRestListAdapter extends RecyclerView.Adapter<AlternateRest
             tvBussName = (CustomTextView) itemView.findViewById(R.id.tvBussName);
             tvBussAddr = (CustomTextView) itemView.findViewById(R.id.tvBussAddr);
             tvDistance = (CustomTextView) itemView.findViewById(R.id.tvDistance);
-            tvContactNo = (CustomTextView) itemView.findViewById(R.id.tvContactNo);
+            tvTable = (CustomTextView) itemView.findViewById(R.id.tvTable);
             restLogo = (ImageView) itemView.findViewById(R.id.restLogo);
         }
     }

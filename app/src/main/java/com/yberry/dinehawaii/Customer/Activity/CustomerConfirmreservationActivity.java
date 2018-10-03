@@ -62,6 +62,8 @@ public class CustomerConfirmreservationActivity extends AppCompatActivity implem
 
     private void init() {
         amount = AppPreferences.getReservationAmount(CustomerConfirmreservationActivity.this);
+        amount = amount.replaceAll("\\$", "").replaceAll("\\s", "");
+        Log.e(TAG, "init: amount >> " + amount);
         if (getIntent().hasExtra("business_id"))
             business_id = getIntent().getStringExtra("business_id");
         if (getIntent().hasExtra("reservation_id"))
@@ -140,16 +142,14 @@ public class CustomerConfirmreservationActivity extends AppCompatActivity implem
     }
 
     private void getPayment(String amount) {
-        // amount="10";
-        if (amount.equalsIgnoreCase("0")) {
+        String tempamount = amount.replaceAll("\\$", "").replaceAll("\\s", "");
+        Log.e(TAG, "getPayment: tempamount >> " + tempamount);
+
+        if (tempamount.equalsIgnoreCase("0")) {
             Toast.makeText(this, "Payment amount can't be zero ", Toast.LENGTH_SHORT).show();
         } else {
-            //Getting the amountToBePaid from editText
-            Log.v(TAG, "~~~~~~~~~~~~~~~~~~~~ Song Price outside iff :- " + amount);
-            Log.d("amount", "" + amount);
-
             //Creating a paypalpayment
-            PayPalPayment payment = new PayPalPayment(new BigDecimal(String.valueOf(amount)), "USD", "Purchase Fee\n",
+            PayPalPayment payment = new PayPalPayment(new BigDecimal(String.valueOf(tempamount)), "USD", "Purchase Fee\n",
                     PayPalPayment.PAYMENT_INTENT_SALE);
             //Creating Paypal Payment activity intent
             Intent intent = new Intent(CustomerConfirmreservationActivity.this, com.paypal.android.sdk.payments.PaymentActivity.class);

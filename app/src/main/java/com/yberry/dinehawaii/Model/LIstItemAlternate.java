@@ -1,12 +1,9 @@
 package com.yberry.dinehawaii.Model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ListItem implements Parcelable {
+public class LIstItemAlternate {
 
     @SerializedName("id")
     @Expose
@@ -56,51 +53,12 @@ public class ListItem implements Parcelable {
     @SerializedName("type")
     @Expose
     private String type;
-
-    @SerializedName("table_id")
-    @Expose
-    private String table_id;
     @SerializedName("table_name")
     @Expose
-    private String table_name;
-    private Boolean displayLogo;
-
-    protected ListItem(Parcel in) {
-        id = in.readString();
-        avgPrice = in.readString();
-        reservationPrice = in.readString();
-        healthCardStstus = in.readString();
-        if (in.readByte() == 0) {
-            distance = null;
-        } else {
-            distance = in.readDouble();
-        }
-        coverImage = in.readString();
-        logoImg = in.readString();
-        businessName = in.readString();
-        businessPackage = in.readString();
-        businessOption = in.readString();
-        businessAddress = in.readString();
-        latitude = in.readString();
-        longitude = in.readString();
-        businessContactNo = in.readString();
-        rating = in.readString();
-        type = in.readString();
-        table_id = in.readString();
-        table_name = in.readString();
-    }
-
-    public static final Creator<ListItem> CREATOR = new Creator<ListItem>() {
-        @Override
-        public ListItem createFromParcel(Parcel in) {
-            return new ListItem(in);
-        }
-
-        @Override
-        public ListItem[] newArray(int size) {
-            return new ListItem[size];
-        }
-    };
+    private String tableName;
+    @SerializedName("table_id")
+    @Expose
+    private String tableId;
 
     public String getId() {
         return id;
@@ -230,83 +188,20 @@ public class ListItem implements Parcelable {
         this.type = type;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public String getTableName() {
+        return tableName;
     }
 
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(id);
-        parcel.writeString(avgPrice);
-        parcel.writeString(reservationPrice);
-        parcel.writeString(healthCardStstus);
-        if (distance == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeDouble(distance);
-        }
-        parcel.writeString(coverImage);
-        parcel.writeString(logoImg);
-        parcel.writeString(businessName);
-        parcel.writeString(businessPackage);
-        parcel.writeString(businessOption);
-        parcel.writeString(businessAddress);
-        parcel.writeString(latitude);
-        parcel.writeString(longitude);
-        parcel.writeString(businessContactNo);
-        parcel.writeString(rating);
-        parcel.writeString(type);
-        parcel.writeString(table_id);
-        parcel.writeString(table_name);
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
     }
 
-    @Override
-    public String toString() {
-        return "ListItem{" +
-                "id='" + id + '\'' +
-                ", avgPrice='" + avgPrice + '\'' +
-                ", reservationPrice='" + reservationPrice + '\'' +
-                ", healthCardStstus='" + healthCardStstus + '\'' +
-                ", distance=" + distance +
-                ", coverImage='" + coverImage + '\'' +
-                ", logoImg='" + logoImg + '\'' +
-                ", businessName='" + businessName + '\'' +
-                ", businessPackage='" + businessPackage + '\'' +
-                ", businessOption='" + businessOption + '\'' +
-                ", businessAddress='" + businessAddress + '\'' +
-                ", latitude='" + latitude + '\'' +
-                ", longitude='" + longitude + '\'' +
-                ", businessContactNo='" + businessContactNo + '\'' +
-                ", rating='" + rating + '\'' +
-                ", type='" + type + '\'' +
-                ", table_id='" + table_id + '\'' +
-                ", table_name='" + table_name + '\'' +
-                '}';
+    public String getTableId() {
+        return tableId;
     }
 
-    public Boolean getDisplayLogo() {
-        return displayLogo;
+    public void setTableId(String tableId) {
+        this.tableId = tableId;
     }
 
-    public void setDisplayLogo(Boolean displayLogo) {
-        this.displayLogo = displayLogo;
-    }
-
-    public String getTable_id() {
-        return table_id;
-    }
-
-    public void setTable_id(String table_id) {
-        this.table_id = table_id;
-    }
-
-    public String getTable_name() {
-        return table_name;
-    }
-
-    public void setTable_name(String table_name) {
-        this.table_name = table_name;
-    }
 }

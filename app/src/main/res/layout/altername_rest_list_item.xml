@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="@dimen/_5sdp"
-    android:layout_marginRight="@dimen/_5sdp"
     android:layout_marginTop="@dimen/_5sdp"
+    android:layout_marginRight="@dimen/_5sdp"
     app:cardCornerRadius="@dimen/_5sdp"
     app:cardElevation="1dp"
     app:contentPadding="@dimen/_5sdp">
@@ -19,8 +19,8 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginLeft="@dimen/_8sdp"
-            android:layout_marginRight="@dimen/_8sdp"
             android:layout_marginTop="@dimen/_4sdp"
+            android:layout_marginRight="@dimen/_8sdp"
             app:cardBackgroundColor="#ffffff"
             app:cardCornerRadius="25dp"
             app:cardElevation="1dp">
@@ -48,6 +48,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tvBussName"
             android:layout_toRightOf="@id/cardLogo"
+            android:maxLines="1"
+            android:singleLine="true"
             android:text="Indore"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             android:textColor="@color/blue" />
@@ -58,17 +60,17 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tvBussAddr"
             android:layout_toRightOf="@id/cardLogo"
-            android:text="abc@gmail.com"
+            android:text="0km"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             android:textColor="@color/blue" />
 
         <com.yberry.dinehawaii.customview.CustomTextView
-            android:id="@+id/tvContactNo"
+            android:id="@+id/tvTable"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tvDistance"
             android:layout_toRightOf="@id/cardLogo"
-            android:text="989889989"
+            android:text="Available Table"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             android:textColor="@color/blue" />
 

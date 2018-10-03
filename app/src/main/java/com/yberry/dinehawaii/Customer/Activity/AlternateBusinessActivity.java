@@ -1,7 +1,9 @@
 package com.yberry.dinehawaii.Customer.Activity;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
+import android.app.Activity;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
@@ -17,42 +19,164 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.yberry.dinehawaii.Customer.Adapter.AlternateRestListAdapter;
-import com.yberry.dinehawaii.Model.ListItem;
+import com.yberry.dinehawaii.Model.LIstItemAlternate;
 import com.yberry.dinehawaii.R;
-import com.yberry.dinehawaii.RetrofitClasses.ApiClient;
 import com.yberry.dinehawaii.RetrofitClasses.MyApiEndpointInterface;
 import com.yberry.dinehawaii.Util.AppConstants;
-import com.yberry.dinehawaii.Util.AppPreferencesBuss;
-import com.yberry.dinehawaii.Util.ProgressHUD;
+import com.yberry.dinehawaii.Util.DialogManager;
+import com.yberry.dinehawaii.Util.Function;
+import com.yberry.dinehawaii.Util.GPSTracker;
 import com.yberry.dinehawaii.Util.RecyclerItemClickListener;
-import com.yberry.dinehawaii.Util.Util;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class AlternateBusinessActivity extends AppCompatActivity {
 
     private final String TAG = "AlternateBusinessActivity";
     private FragmentActivity context;
     private RecyclerView recycler_view;
-    private ArrayList<ListItem> list = new ArrayList<ListItem>();
+    private ArrayList<LIstItemAlternate> list;
     private AlternateRestListAdapter adapter;
+    private GPSTracker gpsTracker;
+    private double latitude, longitude;
+    private String party_size = "0";
 
+    @SuppressLint("LongLogTag")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alternate_business);
         context = this;
+        if (getIntent().hasExtra("party_size")) {
+            party_size = getIntent().getStringExtra("party_size");
+            Log.e(TAG, "onCreate: party_size >> " + party_size);
+        }
+        list = new ArrayList<LIstItemAlternate>();
         setAdapter();
         setToolbar();
+
+        gpsTracker = new GPSTracker(context);
+        if (gpsTracker.canGetLocation()) {
+            latitude = gpsTracker.getLatitude();
+            longitude = gpsTracker.getLongitude();
+            Log.e(TAG, " Latitude :- " + latitude + " & Longitude:- " + longitude);
+            if (Function.isConnectingToInternet(context)) {
+                new getRestFromServer().execute();
+            } else
+                Toast.makeText(context, "Connect to internet", Toast.LENGTH_SHORT).show();
+        } else {
+            gpsTracker.showSettingsAlert();
+        }
     }
+
+    class getRestFromServer extends AsyncTask<Void, String, Void> {
+        DialogManager dialogManager;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialogManager = new DialogManager();
+            dialogManager.showProcessDialog(context, "Please wait...");
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.GENERALAPI.GETALTERNATEBUSINESS);
+            jsonObject.addProperty(AppConstants.KEY_LATITUDE, latitude);
+            jsonObject.addProperty(AppConstants.KEY_LONGITUDE, longitude);
+            jsonObject.addProperty("party_size", party_size);
+            jsonObject.addProperty("distance", "15");
+            Log.e(TAG, "Request GET ALL RESTAURANTS" + jsonObject.toString());
+
+            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+            OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                    .readTimeout(60, TimeUnit.SECONDS)
+                    .writeTimeout(60, TimeUnit.SECONDS)
+                    .connectTimeout(60, TimeUnit.SECONDS)
+                    .addInterceptor(logging)
+                    .build();
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .client(okHttpClient)
+                    .baseUrl(AppConstants.BASEURL.URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+
+            MyApiEndpointInterface apiService =
+                    retrofit.create(MyApiEndpointInterface.class);
+
+
+            Call<JsonObject> call = apiService.requestGeneral(jsonObject);
+            call.enqueue(new Callback<JsonObject>() {
+                @Override
+
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                    Log.e(TAG, "Request GET ALL RESTAURANTS >>  " + call.request().toString());
+                    Log.e(TAG, "Response GET ALL RESTAURANTS >> " + response.body().toString());
+                    JSONObject jsonObject = null;
+                    list = new ArrayList<LIstItemAlternate>();
+                    try {
+                        jsonObject = new JSONObject(response.body().toString());
+
+                        if (jsonObject.getString("status").equalsIgnoreCase("200")) {
+                            JSONArray jsonArray = jsonObject.getJSONArray("result");
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject result = jsonArray.getJSONObject(i);
+                                LIstItemAlternate newData = new Gson().fromJson(String.valueOf(result), LIstItemAlternate.class);
+                                if (!newData.getTableName().equalsIgnoreCase("") && !newData.getTableId().equalsIgnoreCase("")) {
+                                    list.add(newData);
+                                    Log.e("newData", String.valueOf(newData));
+                                }
+                            }
+                            publishProgress("200", "");
+                        } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
+                            publishProgress("400", jsonObject.getJSONArray("result").getJSONObject(0).getString("msg"));
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        publishProgress("400", "Server Error");
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<JsonObject> call, Throwable t) {
+                    Log.e(TAG, "onFailure: " + t.getMessage());
+                    publishProgress("400", "Server Error");
+                }
+            });
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+            super.onProgressUpdate(values);
+            dialogManager.stopProcessDialog();
+            adapter.notifyDataSetChanged();
+            Log.e(TAG, "onProgressUpdate: list.size >> " + list.size());
+            setAdapter();
+            if (values[0].equalsIgnoreCase("200")) {
+            } else if (values[0].equalsIgnoreCase("400")) {
+                Toast.makeText(context, values[1], Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
 
     private void setToolbar() {
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar_bar);
@@ -70,79 +194,6 @@ public class AlternateBusinessActivity extends AppCompatActivity {
     }
 
     private void setAdapter() {
-        list.add(new Gson().fromJson("{\n" +
-                "id\": \"501\"," +
-                "avgPrice\": \"$\"," +
-                "reservation_price\": \"88\"," +
-                "healthCardStstus\": \"Poor\"," +
-                "distance\": 1.08," +
-                "cover_image\": \"https:\\/\\/take007.co.in\\/Projects-Work\\/Hawaii\\/APP\\/food_service_image\\/buss_pic\\/buss_pic501_service__647_5b34775e66950.png\"," +
-                "logoImg\": \"https:\\/\\/take007.co.in\\/Projects-Work\\/Hawaii\\/APP\\/food_service_image\\/logo\\/logo501_service__647_5b8d081f01d87.png\"," +
-                "business_name\": \"Sayaji Indore\"," +
-                "business_package\": \"1, 2, 3, 4\"," +
-                "business_option\": \"1, 2, 3\"," +
-                "business_address\": \"Vijay Nagar  Vijay Nagar  Indore  Madhya Pradesh 452010  India\"," +
-                "latitude\": \"22.718202590942\"," +
-                "longitude\": \"75.87565612793\"," +
-                "business_contact_no\": \"8008889995\"," +
-                "rating\": \"3\"," +
-                "type\": \"1\"\n" +
-                "}", ListItem.class));
-        list.add(new Gson().fromJson("{\n" +
-                "id\": \"502\"," +
-                "avgPrice\": \"250\"," +
-                "reservation_price\": \"0\"," +
-                "healthCardStstus\": \"Poor\"," +
-                "distance\": 4.16," +
-                "cover_image\": \"\"," +
-                "logoImg\": \"\"," +
-                "business_name\": \"Shree Maya Hotel Indore\"," +
-                "business_package\": \"1, 2, 3\"," +
-                "business_option\": \"1, 2\"," +
-                "business_address\": \"Ab Road, Indore, Madhya Pradesh, India\"," +
-                "latitude\": \"22.6465637\"," +
-                "longitude\": \"75.818713\"," +
-                "business_contact_no\": \"9713891878\"," +
-                "rating\": \"4\"," +
-                "type\": \"1\"\n" +
-                "}", ListItem.class));
-        list.add(new Gson().fromJson("{\n" +
-                "id\": \"503\"," +
-                "avgPrice\": \"$$\"," +
-                "reservation_price\": \"0\"," +
-                "healthCardStstus\": \"Poor\"," +
-                "distance\": 2.19," +
-                "cover_image\": \"\"," +
-                "logoImg\": \"\"," +
-                "business_name\": \"Hvantage\"," +
-                "business_package\": \"1, 2\"," +
-                "business_option\": \"\"," +
-                "business_address\": \"mp nagar\"," +
-                "latitude\": \"23.2599\"," +
-                "longitude\": \"77.4126\"," +
-                "business_contact_no\": \"8269262610\"," +
-                "rating\": \"3\"," +
-                "type\": \"1\"\n" +
-                "}", ListItem.class));
-        list.add(new Gson().fromJson("{\n" +
-                "id\": \"508\"," +
-                "avgPrice\": \"100\"," +
-                "reservation_price\": \"0\"," +
-                "healthCardStstus\": \"Poor\"," +
-                "distance\": 0.16," +
-                "cover_image\": \"\"," +
-                "logoImg\": \"\"," +
-                "business_name\": \"Ashu Restaurant\"," +
-                "business_package\": \"1, 2\"," +
-                "business_option\": \"1, 2\"," +
-                "business_address\": \"\"," +
-                "latitude\": \"22.6465637\"," +
-                "longitude\": \"75.818713\"," +
-                "business_contact_no\": \"88998859999\"," +
-                "rating\": \"4\"," +
-                "type\": \"1\"\n" +
-                "}", ListItem.class));
-
         recycler_view = (RecyclerView) findViewById(R.id.recycler_view);
         recycler_view.setLayoutManager(new LinearLayoutManager(context));
         adapter = new AlternateRestListAdapter(AlternateBusinessActivity.this, context, list);
@@ -150,6 +201,11 @@ public class AlternateBusinessActivity extends AppCompatActivity {
         recycler_view.addOnItemTouchListener(new RecyclerItemClickListener(context, recycler_view, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
+                Intent returnIntent = getIntent();
+                returnIntent.putExtra("busi_id", list.get(position).getId());
+                returnIntent.putExtra("table_id", list.get(position).getTableId());
+                returnIntent.putExtra("reserve_amt", list.get(position).getReservationPrice());
+                setResult(Activity.RESULT_OK, returnIntent);
                 finish();
             }
 
@@ -157,63 +213,5 @@ public class AlternateBusinessActivity extends AppCompatActivity {
             public void onItemLongClick(View view, int position) {
             }
         }));
-    }
-
-    @SuppressLint("LongLogTag")
-    private void getData() {
-        if (Util.isNetworkAvailable(context)) {
-            JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("method", AppConstants.BUSSINES_USER_BUSINESSAPI.GET_ALTERNATE_BUSINESS);
-            jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(context));
-            jsonObject.addProperty("party_size", "50");
-            Log.e(TAG, "getData: Request >> " + jsonObject.toString());
-
-            final ProgressHUD progressHD = ProgressHUD.show(context, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
-                @Override
-                public void onCancel(DialogInterface dialog) {
-                    // TODO Auto-generated method stub
-                }
-            });
-            MyApiEndpointInterface apiService = ApiClient.getClient().create(MyApiEndpointInterface.class);
-            Call<JsonObject> call = apiService.n_business_new_api(jsonObject);
-            call.enqueue(new Callback<JsonObject>() {
-                @SuppressLint("LongLogTag")
-                @Override
-                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                    Log.e(TAG, "getData: Response >> " + response.body().toString());
-                    String s = response.body().toString();
-                    list.clear();
-                    try {
-                        JSONObject jsonObject = new JSONObject(s);
-                        if (jsonObject.getString("status").equalsIgnoreCase("200")) {
-                            JSONArray jsonArray = jsonObject.getJSONArray("result");
-                            for (int i = 0; i < jsonArray.length(); i++) {
-                                JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-                                ListItem model = new Gson().fromJson(String.valueOf(jsonObject1), ListItem.class);
-                                list.add(model);
-                            }
-                            adapter.notifyDataSetChanged();
-                        } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
-                            String msg = jsonObject.getJSONArray("result").getJSONObject(0).getString("msg");
-                            Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
-                        }
-                    } catch (JSONException e) {
-                        progressHD.dismiss();
-                        e.printStackTrace();
-                    }
-                    progressHD.dismiss();
-                }
-
-                @SuppressLint("LongLogTag")
-                @Override
-                public void onFailure(Call<JsonObject> call, Throwable t) {
-                    Log.e(TAG, " Error :- " + Log.getStackTraceString(t));
-                    progressHD.dismiss();
-                }
-            });
-
-        } else {
-            Toast.makeText(context, "Please Connect Your Internet", Toast.LENGTH_SHORT).show();
-        }
     }
 }

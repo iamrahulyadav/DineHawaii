@@ -44,12 +44,10 @@ public class AppConstants {
     public static String KEY_EGIFT_APPLY = "getCheckCouponCode";
     public static String FOOD_PREP_TIME = "getBussinessOrderPaymentPackage";
 
-    //http://truckslogistics.com/Projects-Work/Hawaii/web/APP/business_user/business_table_reaservation_api.php
 
     public interface BASEURL {
-        //String URL = "http://truckslogistics.com/Projects-Work/Hawaii/web/APP/";
-//        String URL = "http://take007.co.in/Projects-Work/Hawaii/APP/";
-        String URL = "https://take007.co.in/Projects-Work/Hawaii/APP/";
+        //        String URL = "https://take007.co.in/Projects-Work/Hawaii/APP/";
+        String URL = "https://neeleshjain.us/Projects_Work/Hawaii/APP/";
         //String URL = "http://take007.co.in/Projects-Work/Hawaii/Beta-Test/APP/";
     }
 
@@ -146,6 +144,7 @@ public class AppConstants {
         String ADDEMPPOS = "add_emp_position";
         String ADDEMPDUTY = "add_emp_duty";
         String GETRECOMENDEDBUSINESS = "getRecomendedBusiness";
+        String GETALTERNATEBUSINESS = "getAlternateBusiness";
     }
 
     public interface BUSSINES_USER_BUSINESSAPI {
@@ -212,7 +211,7 @@ public class AppConstants {
         String SEND_REPLY_TO_ORDERS = "send_reply_to_orders";
         String SEND_REPLY_TO_RESERVATION = "send_reply_to_reservation";
         String SEND_REPLY_TO_REVIEW = "send_reply_to_review";
-        String GET_ALTERNATE_BUSINESS ="get_alternate_business" ;
+        String GET_ALTERNATE_BUSINESS = "get_alternate_business";
     }
 
     public interface BUSINESS_VENDOR_API {

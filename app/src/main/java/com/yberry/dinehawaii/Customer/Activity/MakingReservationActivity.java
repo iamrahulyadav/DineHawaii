@@ -74,7 +74,7 @@ public class MakingReservationActivity extends AppCompatActivity implements Time
     CustomTextView btn_BookTable;
     String selectedTableID = "";
     String partySizeS, dateString, timeString, userNameString, mobileNoString, emailString, noofadultsString, noofchildString;
-    String name, i, table_id, selected_table;
+    String name, i, selected_table;
     ArrayList<TableData> tableDataList;
     private boolean isWaitList = false;
     private String combinetable = "";
@@ -274,10 +274,8 @@ public class MakingReservationActivity extends AppCompatActivity implements Time
                             try {
                                 selectedDate = dateFormat.parse(mytime);
                                 currentDate = dateFormat.parse(currentTimeStr);
-
                                 Log.e(TAG, "onTimeSet: selectedDate >> " + selectedDate);
                                 Log.e(TAG, "onTimeSet: currentDate >> " + currentDate);
-
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
@@ -549,11 +547,11 @@ public class MakingReservationActivity extends AppCompatActivity implements Time
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 TableData table = tableDataList.get(i);
-                table_id = table.getTable_id();
-                selectedTableID = table_id;
+
+                selectedTableID = table.getTable_id();
                 selected_table = table.getTable_name();
                 btn_BookTable.setText("SELECTED TABLE : " + table.getTable_name());
-                Log.d("tableId", table_id);
+                Log.d("selectedTableID", selectedTableID);
                 gridView.setSelection(i);
                 dialog.dismiss();
             }
@@ -653,7 +651,9 @@ public class MakingReservationActivity extends AppCompatActivity implements Time
         builder.setNegativeButton("Choose Alternate", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                startActivity(new Intent(MakingReservationActivity.this, AlternateBusinessActivity.class));
+                Intent intent = new Intent(MakingReservationActivity.this, AlternateBusinessActivity.class);
+                intent.putExtra("party_size", partySize.getText().toString());
+                startActivityForResult(intent, 102);
             }
         });
 
@@ -674,7 +674,9 @@ public class MakingReservationActivity extends AppCompatActivity implements Time
         builder.setNegativeButton("Choose Alternate", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                startActivity(new Intent(MakingReservationActivity.this, AlternateBusinessActivity.class));
+                Intent intent = new Intent(MakingReservationActivity.this, AlternateBusinessActivity.class);
+                intent.putExtra("party_size", partySize.getText().toString());
+                startActivityForResult(intent, 102);
             }
         });
 
@@ -700,6 +702,22 @@ public class MakingReservationActivity extends AppCompatActivity implements Time
             TableData table = tableList.get(position);
             textViewTableName.setText(table.getTable_name());
             return v;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.e(TAG, "onActivityResult: requestCode >> " + requestCode + ", resultCode >> " + resultCode);
+        if (requestCode == 102 && resultCode == RESULT_OK) {
+            business_id = data.getStringExtra("busi_id");
+            selectedTableID = data.getStringExtra("table_id");
+            pre_amonut = data.getStringExtra("reserve_amt").replaceAll("\\$", "").replaceAll("\\s", "");
+            Log.e(TAG, "onActivityResult: business_id >> " + business_id);
+            Log.e(TAG, "onActivityResult: selectedTableID >> " + selectedTableID);
+            Log.e(TAG, "onActivityResult: pre_amonut >> " + pre_amonut);
+            AppPreferences.setBusiID(this, business_id);
+            submit.performClick();
         }
     }
 }

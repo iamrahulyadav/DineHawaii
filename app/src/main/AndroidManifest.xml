@@ -336,7 +336,7 @@
             android:clearTaskOnLaunch="true"
             android:label="Altername Business   "
             android:launchMode="singleTask"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme" ></activity>
         <activity android:name=".Customer.Activity.RatingActivity"></activity>
     </application>
 
