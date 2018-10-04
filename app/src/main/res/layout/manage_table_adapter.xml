@@ -4,12 +4,12 @@
     android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/_2sdp"
     android:layout_marginLeft="@dimen/_8sdp"
-    android:layout_marginRight="@dimen/_8sdp"
     android:layout_marginTop="@dimen/_6sdp"
-    android:elevation="1dp"
+    android:layout_marginRight="@dimen/_8sdp"
+    android:layout_marginBottom="@dimen/_2sdp"
     android:clickable="true"
+    android:elevation="1dp"
     android:foreground="@drawable/custom_ripple_card"
     app:cardElevation="1dp">
 
@@ -32,41 +32,42 @@
                 android:layout_weight="1">
 
                 <com.yberry.dinehawaii.customview.CustomTextView
+                    style="@style/TextAppearance.AppCompat.Subhead"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/TextAppearance.AppCompat.Subhead"
-                    android:text="Table : "
                     android:singleLine="true"
+                    android:text="Table : "
                     app:edittextfont="Raleway-Bold.ttf" />
 
                 <com.yberry.dinehawaii.customview.CustomTextView
                     android:id="@+id/table_name"
-                    android:singleLine="true"
-                    android:layout_width="wrap_content"
                     style="@style/TextAppearance.AppCompat.Subhead"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:singleLine="true"
                     android:text="NA"
                     app:edittextfont="Raleway-Regular.ttf" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
 
                 <com.yberry.dinehawaii.customview.CustomTextView
+                    style="@style/TextAppearance.AppCompat.Subhead"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
-                    style="@style/TextAppearance.AppCompat.Subhead"
                     android:text="Capacity : "
                     app:edittextfont="Raleway-Bold.ttf" />
 
                 <com.yberry.dinehawaii.customview.CustomTextView
                     android:id="@+id/table_capacity"
-                    android:layout_width="wrap_content"
-                    android:singleLine="true"
                     style="@style/TextAppearance.AppCompat.Subhead"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:singleLine="true"
                     android:text="NA"
                     app:edittextfont="Raleway-Regular.ttf" />
             </LinearLayout>
@@ -87,45 +88,45 @@
                 android:layout_weight="1">
 
                 <com.yberry.dinehawaii.customview.CustomTextView
+                    style="@style/TextAppearance.AppCompat.Subhead"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/TextAppearance.AppCompat.Subhead"
-                    android:text="Priority : "
                     android:singleLine="true"
+                    android:text="Priority : "
                     app:edittextfont="Raleway-Bold.ttf" />
 
                 <com.yberry.dinehawaii.customview.CustomTextView
                     android:id="@+id/table_reser"
+                    style="@style/TextAppearance.AppCompat.Subhead"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="NA"
-                    style="@style/TextAppearance.AppCompat.Subhead"
                     android:singleLine="true"
+                    android:text="NA"
                     app:edittextfont="Raleway-Regular.ttf" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
 
                 <com.yberry.dinehawaii.customview.CustomTextView
+                    style="@style/TextAppearance.AppCompat.Subhead"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/TextAppearance.AppCompat.Subhead"
-                    android:text="Service : "
                     android:singleLine="true"
+                    android:text="Service : "
                     app:edittextfont="Raleway-Bold.ttf" />
 
                 <com.yberry.dinehawaii.customview.CustomTextView
                     android:id="@+id/table_service"
+                    style="@style/TextAppearance.AppCompat.Subhead"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="NA"
-                    style="@style/TextAppearance.AppCompat.Subhead"
                     android:singleLine="true"
+                    android:text="NA"
                     app:edittextfont="Raleway-Regular.ttf" />
             </LinearLayout>
-
 
 
         </LinearLayout>
@@ -136,50 +137,53 @@
             android:layout_below="@+id/linear2"
             android:layout_marginTop="@dimen/_3sdp"
             android:orientation="horizontal">
+
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
 
                 <com.yberry.dinehawaii.customview.CustomTextView
-                    android:layout_width="wrap_content"
                     style="@style/TextAppearance.AppCompat.Subhead"
-                    android:singleLine="true"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:singleLine="true"
                     android:text="Time : "
                     app:edittextfont="Raleway-Bold.ttf" />
 
                 <com.yberry.dinehawaii.customview.CustomTextView
                     android:id="@+id/table_mins"
-                    android:layout_width="wrap_content"
-                    android:singleLine="true"
                     style="@style/TextAppearance.AppCompat.Subhead"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:singleLine="true"
                     android:text="NA"
                     app:edittextfont="Raleway-Regular.ttf" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_weight="1"
+
+                android:gravity="end">
 
                 <com.yberry.dinehawaii.customview.CustomTextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/tvBlock"
                     style="@style/TextAppearance.AppCompat.Subhead"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:drawableLeft="@drawable/ic_do_not_disturb_black_24dp"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:gravity="left"
                     android:singleLine="true"
-                    android:text="Mins : "
-                    android:visibility="gone"
+                    android:text="BLOCK"
+                    android:textColor="@color/red"
+                    android:textStyle="bold"
+                    android:visibility="visible"
                     app:edittextfont="Raleway-Bold.ttf" />
 
-                <com.yberry.dinehawaii.customview.CustomTextView
-                    android:visibility="gone"
-                    android:singleLine="true"
-                    android:layout_width="wrap_content"
-                    style="@style/TextAppearance.AppCompat.Subhead"
-                    android:layout_height="wrap_content"
-                    android:text="NA"
-                    app:edittextfont="Raleway-Regular.ttf" />
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>

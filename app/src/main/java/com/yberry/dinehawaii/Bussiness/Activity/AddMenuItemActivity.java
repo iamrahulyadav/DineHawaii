@@ -85,7 +85,7 @@ public class AddMenuItemActivity extends AppCompatActivity implements View.OnCli
     public static final int REQUEST_CODE_ALBUM = 2;
     private static final int REQUEST_IMAGE_CROP = 3;
     public CustomTextView tvSelectService, text_food;
-    CustomEditText foodname, halfprice, fullprice, ingredients, businessArea;
+    CustomEditText foodname, halfprice, fullprice, ingredients, businessArea, etFoodTime;
     CustomCheckBox check_half, check_full;
     ArrayList<CheckBoxPositionModel> listFoodService;
     LinearLayout mainLayout;
@@ -293,6 +293,7 @@ public class AddMenuItemActivity extends AppCompatActivity implements View.OnCli
         halfprice = (CustomEditText) findViewById(R.id.edhalfprice);
         fullprice = (CustomEditText) findViewById(R.id.edfullprice);
         ingredients = (CustomEditText) findViewById(R.id.edingredients);
+        etFoodTime = (CustomEditText) findViewById(R.id.etFoodTime);
         check_half = (CustomCheckBox) findViewById(R.id.rdhalf);
         check_full = (CustomCheckBox) findViewById(R.id.rdfull);
         addFoodImage = (ImageView) findViewById(R.id.food_image);
@@ -499,7 +500,8 @@ public class AddMenuItemActivity extends AppCompatActivity implements View.OnCli
             Toast.makeText(context, "Enter Half Price", Toast.LENGTH_SHORT).show();
         } else if (check_full.isChecked() && TextUtils.isEmpty(fullprice.getText().toString())) {
             Toast.makeText(context, "Enter Full Price", Toast.LENGTH_SHORT).show();
-
+        } else if (TextUtils.isEmpty(etFoodTime.getText().toString())) {
+            Toast.makeText(context, "Enter Food Preparation Time", Toast.LENGTH_SHORT).show();
         } else {
             if (Util.isNetworkAvailable(context)) {
                 if (halfprice.getText().toString().equals("")) {
@@ -549,6 +551,7 @@ public class AddMenuItemActivity extends AppCompatActivity implements View.OnCli
         jsonObject.addProperty("food_image", imageString);
         jsonObject.addProperty("area_id", selectedAreaId);
         jsonObject.addProperty("customization", customize);
+        jsonObject.addProperty("preparation_time", etFoodTime.getText().toString());
         Log.e(TAG, "edit Json" + jsonObject.toString());
         addFoodMenuApi(jsonObject);
     }
@@ -567,6 +570,7 @@ public class AddMenuItemActivity extends AppCompatActivity implements View.OnCli
         jsonObject.addProperty("food_image", imageString);
         jsonObject.addProperty("area_id", selectedAreaId);
         jsonObject.addProperty("customization", customize);
+        jsonObject.addProperty("preparation_time", etFoodTime.getText().toString());
         Log.e(TAG, "add Json" + jsonObject.toString());
         addFoodMenuApi(jsonObject);
     }

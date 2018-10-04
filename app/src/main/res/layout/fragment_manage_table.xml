@@ -9,8 +9,7 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/_40sdp">
+        android:layout_height="wrap_content">
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tab_layout"
@@ -28,25 +27,5 @@
             app:tabTextColor="#e0808080"></android.support.design.widget.TabLayout>
     </android.support.v4.view.ViewPager>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimary">
 
-        <com.yberry.dinehawaii.customview.CustomTextView
-            android:id="@+id/addNewTable"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:drawablePadding="@dimen/_8sdp"
-            android:padding="@dimen/_8sdp"
-            android:text="Add New Table"
-            android:textAllCaps="true"
-            style="@style/TextAppearance.AppCompat.Subhead"
-            android:textColor="@color/white"
-            app:edittextfont="@string/raleway_bold"
-            />
-    </RelativeLayout>
 </RelativeLayout>

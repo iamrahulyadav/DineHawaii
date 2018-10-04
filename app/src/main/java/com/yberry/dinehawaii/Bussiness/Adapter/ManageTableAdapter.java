@@ -20,10 +20,14 @@ public class ManageTableAdapter extends RecyclerView.Adapter<ManageTableAdapter.
     private final String TAG = "ManageTableAdapter";
     private final Context context;
     private final ArrayList<TableData> tabledetails;
+    private ManageTableAdapterListener listener;
+    private String type = "";
 
-    public ManageTableAdapter(Context context, ArrayList<TableData> details) {
+    public ManageTableAdapter(Context context, ArrayList<TableData> details, String type, ManageTableAdapterListener listener) {
         this.context = context;
         this.tabledetails = details;
+        this.type = type;
+        this.listener = listener;
     }
 
     @Override
@@ -34,8 +38,36 @@ public class ManageTableAdapter extends RecyclerView.Adapter<ManageTableAdapter.
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         final TableData tableData = tabledetails.get(position);
+        if (type.equalsIgnoreCase("single")) {
+            holder.tvBlock.setVisibility(View.VISIBLE);
+            holder.tvBlock.setText("BLOCK");
+            holder.tvBlock.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listener.blockTable(view, position, true);
+                }
+            });
+        } else if (type.equalsIgnoreCase("Combined")) {
+            holder.tvBlock.setVisibility(View.VISIBLE);
+            holder.tvBlock.setText("BLOCK");
+            holder.tvBlock.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listener.blockTable(view, position, true);
+                }
+            });
+        } else if (type.equalsIgnoreCase("blocked")) {
+            holder.tvBlock.setVisibility(View.VISIBLE);
+            holder.tvBlock.setText("UNBLOCK");
+            holder.tvBlock.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listener.blockTable(view, position, false);
+                }
+            });
+        }
         if (tableData.getTable_name().equalsIgnoreCase("")) {
             holder.tableno.setText("NA");
         } else {
@@ -89,12 +121,13 @@ public class ManageTableAdapter extends RecyclerView.Adapter<ManageTableAdapter.
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         RelativeLayout itemlayout;
-        CustomTextView tableno, capacity, reserv, mins, table_service;
+        CustomTextView tableno, capacity, reserv, mins, table_service, tvBlock;
 
         public ViewHolder(View itemView) {
             super(itemView);
             itemlayout = (RelativeLayout) itemView.findViewById(R.id.itemsMenu);
             tableno = (CustomTextView) itemView.findViewById(R.id.table_name);
+            tvBlock = (CustomTextView) itemView.findViewById(R.id.tvBlock);
             capacity = (CustomTextView) itemView.findViewById(R.id.table_capacity);
             reserv = (CustomTextView) itemView.findViewById(R.id.table_reser);
             table_service = (CustomTextView) itemView.findViewById(R.id.table_service);
@@ -102,4 +135,9 @@ public class ManageTableAdapter extends RecyclerView.Adapter<ManageTableAdapter.
             mins = (CustomTextView) itemView.findViewById(R.id.table_mins);
         }
     }
+
+    public interface ManageTableAdapterListener {
+        void blockTable(View view, int position, boolean block_status);
+    }
+
 }

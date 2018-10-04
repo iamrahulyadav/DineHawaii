@@ -7,8 +7,8 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_viewtable"
         android:layout_width="match_parent"
-        android:layout_marginBottom="@dimen/_40sdp"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_40sdp" />
 
     <com.yberry.dinehawaii.customview.CustomTextView
         android:id="@+id/notable"
@@ -41,7 +41,7 @@
             android:layout_centerVertical="true"
             android:drawablePadding="@dimen/_8sdp"
             android:padding="@dimen/_8sdp"
-            android:text="Add New Table"
+            android:text="BLOCK TABLES"
             android:textAllCaps="true"
             android:textColor="@color/white"
             app:edittextfont="@string/raleway_bold" />

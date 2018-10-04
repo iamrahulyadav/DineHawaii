@@ -108,6 +108,11 @@ public class MakingReservationActivity extends AppCompatActivity implements Time
         Log.e(TAG, "onCreate: business_name >> " + business_name);
         checkPackage();
         getFoodPrepTime();
+
+
+        userName.setText(AppPreferences.getCustomername(MakingReservationActivity.this));
+        mobileNo.setText(AppPreferences.getCustomerMobile(MakingReservationActivity.this));
+        emailId.setText(AppPreferences.getEmailSetting(MakingReservationActivity.this));
     }
 
     private void getFoodPrepTime() {
