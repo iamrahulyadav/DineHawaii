@@ -47,8 +47,8 @@ public class AppConstants {
 
     public interface BASEURL {
         //        String URL = "https://take007.co.in/Projects-Work/Hawaii/APP/";
-//        String URL = "https://neeleshjain.us/Projects_Work/Hawaii/APP/";
-        String URL = "http://192.168.29.250/Hawaii/APP/";
+        String URL = "https://neeleshjain.us/Projects_Work/Hawaii/APP/";
+//        String URL = "http://192.168.29.250/Hawaii/APP/";
         //String URL = "http://take007.co.in/Projects-Work/Hawaii/Beta-Test/APP/";
     }
 
@@ -267,6 +267,9 @@ public class AppConstants {
         String GETCOMBINATIONTABLE = "getCombinationTable";
         String BLOCKTABLES = "blockTables";
         String GETBLOCKEDTABLES = "getBlockedTables";
+        String UNBLOCKTABLES = "unblockTables";
+        String GETBLOCKEDSINGLETABLES = "getBlockedSingleTables";
+        String GETBLOCKEDCOMBINETABLES = "getBlockedCombineTables";
     }
 
     public interface BUSINESS_FEEDBACK_AND_MARKETING_API {

@@ -3,10 +3,12 @@ package com.yberry.dinehawaii.Bussiness.Adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.yberry.dinehawaii.Bussiness.Activity.AddNewTableActivity;
 import com.yberry.dinehawaii.Model.TableData;
@@ -40,6 +42,7 @@ public class ManageTableAdapter extends RecyclerView.Adapter<ManageTableAdapter.
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         final TableData tableData = tabledetails.get(position);
+        Log.e(TAG, "onBindViewHolder: tableData >> " + tableData);
         if (type.equalsIgnoreCase("single")) {
             holder.tvBlock.setVisibility(View.VISIBLE);
             holder.tvBlock.setText("BLOCK");
@@ -121,13 +124,14 @@ public class ManageTableAdapter extends RecyclerView.Adapter<ManageTableAdapter.
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         RelativeLayout itemlayout;
-        CustomTextView tableno, capacity, reserv, mins, table_service, tvBlock;
+        CustomTextView tableno, capacity, reserv, mins, table_service;
+        TextView tvBlock;
 
         public ViewHolder(View itemView) {
             super(itemView);
             itemlayout = (RelativeLayout) itemView.findViewById(R.id.itemsMenu);
             tableno = (CustomTextView) itemView.findViewById(R.id.table_name);
-            tvBlock = (CustomTextView) itemView.findViewById(R.id.tvBlock);
+            tvBlock = (TextView) itemView.findViewById(R.id.tvBlock);
             capacity = (CustomTextView) itemView.findViewById(R.id.table_capacity);
             reserv = (CustomTextView) itemView.findViewById(R.id.table_reser);
             table_service = (CustomTextView) itemView.findViewById(R.id.table_service);

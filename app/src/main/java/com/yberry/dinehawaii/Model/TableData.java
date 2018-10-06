@@ -23,7 +23,7 @@ public class TableData implements Serializable {
     String chair_type;
     String service_id;
     String tableDetails;
-    String combineStatus;
+    String combineStatus = "";
     String isHandicapped;
 
     public boolean isSeleted() {
@@ -34,7 +34,7 @@ public class TableData implements Serializable {
         isSeleted = seleted;
     }
 
-    boolean isSeleted=false;
+    boolean isSeleted = false;
 
     public String getTable_type() {
         return table_type;
@@ -44,7 +44,7 @@ public class TableData implements Serializable {
         this.table_type = table_type;
     }
 
-    String table_type;
+    String table_type = "";
 
     public String getTable_ids() {
         return table_ids;

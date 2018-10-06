@@ -368,6 +368,7 @@ public class TableSingleFragment extends Fragment implements View.OnClickListene
             jsonObject.addProperty("start_time", start_time);
             jsonObject.addProperty("end_date", end_date);
             jsonObject.addProperty("end_time", end_time);
+            jsonObject.addProperty("table_type", "n");
             Log.e(TAG, "blockApi: Request >> " + jsonObject.toString());
 
             MyApiEndpointInterface apiService = ApiClient.getClient().create(MyApiEndpointInterface.class);

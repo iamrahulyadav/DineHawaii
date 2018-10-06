@@ -368,6 +368,7 @@ public class TableCombineFragment extends Fragment implements View.OnClickListen
             jsonObject.addProperty("start_time", start_time);
             jsonObject.addProperty("end_date", end_date);
             jsonObject.addProperty("end_time", end_time);
+            jsonObject.addProperty("table_type", "c");
             Log.e(TAG, "blockApi: Request >> " + jsonObject.toString());
 
             MyApiEndpointInterface apiService = ApiClient.getClient().create(MyApiEndpointInterface.class);

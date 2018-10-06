@@ -165,24 +165,26 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-
                 android:gravity="end">
 
-                <com.yberry.dinehawaii.customview.CustomTextView
+                <TextView
                     android:id="@+id/tvBlock"
                     style="@style/TextAppearance.AppCompat.Subhead"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
+                    android:layout_height="@dimen/_30sdp"
+                    android:background="@color/red"
+                    android:drawablePadding="@dimen/_3sdp"
                     android:drawableLeft="@drawable/ic_do_not_disturb_black_24dp"
-                    android:drawablePadding="@dimen/_5sdp"
-                    android:gravity="left"
+                    android:elevation="3dp"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/_8sdp"
+                    android:paddingRight="@dimen/_8sdp"
                     android:singleLine="true"
                     android:text="BLOCK"
-                    android:textColor="@color/red"
-                    android:textStyle="bold"
-                    android:visibility="visible"
-                    app:edittextfont="Raleway-Bold.ttf" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:textColor="@color/white"
+                    android:layout_margin="3dp"
+                    android:visibility="visible" />
 
             </LinearLayout>
         </LinearLayout>
