@@ -269,7 +269,6 @@ public class MakingReservationActivity extends AppCompatActivity implements Time
                             String selectedTime = String.format("%02d:%02d %s", (hourOfDay == 12 || hourOfDay == 0) ? 12 : hourOfDay % 12, minute, isPM ? "PM" : "AM");
                             Log.d("selectedTime", selectedTime);
 
-
                             //check for date
                             String mytime = datePicker.getText().toString();
                             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -317,6 +316,8 @@ public class MakingReservationActivity extends AppCompatActivity implements Time
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
+                            } else {
+                                timePicker.setText(selectedTime);
                             }
 
                             //check for time

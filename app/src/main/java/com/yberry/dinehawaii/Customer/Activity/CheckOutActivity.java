@@ -137,6 +137,9 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
     private CustomTextView tvDeliveryText, tvDriverTipText, tvDelChargeAmount;
     private double delChargeAmount = 0.0, geTaxAmount = 0.0, totalPaidAmountBase = 0.0, cust_latitude = 0.0, cust_longitude = 0.0;
     private DecimalFormat decimalFormat;
+    private AlertDialog inhouseDialog;
+    private AlertDialog takeoutDialog;
+    private String inhouse_table = "0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,7 +154,8 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         Log.e(TAG, "onCreate: cartItems >> " + cartItems);
         setCartAdapter();
         updateHomeDeliveryInfo();
-
+        inhouseDialog();
+        takeoutDialog();
         cust_latitude = Double.parseDouble(AppPreferences.getCustAddrLat(context));
         cust_longitude = Double.parseDouble(AppPreferences.getCustAddrLong(context));
 
@@ -509,7 +513,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                 catering_btn.setChecked(false);
                 homedelivery_btn.setChecked(false);
                 AppPreferences.setOrderType(context, order_type);
-                setTimePicker();
+                takeoutDialog.show();
                 break;
             case R.id.cateringradio:
                 catering_btn.setChecked(true);
@@ -528,7 +532,8 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                 AppPreferences.setDeliveryContact(context, AppPreferences.getCustomerMobile(context));
                 AppPreferences.setDeliveryAddress(context, "In-House Order");
                 AppPreferences.setOrderType(context, order_type);
-                setTimePicker();
+                //setTimePicker();
+                inhouseDialog.show();
                 break;
             case R.id.applygift:
                 // applyEgift();
@@ -1092,7 +1097,6 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                             custDtLayout.setVisibility(View.VISIBLE);
                             custPreptimeLayout.setVisibility(View.VISIBLE);
                             custNmLayout.setVisibility(View.VISIBLE);
-                            custName.setText(AppPreferences.getCustomername(context));
                             custName.setSelection(custName.length());
                             CustOrTime.setText(selectedTime);
                             CustOrDate.setText(cateringDateTime);
@@ -1128,7 +1132,6 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
 
 
     private void setTimePicker() {
-
         final Calendar c = Calendar.getInstance();
         int mHour = c.get(Calendar.HOUR_OF_DAY);
         int mMinute = c.get(Calendar.MINUTE);
@@ -1154,7 +1157,6 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                             custDtLayout.setVisibility(View.GONE);
                             custPreptimeLayout.setVisibility(View.VISIBLE);
                             custNmLayout.setVisibility(View.VISIBLE);
-                            custName.setText(AppPreferences.getCustomername(context));
                             custName.setSelection(custName.length());
                             CustOrTime.setText(order_timings);
                             setFoodPrepTime(order_type);
@@ -1186,7 +1188,6 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                                     custDtLayout.setVisibility(View.GONE);
                                     custPreptimeLayout.setVisibility(View.VISIBLE);
                                     custNmLayout.setVisibility(View.VISIBLE);
-                                    custName.setText(AppPreferences.getCustomername(context));
                                     custName.setSelection(custName.length());
                                     CustOrTime.setText(order_timings);
                                     setFoodPrepTime(order_type);
@@ -1367,6 +1368,96 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         deliveryDialog.dismiss();
     }
 
+
+    @SuppressLint("RestrictedApi")
+    public void inhouseDialog() {
+        builder = new AlertDialog.Builder(context);
+        LayoutInflater _inflater = LayoutInflater.from(context);
+        view = _inflater.inflate(R.layout.dialog_inhouse_order, null);
+        builder.setView(view, 50, 50, 50, 50);
+        inhouseDialog = builder.create();
+        inhouseDialog.setCancelable(true);
+        inhouseDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        inhouseDialog.setCanceledOnTouchOutside(false);
+        final EditText et_table_no = (CustomEditText) view.findViewById(R.id.et_table_no);
+        ImageView close = (ImageView) view.findViewById(R.id.close);
+
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                take_way_btn.setChecked(false);
+                homedelivery_btn.setChecked(false);
+                catering_btn.setChecked(false);
+                inhouse_btn.setChecked(false);
+                inhouseDialog.dismiss();
+                order_type = "0";
+            }
+        });
+
+        CustomButton dsubmit = (CustomButton) view.findViewById(R.id.dsubmit);
+        dsubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (TextUtils.isEmpty(et_table_no.getText().toString())) {
+                    et_table_no.setError(fieldRequired);
+                } else {
+                    custName.setText(AppPreferences.getCustomername(context));
+                    inhouse_table = et_table_no.getText().toString();
+                    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                    inhouseDialog.hide();
+//                    setTimePicker();
+                }
+            }
+        });
+        inhouseDialog.dismiss();
+    }
+
+    @SuppressLint("RestrictedApi")
+    public void takeoutDialog() {
+        builder = new AlertDialog.Builder(context);
+        LayoutInflater _inflater = LayoutInflater.from(context);
+        view = _inflater.inflate(R.layout.dialog_takeout_order, null);
+        builder.setView(view, 50, 50, 50, 50);
+        takeoutDialog = builder.create();
+        takeoutDialog.setCancelable(true);
+        takeoutDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        takeoutDialog.setCanceledOnTouchOutside(false);
+
+        final EditText et_table_no = (CustomEditText) view.findViewById(R.id.et_table_no);
+        ImageView close = (ImageView) view.findViewById(R.id.close);
+        et_table_no.setText(AppPreferences.getCustomername(context));
+
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                take_way_btn.setChecked(false);
+                homedelivery_btn.setChecked(false);
+                catering_btn.setChecked(false);
+                inhouse_btn.setChecked(false);
+                takeoutDialog.dismiss();
+                order_type = "0";
+            }
+        });
+
+        CustomButton dsubmit = (CustomButton) view.findViewById(R.id.dsubmit);
+        dsubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (TextUtils.isEmpty(et_table_no.getText().toString())) {
+                    et_table_no.setError(fieldRequired);
+                } else {
+                    custName.setText(et_table_no.getText().toString());
+                    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                    takeoutDialog.dismiss();
+                    setTimePicker();
+                }
+            }
+        });
+        takeoutDialog.dismiss();
+    }
+
     private void checkPackage() {
         String package_list = AppPreferences.getBussPackageList(context);
         if (package_list.contains("3")) {
@@ -1505,7 +1596,6 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
             Toast.makeText(context, "Please Connect Your Internet", Toast.LENGTH_LONG).show();
         }
     }
-
 
     public void findPlace() {
         try {
@@ -1708,6 +1798,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         object.addProperty("future_time", AppPreferences.getOrderTime(CheckOutActivity.this));
         object.addProperty("address_lat", String.valueOf(cust_latitude));
         object.addProperty("address_long", String.valueOf(cust_longitude));
+        object.addProperty("inhouse_table_no", inhouse_table);
         object.addProperty("set_as_default", setDefault);
         jsonObject.add("contactDetails", object);
         JsonArray jsonArray = new JsonArray();

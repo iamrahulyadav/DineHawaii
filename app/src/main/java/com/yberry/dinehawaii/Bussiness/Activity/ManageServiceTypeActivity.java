@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
+import com.yberry.dinehawaii.Bussiness.Adapter.CheckBoxOptionAdapter;
 import com.yberry.dinehawaii.Model.CheckBoxPositionModel;
 import com.yberry.dinehawaii.R;
 import com.yberry.dinehawaii.RetrofitClasses.ApiClient;
@@ -29,7 +30,6 @@ import com.yberry.dinehawaii.Util.AppPreferences;
 import com.yberry.dinehawaii.Util.AppPreferencesBuss;
 import com.yberry.dinehawaii.Util.ProgressHUD;
 import com.yberry.dinehawaii.Util.Util;
-import com.yberry.dinehawaii.Bussiness.Adapter.CheckBoxOptionAdapter;
 import com.yberry.dinehawaii.customview.CustomTextView;
 
 import org.json.JSONArray;
@@ -107,11 +107,11 @@ public class ManageServiceTypeActivity extends AppCompatActivity {
                             model.setName(object.getString("service_name"));
                             model.setId(object.getString("id"));
                             String status = object.getString("available");
-                            if (status.equalsIgnoreCase("true")){
+                            if (status.equalsIgnoreCase("true")) {
                                 model.setChckStatus(true);
-                            }else if (status.equalsIgnoreCase("false")){
+                            } else if (status.equalsIgnoreCase("false")) {
                                 model.setChckStatus(false);
-                            }else{
+                            } else {
                                 model.setChckStatus(false);
                             }
 
@@ -186,7 +186,7 @@ public class ManageServiceTypeActivity extends AppCompatActivity {
             jsonObject.addProperty("method", AppConstants.BUSSINES_USER_BUSINESSAPI.IMPORT_SERVICE_TYPE);
             jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(ManageServiceTypeActivity.this));
             jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(ManageServiceTypeActivity.this));
-            jsonObject.addProperty("update_type",logintype);
+            jsonObject.addProperty("update_type", logintype);
             jsonObject.addProperty("service_id", service_id_list);
             Log.e(TAG, "import service request " + jsonObject);
             importServiceTypesApi(jsonObject);
@@ -240,11 +240,11 @@ public class ManageServiceTypeActivity extends AppCompatActivity {
 
 
     private void init() {
-        if (AppPreferences.getUserType(ManageServiceTypeActivity.this).equalsIgnoreCase("BussinessLocalUser")){
+        if (AppPreferences.getUserType(ManageServiceTypeActivity.this).equalsIgnoreCase("BussinessLocalUser")) {
             logintype = "emp";
-        }else if (AppPreferences.getUserType(ManageServiceTypeActivity.this).equalsIgnoreCase("BussinessUser")){
+        } else if (AppPreferences.getUserType(ManageServiceTypeActivity.this).equalsIgnoreCase("BussinessUser")) {
             logintype = "buss";
-        }else{
+        } else {
             logintype = "buss";
         }
         serviceList = new ArrayList<>();

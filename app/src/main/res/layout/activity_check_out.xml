@@ -112,23 +112,24 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_15sdp"
-                    android:layout_marginRight="@dimen/_15sdp"
                     android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_15sdp"
                     android:lineSpacingExtra="@dimen/_5sdp"
                     android:text="Delivery Rates:"
                     android:visibility="gone"
                     app:edittextfont="@string/raleway_regular" />
+
                 <com.yberry.dinehawaii.customview.CustomTextView
                     android:id="@+id/tvDriverTipText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_15sdp"
-                    android:layout_marginRight="@dimen/_15sdp"
                     android:layout_marginTop="@dimen/_5sdp"
-                    android:text="0"
-                    android:visibility="gone"
-                    android:textColor="@color/red"
+                    android:layout_marginRight="@dimen/_15sdp"
                     android:lineSpacingExtra="@dimen/_5sdp"
+                    android:text="0"
+                    android:textColor="@color/red"
+                    android:visibility="gone"
                     app:edittextfont="@string/raleway_regular" />
             </LinearLayout>
 
@@ -165,8 +166,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_15sdp"
-                    android:layout_marginRight="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_3sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
                     android:orientation="horizontal">
 
                     <com.yberry.dinehawaii.customview.CustomRadioButton
@@ -174,21 +175,23 @@
                         style="@style/TextAppearance.AppCompat.Small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:enabled="false"
                         android:text="Loyalty Point"
+                        android:visibility="gone"
                         app:edittextfont="@string/raleway_regular" />
 
                     <View
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="@dimen/_5sdp"
-                        android:background="@color/colorDivider" />
+                        android:background="@color/colorDivider"
+                        android:visibility="gone" />
 
                     <com.yberry.dinehawaii.customview.CustomRadioButton
                         android:id="@+id/radio_egift"
                         style="@style/TextAppearance.AppCompat.Small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
                         android:text="E-Gift"
                         app:edittextfont="@string/raleway_regular" />
 
@@ -208,14 +211,13 @@
                         app:edittextfont="@string/raleway_regular" />
                 </RadioGroup>
 
-
                 <LinearLayout
                     android:id="@+id/relloyalty"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_35sdp"
                     android:layout_marginLeft="@dimen/_20sdp"
-                    android:layout_marginRight="@dimen/_20sdp"
                     android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginRight="@dimen/_20sdp"
                     android:background="@drawable/bgrectangle"
                     android:orientation="horizontal"
                     android:visibility="gone"
@@ -302,8 +304,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_35sdp"
                     android:layout_marginLeft="@dimen/_20sdp"
-                    android:layout_marginRight="@dimen/_20sdp"
                     android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginRight="@dimen/_20sdp"
                     android:background="@drawable/bgrectangle"
                     android:orientation="horizontal"
                     android:visibility="gone"
@@ -316,9 +318,9 @@
                         android:layout_height="match_parent"
                         android:layout_alignParentBottom="true"
                         android:layout_weight="0.8"
-                        android:inputType="number"
                         android:background="@null"
                         android:hint="Enter Amount"
+                        android:inputType="number"
                         android:padding="@dimen/_5sdp"
                         android:textColor="@color/black"
                         app:edittextfont="Raleway-Regular.ttf" />
@@ -348,6 +350,7 @@
                         android:visibility="gone"
                         app:edittextfont="@string/raleway_regular" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/llegiftbal"
                     android:layout_width="match_parent"
@@ -391,8 +394,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_35sdp"
                     android:layout_marginLeft="@dimen/_20sdp"
-                    android:layout_marginRight="@dimen/_20sdp"
                     android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginRight="@dimen/_20sdp"
                     android:background="@drawable/bgrectangle"
                     android:orientation="horizontal"
                     android:visibility="gone"
@@ -476,9 +479,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginBottom="@dimen/_5sdp"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
                     android:orientation="horizontal">
 
                     <com.yberry.dinehawaii.customview.CustomRadioButton
@@ -536,8 +539,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
                     android:orientation="horizontal"
                     android:visibility="gone"
                     android:weightSum="1">
@@ -580,8 +583,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
                     android:orientation="horizontal"
                     android:visibility="gone"
                     android:weightSum="1">
@@ -621,8 +624,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
                     android:orientation="horizontal"
                     android:visibility="gone"
                     android:weightSum="1">
@@ -663,8 +666,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
                     android:orientation="horizontal"
                     android:visibility="gone"
                     android:weightSum="1">
@@ -704,8 +707,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
                     android:orientation="horizontal"
                     android:visibility="gone"
                     android:weightSum="1">
@@ -745,8 +748,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
                     android:orientation="horizontal"
                     android:visibility="gone"
                     android:weightSum="1">
@@ -1038,6 +1041,7 @@
                     </RelativeLayout>
 
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -1078,9 +1082,9 @@
                         android:layout_weight="0.3">
 
                         <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/tvDriverTipValue"
                             style="@style/TextAppearance.AppCompat.Small"
                             android:layout_width="match_parent"
-                            android:id="@+id/tvDriverTipValue"
                             android:layout_height="wrap_content"
                             android:padding="3dp"
                             android:text="Driver Tip"

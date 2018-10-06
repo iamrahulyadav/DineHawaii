@@ -24,7 +24,6 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
-import com.yberry.dinehawaii.Bussiness.Adapter.ManageTableAdapter;
 import com.yberry.dinehawaii.Model.TableData;
 import com.yberry.dinehawaii.R;
 import com.yberry.dinehawaii.RetrofitClasses.ApiClient;
