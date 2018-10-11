@@ -3,6 +3,7 @@ package com.yberry.dinehawaii.Customer.Fragment;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
+import com.yberry.dinehawaii.Customer.Activity.FeedbackActivity;
 import com.yberry.dinehawaii.Customer.Adapter.MyFeedbackAdapter;
 import com.yberry.dinehawaii.Model.ReviewModel;
 import com.yberry.dinehawaii.R;
@@ -24,6 +26,7 @@ import com.yberry.dinehawaii.Util.AppConstants;
 import com.yberry.dinehawaii.Util.AppPreferences;
 import com.yberry.dinehawaii.Util.ProgressHUD;
 import com.yberry.dinehawaii.Util.Util;
+import com.yberry.dinehawaii.customview.CustomButton;
 import com.yberry.dinehawaii.customview.CustomTextView;
 
 import org.json.JSONArray;
@@ -48,6 +51,7 @@ public class MyFeedbackFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
     private SwipeRefreshLayout swipeRefreshLayout;
+    CustomButton tvAdd;
 
     public MyFeedbackFragment() {
         // Required empty public constructor
@@ -92,7 +96,7 @@ public class MyFeedbackFragment extends Fragment {
                     try {
                         JSONObject jsonObject = new JSONObject(resp);
                         if (jsonObject.getString("status").equalsIgnoreCase("200")) {
-                            JSONArray jsonArray = jsonObject.getJSONArray("result_reserv");
+                            /*JSONArray jsonArray = jsonObject.getJSONArray("result_reserv");
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 ReviewModel model = new ReviewModel();
                                 JSONObject object = jsonArray.getJSONObject(i);
@@ -100,7 +104,7 @@ public class MyFeedbackFragment extends Fragment {
                                 model.setReview_message(object.getString("review_message"));
                                 model.setDate(object.getString("added_on"));
                                 list.add(model);
-                            }
+                            }*/
                             JSONArray jsonArray1 = jsonObject.getJSONArray("result_order");
                             for (int i = 0; i < jsonArray1.length(); i++) {
                                 ReviewModel model = new ReviewModel();
@@ -142,6 +146,7 @@ public class MyFeedbackFragment extends Fragment {
 
     private void initView(View rootView) {
         nofeed = (CustomTextView) rootView.findViewById(R.id.noreserv);
+        tvAdd = (CustomButton) rootView.findViewById(R.id.tvAdd);
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeCurrentRes);
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerview_feed);
         mLayoutManager = new LinearLayoutManager(getActivity());
@@ -156,6 +161,13 @@ public class MyFeedbackFragment extends Fragment {
                 list.clear();
                 getReservFeedback();
                 adapter.notifyDataSetChanged();
+            }
+        });
+
+        tvAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), FeedbackActivity.class));
             }
         });
     }

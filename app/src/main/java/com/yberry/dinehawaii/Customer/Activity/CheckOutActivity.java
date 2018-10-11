@@ -1893,7 +1893,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         builder.setNeutralButton("FEEDBACK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Intent intent1 = new Intent(getApplicationContext(), CustomerFeedbackActivity.class);
+                Intent intent1 = new Intent(getApplicationContext(), ImmediateFeedbackActivity.class);
                 intent1.setAction("Order");
                 intent1.putExtra("orderid", order_id);
                 intent1.putExtra("busid", AppPreferences.getBusiID(CheckOutActivity.this));

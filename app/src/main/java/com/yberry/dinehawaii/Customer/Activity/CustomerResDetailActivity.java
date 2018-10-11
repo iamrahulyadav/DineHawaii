@@ -180,7 +180,7 @@ public class CustomerResDetailActivity extends AppCompatActivity implements View
                 cancelReservData();
                 break;
             case R.id.tvfeedback:
-                Intent intent = new Intent(CustomerResDetailActivity.this, CustomerFeedbackActivity.class);
+                Intent intent = new Intent(CustomerResDetailActivity.this, ImmediateFeedbackActivity.class);
                 intent.putExtra("Resv_id", reservation_id);
                 intent.putExtra("Bussiness_id", buss_id);
                 startActivity(intent);

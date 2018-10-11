@@ -24,6 +24,7 @@ import com.yberry.dinehawaii.Util.AppConstants;
 import com.yberry.dinehawaii.Util.AppPreferencesBuss;
 import com.yberry.dinehawaii.Util.ProgressHUD;
 import com.yberry.dinehawaii.Util.Util;
+import com.yberry.dinehawaii.customview.CustomButton;
 import com.yberry.dinehawaii.customview.CustomTextView;
 
 import org.json.JSONArray;
@@ -67,7 +68,7 @@ public class ResrvFeedbackFragment extends Fragment {
     private void getReservFeedback() {
         if (Util.isNetworkAvailable(getActivity())) {
             JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("method", AppConstants.BUSSINES_USER_BUSINESSAPI.GETRESERVFEED);
+            jsonObject.addProperty("method", AppConstants.BUSSINES_USER_BUSINESSAPI.GETRESERVEFEED);
             jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(getActivity()));
             jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(getActivity()));
             Log.e(TAG, "getReservFeedback request>>. " + jsonObject.toString());
@@ -81,7 +82,7 @@ public class ResrvFeedbackFragment extends Fragment {
 
 
             MyApiEndpointInterface apiService = ApiClient.getClient().create(MyApiEndpointInterface.class);
-            Call<JsonObject> call = apiService.n_business_new_api(jsonObject);
+            Call<JsonObject> call = apiService.business_feedback_and_marketing_api(jsonObject);
 
             call.enqueue(new Callback<JsonObject>() {
                 @SuppressLint("LongLogTag")
@@ -97,8 +98,8 @@ public class ResrvFeedbackFragment extends Fragment {
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 OrderDetails model = new OrderDetails();
                                 JSONObject object = jsonArray.getJSONObject(i);
-                                model.setOrder_id(object.getString("reservation_id"));
-                                model.setUser_name(object.getString("user_name"));
+                                model.setOrder_id(object.getString("order_id"));
+                                model.setUser_name(object.getString("user"));
                                 model.setReviewmsg(object.getString("review_message"));
                                 list.add(model);
                             }
@@ -140,7 +141,7 @@ public class ResrvFeedbackFragment extends Fragment {
         adapter = new ResrvFeedbackAdapter(getActivity(), list);
         mRecyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
-
+        ((CustomButton) rootView.findViewById(R.id.tvAdd)).setVisibility(View.GONE);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

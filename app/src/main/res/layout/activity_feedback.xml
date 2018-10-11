@@ -67,7 +67,29 @@
                 android:text="@string/Feedback_96IHave"
                 app:edittextfont="@string/raleway_regular" />
 
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/spinner"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:spinnerMode="dialog"
+                android:visibility="invisible" />
 
+            <com.yberry.dinehawaii.customview.CustomEditText
+                android:id="@+id/feedback_buiness"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:background="@drawable/bgrectangle"
+                android:clickable="true"
+                android:focusableInTouchMode="false"
+                android:gravity="start"
+                android:hint="Select Business"
+                android:maxLines="1"
+                android:padding="@dimen/_10sdp"
+                android:textAlignment="textStart"
+                app:edittextfont="Raleway-Regular.ttf" />
 
             <com.yberry.dinehawaii.customview.CustomEditText
                 android:id="@+id/feedback_title"
@@ -75,10 +97,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginRight="@dimen/_10sdp"
                 android:background="@drawable/bgrectangle"
                 android:gravity="start"
                 android:hint="Title Of Feedback"
+                android:imeOptions="actionNext"
+                android:inputType="textCapSentences"
                 android:maxLines="1"
                 android:padding="@dimen/_10sdp"
                 android:textAlignment="textStart"
@@ -95,6 +120,8 @@
                 android:background="@drawable/bgrectangle"
                 android:gravity="start"
                 android:hint="Remark(eg. Delivery Services, Reservation)"
+                android:imeOptions="actionNext"
+                android:inputType="textCapSentences"
                 android:maxLines="1"
                 android:padding="@dimen/_10sdp"
                 android:textAlignment="textStart"
@@ -111,6 +138,8 @@
                 android:background="@drawable/bgrectangle"
                 android:gravity="start"
                 android:hint="Max 100 words"
+                android:imeOptions="actionDone"
+                android:inputType="textCapSentences"
                 android:maxLines="4"
                 android:padding="@dimen/_10sdp"
                 android:textAlignment="textStart"
@@ -128,6 +157,7 @@
                 android:text="SUBMIT"
                 android:textColor="@color/white"
                 app:edittextfont="Raleway-Bold.ttf" />
+
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

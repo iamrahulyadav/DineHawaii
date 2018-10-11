@@ -2,7 +2,6 @@ package com.yberry.dinehawaii.Bussiness.Fragment;
 
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,15 +17,14 @@ import android.widget.Toast;
 import com.google.gson.JsonObject;
 import com.yberry.dinehawaii.Bussiness.Adapter.OrderFeedbackAdapter;
 import com.yberry.dinehawaii.Bussiness.model.OrderDetails;
-import com.yberry.dinehawaii.Model.ReservationDataModel;
 import com.yberry.dinehawaii.R;
 import com.yberry.dinehawaii.RetrofitClasses.ApiClient;
 import com.yberry.dinehawaii.RetrofitClasses.MyApiEndpointInterface;
 import com.yberry.dinehawaii.Util.AppConstants;
-import com.yberry.dinehawaii.Util.AppPreferences;
 import com.yberry.dinehawaii.Util.AppPreferencesBuss;
 import com.yberry.dinehawaii.Util.ProgressHUD;
 import com.yberry.dinehawaii.Util.Util;
+import com.yberry.dinehawaii.customview.CustomButton;
 import com.yberry.dinehawaii.customview.CustomTextView;
 
 import org.json.JSONArray;
@@ -141,6 +139,7 @@ public class OrderFeedbackFragment extends Fragment {
 
     private void initView(View rootView) {
         nofeed = (CustomTextView)rootView.findViewById(R.id.noreserv);
+        ((CustomButton) rootView.findViewById(R.id.tvAdd)).setVisibility(View.GONE);
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeCurrentRes);
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerview_feed);
         mLayoutManager = new LinearLayoutManager(getActivity());

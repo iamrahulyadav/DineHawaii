@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -34,13 +35,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CustomerFeedbackActivity extends AppCompatActivity implements View.OnClickListener {
+public class ImmediateFeedbackActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "FEEDBACK Customer";
     CustomButton btnSub;
     String rESV_ID, Business_ID, orderId;
-    CustomEditText feedbackMsg;
+    CustomEditText feedbackMsg, feedback_remark, feedback_title;
     boolean feedFrom = false;
     private ImageView back;
+    private String type = "none";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,13 +88,15 @@ public class CustomerFeedbackActivity extends AppCompatActivity implements View.
     private void init() {
         btnSub = (CustomButton) findViewById(R.id.btnSub);
         feedbackMsg = (CustomEditText) findViewById(R.id.feedback_msg);
+        feedback_remark = (CustomEditText) findViewById(R.id.feedback_remark);
+        feedback_title = (CustomEditText) findViewById(R.id.feedback_title);
         LinearLayout mainView = (LinearLayout) findViewById(R.id.main_view);
         mainView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                view = CustomerFeedbackActivity.this.getCurrentFocus();
+                view = ImmediateFeedbackActivity.this.getCurrentFocus();
                 if (view != null) {
-                    InputMethodManager imm = (InputMethodManager) CustomerFeedbackActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE);
+                    InputMethodManager imm = (InputMethodManager) ImmediateFeedbackActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 }
                 return false;
@@ -103,26 +107,27 @@ public class CustomerFeedbackActivity extends AppCompatActivity implements View.
     }
 
 
-    private void getFeedback() {
-        if (Util.isNetworkAvailable(CustomerFeedbackActivity.this)) {
+    private void reservFeedback() {
+        if (Util.isNetworkAvailable(ImmediateFeedbackActivity.this)) {
             JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("method", AppConstants.CUSTOMER_USER.RESERVATION_FEEDBACK);
+            jsonObject.addProperty("method", AppConstants.CUSTOMER_USER.ALL_FEEDBACK);
             jsonObject.addProperty("business_id", Business_ID);
-            jsonObject.addProperty("reservation_id", rESV_ID);
+            jsonObject.addProperty("order_id", rESV_ID);
             jsonObject.addProperty("review_message", feedbackMsg.getText().toString());
-            jsonObject.addProperty("user_id", AppPreferences.getCustomerid(CustomerFeedbackActivity.this));
+            jsonObject.addProperty("title", feedback_title.getText().toString());
+            jsonObject.addProperty("remark", feedback_remark.getText().toString());
+            jsonObject.addProperty("type", type);
+            jsonObject.addProperty("user_id", AppPreferences.getCustomerid(ImmediateFeedbackActivity.this));
             Log.e(TAG, "FeedbackJson :- " + jsonObject.toString());
             feedbackData(jsonObject);
-
         } else {
-            Toast.makeText(CustomerFeedbackActivity.this, "Please Connect Your Internet", Toast.LENGTH_LONG).show();
+            Toast.makeText(ImmediateFeedbackActivity.this, "Please Connect Your Internet", Toast.LENGTH_LONG).show();
 
         }
-
     }
 
     private void feedbackData(JsonObject jsonObject) {
-        final ProgressHUD progressHD = ProgressHUD.show(CustomerFeedbackActivity.this, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
+        final ProgressHUD progressHD = ProgressHUD.show(ImmediateFeedbackActivity.this, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
 
@@ -143,14 +148,14 @@ public class CustomerFeedbackActivity extends AppCompatActivity implements View.
                 try {
                     JSONObject jsonObject = new JSONObject(resp);
                     if (jsonObject.getString("status").equalsIgnoreCase("200")) {
-                        Toast.makeText(CustomerFeedbackActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(CustomerFeedbackActivity.this, CustomerNaviDrawer.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                        Toast.makeText(ImmediateFeedbackActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(ImmediateFeedbackActivity.this, CustomerNaviDrawer.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
                     } else if (jsonObject.getString("status").equals("400")) {
-                        Toast.makeText(CustomerFeedbackActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(CustomerFeedbackActivity.this, CustomerNaviDrawer.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                        Toast.makeText(ImmediateFeedbackActivity.this, jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(ImmediateFeedbackActivity.this, CustomerNaviDrawer.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
                     } else {
-                        Toast.makeText(CustomerFeedbackActivity.this, "Server not Responding", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(CustomerFeedbackActivity.this, CustomerNaviDrawer.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                        Toast.makeText(ImmediateFeedbackActivity.this, "Server not Responding", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(ImmediateFeedbackActivity.this, CustomerNaviDrawer.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
                     }
 
                     progressHD.dismiss();
@@ -158,7 +163,7 @@ public class CustomerFeedbackActivity extends AppCompatActivity implements View.
                 } catch (JSONException e) {
                     progressHD.dismiss();
                     e.printStackTrace();
-                    startActivity(new Intent(CustomerFeedbackActivity.this, CustomerNaviDrawer.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                    startActivity(new Intent(ImmediateFeedbackActivity.this, CustomerNaviDrawer.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
                 }
             }
 
@@ -167,8 +172,8 @@ public class CustomerFeedbackActivity extends AppCompatActivity implements View.
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Log.e(TAG, "error :- " + Log.getStackTraceString(t));
                 progressHD.dismiss();
-                Toast.makeText(CustomerFeedbackActivity.this, "Server not Responding", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(CustomerFeedbackActivity.this, CustomerNaviDrawer.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                Toast.makeText(ImmediateFeedbackActivity.this, "Server not Responding", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(ImmediateFeedbackActivity.this, CustomerNaviDrawer.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
             }
         });
     }
@@ -177,14 +182,19 @@ public class CustomerFeedbackActivity extends AppCompatActivity implements View.
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.btnSub) {
-            if (feedbackMsg.getText().toString().equalsIgnoreCase("")) {
+            if (TextUtils.isEmpty(feedbackMsg.getText().toString())) {
                 feedbackMsg.setError("Enter Message");
+            } else if (TextUtils.isEmpty(feedback_title.getText().toString())) {
+                feedbackMsg.setError("Enter Title");
             } else {
-                if (Util.isNetworkAvailable(CustomerFeedbackActivity.this)) {
-                    if (feedFrom)
-                        feedbackOrder();
-                    else
-                        getFeedback();
+                if (Util.isNetworkAvailable(ImmediateFeedbackActivity.this)) {
+                    if (feedFrom) {
+                        type = "order";
+                        orderFeedback();
+                    } else {
+                        type = "reservation";
+                        reservFeedback();
+                    }
                 } else {
                     Toast.makeText(this, "Please connect to internet", Toast.LENGTH_SHORT).show();
                 }
@@ -192,18 +202,21 @@ public class CustomerFeedbackActivity extends AppCompatActivity implements View.
         }
     }
 
-    private void feedbackOrder() {
-        if (Util.isNetworkAvailable(CustomerFeedbackActivity.this)) {
+    private void orderFeedback() {
+        if (Util.isNetworkAvailable(ImmediateFeedbackActivity.this)) {
             JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("method", AppConstants.CUSTOMER_USER.ORDER_FEEDBACK);
+            jsonObject.addProperty("method", AppConstants.CUSTOMER_USER.ALL_FEEDBACK);
             jsonObject.addProperty("business_id", Business_ID);
             jsonObject.addProperty("order_id", orderId);
+            jsonObject.addProperty("title", feedback_title.getText().toString());
+            jsonObject.addProperty("remark", feedback_remark.getText().toString());
+            jsonObject.addProperty("type", type);
             jsonObject.addProperty("review_message", feedbackMsg.getText().toString());
-            jsonObject.addProperty("user_id", AppPreferences.getCustomerid(CustomerFeedbackActivity.this));
+            jsonObject.addProperty("user_id", AppPreferences.getCustomerid(ImmediateFeedbackActivity.this));
             Log.e(TAG, "OrderFeedbackJson :- " + jsonObject.toString());
             feedbackData(jsonObject);
         } else {
-            Toast.makeText(CustomerFeedbackActivity.this, "Please Connect Your Internet", Toast.LENGTH_LONG).show();
+            Toast.makeText(ImmediateFeedbackActivity.this, "Please Connect Your Internet", Toast.LENGTH_LONG).show();
         }
     }
 }

@@ -65,6 +65,9 @@ public class ListItem implements Parcelable {
     private String table_name;
     private Boolean displayLogo;
 
+    public ListItem() {
+    }
+
     protected ListItem(Parcel in) {
         id = in.readString();
         avgPrice = in.readString();

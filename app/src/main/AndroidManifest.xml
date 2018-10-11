@@ -75,6 +75,7 @@
             android:windowSoftInputMode="stateHidden|adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <!-- Accepts URIs "com.example.myapp://" -->
@@ -230,9 +231,15 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".Customer.Activity.CustomerFeedbackActivity"
+            android:name=".Customer.Activity.ImmediateFeedbackActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name=".Customer.Activity.FeedbackActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan">
+
+        </activity>
         <activity
             android:name=".Customer.Activity.CustomerReviewActivity"
             android:screenOrientation="portrait"
@@ -332,7 +339,7 @@
             android:clearTaskOnLaunch="true"
             android:label="Altername Business   "
             android:launchMode="singleTask"
-            android:theme="@style/AppTheme" ></activity>
+            android:theme="@style/AppTheme"></activity>
         <activity android:name=".Customer.Activity.RatingActivity"></activity>
     </application>
 
