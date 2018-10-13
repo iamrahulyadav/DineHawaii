@@ -60,7 +60,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_9sdp"
-
                 android:drawablePadding="@dimen/_5sdp"
                 android:gravity="center"
                 android:text="Pickup Name"
@@ -81,7 +80,6 @@
                 android:singleLine="true"
                 app:edittextfont="Raleway-Regular.ttf" />
         </LinearLayout>
-
 
         <com.yberry.dinehawaii.customview.CustomButton
             android:id="@+id/dsubmit"

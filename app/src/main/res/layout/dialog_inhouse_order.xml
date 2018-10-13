@@ -8,19 +8,16 @@
     android:focusableInTouchMode="true"
     android:orientation="horizontal"
     app:cardCornerRadius="@dimen/_5sdp">
-
     <LinearLayout
         android:id="@+id/mainRelativeFood"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
         <RelativeLayout
             android:id="@+id/toolbar_bar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorPrimary">
-
             <com.yberry.dinehawaii.customview.CustomTextView
                 android:id="@+id/foodTitle"
                 style="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle"
@@ -33,7 +30,6 @@
                 android:textAllCaps="true"
                 android:textColor="@color/white"
                 app:edittextfont="Raleway-Bold.ttf" />
-
             <ImageView
                 android:id="@+id/close"
                 android:layout_width="wrap_content"
