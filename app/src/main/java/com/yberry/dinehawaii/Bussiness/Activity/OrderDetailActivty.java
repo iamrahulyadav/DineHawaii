@@ -655,15 +655,20 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
 
                             tvTotalAmount.setText("$" + listItem.getTotal_price());
 
-                            JsonArray jsonArrayItem = jsonObject.getAsJsonArray("menu_detail");
-                            for (int j = 0; j < jsonArrayItem.size(); j++) {
-                                Gson gson = new Gson();
-                                JsonObject itemDetail = jsonArrayItem.get(j).getAsJsonObject();
-                                OrderDetailItemData model = gson.fromJson(itemDetail, OrderDetailItemData.class);
-                                Log.e(TAG, i + ", itemDetail: >> " + model);
-                                itemList.add(model);
+                            try {
+                                JsonArray jsonArrayItem = jsonObject.getAsJsonArray("menu_detail");
+                                for (int j = 0; j < jsonArrayItem.size(); j++) {
+                                    Gson gson = new Gson();
+                                    JsonObject itemDetail = jsonArrayItem.get(j).getAsJsonObject();
+                                    OrderDetailItemData model = gson.fromJson(itemDetail, OrderDetailItemData.class);
+                                    Log.e(TAG, i + ", itemDetail: >> " + model);
+                                    itemList.add(model);
+                                }
+                                setAdapter();
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
-                            setAdapter();
 
                         }
                     } else {
