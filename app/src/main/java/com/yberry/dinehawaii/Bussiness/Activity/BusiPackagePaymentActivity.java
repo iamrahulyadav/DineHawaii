@@ -307,7 +307,7 @@ public class BusiPackagePaymentActivity extends AppCompatActivity implements Vie
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("method", AppConstants.REGISTRATION.TAX);
         jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(context));
-        Log.e(TAG, "getGETax: json"+jsonObject.toString() );
+        Log.e(TAG, "getGETax: json" + jsonObject.toString());
         MyApiEndpointInterface apiService =
                 ApiClient.getClient().create(MyApiEndpointInterface.class);
         Call<JsonObject> call = apiService.requestGeneral(jsonObject);
@@ -316,7 +316,7 @@ public class BusiPackagePaymentActivity extends AppCompatActivity implements Vie
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 String s = response.body().toString();
-                Log.e(TAG, "getGETax onResponse: "+s );
+                Log.e(TAG, "getGETax onResponse: " + s);
                 try {
                     JSONObject jsonObject = new JSONObject(s);
 
@@ -595,6 +595,7 @@ public class BusiPackagePaymentActivity extends AppCompatActivity implements Vie
     @Override
     protected void onPause() {
         super.onPause();
-        paymentDialog.dismiss();
+        if (paymentDialog != null)
+            paymentDialog.dismiss();
     }
 }
