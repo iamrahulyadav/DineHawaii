@@ -136,6 +136,7 @@ public class CompletedCateringFragment extends Fragment {
                             orderModel.setOrder_id(object.getString("order_id"));
                             orderModel.setDelivery_contact_no(object.getString("delivery_contact_no"));
                             orderModel.setOrder_status(object.getString("order_status"));
+                            orderModel.setOrder_source(object.getString("order_added_by"));
 
                             list.add(orderModel);
                         }

@@ -157,6 +157,37 @@
                         app:edittextfont="Roboto-LIGHT.TTF" />
 
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.yberry.dinehawaii.customview.CustomTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:padding="@dimen/_2sdp"
+                        android:singleLine="true"
+                        android:text="Source : "
+                        android:textStyle="bold"
+                        app:edittextfont="Roboto-MEDIUM.TTF" />
+
+                    <com.yberry.dinehawaii.customview.CustomTextView
+                        android:id="@+id/tvSource"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+
+                        android:background="@drawable/bootomline_gray_back_trans"
+                        android:gravity="center"
+
+                        android:padding="@dimen/_2sdp"
+                        android:singleLine="true"
+                        android:text="App"
+                        app:edittextfont="Roboto-LIGHT.TTF" />
+
+                </LinearLayout>
 
             </LinearLayout>
 

@@ -9,9 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.yberry.dinehawaii.Bussiness.Activity.OrderDetailActivty;
 import com.yberry.dinehawaii.Bussiness.model.OrderDetails;
 import com.yberry.dinehawaii.R;
-import com.yberry.dinehawaii.Bussiness.Activity.OrderDetailActivty;
 import com.yberry.dinehawaii.customview.CustomTextView;
 
 import java.util.ArrayList;
@@ -46,11 +46,12 @@ public class TakeOutAdapter extends RecyclerView.Adapter<TakeOutAdapter.ViewHold
     public void onBindViewHolder(ViewHolder holder, final int position) {
         OrderDetails model = orderDetails.get(position);
         String date = model.getDate();
-        String newDate = date.replaceAll("M","");
+        String newDate = date.replaceAll("M", "");
         holder.dateTextView.setText(newDate);
         holder.nameTextView.setText(model.getUser_name());
         holder.totalAmountTextView.setText(model.getTotal_price());
         holder.statusTextView.setText(model.getOrder_status());
+        holder.tvSource.setText(model.getOrder_source());
 
        /* if (model.getOrder_time().contains("AM")) {
             String replace = model.getOrder_time().replace("AM", "a");
@@ -88,7 +89,7 @@ public class TakeOutAdapter extends RecyclerView.Adapter<TakeOutAdapter.ViewHold
 
         CardView cardView;
         LinearLayout recycler_item;
-        CustomTextView dateTextView, nameTextView, orderTimeTextView, dueTimeTextView, totalAmountTextView, statusTextView;
+        CustomTextView tvSource, dateTextView, nameTextView, orderTimeTextView, dueTimeTextView, totalAmountTextView, statusTextView;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -99,6 +100,8 @@ public class TakeOutAdapter extends RecyclerView.Adapter<TakeOutAdapter.ViewHold
             dueTimeTextView = (CustomTextView) itemView.findViewById(R.id.dueTimeTextView);
             totalAmountTextView = (CustomTextView) itemView.findViewById(R.id.totalAmountTextView);
             statusTextView = (CustomTextView) itemView.findViewById(R.id.statusTextView);
+            tvSource = (CustomTextView) itemView.findViewById(R.id.tvSource);
+
             recycler_item = (LinearLayout) itemView.findViewById(R.id.recycler_item);
         }
     }

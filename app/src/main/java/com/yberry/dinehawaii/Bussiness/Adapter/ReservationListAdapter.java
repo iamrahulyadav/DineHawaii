@@ -17,7 +17,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 
-import com.yberry.dinehawaii.Bussiness.Activity.ReservationDeailsActivity;
+import com.yberry.dinehawaii.Bussiness.Activity.ReservationDetailsActivity;
 import com.yberry.dinehawaii.Model.ReservationDetails;
 import com.yberry.dinehawaii.R;
 import com.yberry.dinehawaii.customview.CustomTextView;
@@ -155,7 +155,7 @@ public class ReservationListAdapter extends RecyclerView.Adapter<ReservationList
                         @Override
                         public void run() {
                             ReservationDetails model = reservList.get(position);
-                            Intent intent = new Intent(context, ReservationDeailsActivity.class);
+                            Intent intent = new Intent(context, ReservationDetailsActivity.class);
                             intent.putExtra("reservation_id", model.getReservId());
                             if (model.isBlinked())
                                 intent.setAction("NOSHOW");

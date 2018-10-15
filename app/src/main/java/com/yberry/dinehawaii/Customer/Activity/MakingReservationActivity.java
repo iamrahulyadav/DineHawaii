@@ -247,6 +247,7 @@ public class MakingReservationActivity extends AppCompatActivity implements Time
                 dpd.setOkColor(getResources().getColor(R.color.colorPrimary));
                 Calendar c = Calendar.getInstance();
                 c.setTimeInMillis(System.currentTimeMillis() - 1000);
+                c.add(Calendar.DATE, 1);
                 dpd.setMinDate(c);
             }
         });
@@ -380,6 +381,8 @@ public class MakingReservationActivity extends AppCompatActivity implements Time
             noOfChilds.setError("Enter no of children");
         else if (noOfAdults.getText().toString().equalsIgnoreCase(""))
             noOfAdults.setError("Enter no of adults");
+        else if (selectedTableID.equalsIgnoreCase(""))
+            Toast.makeText(this, "Select table", Toast.LENGTH_SHORT).show();
         else {
             partySizeS = partySize.getText().toString().trim();
             dateString = datePicker.getText().toString().trim();

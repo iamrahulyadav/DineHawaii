@@ -2,10 +2,8 @@ package com.yberry.dinehawaii.Bussiness.Fragment;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -19,7 +17,6 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.yberry.dinehawaii.Bussiness.Activity.ReservationDeailsActivity;
 import com.yberry.dinehawaii.Bussiness.Adapter.ReservationListAdapter;
 import com.yberry.dinehawaii.Model.ReservationDetails;
 import com.yberry.dinehawaii.R;
@@ -28,7 +25,6 @@ import com.yberry.dinehawaii.RetrofitClasses.MyApiEndpointInterface;
 import com.yberry.dinehawaii.Util.AppConstants;
 import com.yberry.dinehawaii.Util.AppPreferencesBuss;
 import com.yberry.dinehawaii.Util.ProgressHUD;
-import com.yberry.dinehawaii.Util.RecyclerItemClickListener;
 import com.yberry.dinehawaii.Util.Util;
 import com.yberry.dinehawaii.customview.CustomTextView;
 

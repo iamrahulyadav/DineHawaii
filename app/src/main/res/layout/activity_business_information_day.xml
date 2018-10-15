@@ -24,12 +24,12 @@
                 style="@style/TextAppearance.AppCompat.Subhead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:drawableLeft="@drawable/drawable_green_dot"
-                android:drawablePadding="@dimen/_5sdp"
                 android:drawableRight="@drawable/help"
+                android:drawablePadding="@dimen/_5sdp"
                 android:gravity="fill_vertical"
                 android:text="@string/ServiceHour"
                 android:textColor="@color/green"
@@ -585,8 +585,8 @@
                 android:layout_below="@+id/horizontalView"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:drawableLeft="@drawable/drawable_green_dot"
-                android:drawablePadding="@dimen/_5sdp"
                 android:drawableRight="@drawable/help"
+                android:drawablePadding="@dimen/_5sdp"
                 android:gravity="fill_vertical"
                 android:text="@string/LoyaltyProgram"
                 android:textColor="@color/green"
@@ -598,8 +598,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tvLoyalProgram"
                 android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginRight="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_10sdp"
                 android:orientation="horizontal">
 
                 <com.yberry.dinehawaii.customview.CustomRadioButton
@@ -634,8 +634,8 @@
                 android:layout_below="@+id/radiogroup"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:drawableLeft="@drawable/drawable_green_dot"
-                android:drawablePadding="@dimen/_5sdp"
                 android:drawableRight="@drawable/help"
+                android:drawablePadding="@dimen/_5sdp"
                 android:gravity="fill_vertical"
                 android:text="Price Range Per Customer"
                 android:textColor="@color/green"
@@ -673,8 +673,8 @@
                 android:layout_below="@+id/spinnerPriceRange"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:drawableLeft="@drawable/drawable_green_dot"
-                android:drawablePadding="@dimen/_5sdp"
                 android:drawableRight="@drawable/help"
+                android:drawablePadding="@dimen/_5sdp"
                 android:gravity="fill_vertical"
                 android:text="@string/ReservationDeposit"
                 android:textColor="@color/green"
@@ -686,8 +686,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvReservation"
                 android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginRight="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_10sdp"
                 android:orientation="horizontal">
 
                 <com.yberry.dinehawaii.customview.CustomRadioButton
@@ -759,10 +759,10 @@
                         android:hint="00"
                         android:inputType="numberDecimal"
                         android:maxLength="3"
-                        android:paddingBottom="@dimen/_3sdp"
                         android:paddingLeft="@dimen/_5sdp"
-                        android:paddingRight="@dimen/_5sdp"
                         android:paddingTop="@dimen/_3sdp"
+                        android:paddingRight="@dimen/_5sdp"
+                        android:paddingBottom="@dimen/_3sdp"
                         android:textAlignment="center"
                         android:textColor="@color/gray"
                         app:edittextfont="Raleway-Regular.ttf" />
@@ -799,10 +799,10 @@
                         android:hint="00"
                         android:inputType="number"
                         android:maxLength="2"
-                        android:paddingBottom="@dimen/_3sdp"
                         android:paddingLeft="@dimen/_5sdp"
-                        android:paddingRight="@dimen/_5sdp"
                         android:paddingTop="@dimen/_3sdp"
+                        android:paddingRight="@dimen/_5sdp"
+                        android:paddingBottom="@dimen/_3sdp"
                         android:textAlignment="center"
                         android:textColor="@color/gray"
                         app:edittextfont="Raleway-Regular.ttf" />
@@ -828,8 +828,8 @@
                 android:layout_below="@+id/llYesNo"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:drawableLeft="@drawable/drawable_green_dot"
-                android:drawablePadding="@dimen/_5sdp"
                 android:drawableRight="@drawable/help"
+                android:drawablePadding="@dimen/_5sdp"
                 android:gravity="fill_vertical"
                 android:text="Set No-Show Processing"
                 android:textColor="@color/green"
@@ -841,8 +841,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvNoShow"
                 android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginRight="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_10sdp"
                 android:orientation="horizontal">
 
                 <com.yberry.dinehawaii.customview.CustomRadioButton
@@ -850,26 +850,23 @@
                     style="@style/TextAppearance.AppCompat.Subhead"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvReservation"
                     android:buttonTint="@color/colorPrimary"
                     android:text="Automatic"
                     android:textColor="@color/gray"
                     app:edittextfont="Raleway-Regular.ttf" />
 
                 <com.yberry.dinehawaii.customview.CustomRadioButton
+                    android:id="@+id/rbManual"
                     style="@style/TextAppearance.AppCompat.Subhead"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/tvReservation"
                     android:layout_marginLeft="@dimen/_20sdp"
                     android:layout_toRightOf="@+id/rbAuto"
                     android:buttonTint="@color/colorPrimary"
                     android:checked="true"
                     android:text="Manual"
                     android:textColor="@color/gray"
-                    app:edittextfont="Raleway-Regular.ttf"
-
-                    />
+                    app:edittextfont="Raleway-Regular.ttf" />
 
             </RadioGroup>
 
@@ -881,8 +878,8 @@
                 android:layout_below="@+id/grpNoShow"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:drawableLeft="@drawable/drawable_green_dot"
-                android:drawablePadding="@dimen/_5sdp"
                 android:drawableRight="@drawable/help"
+                android:drawablePadding="@dimen/_5sdp"
                 android:gravity="fill_vertical"
                 android:text="Assign Delivery to Delivery vendors"
                 android:textColor="@color/green"
@@ -894,8 +891,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvDelivery"
                 android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginRight="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_10sdp"
                 android:orientation="horizontal">
 
                 <com.yberry.dinehawaii.customview.CustomRadioButton
@@ -910,6 +907,7 @@
                     app:edittextfont="Raleway-Regular.ttf" />
 
                 <com.yberry.dinehawaii.customview.CustomRadioButton
+                    android:id="@+id/rbDelManual"
                     style="@style/TextAppearance.AppCompat.Subhead"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -917,7 +915,6 @@
                     android:layout_marginLeft="@dimen/_20sdp"
                     android:layout_toRightOf="@+id/rbdelAuto"
                     android:buttonTint="@color/colorPrimary"
-                    android:id="@+id/rbDelManual"
                     android:checked="true"
                     android:text="Manual"
                     android:textColor="@color/gray"

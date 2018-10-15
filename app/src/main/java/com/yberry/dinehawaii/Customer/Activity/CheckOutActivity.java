@@ -2094,7 +2094,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
             this.origin_long = origin_long;
             this.dest_lat = dest_lat;
             this.dest_long = dest_long;
-            url_request = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + origin_lat + "," + origin_long + "&destinations=" + dest_lat + "," + dest_long + "&mode=driving&key=" + API_KEY;
+            url_request = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + origin_lat + "," + origin_long + "&destinations=" + dest_lat + "," + dest_long + "&mode=driving&units=imperial&key=" + API_KEY;
         }
 
         @Override

@@ -17,7 +17,7 @@ import android.util.Log;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.yberry.dinehawaii.Bussiness.Activity.OrderDetailActivty;
-import com.yberry.dinehawaii.Bussiness.Activity.ReservationDeailsActivity;
+import com.yberry.dinehawaii.Bussiness.Activity.ReservationDetailsActivity;
 import com.yberry.dinehawaii.Customer.Activity.CustomerOrderDetailActivity;
 import com.yberry.dinehawaii.Customer.Activity.CustomerResDetailActivity;
 import com.yberry.dinehawaii.R;
@@ -52,7 +52,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 } else if (jsonObject1.has("new_reservation")) {
                     messageBody = jsonObject1.getString("new_reservation");
                     reserv_id = jsonObject1.getString("reserv_id");
-                    Intent intent = new Intent(this, ReservationDeailsActivity.class);
+                    Intent intent = new Intent(this, ReservationDetailsActivity.class);
                     intent.setAction("SHOW");
                     intent.putExtra("reservation_id", reserv_id);
                     sendNotification(intent, messageBody);
@@ -111,7 +111,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
                 } else if (jsonObject1.has("noshow_reservation_business")) {
                     messageBody = jsonObject1.getString("noshow_reservation_business");
-                    Intent intent = new Intent(this, ReservationDeailsActivity.class);
+                    Intent intent = new Intent(this, ReservationDetailsActivity.class);
                     intent.setAction("NOSHOW");
                     intent.putExtra("reservation_id", jsonObject1.getString("reserv_id"));
                     sendNotification(intent, messageBody);

@@ -126,6 +126,7 @@ public class PendingCateringOrderFragment extends Fragment {
                             orderModel.setDelivery_adderess(object.getString("delivery_adderess"));
                             orderModel.setOrder_id(object.getString("order_id"));
                             orderModel.setDelivery_contact_no(object.getString("delivery_contact_no"));
+                            orderModel.setOrder_source(object.getString("order_added_by"));
 
                             list.add(orderModel);
                             //Log.d("amt", object.getString("amount"));

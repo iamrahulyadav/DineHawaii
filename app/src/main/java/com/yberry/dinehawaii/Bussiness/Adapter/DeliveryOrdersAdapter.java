@@ -9,9 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.yberry.dinehawaii.Bussiness.Activity.OrderDetailActivty;
 import com.yberry.dinehawaii.Bussiness.model.OrderDetails;
 import com.yberry.dinehawaii.R;
-import com.yberry.dinehawaii.Bussiness.Activity.OrderDetailActivty;
 import com.yberry.dinehawaii.customview.CustomTextView;
 
 import java.util.ArrayList;
@@ -45,11 +45,12 @@ public class DeliveryOrdersAdapter extends RecyclerView.Adapter<DeliveryOrdersAd
     public void onBindViewHolder(ViewHolder holder, final int position) {
         OrderDetails model = orderDetails.get(position);
         String date = model.getDate();
-        String newDate = date.replaceAll("M","");
+        String newDate = date.replaceAll("M", "");
         holder.dateTextView.setText(newDate);
         holder.nameTextView.setText(model.getDelivery_name());
         holder.totalAmountTextView.setText(model.getTotal_price());
         holder.statusTextView.setText(model.getOrder_status());
+        holder.tvSource.setText(model.getOrder_source());
 
         holder.recycler_item.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,7 +72,7 @@ public class DeliveryOrdersAdapter extends RecyclerView.Adapter<DeliveryOrdersAd
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         CardView cardView;
-        CustomTextView dateTextView, nameTextView, totalAmountTextView, statusTextView;
+        CustomTextView tvSource, dateTextView, nameTextView, totalAmountTextView, statusTextView;
         LinearLayout recycler_item;
 
         public ViewHolder(View itemView) {
@@ -81,6 +82,7 @@ public class DeliveryOrdersAdapter extends RecyclerView.Adapter<DeliveryOrdersAd
             nameTextView = (CustomTextView) itemView.findViewById(R.id.nameTextView);
             totalAmountTextView = (CustomTextView) itemView.findViewById(R.id.totalAmountTextView);
             statusTextView = (CustomTextView) itemView.findViewById(R.id.statusTextView);
+            tvSource = (CustomTextView) itemView.findViewById(R.id.tvSource);
             recycler_item = (LinearLayout) itemView.findViewById(R.id.recycler_item);
         }
     }

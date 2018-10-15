@@ -141,6 +141,7 @@ public class PendingDeliveryOrdersFragment extends Fragment {
                                 orderModel.setCustomization(object.getString("customization"));
                                 orderModel.setDescription(object.getString("description"));
                                 orderModel.setOrder_status(object.getString("order_status"));
+                                orderModel.setOrder_source(object.getString("order_added_by"));
                                 list.add(orderModel);
                             }
                         } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {

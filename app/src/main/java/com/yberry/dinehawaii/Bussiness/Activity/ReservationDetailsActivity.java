@@ -55,7 +55,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ReservationDeailsActivity extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
+public class ReservationDetailsActivity extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
     private static final String TAG = "ReservationDetails";
     String tempRDate;
     ArrayList<TableData> tableDataList = new ArrayList<TableData>();
@@ -85,6 +85,7 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reservation_deails);
+        context = this;
         setToolbar();
         init();
         initControls();
@@ -153,7 +154,6 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
     }
 
     private void init() {
-        context = this;
         ((CustomTextView) findViewById(R.id.btnCloseR)).setOnClickListener(this);
         ((CustomTextView) findViewById(R.id.btnCancel)).setOnClickListener(this);
         ((CustomTextView) findViewById(R.id.btnConfirm)).setOnClickListener(this);
@@ -212,7 +212,7 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
     }
 
     private void choseRestoreTable() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(ReservationDeailsActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Restore Reservation");
         builder.setMessage("Choose a new table to reassign: ");
         builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
@@ -234,8 +234,8 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
     private void makeRservAvailable() {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("method", AppConstants.BUSINESS_TABLE_SYSTEM_API.WAIT_RESERV_CONFIRM);
-        jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(ReservationDeailsActivity.this));
-        jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(ReservationDeailsActivity.this));
+        jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(context));
+        jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(context));
         jsonObject.addProperty("reserv_id", reservation_id);
         Log.e(TAG, "make res ava Request >> " + jsonObject.toString());
         performAction(jsonObject);
@@ -244,12 +244,12 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
     private void getResrvData() {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.CUSTOMER_USER.RESERV_DETAILS);
-        jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(ReservationDeailsActivity.this));
-        jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(ReservationDeailsActivity.this));
+        jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(context));
+        jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(context));
         jsonObject.addProperty("reservation_id", reservation_id);
         Log.e(TAG, "Request GET RESERVATION DETAILS" + jsonObject.toString());
 
-        final ProgressHUD progressHD = ProgressHUD.show(ReservationDeailsActivity.this, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
+        final ProgressHUD progressHD = ProgressHUD.show(context, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
             }
@@ -286,7 +286,7 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
                             ((CardView) findViewById(R.id.card_now_show)).setVisibility(View.VISIBLE);
                             ((CardView) findViewById(R.id.card_confirm)).setVisibility(View.GONE);
                             ((CardView) findViewById(R.id.card_make_available)).setVisibility(View.GONE);
-                            ((CustomTextView) findViewById(R.id.btnCloseR)).setOnClickListener(ReservationDeailsActivity.this);
+                            ((CustomTextView) findViewById(R.id.btnCloseR)).setOnClickListener(ReservationDetailsActivity.this);
                             btnNoShow = (CustomTextView) findViewById(R.id.btnNoShow);
                             anim = new AlphaAnimation(0.0f, 1.0f);
                             anim.setDuration(200);
@@ -311,7 +311,7 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
                                             Log.e(TAG, "reserTime24hr is before currentTime24");
                                             if (afterAddingMins.compareTo(currentTime24) > 0) {
                                                 ((CustomTextView) findViewById(R.id.btnNoShow)).startAnimation(anim);
-                                                btnNoShow.setOnClickListener(ReservationDeailsActivity.this);
+                                                btnNoShow.setOnClickListener(ReservationDetailsActivity.this);
                                                 Log.e(TAG, "currentTime24 is before afterAddingMins");
                                                 Log.e(TAG, "onCreate: IT'S NO-SHOW TIME");
                                             }
@@ -416,9 +416,9 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
                     } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
                         JSONArray jsonArray2 = jsonObject.getJSONArray("result");
                         JSONObject jsonObject1 = jsonArray2.getJSONObject(0);
-                        Toast.makeText(ReservationDeailsActivity.this, jsonObject1.getString("msg"), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, jsonObject1.getString("msg"), Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(ReservationDeailsActivity.this, "Server not Responding", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Server not Responding", Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -431,14 +431,14 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Log.e(TAG, "error :- " + Log.getStackTraceString(t));
                 progressHD.dismiss();
-                Toast.makeText(ReservationDeailsActivity.this, "Server not Responding", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Server not Responding", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void getBusinessTables() {
-        if (Util.isNetworkAvailable(ReservationDeailsActivity.this)) {
-            final ProgressHUD progressHD = ProgressHUD.show(ReservationDeailsActivity.this, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
+        if (Util.isNetworkAvailable(context)) {
+            final ProgressHUD progressHD = ProgressHUD.show(context, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
                 @Override
                 public void onCancel(DialogInterface dialog) {
                     // TODO Auto-generated method stub
@@ -447,9 +447,9 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
 
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("method", AppConstants.CUSTOMER_USER.GET_PARTY_SIZE_TABLE);
-            jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(ReservationDeailsActivity.this));
+            jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(context));
             jsonObject.addProperty("party_size", "2");
-            jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(ReservationDeailsActivity.this));
+            jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(context));
             Log.e(TAG, "Request GET TABLES >> " + jsonObject.toString());
             MyApiEndpointInterface apiService = ApiClient.getClient().create(MyApiEndpointInterface.class);
             Call<JsonObject> call = apiService.get_party_size_tables(jsonObject);
@@ -481,7 +481,7 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
                                 tableDataListString[i] = name;
                             }
                             Log.e("Table List:", "" + tableDataList);
-                            new AlertDialog.Builder(ReservationDeailsActivity.this)
+                            new AlertDialog.Builder(context)
                                     .setTitle("Select Re-assign Table")
                                     .setSingleChoiceItems(tableDataListString, 0, null)
                                     .setPositiveButton("Select", new DialogInterface.OnClickListener() {
@@ -539,13 +539,13 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
                 }
             });
         } else {
-            Toast.makeText(ReservationDeailsActivity.this, "Please Connect Your Internet", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "Please Connect Your Internet", Toast.LENGTH_LONG).show();
         }
     }
 
     private void restoreReservation() {
-        if (Util.isNetworkAvailable(ReservationDeailsActivity.this)) {
-            final ProgressHUD progressHD = ProgressHUD.show(ReservationDeailsActivity.this, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
+        if (Util.isNetworkAvailable(context)) {
+            final ProgressHUD progressHD = ProgressHUD.show(context, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
                 @Override
                 public void onCancel(DialogInterface dialog) {
                     // TODO Auto-generated method stub
@@ -557,8 +557,8 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
             jsonObject.addProperty("reservation_id", reservation_id);
             jsonObject.addProperty("table_id", selected_table_id);
             jsonObject.addProperty("combine_table", combinetable);
-            jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(ReservationDeailsActivity.this));
-            jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(ReservationDeailsActivity.this));
+            jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(context));
+            jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(context));
             Log.e(TAG, "restoreReservation : Request >> " + jsonObject.toString());
             MyApiEndpointInterface apiService = ApiClient.getClient().create(MyApiEndpointInterface.class);
             Call<JsonObject> call = apiService.business_table_reaservation_api(jsonObject);
@@ -575,7 +575,7 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
                         String msg;
                         if (jsonObject.getString("status").equalsIgnoreCase("200")) {
                             msg = jsonObject.getJSONArray("result").getJSONObject(0).getString("msg");
-                            new AlertDialog.Builder(ReservationDeailsActivity.this)
+                            new AlertDialog.Builder(context)
                                     .setTitle("Message")
                                     .setMessage(msg)
                                     .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -614,7 +614,7 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
                 }
             });
         } else {
-            Toast.makeText(ReservationDeailsActivity.this, "Please Connect Your Internet", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "Please Connect Your Internet", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -639,7 +639,7 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
                 Log.e(TAG, "reserTime24hr is before currentTime24");
                 if (afterAddingMins.compareTo(currentTime24) > 0) {
                     ((CustomTextView) findViewById(R.id.btnNoShow)).startAnimation(anim);
-                    btnNoShow.setOnClickListener(ReservationDeailsActivity.this);
+                    btnNoShow.setOnClickListener(ReservationDetailsActivity.this);
                     Log.e(TAG, "currentTime24 is before afterAddingMins");
                     Log.e(TAG, "onCreate: IT'S NO-SHOW TIME");
                 }
@@ -657,8 +657,8 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
     private void cancelReservation() {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("method", AppConstants.BUSINESS_TABLE_SYSTEM_API.CANCEL_RESERVATION);
-        jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(ReservationDeailsActivity.this));
-        jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(ReservationDeailsActivity.this));
+        jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(context));
+        jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(context));
         jsonObject.addProperty("reserv_id", reservation_id);
         Log.e(TAG, "cancelReservation: Request >> " + jsonObject.toString());
         performAction(jsonObject);
@@ -667,8 +667,8 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
     private void confirmReservation() {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("method", AppConstants.BUSINESS_TABLE_SYSTEM_API.CONFIRM_RESERVATION);
-        jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(ReservationDeailsActivity.this));
-        jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(ReservationDeailsActivity.this));
+        jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(context));
+        jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(context));
         jsonObject.addProperty("reserv_id", reservation_id);
         Log.e(TAG, "confirmReservation: Request >> " + jsonObject);
         performAction(jsonObject);
@@ -676,7 +676,7 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
     }
 
     private void performAction(JsonObject jsonObject) {
-        final ProgressHUD progressHD = ProgressHUD.show(ReservationDeailsActivity.this, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
+        final ProgressHUD progressHD = ProgressHUD.show(context, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
                 // TODO Auto-generated method stub
@@ -718,7 +718,7 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
     }
 
     private void openCloseDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(ReservationDeailsActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Close Reservation");
         builder.setMessage("Do you want to close this reservation?");
         builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
@@ -740,15 +740,15 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
     private void closeReservation() {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("method", AppConstants.ENDPOINT.CLOSE_RESERVATION);
-        jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(ReservationDeailsActivity.this));
-        jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(ReservationDeailsActivity.this));
+        jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(context));
+        jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(context));
         jsonObject.addProperty("reserv_id", reservation_id);
         Log.e(TAG, "closeReservation: Request >> " + jsonObject.toString());
         performCloseAction(jsonObject);
     }
 
     private void performCloseAction(JsonObject jsonObject) {
-        final ProgressHUD progressHD = ProgressHUD.show(ReservationDeailsActivity.this, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
+        final ProgressHUD progressHD = ProgressHUD.show(context, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
                 // TODO Auto-generated method stub
@@ -788,7 +788,7 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
     }
 
     private void makeNoShow() {
-        final ProgressHUD progressHD = ProgressHUD.show(ReservationDeailsActivity.this, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
+        final ProgressHUD progressHD = ProgressHUD.show(context, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
                 // TODO Auto-generated method stub
@@ -797,8 +797,8 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
 
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("method", AppConstants.ENDPOINT.NOSHOWTIMEUPDATE);
-        jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(ReservationDeailsActivity.this));
-        jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(ReservationDeailsActivity.this));
+        jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(context));
+        jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(context));
         jsonObject.addProperty("reserv_id", reservation_id);
         Log.e(TAG, "makeNoShow: Request >> " + jsonObject.toString());
 
@@ -835,7 +835,7 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
     }
 
     private void cancelDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(ReservationDeailsActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Cancel Reservation");
         builder.setMessage("Do you want to cancel this reservation?");
         builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
@@ -869,7 +869,7 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
             public void onClick(View v) {
                 Calendar now = Calendar.getInstance();
                 DatePickerDialog dpd = DatePickerDialog.newInstance(
-                        ReservationDeailsActivity.this,
+                        ReservationDetailsActivity.this,
                         now.get(Calendar.YEAR),
                         now.get(Calendar.MONTH),
                         now.get(Calendar.DAY_OF_MONTH)
@@ -904,7 +904,7 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
     }
 
     private void setReschedule() {
-        final ProgressHUD progressHD = ProgressHUD.show(ReservationDeailsActivity.this, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
+        final ProgressHUD progressHD = ProgressHUD.show(context, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
             }
@@ -915,8 +915,8 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
         jsonObject.addProperty("reserv_id", reservation_id);
         jsonObject.addProperty("date", new_date);
         jsonObject.addProperty("time", new_time);
-        jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(ReservationDeailsActivity.this));
-        jsonObject.addProperty(AppConstants.KEY_USERID, AppPreferencesBuss.getUserId(ReservationDeailsActivity.this));
+        jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(context));
+        jsonObject.addProperty(AppConstants.KEY_USERID, AppPreferencesBuss.getUserId(context));
         Log.e(TAG, "Request SET RESCHEDULE" + jsonObject.toString());
 
         MyApiEndpointInterface apiService = ApiClient.getClient().create(MyApiEndpointInterface.class);
@@ -934,9 +934,9 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
                     } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
                         JSONArray jsonArray2 = jsonObject.getJSONArray("result");
                         JSONObject jsonObject1 = jsonArray2.getJSONObject(0);
-                        Toast.makeText(ReservationDeailsActivity.this, jsonObject1.getString("msg"), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, jsonObject1.getString("msg"), Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(ReservationDeailsActivity.this, "Server not Responding", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Server not Responding", Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -949,7 +949,7 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Log.e(TAG, "error :- " + Log.getStackTraceString(t));
                 progressHD.dismiss();
-                Toast.makeText(ReservationDeailsActivity.this, "Server not Responding", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Server not Responding", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -983,7 +983,7 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
     }
 
     private void openTableReadyDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(ReservationDeailsActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Table Ready");
         builder.setMessage("Is customer table ready?");
         builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
@@ -1033,7 +1033,7 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
     }
 
     private void openCheckinDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(ReservationDeailsActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Checked-in");
         builder.setMessage("Your customer is checked-in into restaurant?");
         builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
@@ -1052,7 +1052,7 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
     }
 
     private void setCheckIn() {
-        final ProgressHUD progressHD = ProgressHUD.show(ReservationDeailsActivity.this, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
+        final ProgressHUD progressHD = ProgressHUD.show(context, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
             }
@@ -1062,8 +1062,8 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
         jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.BUSSINES_USER_BUSINESSAPI.SETCHECKEDIN);
         jsonObject.addProperty("reserv_id", reservation_id);
         jsonObject.addProperty("checked_id", "1");
-        jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(ReservationDeailsActivity.this));
-        jsonObject.addProperty(AppConstants.KEY_USERID, AppPreferencesBuss.getUserId(ReservationDeailsActivity.this));
+        jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(context));
+        jsonObject.addProperty(AppConstants.KEY_USERID, AppPreferencesBuss.getUserId(context));
         Log.e(TAG, "Request SET CHECK IN" + jsonObject.toString());
 
         MyApiEndpointInterface apiService = ApiClient.getClient().create(MyApiEndpointInterface.class);
@@ -1082,9 +1082,9 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
                     } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
                         JSONArray jsonArray2 = jsonObject.getJSONArray("result");
                         JSONObject jsonObject1 = jsonArray2.getJSONObject(0);
-                        Toast.makeText(ReservationDeailsActivity.this, jsonObject1.getString("msg"), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, jsonObject1.getString("msg"), Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(ReservationDeailsActivity.this, "Server not Responding", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Server not Responding", Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -1097,13 +1097,13 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Log.e(TAG, "error :- " + Log.getStackTraceString(t));
                 progressHD.dismiss();
-                Toast.makeText(ReservationDeailsActivity.this, "Server not Responding", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Server not Responding", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void setTableReady() {
-        final ProgressHUD progressHD = ProgressHUD.show(ReservationDeailsActivity.this, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
+        final ProgressHUD progressHD = ProgressHUD.show(context, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
             }
@@ -1113,8 +1113,8 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
         jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.BUSSINES_USER_BUSINESSAPI.SETTABLEREADY);
         jsonObject.addProperty("reserv_id", reservation_id);
         jsonObject.addProperty("table_ready", "1");
-        jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(ReservationDeailsActivity.this));
-        jsonObject.addProperty(AppConstants.KEY_USERID, AppPreferencesBuss.getUserId(ReservationDeailsActivity.this));
+        jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(context));
+        jsonObject.addProperty(AppConstants.KEY_USERID, AppPreferencesBuss.getUserId(context));
         Log.e(TAG, "Request SET CHECK IN" + jsonObject.toString());
 
         MyApiEndpointInterface apiService = ApiClient.getClient().create(MyApiEndpointInterface.class);
@@ -1133,9 +1133,9 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
                     } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
                         JSONArray jsonArray2 = jsonObject.getJSONArray("result");
                         JSONObject jsonObject1 = jsonArray2.getJSONObject(0);
-                        Toast.makeText(ReservationDeailsActivity.this, jsonObject1.getString("msg"), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, jsonObject1.getString("msg"), Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(ReservationDeailsActivity.this, "Server not Responding", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Server not Responding", Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -1148,13 +1148,13 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Log.e(TAG, "error :- " + Log.getStackTraceString(t));
                 progressHD.dismiss();
-                Toast.makeText(ReservationDeailsActivity.this, "Server not Responding", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Server not Responding", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void setTvSeatedBy(String seatedBy) {
-        final ProgressHUD progressHD = ProgressHUD.show(ReservationDeailsActivity.this, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
+        final ProgressHUD progressHD = ProgressHUD.show(context, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
             }
@@ -1164,8 +1164,8 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
         jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.BUSSINES_USER_BUSINESSAPI.SETSEATEDBY);
         jsonObject.addProperty("reserv_id", reservation_id);
         jsonObject.addProperty("seated_by", seatedBy);
-        jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(ReservationDeailsActivity.this));
-        jsonObject.addProperty(AppConstants.KEY_USERID, AppPreferencesBuss.getUserId(ReservationDeailsActivity.this));
+        jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(context));
+        jsonObject.addProperty(AppConstants.KEY_USERID, AppPreferencesBuss.getUserId(context));
         Log.e(TAG, "Request SET CHECK IN" + jsonObject.toString());
 
         MyApiEndpointInterface apiService = ApiClient.getClient().create(MyApiEndpointInterface.class);
@@ -1183,9 +1183,9 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
                     } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
                         JSONArray jsonArray2 = jsonObject.getJSONArray("result");
                         JSONObject jsonObject1 = jsonArray2.getJSONObject(0);
-                        Toast.makeText(ReservationDeailsActivity.this, jsonObject1.getString("msg"), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, jsonObject1.getString("msg"), Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(ReservationDeailsActivity.this, "Server not Responding", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Server not Responding", Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -1198,13 +1198,13 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Log.e(TAG, "error :- " + Log.getStackTraceString(t));
                 progressHD.dismiss();
-                Toast.makeText(ReservationDeailsActivity.this, "Server not Responding", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Server not Responding", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void setWaitTime(String wait_time) {
-        final ProgressHUD progressHD = ProgressHUD.show(ReservationDeailsActivity.this, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
+        final ProgressHUD progressHD = ProgressHUD.show(context, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
             }
@@ -1214,8 +1214,8 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
         jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.BUSSINES_USER_BUSINESSAPI.SETWAITTIME);
         jsonObject.addProperty("reserv_id", reservation_id);
         jsonObject.addProperty("waiting_time", wait_time);
-        jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(ReservationDeailsActivity.this));
-        jsonObject.addProperty(AppConstants.KEY_USERID, AppPreferencesBuss.getUserId(ReservationDeailsActivity.this));
+        jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(context));
+        jsonObject.addProperty(AppConstants.KEY_USERID, AppPreferencesBuss.getUserId(context));
         Log.e(TAG, "Request SET WAIT TIME" + jsonObject.toString());
 
         MyApiEndpointInterface apiService = ApiClient.getClient().create(MyApiEndpointInterface.class);
@@ -1233,9 +1233,9 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
                     } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
                         JSONArray jsonArray2 = jsonObject.getJSONArray("result");
                         JSONObject jsonObject1 = jsonArray2.getJSONObject(0);
-                        Toast.makeText(ReservationDeailsActivity.this, jsonObject1.getString("msg"), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, jsonObject1.getString("msg"), Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(ReservationDeailsActivity.this, "Server not Responding", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Server not Responding", Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -1248,7 +1248,7 @@ public class ReservationDeailsActivity extends AppCompatActivity implements View
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Log.e(TAG, "error :- " + Log.getStackTraceString(t));
                 progressHD.dismiss();
-                Toast.makeText(ReservationDeailsActivity.this, "Server not Responding", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Server not Responding", Toast.LENGTH_SHORT).show();
             }
         });
     }

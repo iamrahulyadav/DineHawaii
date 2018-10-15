@@ -1,10 +1,9 @@
 package com.yberry.dinehawaii.Bussiness.Fragment;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -14,9 +13,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.yberry.dinehawaii.Bussiness.Activity.TableLayoutActivity;
 import com.yberry.dinehawaii.R;
 import com.yberry.dinehawaii.Util.FragmentIntraction;
-import com.yberry.dinehawaii.Util.Function;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -30,6 +29,7 @@ public class TableManagmentFragment extends Fragment {
     View view;
     ViewPager viewPager;
     FragmentIntraction intraction;
+    FloatingActionButton fabBtn;
 
     public TableManagmentFragment() {
         // Required empty public constructor
@@ -71,6 +71,7 @@ public class TableManagmentFragment extends Fragment {
 
     private void init() {
         viewPager = (ViewPager) view.findViewById(R.id.viewpager);
+        fabBtn = view.findViewById(R.id.fabBtn);
         PagerAdapter pagerAdapter = new PagerAdapter(getActivity().getSupportFragmentManager(), getActivity());
         pagerAdapter.addFragment(new ResvCurrentFragment());
         pagerAdapter.addFragment(new ResvFutureFragment());
@@ -79,15 +80,22 @@ public class TableManagmentFragment extends Fragment {
         viewPager.setAdapter(pagerAdapter);
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
-        Date date= Calendar.getInstance().getTime();
-        SimpleDateFormat df= new SimpleDateFormat("MM/dd/yyyy");
+        Date date = Calendar.getInstance().getTime();
+        SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
         String today = df.format(date);
         Log.v(TAG, "Todays Date :- " + today);
-        tabLayout.getTabAt(0).setText(today+ " TODAY");
+        tabLayout.getTabAt(0).setText(today + " TODAY");
         tabLayout.getTabAt(1).setText("FUTURE");
         tabLayout.getTabAt(2).setText("WAIT LIST");
         tabLayout.getTabAt(3).setText("PREVIOUS");
         viewPager.setCurrentItem(0);
+
+        fabBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), TableLayoutActivity.class));
+            }
+        });
     }
 
     class PagerAdapter extends android.support.v4.app.FragmentStatePagerAdapter {

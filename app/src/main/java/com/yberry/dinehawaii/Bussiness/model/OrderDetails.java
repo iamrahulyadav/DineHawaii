@@ -33,6 +33,7 @@ public class OrderDetails implements Serializable {
     String coupon_code;
     String coupon_amount;
     String order_assign_status;
+    String order_source;
 
     public String getVendor_name() {
         return vendor_name;
@@ -67,7 +68,7 @@ public class OrderDetails implements Serializable {
 
     public OrderDetails(String id, String order_id, String date, String business_name, String total_price, String delivery_adderess, String delivery_name, String delivery_contact_no, String order_status, String user_name,
                         String food_name, String quantity, String order_type, String customization, String description, String loyalty_points,
-                        String e_gift_code, String e_gift_amount, String coupon_code, String coupon_amount,String order_assign_status ) {
+                        String e_gift_code, String e_gift_amount, String coupon_code, String coupon_amount, String order_assign_status) {
         this.id = id;
         this.order_id = order_id;
         this.date = date;
@@ -88,7 +89,7 @@ public class OrderDetails implements Serializable {
         this.e_gift_amount = e_gift_amount;
         this.coupon_code = coupon_code;
         this.coupon_amount = coupon_amount;
-        this.order_assign_status  = order_assign_status ;
+        this.order_assign_status = order_assign_status;
 
     }
 
@@ -284,6 +285,14 @@ public class OrderDetails implements Serializable {
         this.reviewmsg = reviewmsg;
     }
 
+    public String getOrder_source() {
+        return order_source;
+    }
+
+    public void setOrder_source(String order_source) {
+        this.order_source = order_source;
+    }
+
     @Override
     public String toString() {
         return "OrderDetails{" +
@@ -309,9 +318,10 @@ public class OrderDetails implements Serializable {
                 ", coupon_code='" + coupon_code + '\'' +
                 ", coupon_amount='" + coupon_amount + '\'' +
                 ", vendor_name='" + vendor_name + '\'' +
-                ", vendor_business_name='" + vendor_business_name+ '\'' +
-                ", vendor_contact_no='" + vendor_contact_no+ '\'' +
-                ", order_assign_status='" + order_assign_status+ '\'' +
+                ", vendor_business_name='" + vendor_business_name + '\'' +
+                ", vendor_contact_no='" + vendor_contact_no + '\'' +
+                ", order_assign_status='" + order_assign_status + '\'' +
+                ", order_source='" + order_source + '\'' +
                 '}';
     }
 }

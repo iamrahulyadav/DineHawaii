@@ -319,10 +319,12 @@ public class BusinessServiceHoursFragment extends Fragment implements View.OnCli
         friAD.setOnClickListener(this);
         friBF.setOnClickListener(this);
         friL.setOnClickListener(this);
+        friD.setOnClickListener(this);
         thusD.setOnClickListener(this);
         satAD.setOnClickListener(this);
         satBF.setOnClickListener(this);
         satL.setOnClickListener(this);
+        satD.setOnClickListener(this);
         satOther.setOnClickListener(this);
         jsonObject = new JsonObject();
         submitButton.setOnClickListener(new View.OnClickListener() {

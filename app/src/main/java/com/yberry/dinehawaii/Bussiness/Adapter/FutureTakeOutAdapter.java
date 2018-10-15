@@ -10,9 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.yberry.dinehawaii.Bussiness.Activity.OrderDetailActivty;
 import com.yberry.dinehawaii.Bussiness.model.OrderDetails;
 import com.yberry.dinehawaii.R;
-import com.yberry.dinehawaii.Bussiness.Activity.OrderDetailActivty;
 import com.yberry.dinehawaii.customview.CustomTextView;
 
 import java.util.ArrayList;
@@ -52,6 +52,7 @@ public class FutureTakeOutAdapter extends RecyclerView.Adapter<FutureTakeOutAdap
         holder.totalAmountTextView.setText(model.getTotal_price());
         holder.statusTextView.setText(model.getOrder_status());
         holder.pickupNameNoTextView.setText(model.getDelivery_adderess());
+        holder.tvSource.setText(model.getOrder_source());
         Log.e("order_data", model.toString());
 
         holder.recycler_item.setOnClickListener(new View.OnClickListener() {
@@ -74,7 +75,7 @@ public class FutureTakeOutAdapter extends RecyclerView.Adapter<FutureTakeOutAdap
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         CardView cardView;
-        CustomTextView dateTextView, nameTextView, pickupNameNoTextView, orderTimeTextView, dueTimeTextView, totalAmountTextView, statusTextView;
+        CustomTextView tvSource, dateTextView, nameTextView, pickupNameNoTextView, orderTimeTextView, dueTimeTextView, totalAmountTextView, statusTextView;
         LinearLayout recycler_item;
 
         public ViewHolder(View itemView) {
@@ -88,6 +89,8 @@ public class FutureTakeOutAdapter extends RecyclerView.Adapter<FutureTakeOutAdap
             totalAmountTextView = (CustomTextView) itemView.findViewById(R.id.totalAmountTextView);
             statusTextView = (CustomTextView) itemView.findViewById(R.id.statusTextView);
             recycler_item = (LinearLayout) itemView.findViewById(R.id.recycler_item);
+            tvSource = (CustomTextView) itemView.findViewById(R.id.tvSource);
+
         }
     }
 

@@ -149,7 +149,11 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name=".Bussiness.Activity.ReservationDeailsActivity"
+            android:name=".Bussiness.Activity.ReservationDetailsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name=".Bussiness.Activity.TableLayoutActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity

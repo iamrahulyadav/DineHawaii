@@ -363,8 +363,9 @@ public class RestaurantListFragment extends Fragment {
 
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                     Log.e(TAG, "Request GET ALL RESTAURANTS >>  " + call.request().toString());
-                    Log.e(TAG, "Response GET ALL RESTAURANTS >> " + response.body().toString());
                     JsonObject jsonObject = response.body();
+                    Log.e(TAG, "Response GET ALL RESTAURANTS >> " + jsonObject);
+
                     if (jsonObject.get("status").getAsString().equals("200")) {
                         JsonArray jsonArray = jsonObject.getAsJsonArray("result");
                         for (int i = 0; i < jsonArray.size(); i++) {

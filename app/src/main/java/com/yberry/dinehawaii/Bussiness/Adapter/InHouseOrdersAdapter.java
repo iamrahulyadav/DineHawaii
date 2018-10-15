@@ -46,11 +46,12 @@ public class InHouseOrdersAdapter extends RecyclerView.Adapter<InHouseOrdersAdap
         OrderDetails model = orderDetails.get(position);
 
         String date = model.getDate();
-        String newDate = date.replaceAll("M","");
+        String newDate = date.replaceAll("M", "");
         holder.dateTextView.setText(newDate);
         holder.nameTextView.setText(model.getUser_name());
         holder.totalAmountTextView.setText(model.getTotal_price());
         holder.statusTextView.setText(model.getOrder_status());
+        holder.tvSource.setText(model.getOrder_source());
 
         holder.recycler_item.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +73,7 @@ public class InHouseOrdersAdapter extends RecyclerView.Adapter<InHouseOrdersAdap
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         CardView cardView;
-        CustomTextView dateTextView, nameTextView, totalAmountTextView, statusTextView;
+        CustomTextView tvSource, dateTextView, nameTextView, totalAmountTextView, statusTextView;
         LinearLayout recycler_item;
 
         public ViewHolder(View itemView) {
@@ -82,6 +83,7 @@ public class InHouseOrdersAdapter extends RecyclerView.Adapter<InHouseOrdersAdap
             nameTextView = (CustomTextView) itemView.findViewById(R.id.nameTextView);
             totalAmountTextView = (CustomTextView) itemView.findViewById(R.id.totalAmountTextView);
             statusTextView = (CustomTextView) itemView.findViewById(R.id.statusTextView);
+            tvSource = (CustomTextView) itemView.findViewById(R.id.tvSource);
             recycler_item = (LinearLayout) itemView.findViewById(R.id.recycler_item);
         }
     }
