@@ -129,7 +129,6 @@ public class AppPreferencesBuss {
         return value;
     }
 
-
     public static String setAllottedDuties(Context context, String id) {
         SharedPreferences preferences = context.getSharedPreferences(MBPREFERENCES, 0);
         Editor editor = preferences.edit();
