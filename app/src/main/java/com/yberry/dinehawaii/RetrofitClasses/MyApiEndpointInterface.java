@@ -172,5 +172,8 @@ public interface MyApiEndpointInterface {
     @POST(AppConstants.ENDPOINT.N_BUSINESS_USER_API)
     Call<JsonObject> n_business_user_api(@Body JsonObject jsonObject);
 
+    @POST(AppConstants.ENDPOINT.TABLE_LAYOUT_API)
+    Call<JsonObject> table_layout_api(@Body JsonObject jsonObject);
+
 
 }

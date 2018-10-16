@@ -228,9 +228,10 @@ public class AddNewVendorActivity extends AppCompatActivity implements View.OnCl
             @SuppressLint("LongLogTag")
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                String resp = response.body().toString();
-                Log.e(TAG, "onResponse: Response >> " + resp);
+
                 try {
+                    String resp = response.body().toString();
+                    Log.e(TAG, "onResponse: Response >> " + resp);
                     masterlist.clear();
                     JSONObject jsonObject = new JSONObject(resp);
                     if (jsonObject.getString("status").equalsIgnoreCase("200")) {
@@ -243,8 +244,12 @@ public class AddNewVendorActivity extends AppCompatActivity implements View.OnCl
                         JSONObject objresult = jsonArray.getJSONObject(0);
                         Toast.makeText(context, objresult.getString("msg"), Toast.LENGTH_SHORT).show();
                     }
-
                 } catch (JSONException e) {
+                    progressHD.dismiss();
+                    Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    progressHD.dismiss();
                     Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
@@ -256,7 +261,7 @@ public class AddNewVendorActivity extends AppCompatActivity implements View.OnCl
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Log.e(TAG, "error :- " + Log.getStackTraceString(t));
                 progressHD.dismiss();
-                Toast.makeText(context, getResources().getString(R.string.msg_no_internet), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show();
             }
         });
     }

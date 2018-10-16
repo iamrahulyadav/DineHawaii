@@ -213,7 +213,6 @@ public class FeedbackActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-
     private void getBusiness() {
         if (Util.isNetworkAvailable(FeedbackActivity.this)) {
             final ProgressHUD progressHD = ProgressHUD.show(FeedbackActivity.this, "Please wait...", true, false, new DialogInterface.OnCancelListener() {

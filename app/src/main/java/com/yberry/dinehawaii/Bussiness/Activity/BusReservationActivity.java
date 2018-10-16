@@ -17,7 +17,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
-import com.yberry.dinehawaii.Customer.Activity.CustomerNaviDrawer;
 import com.yberry.dinehawaii.Model.TableData;
 import com.yberry.dinehawaii.R;
 import com.yberry.dinehawaii.RetrofitClasses.ApiClient;
@@ -26,7 +25,6 @@ import com.yberry.dinehawaii.Util.AppConstants;
 import com.yberry.dinehawaii.Util.AppPreferences;
 import com.yberry.dinehawaii.Util.AppPreferencesBuss;
 import com.yberry.dinehawaii.Util.ProgressHUD;
-import com.yberry.dinehawaii.Util.Util;
 import com.yberry.dinehawaii.customview.CustomButton;
 import com.yberry.dinehawaii.customview.CustomEditText;
 import com.yberry.dinehawaii.customview.CustomTextView;
@@ -35,7 +33,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -50,10 +50,16 @@ public class BusReservationActivity extends AppCompatActivity {
     String child_booster = "0", child_high = "0";
     ImageView back;
     String selectedTableID = "";
-    String partySizeS,  userNameString, mobileNoString, emailString;
+    String partySizeS, userNameString, mobileNoString, emailString;
     String name, i;
     ArrayList<TableData> tableDataList;
     private String combinetable = "";
+    private BusReservationActivity context;
+    private Calendar c;
+    private String currTime;
+    private SimpleDateFormat dateFormat;
+    private String currDate;
+    private CustomTextView btn_next;
 
     public static void hideSoftKeyboard(Activity activity) {
         InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
@@ -64,86 +70,41 @@ public class BusReservationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bus_reservation);
+        context = this;
         setToolbar();
         initViews();
 
-        if (getIntent().hasExtra("business_id")) {
-            business_id = getIntent().getStringExtra("business_id");
-            Log.v(TAG, "Business Id :- " + business_id);
+        if (getIntent().hasExtra("table_id")) {
+            selectedTableID = getIntent().getStringExtra("table_id");
+            Log.e(TAG, "onCreate: selectedTableID >> " + selectedTableID);
         }
 
-        if (getIntent().hasExtra("business_name")) {
-            business_name = getIntent().getStringExtra("business_name");
-            businessName.setText(business_name);
-            Log.v(TAG, "Business Name :- " + business_name);
+        if (getIntent().hasExtra("party_size")) {
+            partySizeS = getIntent().getStringExtra("party_size");
+            Log.e(TAG, "onCreate: partySizeS >> " + partySizeS);
+        }
+        if (getIntent().hasExtra("table_name")) {
+            String table_name = getIntent().getStringExtra("table_name");
+            Log.e(TAG, "onCreate: table_name >> " + table_name);
+            businessName.setText("Table : " + table_name + " (Cap. " + partySizeS + ") ");
         }
 
-        Log.e(TAG, "onCreate: business_id >> " + business_id);
-        Log.e(TAG, "onCreate: business_name >> " + business_name);
-        getFoodPrepTime();
-
-
-        userName.setText(AppPreferences.getCustomername(BusReservationActivity.this));
-        mobileNo.setText(AppPreferences.getCustomerMobile(BusReservationActivity.this));
-        emailId.setText(AppPreferences.getEmailSetting(BusReservationActivity.this));
+        c = Calendar.getInstance();
+        dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        currDate = dateFormat.format(c.getTime());
+        dateFormat = new SimpleDateFormat("hh:mm a");
+        currTime = dateFormat.format(c.getTime());
+        Log.e(TAG, "onCreate: currDate >> " + currDate);
+        Log.e(TAG, "onCreate: currTime >> " + currTime);
+        btn_next.setText("Submit customer details to book this table at " + currDate + " | " + currTime);
     }
-
-    private void getFoodPrepTime() {
-        if (Util.isNetworkAvailable(BusReservationActivity.this)) {
-            JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.FOOD_PREP_TIME);
-            jsonObject.addProperty("user_id", AppPreferences.getCustomerid(BusReservationActivity.this));
-            jsonObject.addProperty("business_id", AppPreferences.getBusiID(BusReservationActivity.this));
-            Log.e(TAG, "get food prep time" + jsonObject.toString());
-            getFoodTimeApi(jsonObject);
-        } else {
-            Toast.makeText(BusReservationActivity.this, "Please Connect Internet", Toast.LENGTH_LONG).show();
-        }
-    }
-
-    private void getFoodTimeApi(JsonObject jsonObject) {
-        MyApiEndpointInterface apiService =
-                ApiClient.getClient().create(MyApiEndpointInterface.class);
-        Call<JsonObject> call = apiService.requestGeneral(jsonObject);
-
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-
-                String s = response.body().toString();
-                Log.e(TAG, "get food prep time resp" + s);
-                try {
-                    JSONObject jsonObject = new JSONObject(s);
-
-                    if (jsonObject.getString("status").equalsIgnoreCase("200")) {
-
-                        JSONArray resultJsonArray = jsonObject.getJSONArray("result");
-                        JSONObject object = resultJsonArray.getJSONObject(0);
-
-                    } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
-                    } else {
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-            @SuppressLint("LongLogTag")
-            @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.e(TAG, "error" + t.getMessage());
-            }
-        });
-    }
-
 
     private void initViews() {
         tableDataList = new ArrayList<TableData>();
         complete = (CustomButton) findViewById(R.id.complete);
         submit = (CustomButton) findViewById(R.id.submit1);
         businessName = (CustomTextView) findViewById(R.id.businessName);
+        btn_next = (CustomTextView) findViewById(R.id.btn_next);
         userName = (CustomEditText) findViewById(R.id.userName);
         mobileNo = (CustomEditText) findViewById(R.id.textViewMobile);
         emailId = (CustomEditText) findViewById(R.id.textViewEmail);
@@ -152,11 +113,10 @@ public class BusReservationActivity extends AppCompatActivity {
         ((RelativeLayout) findViewById(R.id.touch_outside)).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                hideSoftKeyboard(BusReservationActivity.this);
+                hideSoftKeyboard(context);
                 return false;
             }
         });
-
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,10 +124,11 @@ public class BusReservationActivity extends AppCompatActivity {
                 makeReservation();
             }
         });
+
     }
 
     private void showAlertDialog(String msg) {
-        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(BusReservationActivity.this);
+        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(context);
         builder.setTitle("Reservation Time");
         builder.setMessage(msg);
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -194,6 +155,12 @@ public class BusReservationActivity extends AppCompatActivity {
             userNameString = userName.getText().toString().trim();
             mobileNoString = mobileNo.getText().toString().trim();
             emailString = emailId.getText().toString().trim();
+            dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            currDate = dateFormat.format(c.getTime());
+            dateFormat = new SimpleDateFormat("hh:mm a");
+            currTime = dateFormat.format(c.getTime());
+            Log.e(TAG, "makeReservation: currDate >> " + currDate);
+            Log.e(TAG, "makeReservation: currTime >> " + currTime);
             submitRequest();
         }
     }
@@ -201,10 +168,10 @@ public class BusReservationActivity extends AppCompatActivity {
     private void submitRequest() {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.CUSTOMER_USER.MAKE_BUSINESS_RESERVATION);
-        jsonObject.addProperty("business_id", business_id);
-        jsonObject.addProperty("user_id", AppPreferences.getCustomerid(BusReservationActivity.this));
-        jsonObject.addProperty("date", date);
-        jsonObject.addProperty("time", time);  //time
+        jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(context));
+        jsonObject.addProperty("user_id", AppPreferences.getCustomerid(context));
+        jsonObject.addProperty("date", currDate);
+        jsonObject.addProperty("time", currTime);  //time
         jsonObject.addProperty("party_size", partySizeS);
         jsonObject.addProperty("child_high_chair", child_high);
         jsonObject.addProperty("child_booster_chair", child_booster);
@@ -220,7 +187,7 @@ public class BusReservationActivity extends AppCompatActivity {
     }
 
     private void make_business_reservation(JsonObject jsonObject) {
-        final ProgressHUD progressHD = ProgressHUD.show(BusReservationActivity.this, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
+        final ProgressHUD progressHD = ProgressHUD.show(context, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
                 // TODO Auto-generated method stub
@@ -250,12 +217,12 @@ public class BusReservationActivity extends AppCompatActivity {
                             pre_amonut = jsonObject1.getString("reservation_pre_amout");
                             Log.e(TAG, "onResponse: reservation_id >> " + reservation_id);
                             Log.e(TAG, "onResponse: reservation_pre_amout >> " + pre_amonut);
-                            AppPreferencesBuss.setReservatId(BusReservationActivity.this, reservation_id);
+                            AppPreferencesBuss.setReservatId(context, reservation_id);
                             showThankYouAlert();
                            /* if (pre_amonut.equalsIgnoreCase("0") || isWaitList) {
                                 showThankYouAlert();
                             } else {
-                                *//*Intent in = new Intent(BusReservationActivity.this, CustomerConfirmreservationActivity.class);
+                                *//*Intent in = new Intent(context, CustomerConfirmreservationActivity.class);
                                 in.putExtra("reservation_id", reservation_id);
                                 in.putExtra("name", userNameString);
                                 in.putExtra("time", timePicker.getText().toString());
@@ -288,19 +255,16 @@ public class BusReservationActivity extends AppCompatActivity {
     }
 
     private void showThankYouAlert() {
-        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(BusReservationActivity.this);
+        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(context);
         builder.setTitle("Thank You!");
         builder.setCancelable(false);
         builder.setMessage("Your reservation has done successfully.");
-        ImageView img = new ImageView(BusReservationActivity.this);
+        ImageView img = new ImageView(context);
         img.setImageResource(R.drawable.thanks);
         builder.setView(img);
-        builder.setPositiveButton("GO TO HOME", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Finish", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Intent intent = new Intent(getApplicationContext(), CustomerNaviDrawer.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
                 finish();
             }
         });

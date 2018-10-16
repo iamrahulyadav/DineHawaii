@@ -47,6 +47,7 @@
                 android:layout_below="@+id/businessName"
                 android:layout_centerHorizontal="true"
                 android:text="Submit customer details to book this table"
+                android:textAlignment="center"
                 android:textColor="@color/place_autocomplete_search_hint"
                 app:edittextfont="Raleway-Regular.ttf" />
 

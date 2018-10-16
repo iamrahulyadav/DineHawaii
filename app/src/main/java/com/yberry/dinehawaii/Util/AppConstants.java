@@ -95,6 +95,8 @@ public class AppConstants {
         String N_BUSINESS_NEW_API = "business_user/N_Business_New_Api.php";
         String N_BUSINESS_USER_API = "normal_user/N_Business_User_Api.php";
         String USER_SEND_E_GIFT_NEW = "normal_user/user_send_e_gift_new.php";
+        String TABLE_LAYOUT_API = "business_user/business_table_matrix_api.php";
+
     }
 
     public interface REGISTRATION {
@@ -214,6 +216,7 @@ public class AppConstants {
         String SEND_REPLY_TO_RESERVATION = "send_reply_to_reservation";
         String SEND_REPLY_TO_REVIEW = "send_reply_to_review";
         String GET_ALTERNATE_BUSINESS = "get_alternate_business";
+        String GETTABLEMATRIX = "getTableMatrix";
     }
 
     public interface BUSINESS_VENDOR_API {

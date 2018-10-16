@@ -64,18 +64,23 @@
 
     </LinearLayout>
 
-    <android.support.v4.widget.NestedScrollView
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/bottom_bar"
         android:layout_below="@id/toolbar_bar">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view"
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent">
 
-    </android.support.v4.widget.NestedScrollView>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </android.support.v4.widget.NestedScrollView>
 
 
+    </android.support.v4.widget.SwipeRefreshLayout>
 </RelativeLayout>

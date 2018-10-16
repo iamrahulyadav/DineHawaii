@@ -24,6 +24,9 @@ public class TableLayoutData {
     @SerializedName("status")
     @Expose
     private String status;
+    @SerializedName("booking_time")
+    @Expose
+    private String bookingTime;
 
     public String getTableId() {
         return tableId;
@@ -71,6 +74,14 @@ public class TableLayoutData {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getBookingTime() {
+        return bookingTime;
+    }
+
+    public void setBookingTime(String bookingTime) {
+        this.bookingTime = bookingTime;
     }
 
 }
