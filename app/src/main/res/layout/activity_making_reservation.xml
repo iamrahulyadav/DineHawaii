@@ -8,7 +8,7 @@
     android:focusableInTouchMode="true"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context="com.yberry.dinehawaii.Customer.Activity.MakingReservationActivity">
+    tools:context="com.yberry.dinehawaii.Customer.Activity.ReservationActivity">
 
     <include android:id="@+id/toolbar_bar" layout="@layout/toolbar" />
 

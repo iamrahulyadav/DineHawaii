@@ -614,7 +614,7 @@ public class RestaurentDetailActivity extends AppCompatActivity {
         makeReservationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RestaurentDetailActivity.this, MakingReservationActivity.class);
+                Intent intent = new Intent(RestaurentDetailActivity.this, ReservationActivity.class);
                 System.out.println("BUSINESS ID " + " : " + business_id);
                 intent.putExtra("business_id", business_id);
                 intent.putExtra("business_name", business_name);

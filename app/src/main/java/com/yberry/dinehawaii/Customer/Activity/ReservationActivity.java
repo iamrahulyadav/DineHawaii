@@ -59,8 +59,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MakingReservationActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
-    private static final String TAG = "MakingReservationAct";
+public class ReservationActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
+    private static final String TAG = "ReservationActivity";
     CustomButton complete, submit;
     String business_id, business_name, reservation_id, date, time, pre_amonut;
     CustomEditText partySize, userName, mobileNo, emailId, noOfAdults, noOfChilds;
@@ -110,21 +110,21 @@ public class MakingReservationActivity extends AppCompatActivity implements Time
         getFoodPrepTime();
 
 
-        userName.setText(AppPreferences.getCustomername(MakingReservationActivity.this));
-        mobileNo.setText(AppPreferences.getCustomerMobile(MakingReservationActivity.this));
-        emailId.setText(AppPreferences.getEmailSetting(MakingReservationActivity.this));
+        userName.setText(AppPreferences.getCustomername(ReservationActivity.this));
+        mobileNo.setText(AppPreferences.getCustomerMobile(ReservationActivity.this));
+        emailId.setText(AppPreferences.getEmailSetting(ReservationActivity.this));
     }
 
     private void getFoodPrepTime() {
-        if (Util.isNetworkAvailable(MakingReservationActivity.this)) {
+        if (Util.isNetworkAvailable(ReservationActivity.this)) {
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.FOOD_PREP_TIME);
-            jsonObject.addProperty("user_id", AppPreferences.getCustomerid(MakingReservationActivity.this));
-            jsonObject.addProperty("business_id", AppPreferences.getBusiID(MakingReservationActivity.this));
+            jsonObject.addProperty("user_id", AppPreferences.getCustomerid(ReservationActivity.this));
+            jsonObject.addProperty("business_id", AppPreferences.getBusiID(ReservationActivity.this));
             Log.e(TAG, "get food prep time" + jsonObject.toString());
             getFoodTimeApi(jsonObject);
         } else {
-            Toast.makeText(MakingReservationActivity.this, "Please Connect Internet", Toast.LENGTH_LONG).show();
+            Toast.makeText(ReservationActivity.this, "Please Connect Internet", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -168,8 +168,8 @@ public class MakingReservationActivity extends AppCompatActivity implements Time
 
     private void checkPackage() {
         Log.e("Activity", "Making Registration");
-        String package_list = AppPreferences.getBussPackageList(MakingReservationActivity.this);
-        Log.d("SelActivity", AppPreferences.getBussPackageList(MakingReservationActivity.this));
+        String package_list = AppPreferences.getBussPackageList(ReservationActivity.this);
+        Log.d("SelActivity", AppPreferences.getBussPackageList(ReservationActivity.this));
 
         if (package_list.equalsIgnoreCase("1")) llTableBook.setVisibility(View.GONE);
         else if (package_list.equalsIgnoreCase("1, 3")) llTableBook.setVisibility(View.GONE);
@@ -201,7 +201,7 @@ public class MakingReservationActivity extends AppCompatActivity implements Time
         ((RelativeLayout) findViewById(R.id.touch_outside)).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                hideSoftKeyboard(MakingReservationActivity.this);
+                hideSoftKeyboard(ReservationActivity.this);
                 return false;
             }
         });
@@ -210,9 +210,9 @@ public class MakingReservationActivity extends AppCompatActivity implements Time
             @Override
             public void onClick(View view) {
                 if (datePicker.getText().toString().equalsIgnoreCase(""))
-                    Toast.makeText(MakingReservationActivity.this, "Select booking date", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ReservationActivity.this, "Select booking date", Toast.LENGTH_SHORT).show();
                 else if (timePicker.getText().toString().equalsIgnoreCase(""))
-                    Toast.makeText(MakingReservationActivity.this, "Select booking time", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ReservationActivity.this, "Select booking time", Toast.LENGTH_SHORT).show();
                 else if (userName.getText().toString().equalsIgnoreCase(""))
                     userName.setError("Enter your full name");
                 else if (mobileNo.getText().toString().equalsIgnoreCase(""))
@@ -236,7 +236,7 @@ public class MakingReservationActivity extends AppCompatActivity implements Time
             public void onClick(View v) {
                 Calendar now = Calendar.getInstance();
                 DatePickerDialog dpd = DatePickerDialog.newInstance(
-                        MakingReservationActivity.this,
+                        ReservationActivity.this,
                         now.get(Calendar.YEAR),
                         now.get(Calendar.MONTH),
                         now.get(Calendar.DAY_OF_MONTH)
@@ -344,7 +344,7 @@ public class MakingReservationActivity extends AppCompatActivity implements Time
     }
 
     private void showAlertDialog(String msg) {
-        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(MakingReservationActivity.this);
+        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(ReservationActivity.this);
         builder.setTitle("Reservation Time");
         builder.setMessage(msg);
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -366,9 +366,9 @@ public class MakingReservationActivity extends AppCompatActivity implements Time
         }
 
         if (datePicker.getText().toString().equalsIgnoreCase(""))
-            Toast.makeText(MakingReservationActivity.this, "Select booking date", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ReservationActivity.this, "Select booking date", Toast.LENGTH_SHORT).show();
         else if (timePicker.getText().toString().equalsIgnoreCase(""))
-            Toast.makeText(MakingReservationActivity.this, "Select booking time", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ReservationActivity.this, "Select booking time", Toast.LENGTH_SHORT).show();
         else if (userName.getText().toString().equalsIgnoreCase(""))
             userName.setError("Enter your full name");
         else if (mobileNo.getText().toString().equalsIgnoreCase(""))
@@ -400,7 +400,7 @@ public class MakingReservationActivity extends AppCompatActivity implements Time
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.CUSTOMER_USER.MAKE_BUSINESS_RESERVATION);
         jsonObject.addProperty("business_id", business_id);
-        jsonObject.addProperty("user_id", AppPreferences.getCustomerid(MakingReservationActivity.this));
+        jsonObject.addProperty("user_id", AppPreferences.getCustomerid(ReservationActivity.this));
         jsonObject.addProperty("date", date);
         jsonObject.addProperty("time", time);  //time
         jsonObject.addProperty("party_size", partySizeS);
@@ -418,7 +418,7 @@ public class MakingReservationActivity extends AppCompatActivity implements Time
     }
 
     private void make_business_reservation(JsonObject jsonObject) {
-        final ProgressHUD progressHD = ProgressHUD.show(MakingReservationActivity.this, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
+        final ProgressHUD progressHD = ProgressHUD.show(ReservationActivity.this, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
                 // TODO Auto-generated method stub
@@ -448,11 +448,11 @@ public class MakingReservationActivity extends AppCompatActivity implements Time
                             pre_amonut = jsonObject1.getString("reservation_pre_amout");
                             Log.e(TAG, "onResponse: reservation_id >> " + reservation_id);
                             Log.e(TAG, "onResponse: reservation_pre_amout >> " + pre_amonut);
-                            AppPreferencesBuss.setReservatId(MakingReservationActivity.this, reservation_id);
+                            AppPreferencesBuss.setReservatId(ReservationActivity.this, reservation_id);
                             if (pre_amonut.equalsIgnoreCase("0") || isWaitList) {
                                 showThankYouAlert();
                             } else {
-                                Intent in = new Intent(MakingReservationActivity.this, CustomerConfirmreservationActivity.class);
+                                Intent in = new Intent(ReservationActivity.this, CustomerConfirmreservationActivity.class);
                                 in.putExtra("reservation_id", reservation_id);
                                 in.putExtra("name", userNameString);
                                 in.putExtra("time", timePicker.getText().toString());
@@ -485,11 +485,11 @@ public class MakingReservationActivity extends AppCompatActivity implements Time
     }
 
     private void showThankYouAlert() {
-        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(MakingReservationActivity.this);
+        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(ReservationActivity.this);
         builder.setTitle("Thank You!");
         builder.setCancelable(false);
         builder.setMessage("Your reservation has done successfully.");
-        ImageView img = new ImageView(MakingReservationActivity.this);
+        ImageView img = new ImageView(ReservationActivity.this);
         img.setImageResource(R.drawable.thanks);
         builder.setView(img);
         builder.setPositiveButton("GO TO HOME", new DialogInterface.OnClickListener() {
@@ -534,7 +534,7 @@ public class MakingReservationActivity extends AppCompatActivity implements Time
     }
 
     private void customTableDialog(ArrayList<TableData> list, String msg) {
-        dialog = new Dialog(MakingReservationActivity.this);
+        dialog = new Dialog(ReservationActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_select_table);
         dialog.setCanceledOnTouchOutside(false);
@@ -569,8 +569,8 @@ public class MakingReservationActivity extends AppCompatActivity implements Time
     }
 
     private void getBusinessTables() {
-        if (Util.isNetworkAvailable(MakingReservationActivity.this)) {
-            final ProgressHUD progressHD = ProgressHUD.show(MakingReservationActivity.this, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
+        if (Util.isNetworkAvailable(ReservationActivity.this)) {
+            final ProgressHUD progressHD = ProgressHUD.show(ReservationActivity.this, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
                 @Override
                 public void onCancel(DialogInterface dialog) {
                     // TODO Auto-generated method stub
@@ -579,9 +579,9 @@ public class MakingReservationActivity extends AppCompatActivity implements Time
 
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("method", AppConstants.CUSTOMER_USER.GET_PARTY_SIZE_TABLE);
-            jsonObject.addProperty("user_id", AppPreferences.getCustomerid(MakingReservationActivity.this));
+            jsonObject.addProperty("user_id", AppPreferences.getCustomerid(ReservationActivity.this));
             jsonObject.addProperty("party_size", partySize.getText().toString().trim());
-            jsonObject.addProperty("business_id", AppPreferences.getBusiID(MakingReservationActivity.this));
+            jsonObject.addProperty("business_id", AppPreferences.getBusiID(ReservationActivity.this));
             Log.e(TAG, "Request GET TABLES >> " + jsonObject.toString());
             MyApiEndpointInterface apiService = ApiClient.getClient().create(MyApiEndpointInterface.class);
             Call<JsonObject> call = apiService.get_party_size_tables(jsonObject);
@@ -639,12 +639,12 @@ public class MakingReservationActivity extends AppCompatActivity implements Time
                 }
             });
         } else {
-            Toast.makeText(MakingReservationActivity.this, "Please Connect Your Internet", Toast.LENGTH_LONG).show();
+            Toast.makeText(ReservationActivity.this, "Please Connect Your Internet", Toast.LENGTH_LONG).show();
         }
     }
 
     private void showWaitListDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(MakingReservationActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(ReservationActivity.this);
         builder.setTitle("Add To Wait-List");
         builder.setMessage("We are sorry, but your request at " + datePicker.getText().toString() + ", " + timePicker.getText().toString() + " for the party size " + partySize.getText().toString() + " is unavailable.\n\nDo you want to add it to wait list?");
         builder.setPositiveButton("ADD TO WAIT-LIST", new DialogInterface.OnClickListener() {
@@ -660,7 +660,7 @@ public class MakingReservationActivity extends AppCompatActivity implements Time
         builder.setNegativeButton("Choose Alternate", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Intent intent = new Intent(MakingReservationActivity.this, AlternateBusinessActivity.class);
+                Intent intent = new Intent(ReservationActivity.this, AlternateBusinessActivity.class);
                 intent.putExtra("party_size", partySize.getText().toString());
                 startActivityForResult(intent, 102);
             }
@@ -670,7 +670,7 @@ public class MakingReservationActivity extends AppCompatActivity implements Time
     }
 
     private void showNoTableDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(MakingReservationActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(ReservationActivity.this);
         builder.setTitle("Tables Not Available");
         builder.setMessage("We are sorry, there are no table available for reservations");
 
@@ -683,7 +683,7 @@ public class MakingReservationActivity extends AppCompatActivity implements Time
         builder.setNegativeButton("Choose Alternate", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Intent intent = new Intent(MakingReservationActivity.this, AlternateBusinessActivity.class);
+                Intent intent = new Intent(ReservationActivity.this, AlternateBusinessActivity.class);
                 intent.putExtra("party_size", partySize.getText().toString());
                 startActivityForResult(intent, 102);
             }

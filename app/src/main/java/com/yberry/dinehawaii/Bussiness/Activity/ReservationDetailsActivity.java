@@ -441,7 +441,6 @@ public class ReservationDetailsActivity extends AppCompatActivity implements Vie
             final ProgressHUD progressHD = ProgressHUD.show(context, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
                 @Override
                 public void onCancel(DialogInterface dialog) {
-                    // TODO Auto-generated method stub
                 }
             });
 

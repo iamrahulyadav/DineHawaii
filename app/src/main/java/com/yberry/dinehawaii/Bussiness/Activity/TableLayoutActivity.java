@@ -138,10 +138,19 @@ public class TableLayoutActivity extends AppCompatActivity implements View.OnCli
         recylcer_view.addOnItemTouchListener(new RecyclerItemClickListener(context, recylcer_view, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Intent intent = new Intent(getApplicationContext(), ReservationDetailsActivity.class);
-                intent.putExtra("reservation_id", list.get(position).getReservationId());
-                intent.setAction("NOSHOW");
-                startActivity(intent);
+
+                Intent intent;
+                if (list.get(position).getStatus().equalsIgnoreCase("Free")) {
+                    intent = new Intent(getApplicationContext(), BusReservationActivity.class);
+                    intent.putExtra("reservation_id", list.get(position).getReservationId());
+                    intent.setAction("NOSHOW");
+                    startActivity(intent);
+                } else {
+                    intent = new Intent(getApplicationContext(), ReservationDetailsActivity.class);
+                    intent.putExtra("reservation_id", list.get(position).getReservationId());
+                    intent.setAction("NOSHOW");
+                    startActivity(intent);
+                }
             }
 
             @Override
