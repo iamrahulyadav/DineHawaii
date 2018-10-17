@@ -144,6 +144,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
     private CustomRadioButton radio_paypal, radio_wallet;
     private String wallet_amt = "0";
     private CustomTextView tvPaymentText;
+    private double totalPaidAmountOrig = 0.0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -177,28 +178,34 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void setWallet() {
-       /* wallet_amt = AppPreferences.getWalletAmt(context);
-        wallet_amt = "130";
+        wallet_amt = AppPreferences.getWalletAmt(context);
         if (radio_wallet.isChecked()) {
             if (!wallet_amt.equalsIgnoreCase("0") && !wallet_amt.equalsIgnoreCase("")) {
                 radio_wallet.setText("Wallet Amount : $" + wallet_amt);
-                if (Double.parseDouble(tvTotalPaidAmount.getText().toString()) < Double.parseDouble(wallet_amt)) {
-                    double wallet_remaining_amt = Double.parseDouble(wallet_amt) - Double.parseDouble(tvTotalPaidAmount.getText().toString());
+                if (totalPaidAmount < Double.parseDouble(wallet_amt)) {
+                    double wallet_remaining_amt = Double.parseDouble(wallet_amt) - totalPaidAmount;
                     radio_wallet.setText("Wallet Amount : $" + decimalFormat.format(wallet_remaining_amt));
                     tvPaymentText.setText("Amount will be deduct from your wallet");
+                    wallet_amt = String.valueOf(totalPaidAmount);
+                    totalPaidAmount = 0;
+                    tvTotalPaidAmount.setText(totalPaidAmount + "");
                 } else {
-                    double remaining_amt = Double.parseDouble(tvTotalPaidAmount.getText().toString()) - Double.parseDouble(wallet_amt);
-                    tvPaymentText.setText("$" + wallet_amt + " will be deduct from your wallet and remaining $" + remaining_amt + " will be done via paypal.");
+                    double remaining_amt = totalPaidAmount - Double.parseDouble(wallet_amt);
+                    tvPaymentText.setText("$" + wallet_amt + " will be deduct from your wallet and remaining $" + decimalFormat.format(remaining_amt) + " will be done via paypal.");
+                    totalPaidAmount = remaining_amt;
+                    tvTotalPaidAmount.setText(decimalFormat.format(totalPaidAmount));
                 }
             } else {
                 Toast.makeText(context, "Wallet is empty!", Toast.LENGTH_SHORT).show();
                 radio_paypal.setChecked(true);
             }
         } else {
+            wallet_amt = "0";
+            totalPaidAmount = totalPaidAmountBase;
+            tvTotalPaidAmount.setText(decimalFormat.format(totalPaidAmount));
             tvPaymentText.setText("Payment will be done via paypal!");
             radio_wallet.setText("Wallet Amount : $" + wallet_amt);
-
-        }*/
+        }
     }
 
     private void setCartAdapter() {
@@ -1026,6 +1033,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         tvTotalPaidAmount.setText(total_amount + "");
         setWallet();
         totalPaidAmount = total_amount;
+        totalPaidAmountOrig = totalPaidAmount;
         usedWalletAmt = "";
         rd_loylty.setEnabled(true);
         rd_coupon.setEnabled(true);
@@ -1838,7 +1846,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         object.addProperty("e_gift_balance", egiftamount);
         object.addProperty("e_gift_id", "0");
         object.addProperty("e_gift_wallet_amount", usedWalletAmt);
-        object.addProperty("wallet_amt", "0");
+        object.addProperty("wallet_amt", wallet_amt);
         object.addProperty("grandtotal", AppPreferencesBuss.getGrandTotal(context));
         object.addProperty("loyalty_points", (AppPreferencesBuss.getFinalLoyalityPoint(context)));
         object.addProperty("gratuity", (AppPreferencesBuss.getGratuity(context)));
