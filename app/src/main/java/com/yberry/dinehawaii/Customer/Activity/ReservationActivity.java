@@ -247,7 +247,7 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
                 dpd.setOkColor(getResources().getColor(R.color.colorPrimary));
                 Calendar c = Calendar.getInstance();
                 c.setTimeInMillis(System.currentTimeMillis() - 1000);
-                c.add(Calendar.DATE, 1);
+               // c.add(Calendar.DATE, 1);
                 dpd.setMinDate(c);
             }
         });

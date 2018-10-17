@@ -4,10 +4,28 @@
     android:layout_height="match_parent"
     android:background="@color/activityBackground">
 
+    <com.yberry.dinehawaii.customview.CustomTextView
+        android:id="@+id/addNewTable"
+        style="@style/TextAppearance.AppCompat.Subhead"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="@color/colorPrimary"
+        android:drawablePadding="@dimen/_8sdp"
+        android:padding="@dimen/_8sdp"
+        android:text="Add New Table"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        app:edittextfont="@string/raleway_bold" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_viewtable"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_above="@id/addNewTable" />
 
     <com.yberry.dinehawaii.customview.CustomTextView
         android:id="@+id/notable"
@@ -25,22 +43,5 @@
         android:visibility="gone"
         app:edittextfont="Raleway-Regular.ttf" />
 
-
-    <com.yberry.dinehawaii.customview.CustomTextView
-        android:id="@+id/addNewTable"
-        style="@style/TextAppearance.AppCompat.Subhead"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:background="@color/colorPrimary"
-        android:drawablePadding="@dimen/_8sdp"
-        android:padding="@dimen/_8sdp"
-        android:text="Add New Table"
-        android:textAlignment="center"
-        android:textAllCaps="true"
-        android:textColor="@color/white"
-        app:edittextfont="@string/raleway_bold" />
 
 </RelativeLayout>

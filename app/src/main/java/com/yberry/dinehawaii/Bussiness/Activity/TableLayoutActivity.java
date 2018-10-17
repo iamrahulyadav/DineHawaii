@@ -247,7 +247,6 @@ public class TableLayoutActivity extends AppCompatActivity implements View.OnCli
         });
     }
 
-
     @Override
     public void onClick(View v) {
     }
@@ -288,6 +287,13 @@ public class TableLayoutActivity extends AppCompatActivity implements View.OnCli
                                 list.add(item);
                                 adapter.notifyDataSetChanged();
 
+                            }
+                            JSONArray jsonArray1 = jsonObject.getJSONArray("result1");
+                            for (int i = 0; i < jsonArray1.length(); i++) {
+                                JSONObject jsonObject1 = jsonArray1.getJSONObject(i);
+                                TableLayoutData item = new Gson().fromJson(String.valueOf(jsonObject1), TableLayoutData.class);
+                                list.add(item);
+                                adapter.notifyDataSetChanged();
                             }
                         } else if (jsonObject.getString("status").equals("400")) {
                             Toast.makeText(context, jsonObject.getJSONArray("result").getJSONObject(0).getString("msg"), Toast.LENGTH_SHORT).show();

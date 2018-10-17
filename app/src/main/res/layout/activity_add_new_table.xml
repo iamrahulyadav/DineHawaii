@@ -49,6 +49,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Enter table name"
+                android:inputType="textCapCharacters|textPersonName"
+                android:maxLength="5"
                 android:padding="@dimen/_10sdp"
                 app:edittextfont="@string/raleway_regular"></com.yberry.dinehawaii.customview.CustomEditText>
 
@@ -94,15 +96,16 @@
                     android:text="Select Tables"
                     android:textColor="@color/colorGreen"
                     app:edittextfont="@string/raleway_bold" />
+
                 <com.yberry.dinehawaii.customview.CustomEditText
                     android:id="@+id/etSelectTables"
                     style="@style/TextAppearance.AppCompat.Subhead"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Select Tables"
                     android:focusableInTouchMode="false"
+                    android:hint="Select Tables"
                     android:padding="@dimen/_10sdp"
-                    app:edittextfont="@string/raleway_regular"/>
+                    app:edittextfont="@string/raleway_regular" />
 
             </LinearLayout>
 

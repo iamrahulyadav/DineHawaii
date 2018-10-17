@@ -601,9 +601,9 @@ public class BusinessNaviDrawer extends AppCompatActivity implements NavigationV
                 @SuppressLint("LongLogTag")
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                    Log.e(TAG, "Response CHECK PAYMENT STATUS >> " + response.body().toString());
-                    String s = response.body().toString();
                     try {
+                        Log.e(TAG, "Response CHECK PAYMENT STATUS >> " + response.body().toString());
+                        String s = response.body().toString();
                         JSONObject jsonObject = new JSONObject(s);
                         if (jsonObject.getString("status").equalsIgnoreCase("200")) {
 //                            JSONArray jsonArray = jsonObject.getJSONArray("result");
@@ -613,6 +613,9 @@ public class BusinessNaviDrawer extends AppCompatActivity implements NavigationV
                             publishProgress(400, message);
                         } else publishProgress(0, "");
                     } catch (JSONException e) {
+                        e.printStackTrace();
+                        publishProgress(0, "");
+                    }catch (Exception e) {
                         e.printStackTrace();
                         publishProgress(0, "");
                     }

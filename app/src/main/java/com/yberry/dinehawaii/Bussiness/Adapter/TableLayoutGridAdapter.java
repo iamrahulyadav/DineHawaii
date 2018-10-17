@@ -42,13 +42,13 @@ public class TableLayoutGridAdapter extends RecyclerView.Adapter<TableLayoutGrid
     @Override
     public void onBindViewHolder(final TableLayoutGridAdapter.ViewHolder holder, final int position) {
         final TableLayoutData model = reservList.get(position);
-        holder.tvTitle.setText(model.getTableName() + "(Cap. " + model.getTableSize() + ")");
+        holder.tvTitle.setText(model.getTableName() + "(Cp. " + model.getTableSize() + ")");
         if (model.getStatus().equalsIgnoreCase("Booked")) {
             holder.item_view.setCardBackgroundColor(context.getResources().getColor(R.color.red));
-            holder.tvTime.setText(model.getBookingTime());
+            holder.tvTime.setText(model.getBookingTime().toLowerCase());
         } else if (model.getStatus().equalsIgnoreCase("Free")) {
             holder.item_view.setCardBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
-            holder.tvTime.setText(model.getSeatingTime());
+            holder.tvTime.setText(model.getSeatingTime().toLowerCase());
         }
     }
 

@@ -45,7 +45,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
 public class TableSingleFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = "TableSingleFragment";
     public static ArrayList<TableData> tableList = new ArrayList<TableData>();
