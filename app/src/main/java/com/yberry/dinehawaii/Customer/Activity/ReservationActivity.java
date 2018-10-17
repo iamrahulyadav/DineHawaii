@@ -258,8 +258,6 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
                 if (datePicker.getText().toString().isEmpty()) {
                     datePicker.setError("First select date");
                 } else {
-
-
                     final Calendar c = Calendar.getInstance();
                     int mHour = c.get(Calendar.HOUR_OF_DAY);
                     int mMinute = c.get(Calendar.MINUTE);
@@ -326,7 +324,6 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
                         }
                     }, mHour, mMinute, false);
                     timePickerDialog.show(getFragmentManager(), "timepickerdialog");
-
                     timePickerDialog.setAccentColor(getResources().getColor(R.color.colorPrimary));
                     timePickerDialog.setCancelColor(getResources().getColor(R.color.colorPrimary));
                     timePickerDialog.setOkColor(getResources().getColor(R.color.colorPrimary));

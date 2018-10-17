@@ -76,13 +76,12 @@ public class TableLayoutActivity extends AppCompatActivity implements View.OnCli
         });
         setToolbar();
         setRecyclerView();
-        //setStaticData();
-        getTableMetrixData();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        refreshLayout.performClick();
         registerReceiver(tickReceiver, new IntentFilter(Intent.ACTION_TIME_TICK));
     }
 
@@ -91,101 +90,6 @@ public class TableLayoutActivity extends AppCompatActivity implements View.OnCli
         super.onPause();
         if (tickReceiver != null)
             unregisterReceiver(tickReceiver);
-    }
-
-
-    private void setStaticData() {
-        list.add(new Gson().fromJson("{\n" +
-                "\t\"table_id\": \"1\",\n" +
-                "\t\"reservation_id\": \"1\",\n" +
-                "\t\"table_size\": \"5\",\n" +
-                "\t\"table_name\": \"T1\",\n" +
-                "\t\"seating_time\": \"60 min\",\n" +
-                "\t\"status\": \"Booked\"\n" +
-                "}", TableLayoutData.class));
-        list.add(new Gson().fromJson("{\n" +
-                "\t\"table_id\": \"2\",\n" +
-                "\t\"reservation_id\": \"1\",\n" +
-                "\t\"table_size\": \"5\",\n" +
-                "\t\"table_name\": \"T2\",\n" +
-                "\t\"seating_time\": \"60 min\",\n" +
-                "\t\"status\": \"Booked\"\n" +
-                "}", TableLayoutData.class));
-        list.add(new Gson().fromJson("{\n" +
-                "\t\"table_id\": \"3\",\n" +
-                "\t\"reservation_id\": \"1\",\n" +
-                "\t\"table_size\": \"5\",\n" +
-                "\t\"table_name\": \"T3\",\n" +
-                "\t\"seating_time\": \"60 min\",\n" +
-                "\t\"status\": \"Booked\"\n" +
-                "}", TableLayoutData.class));
-        list.add(new Gson().fromJson("{\n" +
-                "\t\"table_id\": \"4\",\n" +
-                "\t\"reservation_id\": \"0\",\n" +
-                "\t\"table_size\": \"5\",\n" +
-                "\t\"table_name\": \"T4\",\n" +
-                "\t\"seating_time\": \"60 min\",\n" +
-                "\t\"status\": \"Free\"\n" +
-                "}", TableLayoutData.class));
-        list.add(new Gson().fromJson("{\n" +
-                "\t\"table_id\": \"5\",\n" +
-                "\t\"reservation_id\": \"0\",\n" +
-                "\t\"table_size\": \"5\",\n" +
-                "\t\"table_name\": \"T5\",\n" +
-                "\t\"seating_time\": \"60 min\",\n" +
-                "\t\"status\": \"Free\"\n" +
-                "}", TableLayoutData.class));
-        list.add(new Gson().fromJson("{\n" +
-                "\t\"table_id\": \"4\",\n" +
-                "\t\"reservation_id\": \"0\",\n" +
-                "\t\"table_size\": \"5\",\n" +
-                "\t\"table_name\": \"T4\",\n" +
-                "\t\"seating_time\": \"60 min\",\n" +
-                "\t\"status\": \"Free\"\n" +
-                "}", TableLayoutData.class));
-        list.add(new Gson().fromJson("{\n" +
-                "\t\"table_id\": \"5\",\n" +
-                "\t\"reservation_id\": \"0\",\n" +
-                "\t\"table_size\": \"5\",\n" +
-                "\t\"table_name\": \"T5\",\n" +
-                "\t\"seating_time\": \"60 min\",\n" +
-                "\t\"status\": \"Free\"\n" +
-                "}", TableLayoutData.class));
-        list.add(new Gson().fromJson("{\n" +
-                "\t\"table_id\": \"3\",\n" +
-                "\t\"reservation_id\": \"0\",\n" +
-                "\t\"table_size\": \"5\",\n" +
-                "\t\"table_name\": \"T3\",\n" +
-                "\t\"seating_time\": \"60 min\",\n" +
-                "\t\"status\": \"Booked\"\n" +
-                "}", TableLayoutData.class));
-        list.add(new Gson().fromJson("{\n" +
-                "\t\"table_id\": \"4\",\n" +
-                "\t\"reservation_id\": \"0\",\n" +
-                "\t\"table_size\": \"5\",\n" +
-                "\t\"table_name\": \"T4\",\n" +
-                "\t\"seating_time\": \"60 min\",\n" +
-                "\t\"status\": \"Free\"\n" +
-                "}", TableLayoutData.class));
-        list.add(new Gson().fromJson("{\n" +
-                "\t\"table_id\": \"3\",\n" +
-                "\t\"reservation_id\": \"1\",\n" +
-                "\t\"table_size\": \"5\",\n" +
-                "\t\"table_name\": \"T3\",\n" +
-                "\t\"seating_time\": \"60 min\",\n" +
-                "\t\"status\": \"Booked\"\n" +
-                "}", TableLayoutData.class));
-        list.add(new Gson().fromJson("{\n" +
-                "\t\"table_id\": \"4\",\n" +
-                "\t\"reservation_id\": \"0\",\n" +
-                "\t\"table_size\": \"5\",\n" +
-                "\t\"table_name\": \"T4\",\n" +
-                "\t\"seating_time\": \"60 min\",\n" +
-                "\t\"status\": \"Free\"\n" +
-                "}", TableLayoutData.class));
-        adapter.notifyDataSetChanged();
-        if (list.size() <= 50)
-            setStaticData();
     }
 
     private void setRecyclerView() {
@@ -288,12 +192,15 @@ public class TableLayoutActivity extends AppCompatActivity implements View.OnCli
                                 adapter.notifyDataSetChanged();
 
                             }
-                            JSONArray jsonArray1 = jsonObject.getJSONArray("result1");
-                            for (int i = 0; i < jsonArray1.length(); i++) {
-                                JSONObject jsonObject1 = jsonArray1.getJSONObject(i);
-                                TableLayoutData item = new Gson().fromJson(String.valueOf(jsonObject1), TableLayoutData.class);
-                                list.add(item);
-                                adapter.notifyDataSetChanged();
+
+                            if (jsonObject.has("result1")) {
+                                JSONArray jsonArray1 = jsonObject.getJSONArray("result1");
+                                for (int i = 0; i < jsonArray1.length(); i++) {
+                                    JSONObject jsonObject1 = jsonArray1.getJSONObject(i);
+                                    TableLayoutData item = new Gson().fromJson(String.valueOf(jsonObject1), TableLayoutData.class);
+                                    list.add(item);
+                                    adapter.notifyDataSetChanged();
+                                }
                             }
                         } else if (jsonObject.getString("status").equals("400")) {
                             Toast.makeText(context, jsonObject.getJSONArray("result").getJSONObject(0).getString("msg"), Toast.LENGTH_SHORT).show();

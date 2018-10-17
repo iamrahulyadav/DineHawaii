@@ -217,6 +217,7 @@ public class AppConstants {
         String SEND_REPLY_TO_REVIEW = "send_reply_to_review";
         String GET_ALTERNATE_BUSINESS = "get_alternate_business";
         String GETTABLEMATRIX = "getTableMatrix1";
+        String CANCELORDER = "cancelOrder";
     }
 
     public interface BUSINESS_VENDOR_API {
@@ -340,6 +341,7 @@ public class AppConstants {
         String ALL_RATING_REVIEW = "all_rating_review";
         String GET_FEEDBACK_BUSINESS = "get_feedback_business";
         String ALL_FEEDBACK = "all_feedback";
+        String GETUSERWALLET = "getUserWallet";
     }
 
     public interface REPORT {

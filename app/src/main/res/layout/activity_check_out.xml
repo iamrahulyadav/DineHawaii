@@ -445,10 +445,85 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/tvradioMultiSiteBusiness"
+                android:id="@+id/linear4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/linear3"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:orientation="vertical">
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/greendot"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:padding="@dimen/_5sdp"
+                    android:text="Pay via"
+                    android:textColor="@color/green"
+                    app:edittextfont="Raleway-Bold.ttf" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:background="@color/colorDivider"></View>
+
+                <RadioGroup
+                    android:id="@+id/radioPaymode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_3sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:orientation="horizontal">
+
+
+                    <com.yberry.dinehawaii.customview.CustomRadioButton
+                        android:id="@+id/radio_paypal"
+                        style="@style/TextAppearance.AppCompat.Small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:drawableRight="@drawable/paypal2"
+                        android:text=""
+                        app:edittextfont="@string/raleway_regular" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:background="@color/colorDivider" />
+
+                    <com.yberry.dinehawaii.customview.CustomRadioButton
+                        android:id="@+id/radio_wallet"
+                        style="@style/TextAppearance.AppCompat.Small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:text="Wallet ($0)"
+                        app:edittextfont="@string/raleway_regular" />
+                </RadioGroup>
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    android:id="@+id/tvPaymentText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_3sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:padding="@dimen/_5sdp"
+                    android:text="Payment will be done via paypal"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                    app:edittextfont="Raleway-Bold.ttf" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/tvradioMultiSiteBusiness"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/linear4"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:orientation="vertical"
                 android:paddingTop="@dimen/_2sdp">

@@ -5,9 +5,11 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,12 +22,26 @@ import android.widget.TextView;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+import com.google.gson.JsonObject;
 import com.yberry.dinehawaii.R;
+import com.yberry.dinehawaii.RetrofitClasses.MyApiEndpointInterface;
+import com.yberry.dinehawaii.Util.AppConstants;
 import com.yberry.dinehawaii.Util.AppPreferences;
 import com.yberry.dinehawaii.Util.FragmentIntraction;
 import com.yberry.dinehawaii.customview.CustomTextView;
 
+import org.json.JSONObject;
+
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class CustomerHomeFragment extends Fragment {
+    private final String TAG = "CustomerHomeFragment";
     TextView tvSearchBuss, tvNearest, tvPlaceOrder, tvMakingres;
     LinearLayout orderLayout;
     CustomTextView activity_making_reservation, order_history, fav_order, book_reservation, loyality_point, voucher, feedback;
@@ -34,6 +50,8 @@ public class CustomerHomeFragment extends Fragment {
     private CustomTextView completeOrder;
     private View view;
     private FloatingActionMenu floatingActionMenu;
+    private Context context;
+    private String walletAmt = "0";
 
     public CustomerHomeFragment() {
         // Required empty public constructor
@@ -47,6 +65,7 @@ public class CustomerHomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_customer_home, container, false);
+        context = getActivity();
         if (intraction != null) {
             intraction.actionbarsetTitle("Home");
         }
@@ -145,7 +164,7 @@ public class CustomerHomeFragment extends Fragment {
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.replace(R.id.frame, fragment, fragment.getTag());
                 fragmentTransaction.commitAllowingStateLoss();
-                //Toast.makeText(getActivity(), "Choose a restaurant", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "Choose a restaurant", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -195,9 +214,11 @@ public class CustomerHomeFragment extends Fragment {
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.replace(R.id.frame, fragment, fragment.getTag());
                 fragmentTransaction.commitAllowingStateLoss();
-                //Toast.makeText(getActivity(), "Choose a restaurant", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "Choose a restaurant", Toast.LENGTH_SHORT).show();
             }
         });
+
+        new GetWallet().execute();
         return view;
     }
 
@@ -332,4 +353,56 @@ public class CustomerHomeFragment extends Fragment {
         }
     }
 
+    class GetWallet extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.CUSTOMER_USER.GETUSERWALLET);
+            jsonObject.addProperty("user_id", AppPreferences.getCustomerid(context));
+            Log.e(TAG, "GetWallet: Request >> " + jsonObject.toString());
+
+            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+            httpClient.addInterceptor(logging);
+            Retrofit retrofit = new Retrofit.Builder()
+                    .client(httpClient.build())
+                    .baseUrl(AppConstants.BASEURL.URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+
+            MyApiEndpointInterface apiService = retrofit.create(MyApiEndpointInterface.class);
+
+            Call<JsonObject> call = apiService.customerprofile(jsonObject);
+            call.enqueue(new Callback<JsonObject>() {
+                @Override
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                    Log.e(TAG, "GetWallet: Response >> " + response.body());
+                    JSONObject jsonObject = null;
+                    try {
+                        jsonObject = new JSONObject(response.body().toString());
+                        if (jsonObject.getString("status").equalsIgnoreCase("200")) {
+                            walletAmt = jsonObject.getJSONArray("result").getJSONObject(0).getString("wallet");
+                            AppPreferences.setWalletAmt(context, walletAmt);
+                        } else {
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<JsonObject> call, Throwable t) {
+                    Log.e("Response: onFailure 1", t.toString());
+                }
+            });
+            return null;
+        }
+    }
 }

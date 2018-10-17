@@ -61,6 +61,7 @@ public class AppPreferences {
     public static final String CUST_ADDR_LONG = "cust_addr_long";
     public static final String SEL_BUSI_LAT = "sel_busi_lat";
     public static final String SEL_BUSI_LONG = "sel_busi_long";
+    public static final String WALLET_AMT = "wallet_amt";
 
 
     private final SharedPreferences sharedPreferences;
@@ -835,6 +836,21 @@ public class AppPreferences {
         SharedPreferences pereference = context.getSharedPreferences(
                 MBPREFERENCES, 0);
         return pereference.getString(SEL_BUSI_LONG, "0.0");
+    }
+
+
+    public static void setWalletAmt(Context context, String value) {
+        SharedPreferences preferences = context.getSharedPreferences(
+                MBPREFERENCES, 0);
+        Editor editor = preferences.edit();
+        editor.putString(WALLET_AMT, value);
+        editor.commit();
+    }
+
+    public static String getWalletAmt(Context context) {
+        SharedPreferences pereference = context.getSharedPreferences(
+                MBPREFERENCES, 0);
+        return pereference.getString(WALLET_AMT, "0");
     }
 
 

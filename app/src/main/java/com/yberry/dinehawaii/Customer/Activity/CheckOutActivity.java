@@ -140,6 +140,10 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
     private AlertDialog inhouseDialog;
     private AlertDialog takeoutDialog;
     private String inhouse_table = "0";
+    private RadioGroup radioPaymode;
+    private CustomRadioButton radio_paypal, radio_wallet;
+    private String wallet_amt = "0";
+    private CustomTextView tvPaymentText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,6 +172,33 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         }
 
         custName.requestFocus();
+
+        setWallet();
+    }
+
+    private void setWallet() {
+        wallet_amt = AppPreferences.getWalletAmt(context);
+        wallet_amt = "130";
+        if (radio_wallet.isChecked()) {
+            if (!wallet_amt.equalsIgnoreCase("0") && !wallet_amt.equalsIgnoreCase("")) {
+                radio_wallet.setText("Wallet Amount : $" + wallet_amt);
+                if (Double.parseDouble(tvTotalPaidAmount.getText().toString()) < Double.parseDouble(wallet_amt)) {
+                    double wallet_remaining_amt = Double.parseDouble(wallet_amt) - Double.parseDouble(tvTotalPaidAmount.getText().toString());
+                    radio_wallet.setText("Wallet Amount : $" + decimalFormat.format(wallet_remaining_amt));
+                    tvPaymentText.setText("Amount will be deduct from your wallet");
+                } else {
+                    double remaining_amt = Double.parseDouble(tvTotalPaidAmount.getText().toString()) - Double.parseDouble(wallet_amt);
+                    tvPaymentText.setText("$" + wallet_amt + " will be deduct from your wallet and remaining $" + remaining_amt + " will be done via paypal.");
+                }
+            } else {
+                Toast.makeText(context, "Wallet is empty!", Toast.LENGTH_SHORT).show();
+                radio_paypal.setChecked(true);
+            }
+        } else {
+            tvPaymentText.setText("Payment will be done via paypal!");
+            radio_wallet.setText("Wallet Amount : $" + wallet_amt);
+
+        }
     }
 
     private void setCartAdapter() {
@@ -225,6 +256,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
 
     private void init() {
         tvTotalPaidAmount = (CustomTextView) findViewById(R.id.tvTotalPaidAmount);
+        tvPaymentText = (CustomTextView) findViewById(R.id.tvPaymentText);
         tvTotalAmt = (CustomTextView) findViewById(R.id.totalCost);
         tvTotalPaidAmount2 = (CustomTextView) findViewById(R.id.tvTotalPaidAmount2);
         if (!getIntent().getStringExtra("totalamount").equalsIgnoreCase("")) {
@@ -245,7 +277,10 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         apply_coupon = (CustomButton) findViewById(R.id.applycoupon);
         remove_coupon = (CustomButton) findViewById(R.id.removecoupon);
         radioGroup = (RadioGroup) findViewById(R.id.radioGrp);
+        radioPaymode = (RadioGroup) findViewById(R.id.radioPaymode);
         radioCredits = (RadioGroup) findViewById(R.id.radioCredits);
+        radio_paypal = (CustomRadioButton) findViewById(R.id.radio_paypal);
+        radio_wallet = (CustomRadioButton) findViewById(R.id.radio_wallet);
         take_way_btn = (CustomCheckBox) findViewById(R.id.take_way_btn);
         homedelivery_btn = (CustomCheckBox) findViewById(R.id.homedelivery_btn);
         proceed = (RelativeLayout) findViewById(R.id.proceedtopay);
@@ -308,6 +343,14 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                     radioValue = "0";
                 }
                 setRadioValue(context, radioValue);
+            }
+        });
+
+        radioPaymode.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+                Log.e(TAG, "onCheckedChanged: ");
+                setWallet();
             }
         });
 
@@ -570,6 +613,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
             double amt = totalPaidAmount - Double.parseDouble(usedWalletAmt);
             double total_amount = Double.valueOf(decimalFormat.format(amt));
             tvTotalPaidAmount.setText("" + total_amount);
+            setWallet();
             totalPaidAmount = total_amount;
         } else
             Toast.makeText(context, "Your total amount is less than applied balance", Toast.LENGTH_LONG).show();
@@ -583,6 +627,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         rd_loylty.setEnabled(true);
         rd_egift.setEnabled(true);
         tvTotalPaidAmount.setText("" + String.valueOf(decimalFormat.format(totalPaidAmountBase)));
+        setWallet();
     }
 
     private void applyCouponCode() {
@@ -643,10 +688,12 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
 
                                         double grand_amount = Double.valueOf(decimalFormat.format(admin_per));
                                         tvTotalPaidAmount.setText("" + grand_amount);
+                                        setWallet();
                                     } else if (coupon_type.equalsIgnoreCase("Discount Amount")) {
                                         double amt = Double.parseDouble(tvTotalPaidAmount.getText().toString()) - Double.parseDouble(coupon_amount);
                                         double total_amount = Double.valueOf(decimalFormat.format(amt));
                                         tvTotalPaidAmount.setText("" + total_amount);
+                                        setWallet();
                                     }
 
                                     Snackbar.make(findViewById(android.R.id.content), "Your Coupon Code " + coupon_name + " applied successfully", Snackbar.LENGTH_LONG).show();
@@ -716,7 +763,6 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                 onBackPressed();
             }
         });
-
     }
 
     private void hideKeyboard() {
@@ -733,9 +779,9 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         Log.e(TAG, "balance" + balance);
         Log.e(TAG, "total" + total);
 
-
         double grandtotal = Double.valueOf(decimalFormat.format(total));
         tvTotalPaidAmount.setText("" + grandtotal);
+        setWallet();
 //        tvTotalPaidAmount.setText("" + String.valueOf(decimalFormat.format(totalPaidAmountBase)));
         loylityBal.setText(balance + "");
         loyality_apply.setText("");
@@ -761,6 +807,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                 Log.e(TAG, "total" + total);
                 double total_amount = Double.valueOf(decimalFormat.format(total));
                 tvTotalPaidAmount.setText("" + total_amount);
+                setWallet();
                 loylityBal.setText(balance + "");
                 applyLoyaltyPoints.setVisibility(View.GONE);
                 removePoints.setVisibility(View.VISIBLE);
@@ -819,6 +866,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                                     double amt = Double.parseDouble(tvTotalPaidAmount.getText().toString()) - Double.parseDouble(egiftamount);
                                     double total_amount = Double.valueOf(decimalFormat.format(amt));
                                     tvTotalPaidAmount.setText("" + total_amount);
+                                    setWallet();
                                     Snackbar.make(findViewById(android.R.id.content), "Egift Card " + egiftcoupon + " applied successfully", Snackbar.LENGTH_LONG).show();
                                 } else {
                                     Snackbar.make(findViewById(android.R.id.content), "Egift Card can't be applied", Snackbar.LENGTH_LONG).setAction("Ok", new View.OnClickListener() {
@@ -923,6 +971,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                             tvGETaxValue.setText("GE Tax");
                             tvTotalAmt.setText("$" + totalAmount);
                             tvTotalPaidAmount.setText("" + totalAmount);
+                            setWallet();
                             tvTotalPaidAmount2.setText("$" + totalAmount);
                             tvGETaxAmount.setText("00");
                         } else {
@@ -941,6 +990,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                             totalPaidAmount = Double.valueOf(decimalFormat.format(totalPaidAmount));
 
                             tvTotalPaidAmount.setText("" + totalPaidAmount);
+                            setWallet();
                             tvTotalPaidAmount2.setText("$" + totalPaidAmount);
                             tvGETaxAmount.setText("$" + geTaxAmount);
                             amount = String.valueOf(totalPaidAmount);
@@ -975,6 +1025,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         double amt = totalPaidAmount + Double.parseDouble(usedWalletAmt);
         double total_amount = Double.valueOf(decimalFormat.format(amt));
         tvTotalPaidAmount.setText(total_amount + "");
+        setWallet();
         totalPaidAmount = total_amount;
         usedWalletAmt = "";
         rd_loylty.setEnabled(true);
@@ -1788,7 +1839,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         object.addProperty("e_gift_balance", egiftamount);
         object.addProperty("e_gift_id", "0");
         object.addProperty("e_gift_wallet_amount", usedWalletAmt);
-//        object.addProperty("e_gift_id", egiftid);
+        object.addProperty("wallet_amt", "0");
         object.addProperty("grandtotal", AppPreferencesBuss.getGrandTotal(context));
         object.addProperty("loyalty_points", (AppPreferencesBuss.getFinalLoyalityPoint(context)));
         object.addProperty("gratuity", (AppPreferencesBuss.getGratuity(context)));
@@ -1975,6 +2026,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
 
 
                                     tvTotalPaidAmount.setText("" + totalPaidAmount);
+                                    setWallet();
                                     tvTotalPaidAmount2.setText("$" + totalPaidAmountBase);
                                     tvDriverTipAmt.setText("$" + tipAmt);
                                 }
@@ -2021,6 +2073,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
 //                                totalPaidAmount = totalAmount + delChargeAmount;
                                 totalPaidAmountBase = Double.parseDouble(decimalFormat.format(totalPaidAmount));
                                 tvTotalPaidAmount.setText(decimalFormat.format(totalPaidAmount) + "");
+                                setWallet();
                                 tvTotalPaidAmount2.setText("$" + totalPaidAmountBase);
 
                             } else {

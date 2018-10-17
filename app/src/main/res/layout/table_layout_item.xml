@@ -13,7 +13,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="3dp">
+        android:paddingLeft="@dimen/_3sdp"
+        android:paddingTop="@dimen/_5sdp"
+        android:paddingRight="@dimen/_3sdp"
+        android:paddingBottom="@dimen/_5sdp">
 
         <com.yberry.dinehawaii.customview.CustomTextView
             android:id="@+id/tvTitle"

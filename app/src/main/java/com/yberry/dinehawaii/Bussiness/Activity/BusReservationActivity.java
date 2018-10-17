@@ -24,6 +24,7 @@ import com.yberry.dinehawaii.RetrofitClasses.MyApiEndpointInterface;
 import com.yberry.dinehawaii.Util.AppConstants;
 import com.yberry.dinehawaii.Util.AppPreferences;
 import com.yberry.dinehawaii.Util.AppPreferencesBuss;
+import com.yberry.dinehawaii.Util.Function;
 import com.yberry.dinehawaii.Util.ProgressHUD;
 import com.yberry.dinehawaii.customview.CustomButton;
 import com.yberry.dinehawaii.customview.CustomEditText;
@@ -53,7 +54,7 @@ public class BusReservationActivity extends AppCompatActivity {
     String partySizeS, userNameString, mobileNoString, emailString;
     String name, i;
     ArrayList<TableData> tableDataList;
-    private String combinetable = "";
+    private String combinetable = "0";
     private BusReservationActivity context;
     private Calendar c;
     private String currTime;
@@ -149,6 +150,8 @@ public class BusReservationActivity extends AppCompatActivity {
             mobileNo.setError("Enter your mobile no.");
         else if (emailId.getText().toString().equalsIgnoreCase(""))
             emailId.setError("Enter your email-id");
+        else if (Function.isEmailNotValid(emailId))
+            emailId.setError("Enter valid email-id");
         else if (selectedTableID.equalsIgnoreCase(""))
             Toast.makeText(this, "Select table", Toast.LENGTH_SHORT).show();
         else {

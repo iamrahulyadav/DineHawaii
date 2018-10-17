@@ -15,6 +15,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -101,6 +103,34 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
                 onBackPressed();
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.order_detail_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_cancel) {
+            new AlertDialog.Builder(context)
+                    .setMessage("Do you want to cancel this order?")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            new CancelOrder().execute();
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    })
+                    .show();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void init() {
@@ -777,4 +807,85 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
         }
     }
 
+    class CancelOrder extends AsyncTask<Void, Void, Void> {
+        ProgressHUD progressHD;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressHD = ProgressHUD.show(OrderDetailActivty.this, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                }
+            });
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.BUSSINES_USER_BUSINESSAPI.CANCELORDER);
+            jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(OrderDetailActivty.this));
+            jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(OrderDetailActivty.this));
+            jsonObject.addProperty("order_id", order_id);
+
+
+            Log.e(TAG, "CancelOrder: Request >> " + jsonObject.toString());
+
+            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+            httpClient.addInterceptor(logging);
+            Retrofit retrofit = new Retrofit.Builder()
+                    .client(httpClient.build())
+                    .baseUrl(AppConstants.BASEURL.URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+
+            MyApiEndpointInterface apiService = retrofit.create(MyApiEndpointInterface.class);
+
+            Call<JsonObject> call = apiService.today_orders(jsonObject);
+            call.enqueue(new Callback<JsonObject>() {
+                @Override
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                    Log.e(TAG, "CancelOrder: Response >> " + response.body().toString());
+                    JsonObject jsonObject = response.body();
+                    if (jsonObject.get("status").getAsString().equals("200")) {
+                        publishProgress(200, "Cancelled");
+                    } else {
+                        JsonObject result = jsonObject.getAsJsonObject("result");
+                        publishProgress(400, result.get("msg").getAsString());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<JsonObject> call, Throwable t) {
+                    progressHD.dismiss();
+                    Log.e("Response: onFailure 1", t.toString());
+                    publishProgress(400, "Server not responding...");
+
+                }
+            });
+            return null;
+        }
+
+        private void publishProgress(int i, String msg) {
+            if (progressHD != null && progressHD.isShowing())
+                progressHD.dismiss();
+            if (i == 400) {
+                new AlertDialog.Builder(OrderDetailActivty.this)
+                        .setMessage(msg)
+                        .setPositiveButton("Retry", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                new getOrderDetails().execute();
+                            }
+                        }).setNegativeButton("Go Back", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                }).show();
+            }
+        }
+    }
 }

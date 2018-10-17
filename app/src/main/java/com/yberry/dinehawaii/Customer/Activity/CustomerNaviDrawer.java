@@ -28,12 +28,13 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.JsonObject;
 import com.squareup.picasso.Picasso;
 import com.yberry.dinehawaii.Customer.Fragment.CouponOffersFragment;
-import com.yberry.dinehawaii.Customer.Fragment.MyFeedbackFragment;
 import com.yberry.dinehawaii.Customer.Fragment.CustomerHomeFragment;
 import com.yberry.dinehawaii.Customer.Fragment.CustomerMyProfile;
 import com.yberry.dinehawaii.Customer.Fragment.EGiftAndCoupons;
 import com.yberry.dinehawaii.Customer.Fragment.LoyaltyPointFragment;
+import com.yberry.dinehawaii.Customer.Fragment.MyFeedbackFragment;
 import com.yberry.dinehawaii.Customer.Fragment.MyReviews;
+import com.yberry.dinehawaii.Customer.Fragment.MyWallet;
 import com.yberry.dinehawaii.Customer.Fragment.NotificationCustomerFragment;
 import com.yberry.dinehawaii.Customer.Fragment.OrderHistory;
 import com.yberry.dinehawaii.Customer.Fragment.ReservationOrWaitListManagement;
@@ -204,6 +205,9 @@ public class CustomerNaviDrawer extends AppCompatActivity implements NavigationV
         } else if (id == R.id.nav_profile) {
             headText.setText("My Profile");
             fragment = new CustomerMyProfile();
+        } else if (id == R.id.nav_wallet) {
+            headText.setText("My Wallet");
+            fragment = new MyWallet();
         } else if (id == R.id.nav_orderhistory) {
             headText.setText("Orders");
             Bundle bundle = new Bundle();
@@ -222,7 +226,7 @@ public class CustomerNaviDrawer extends AppCompatActivity implements NavigationV
         } else if (id == R.id.nav_myreview) {
             headText.setText("My Reviews");
             fragment = new MyReviews();
-        }else if (id == R.id.navFeedback) {
+        } else if (id == R.id.navFeedback) {
             headText.setText("My Feedbacks");
             fragment = new MyFeedbackFragment();
         } else if (id == R.id.nav_neworder) {
