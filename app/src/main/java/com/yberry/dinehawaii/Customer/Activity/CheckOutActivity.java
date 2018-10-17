@@ -177,7 +177,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void setWallet() {
-        wallet_amt = AppPreferences.getWalletAmt(context);
+       /* wallet_amt = AppPreferences.getWalletAmt(context);
         wallet_amt = "130";
         if (radio_wallet.isChecked()) {
             if (!wallet_amt.equalsIgnoreCase("0") && !wallet_amt.equalsIgnoreCase("")) {
@@ -198,7 +198,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
             tvPaymentText.setText("Payment will be done via paypal!");
             radio_wallet.setText("Wallet Amount : $" + wallet_amt);
 
-        }
+        }*/
     }
 
     private void setCartAdapter() {
@@ -712,7 +712,6 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                                 Toast.makeText(context, jsonObject1.getString("msg"), Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(context, "Server not Responding", Toast.LENGTH_SHORT).show();
-
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

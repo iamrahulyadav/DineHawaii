@@ -155,7 +155,7 @@ public class MyWallet extends Fragment implements View.OnClickListener {
         private void publishProgress(int i, String msg) {
             if (progressHD != null && progressHD.isShowing())
                 progressHD.dismiss();
-            tvWalletAmt.setText(walletAmt);
+            tvWalletAmt.setText("$" + walletAmt);
             if (i == 400) {
                 new android.support.v7.app.AlertDialog.Builder(context)
                         .setMessage(msg)
@@ -173,6 +173,4 @@ public class MyWallet extends Fragment implements View.OnClickListener {
             }
         }
     }
-
-
 }
