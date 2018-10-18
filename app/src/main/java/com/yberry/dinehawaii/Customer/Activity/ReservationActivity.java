@@ -131,8 +131,8 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
         userName.setText(AppPreferences.getCustomername(context));
         mobileNo.setText(AppPreferences.getCustomerMobile(context));
         emailId.setText(AppPreferences.getEmailSetting(context));
-//        wallet_amt = AppPreferences.getWalletAmt(context);
-        wallet_amt = "5";
+        wallet_amt = AppPreferences.getWalletAmt(context);
+//        wallet_amt = "5";
         radio_wallet.setText("Wallet Amount : $" + wallet_amt);
     }
 
@@ -776,8 +776,8 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
     }
 
     private void setWallet() {
-//        wallet_amt = AppPreferences.getWalletAmt(context);
-        wallet_amt = "5";
+        wallet_amt = AppPreferences.getWalletAmt(context);
+//        wallet_amt = "5";
         radio_wallet.setText("Wallet Amount : $" + wallet_amt);
         if (radio_wallet.isChecked()) {
             if (!wallet_amt.equalsIgnoreCase("0") && !wallet_amt.equalsIgnoreCase("")) {
