@@ -86,7 +86,6 @@ public class TableBSingleFragment extends Fragment implements View.OnClickListen
 
     private void getBlockedSingleTables() {
         if (Util.isNetworkAvailable(getActivity())) {
-            tableList = new ArrayList<>();
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("method", AppConstants.BUSINESS_TABLE_SYSTEM_API.GETBLOCKEDSINGLETABLES);
             jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(getActivity()));
@@ -113,7 +112,6 @@ public class TableBSingleFragment extends Fragment implements View.OnClickListen
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 Log.e(TAG + "onResponseTable", response.body().toString());
                 String s = response.body().toString();
-
                 try {
                     JSONObject jsonObject = new JSONObject(s);
                     Log.d("Res:", s);

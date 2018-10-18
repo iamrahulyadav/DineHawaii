@@ -92,11 +92,12 @@ public class RestaurentDetailActivity extends AppCompatActivity {
     private ChienesAdapter chineseadpater;
     private ArrayList<MenuDetail> arrayListCart;
     private CustomTextView tvCountBadge;
+    private ListItem data;
 
     private void getCounterData() {
         if (tvCountBadge != null)
-            if (new DatabaseHandler(RestaurentDetailActivity.this).hasCartData()) {
-                ArrayList<OrderItemsDetailsModel> cartItems = new DatabaseHandler(RestaurentDetailActivity.this).getCartItems(AppPreferences.getBusiID(RestaurentDetailActivity.this));  //database data
+            if (new DatabaseHandler(context).hasCartData()) {
+                ArrayList<OrderItemsDetailsModel> cartItems = new DatabaseHandler(context).getCartItems(AppPreferences.getBusiID(context));  //database data
                 Log.d("cartItems", String.valueOf(cartItems.size()));
                 tvCountBadge.setText(String.valueOf(cartItems.size()));
             } else {
@@ -108,7 +109,7 @@ public class RestaurentDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurent_detail);
-        context = RestaurentDetailActivity.this;
+        context = this;
         if (checkPermission(Manifest.permission.CALL_PHONE)) {
         } else {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, MAKE_CALL_PERMISSION_REQUEST_CODE);
@@ -122,18 +123,18 @@ public class RestaurentDetailActivity extends AppCompatActivity {
         listItems = new ArrayList<>();
         arrayListCart = new ArrayList<>();
         chineseadpater = new ChienesAdapter(this, arrayListCart);
-        ListItem listItem = getIntent().getParcelableExtra("data");
-        Log.e(TAG, "onCreate: Restaurant Data >> " + listItem);
-        listItems.add(listItem);
-        AppPreferences.setSelectedBusiLat(context, "" + listItem.getLatitude());
-        AppPreferences.setSelectedBusiLong(context, "" + listItem.getLongitude());
+        data = (ListItem) getIntent().getParcelableExtra("data");
+        Log.e(TAG, "onCreate: data >> " + data);
+        listItems.add(data);
+        AppPreferences.setSelectedBusiLat(context, "" + data.getLatitude());
+        AppPreferences.setSelectedBusiLong(context, "" + data.getLongitude());
 
-        if (listItem.getType().equalsIgnoreCase("1")) {
+        if (data.getType().equalsIgnoreCase("1")) {
             viewLayout.setVisibility(View.VISIBLE);
-        } else if (listItem.getType().equalsIgnoreCase("0")) {
+        } else if (data.getType().equalsIgnoreCase("0")) {
             viewLayout.setVisibility(View.GONE);
         }
-        setValues(listItem);
+        setValues(data);
         checkPackage();
         getMenus();
         getHours();
@@ -152,7 +153,7 @@ public class RestaurentDetailActivity extends AppCompatActivity {
     }
 
     private void getServiceJsonCall(JsonObject jsonObject) {
-        final ProgressHUD progressHD = ProgressHUD.show(RestaurentDetailActivity.this, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
+        final ProgressHUD progressHD = ProgressHUD.show(context, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
                 // TODO Auto-generated method stub
@@ -557,7 +558,7 @@ public class RestaurentDetailActivity extends AppCompatActivity {
                                 /*========================================================================*/
                             }
                         } else {
-                            Toast.makeText(RestaurentDetailActivity.this, "No Data found", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "No Data found", Toast.LENGTH_SHORT).show();
                         }
                     }
                 } catch (JSONException e) {
@@ -577,18 +578,18 @@ public class RestaurentDetailActivity extends AppCompatActivity {
 
     }
 
-    private void setValues(ListItem listItem) {
-        headet_text.setText(listItem.getBusinessName());
-        mName.setText(listItem.getBusinessName());
-        mAddress.setText(listItem.getBusinessAddress());
-        mContact.setText(listItem.getBusinessContactNo());
-        myRatingBar.setRating(Float.parseFloat(listItem.getRating()));
-        business_id = listItem.getId();
-        business_name = listItem.getBusinessName();
-        healt_status = listItem.getHealthCardStstus();
-        average_price = listItem.getAvgPrice();
+    private void setValues(ListItem data) {
+        headet_text.setText(data.getBusinessName());
+        mName.setText(data.getBusinessName());
+        mAddress.setText(data.getBusinessAddress());
+        mContact.setText(data.getBusinessContactNo());
+        myRatingBar.setRating(Float.parseFloat(data.getRating()));
+        business_id = data.getId();
+        business_name = data.getBusinessName();
+        healt_status = data.getHealthCardStstus();
+        average_price = data.getAvgPrice();
         Log.e(TAG, "setValues: average_price >> " + average_price);
-        AppPreferencesBuss.setAveragePrice(context, listItem.getAvgPrice());
+        AppPreferencesBuss.setAveragePrice(context, data.getAvgPrice());
         tvDeparment.setText("Department of health report card : " + healt_status);
         tvAverage.setText("Average Price Range : " + average_price);
     }
@@ -597,7 +598,7 @@ public class RestaurentDetailActivity extends AppCompatActivity {
         tvRecent_review.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RestaurentDetailActivity.this, CustomerResturantReviewAcivity.class);
+                Intent intent = new Intent(context, CustomerResturantReviewAcivity.class);
                 intent.putExtra("business_name", mName.getText().toString());
                 startActivity(intent);
             }
@@ -614,10 +615,8 @@ public class RestaurentDetailActivity extends AppCompatActivity {
         makeReservationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RestaurentDetailActivity.this, ReservationActivity.class);
-                System.out.println("BUSINESS ID " + " : " + business_id);
-                intent.putExtra("business_id", business_id);
-                intent.putExtra("business_name", business_name);
+                Intent intent = new Intent(context, ReservationActivity.class);
+                intent.putExtra("data", data);
                 startActivity(intent);
             }
         });
@@ -625,7 +624,7 @@ public class RestaurentDetailActivity extends AppCompatActivity {
         placeOrderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent in = new Intent(RestaurentDetailActivity.this, PlaceAnOrder.class);
+                Intent in = new Intent(context, PlaceAnOrder.class);
                 in.putExtra("business_id", business_id);
                 startActivity(in);
 
@@ -634,7 +633,7 @@ public class RestaurentDetailActivity extends AppCompatActivity {
        /* viewmenu_list.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent in = new Intent(RestaurentDetailActivity.this, PlaceAnOrder.class);
+                Intent in = new Intent(context, PlaceAnOrder.class);
                 in.putExtra("business_id", business_id);
                 startActivity(in);
 
@@ -675,7 +674,7 @@ public class RestaurentDetailActivity extends AppCompatActivity {
         ((CardView) findViewById(R.id.cardMenuList)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent in = new Intent(RestaurentDetailActivity.this, PlaceAnOrder.class);
+                Intent in = new Intent(context, PlaceAnOrder.class);
                 in.putExtra("business_id", business_id);
                 startActivity(in);
             }
@@ -692,7 +691,7 @@ public class RestaurentDetailActivity extends AppCompatActivity {
 
     @SuppressLint("LongLogTag")
     private void getResurant_menu_details(JsonObject jsonObject) {
-        final ProgressHUD progressHD = ProgressHUD.show(RestaurentDetailActivity.this, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
+        final ProgressHUD progressHD = ProgressHUD.show(context, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
                 // TODO Auto-generated method stub
@@ -841,7 +840,7 @@ public class RestaurentDetailActivity extends AppCompatActivity {
         } else if (id == R.id.back) {
             finish();
         } else if (id == R.id.action_map) {
-            Intent intent = new Intent(RestaurentDetailActivity.this, MapsActivity.class);
+            Intent intent = new Intent(context, MapsActivity.class);
             intent.setAction("Restaurant");
             intent.putParcelableArrayListExtra("listItems", listItems);
             startActivity(intent);
@@ -849,7 +848,7 @@ public class RestaurentDetailActivity extends AppCompatActivity {
         } else if (id == R.id.action_notification) {
             return true;
         } else if (id == R.id.action_cart) {
-            Intent intent = new Intent(RestaurentDetailActivity.this, CartActivity.class);
+            Intent intent = new Intent(context, CartActivity.class);
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);

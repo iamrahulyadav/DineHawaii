@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_making_reservation"
     android:layout_width="match_parent"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tools:context="com.yberry.dinehawaii.Customer.Activity.ReservationActivity">
 
-    <include android:id="@+id/toolbar_bar" layout="@layout/toolbar" />
+    <include
+        android:id="@+id/toolbar_bar"
+        layout="@layout/toolbar" />
 
     <ScrollView
         android:id="@+id/activity_guest_or_custumer_reg"
@@ -18,32 +20,36 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar_bar"
         android:scrollbars="none">
+
         <RelativeLayout
-            android:layout_marginLeft="@dimen/_10sdp"
-            android:layout_marginRight="@dimen/_10sdp"
-            android:layout_width="match_parent"
             android:id="@+id/touch_outside"
-            android:layout_height="match_parent">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp">
+
             <com.yberry.dinehawaii.customview.CustomTextView
                 android:id="@+id/businessName"
+                style="@style/TextAppearance.AppCompat.Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Business name"
                 android:padding="@dimen/_8sdp"
+                android:text="Business name"
                 android:textColor="@color/colorPrimary"
-                style="@style/TextAppearance.AppCompat.Title"
                 app:edittextfont="Raleway-Bold.ttf" />
+
             <com.yberry.dinehawaii.customview.CustomTextView
                 android:id="@+id/btn_next"
+                style="@style/TextAppearance.AppCompat.Subhead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/businessName"
                 android:layout_centerHorizontal="true"
                 android:text="Submit your details to book a table"
                 android:textColor="@color/place_autocomplete_search_hint"
-                style="@style/TextAppearance.AppCompat.Subhead"
                 app:edittextfont="Raleway-Regular.ttf" />
+
             <LinearLayout
                 android:id="@+id/linear1"
                 android:layout_width="match_parent"
@@ -54,81 +60,83 @@
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:weightSum="2">
+
                 <com.yberry.dinehawaii.customview.CustomEditText
                     android:id="@+id/datePicker"
+                    style="@style/TextAppearance.AppCompat.Subhead"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/partySize"
                     android:layout_weight="1"
+                    android:focusableInTouchMode="false"
                     android:hint="Select Date"
                     android:inputType="datetime"
-                    android:textAlignment="center"
-                    style="@style/TextAppearance.AppCompat.Subhead"
-                    android:focusableInTouchMode="false"
-                    android:singleLine="true"
                     android:padding="@dimen/_10sdp"
+                    android:singleLine="true"
+                    android:textAlignment="center"
                     app:edittextfont="Raleway-Regular.ttf" />
 
                 <com.yberry.dinehawaii.customview.CustomEditText
                     android:id="@+id/timePicker"
+                    style="@style/TextAppearance.AppCompat.Subhead"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/partySize"
                     android:layout_weight="1"
-                    android:singleLine="true"
-                    android:inputType="datetime"
-                    android:hint="Select Time"
                     android:focusableInTouchMode="false"
+                    android:hint="Select Time"
+                    android:inputType="datetime"
                     android:padding="@dimen/_10sdp"
+                    android:singleLine="true"
                     android:textAlignment="center"
-                    style="@style/TextAppearance.AppCompat.Subhead"
-                    app:edittextfont="Raleway-Regular.ttf"  />
+                    app:edittextfont="Raleway-Regular.ttf" />
             </LinearLayout>
 
             <com.yberry.dinehawaii.customview.CustomEditText
                 android:id="@+id/userName"
+                style="@style/TextAppearance.AppCompat.Subhead"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/linear1"
                 android:layout_weight="1"
                 android:hint="Full Name"
                 android:imeOptions="actionNext"
-                android:singleLine="true"
                 android:inputType="textPersonName|textCapSentences"
-                android:textAlignment="center"
-                style="@style/TextAppearance.AppCompat.Subhead"
                 android:padding="@dimen/_10sdp"
+                android:singleLine="true"
+                android:textAlignment="center"
                 app:edittextfont="Raleway-Regular.ttf" />
 
             <com.yberry.dinehawaii.customview.CustomEditText
-                android:layout_below="@id/userName"
                 android:id="@+id/textViewMobile"
+                style="@style/TextAppearance.AppCompat.Subhead"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/userName"
                 android:gravity="center"
                 android:hint="Mobile No"
-                android:singleLine="true"
                 android:imeOptions="actionNext"
                 android:inputType="number"
-                android:textAlignment="center"
-                style="@style/TextAppearance.AppCompat.Subhead"
                 android:padding="@dimen/_10sdp"
+                android:singleLine="true"
+                android:textAlignment="center"
                 app:edittextfont="Raleway-Regular.ttf" />
 
             <com.yberry.dinehawaii.customview.CustomEditText
                 android:id="@+id/textViewEmail"
+                style="@style/TextAppearance.AppCompat.Subhead"
                 android:layout_width="match_parent"
-                android:singleLine="true"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/textViewMobile"
                 android:gravity="center"
                 android:hint="Email"
                 android:imeOptions="actionNext"
                 android:inputType="textEmailAddress"
-                android:textAlignment="center"
-                style="@style/TextAppearance.AppCompat.Subhead"
                 android:padding="@dimen/_10sdp"
+                android:singleLine="true"
+                android:textAlignment="center"
                 app:edittextfont="Raleway-Regular.ttf" />
+
             <LinearLayout
                 android:id="@+id/contact"
                 android:layout_width="match_parent"
@@ -136,21 +144,23 @@
                 android:layout_below="@+id/textViewEmail"
                 android:orientation="horizontal"
                 android:weightSum="3">
+
                 <com.yberry.dinehawaii.customview.CustomEditText
                     android:id="@+id/partySize"
+                    style="@style/TextAppearance.AppCompat.Subhead"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint="Party size"
-                    android:singleLine="true"
-                    android:inputType="number"
                     android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:singleLine="true"
                     android:textAlignment="center"
-                    style="@style/TextAppearance.AppCompat.Subhead"
-                    app:edittextfont="Raleway-Regular.ttf"  />
+                    app:edittextfont="Raleway-Regular.ttf" />
 
                 <com.yberry.dinehawaii.customview.CustomEditText
                     android:id="@+id/textViewNoofChilds"
+                    style="@style/TextAppearance.AppCompat.Subhead"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/textViewEmail"
@@ -161,69 +171,70 @@
                     android:inputType="number"
                     android:singleLine="true"
                     android:textAlignment="center"
-                    style="@style/TextAppearance.AppCompat.Subhead"
                     app:edittextfont="Raleway-Regular.ttf" />
 
                 <com.yberry.dinehawaii.customview.CustomEditText
                     android:id="@+id/textViewNoofAdults"
+                    style="@style/TextAppearance.AppCompat.Subhead"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint="No of adults"
-                    android:singleLine="true"
                     android:inputType="number"
+                    android:singleLine="true"
                     android:textAlignment="center"
-                    style="@style/TextAppearance.AppCompat.Subhead"
                     app:edittextfont="Raleway-Regular.ttf" />
 
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/l1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:id="@+id/l1"
-                android:layout_below="@+id/contact">
+                android:layout_below="@+id/contact"
+                android:gravity="center">
+
                 <com.yberry.dinehawaii.customview.CustomTextView
                     android:id="@+id/special"
+                    style="@style/TextAppearance.AppCompat.Subhead"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:padding="@dimen/_10sdp"
                     android:text="SPECIAL REQUESTS :"
-                    style="@style/TextAppearance.AppCompat.Subhead"
                     app:edittextfont="Raleway-Bold.ttf" />
 
             </LinearLayout>
+
             <LinearLayout
-                android:layout_centerHorizontal="true"
                 android:id="@+id/relative"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/l1"
+                android:layout_centerHorizontal="true"
                 android:weightSum="2">
 
                 <com.yberry.dinehawaii.customview.CustomCheckBox
                     android:id="@+id/child_high_chair"
+                    style="@style/TextAppearance.AppCompat.Subhead"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Child High Chair"
                     android:textColor="@color/gray"
-                    app:edittextfont="@string/raleway_regular"
-                    style="@style/TextAppearance.AppCompat.Subhead" />
+                    app:edittextfont="@string/raleway_regular" />
 
                 <com.yberry.dinehawaii.customview.CustomCheckBox
                     android:id="@+id/child_booster_chair"
+                    style="@style/TextAppearance.AppCompat.Subhead"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_5sdp"
                     android:layout_toRightOf="@+id/child"
                     android:layout_weight="1"
-                    android:layout_marginLeft="@dimen/_5sdp"
                     android:text="Child Booster Chair"
-                    app:edittextfont="@string/raleway_regular"
                     android:textColor="@color/gray"
-                    style="@style/TextAppearance.AppCompat.Subhead" />
+                    app:edittextfont="@string/raleway_regular" />
             </LinearLayout>
 
             <LinearLayout
@@ -231,42 +242,117 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/relative"
-                android:orientation="horizontal"
                 android:gravity="center_horizontal"
+                android:orientation="horizontal"
                 android:visibility="visible">
 
                 <com.yberry.dinehawaii.customview.CustomTextView
                     android:id="@+id/btn_bookTable"
+                    style="@style/TextAppearance.AppCompat.Subhead"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:textAlignment="center"
-                    android:padding="@dimen/_10sdp"
                     android:background="@drawable/plain_green_border"
+                    android:padding="@dimen/_10sdp"
                     android:text="SELECT TABLE"
-                    style="@style/TextAppearance.AppCompat.Subhead"
+                    android:textAlignment="center"
                     android:textColor="@color/colorPrimary"
                     app:edittextfont="Raleway-Bold.ttf" />
 
             </LinearLayout>
+
             <LinearLayout
-                android:layout_marginTop="@dimen/_10sdp"
+                android:id="@+id/linear4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/llTableBook"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:orientation="vertical">
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    android:id="@+id/tvPreChargesText"
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal"
+                    android:padding="@dimen/_5sdp"
+                    android:text="Pay pre-reservation changes via"
+                    android:textColor="@color/green"
+                    app:edittextfont="Raleway-Bold.ttf" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:background="@color/colorDivider"></View>
+
+                <RadioGroup
+                    android:id="@+id/radioPaymode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="@dimen/_15sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+
+                    <com.yberry.dinehawaii.customview.CustomRadioButton
+                        android:id="@+id/radio_paypal"
+                        style="@style/TextAppearance.AppCompat.Small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:drawableRight="@drawable/paypal2"
+                        android:text=""
+                        app:edittextfont="@string/raleway_regular" />
+
+
+                    <com.yberry.dinehawaii.customview.CustomRadioButton
+                        android:id="@+id/radio_wallet"
+                        style="@style/TextAppearance.AppCompat.Small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:text="Wallet ($0)"
+                        app:edittextfont="@string/raleway_regular" />
+                </RadioGroup>
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    android:id="@+id/tvPaymentText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="@dimen/_15sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:gravity="center_horizontal"
+                    android:padding="@dimen/_3sdp"
+                    android:text="Payment will be done via paypal"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                    app:edittextfont="Raleway-Bold.ttf" />
+            </LinearLayout>
+
+
+            <LinearLayout
                 android:id="@+id/llProceed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/llTableBook"
+                android:layout_below="@+id/linear4"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:orientation="vertical">
 
                 <com.yberry.dinehawaii.customview.CustomButton
-                    android:id="@+id/submit1"
+                    android:id="@+id/btnPay"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_10sdp"
                     android:background="@color/colorPrimary"
                     android:text="SUBMIT"
-                    android:layout_marginBottom="@dimen/_10sdp"
                     android:textColor="@color/white"
-                    app:edittextfont="Raleway-Bold.ttf"/>
+                    app:edittextfont="Raleway-Bold.ttf" />
 
                 <com.yberry.dinehawaii.customview.CustomButton
                     android:id="@+id/complete"
@@ -279,7 +365,7 @@
                     android:text="COMPLETE RESERVATION"
                     android:textColor="@color/white"
                     android:visibility="gone"
-                    app:edittextfont="Raleway-Bold.ttf"/>
+                    app:edittextfont="Raleway-Bold.ttf" />
             </LinearLayout>
         </RelativeLayout>
     </ScrollView>

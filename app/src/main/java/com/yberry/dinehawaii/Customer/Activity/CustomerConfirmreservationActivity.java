@@ -40,8 +40,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class CustomerConfirmreservationActivity extends AppCompatActivity implements View.OnClickListener {
-    public static final int PAYPAL_REQUEST_CODE = 123;
     private static final String TAG = "Making_Reservation_NEXT";
+
+    public static final int PAYPAL_REQUEST_CODE = 123;
     private static PayPalConfiguration config = new PayPalConfiguration()
             // Start with mock environment.  When ready, switch to sandbox (ENVIRONMENT_SANDBOX)
             // or live (ENVIRONMENT_PRODUCTION)
@@ -166,104 +167,55 @@ public class CustomerConfirmreservationActivity extends AppCompatActivity implem
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == PAYPAL_REQUEST_CODE) {
-            //If the result is OK i.e. user has not canceled the payment
-            /*
-            {
-                "client": {
-                "environment": "sandbox",
-                        "paypal_sdk_version": "2.0.0",
-                        "platform": "iOS",
-                        "product_name": "PayPal iOS SDK;"
-            },
-                "response": {
-                "create_time": "2014-02-12T22:29:49Z",
-                        "id": "PAY-564191241M8701234KL57LXI",
-                        "intent": "sale",
-                        "state": "approved"
-            },
-                "response_type": "payment"
-            }
-        */
-
             if (resultCode == Activity.RESULT_OK) {
-                //Getting the payment confirmation
                 PaymentConfirmation confirm = data.getParcelableExtra(com.paypal.android.sdk.payments.PaymentActivity.EXTRA_RESULT_CONFIRMATION);
-                //if confirmation is not null
                 if (confirm != null) {
                     try {
-                        //Getting the payment details
                         String paymentDetails = confirm.toJSONObject().toString(4);
                         Log.e("paymentExample", paymentDetails);
-
                         try {
-
                             JSONObject jsonDetails = new JSONObject(paymentDetails);
                             JSONObject jsonResponse = jsonDetails.getJSONObject("response");
                             AppPreferences.setTranctionId(CustomerConfirmreservationActivity.this, jsonResponse.getString("id"));
-
-
                             String transaction_ID = jsonResponse.getString("id");
                             String createTime = jsonResponse.getString("create_time");
                             String intent = jsonResponse.getString("intent");
                             String paymentState = jsonResponse.getString("state");
-                            String nofity_checkbox = "0";
                             Log.e("paymentExample", "RESPONSE :- \n" + "Transaction_ID :- " + transaction_ID + "\nCreate Time :- " + createTime +
                                     "\nIntent :- " + intent + "\nPayment State :- " + paymentState);
 
-
                             if (paymentState.equalsIgnoreCase("approved")) {
-                                /* Intent in = new Intent(CustomerConfirmreservationActivity.this, ThanksReservationActivity.class);
-                                 *//*  in.putExtra("reservation_id", reservation_id);
-                                in.putExtra("business_id", business_id);
-                             *//*   //in.putExtra("user_id", AppPreferences.getCustomerid(CustomerConfirmreservationActivity.this));
-                                in.putExtra("reservation_amount", amount);
-                                in.putExtra("payment_type", "paypal");
-                                in.putExtra("transaction_id", transaction_ID);
-                                in.putExtra("payment_status", paymentState);
-                                in.putExtra("min_hours", "02");
-                                in.putExtra("time", "11:30");
-                                if (chk_Confirm.isChecked())
-                                    nofity_checkbox="1";
-                                else
-                                    nofity_checkbox="0";
-                                startActivity(in);
-                                finish();*/
-                                confirmReservation(transaction_ID, paymentState, nofity_checkbox);
-
-
+                                confirmReservation(transaction_ID, paymentState);
                             } else {
                                 Toast.makeText(this, "Something went wrong, please try again", Toast.LENGTH_SHORT).show();
                                 finish();
                             }
-
                         } catch (JSONException e) {
                             Toast.makeText(CustomerConfirmreservationActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
-
-//                        showAlertDialog(amount);
-
-
                     } catch (JSONException e) {
                         Log.e("paymentExample", "an extremely unlikely failure occurred: ", e);
                     }
                 }
             } else if (resultCode == Activity.RESULT_CANCELED) {
                 Log.e("paymentExample", "The user canceled.");
-
                 Toast.makeText(getApplicationContext(), "Sorry!! Payment cancelled by User", Toast.LENGTH_SHORT).show();
-
             } else if (resultCode == com.paypal.android.sdk.payments.PaymentActivity.RESULT_EXTRAS_INVALID) {
                 Log.e("paymentExample", "An invalid Payment or PayPalConfiguration was submitted. Please see the docs.");
             }
         }
-
     }
 
 
-    void confirmReservation(String transaction_ID, String paymentState, String nofity_checkbox) {
+    void confirmReservation(String transaction_ID, String paymentState) {
         if (Util.isNetworkAvailable(CustomerConfirmreservationActivity.this)) {
+            final ProgressHUD progressHD = ProgressHUD.show(CustomerConfirmreservationActivity.this, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    // TODO Auto-generated method stub
+                }
+            });
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("method", AppConstants.CUSTOMER_USER.GET_RESERVATION_CONFIRMATION);
             jsonObject.addProperty("business_id", AppPreferences.getBusiID(CustomerConfirmreservationActivity.this));
@@ -275,61 +227,52 @@ public class CustomerConfirmreservationActivity extends AppCompatActivity implem
             jsonObject.addProperty("payment_status", paymentState);
             jsonObject.addProperty("min_hours", "2");
             jsonObject.addProperty("time", Function.getCurrentDateTime());
-            jsonObject.addProperty("nofity_checkbox", nofity_checkbox);
-            Log.e(TAG, "Request CONFIRM RESERVATION >> " + jsonObject.toString());
+            jsonObject.addProperty("nofity_checkbox", "0");
+            Log.e(TAG, "confirmReservation: Request >> " + jsonObject);
             Log.d("SaveCon", AppPreferencesBuss.getReservatId(CustomerConfirmreservationActivity.this));
-            saveDataToServer(jsonObject);
+
+            MyApiEndpointInterface apiService = ApiClient.getClient().create(MyApiEndpointInterface.class);
+            Call<JsonObject> call = apiService.get_reservation_confirmation(jsonObject);
+
+            call.enqueue(new Callback<JsonObject>() {
+                @SuppressLint("LongLogTag")
+                @Override
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                    try {
+                        String resp = response.body().toString();
+                        Log.e(TAG, "confirmReservation: Response >> " + resp);
+                        JSONObject jsonObject = new JSONObject(resp);
+                        if (jsonObject.getString("status").equalsIgnoreCase("200")) {
+                            jsonObject.getString("message");
+                            showThankYouAlert();
+                        } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
+                            JSONArray jsonArray = jsonObject.getJSONArray("result");
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(0);
+                            String msg = jsonObject1.getString("msg");
+                            Toast.makeText(CustomerConfirmreservationActivity.this, msg, Toast.LENGTH_LONG).show();
+                            finish();
+                        }
+                    } catch (JSONException e) {
+                        progressHD.dismiss();
+                        e.printStackTrace();
+                    }
+                    progressHD.dismiss();
+                }
+
+                @SuppressLint("LongLogTag")
+                @Override
+                public void onFailure(Call<JsonObject> call, Throwable t) {
+                    Log.e(TAG, "confirmReservation: onFailure >> " + t.getMessage());
+                    progressHD.dismiss();
+                    Toast.makeText(CustomerConfirmreservationActivity.this, "Server not Responding", Toast.LENGTH_SHORT).show();
+                }
+            });
+
         } else {
             Toast.makeText(this, "Please Connect Your Internet", Toast.LENGTH_LONG).show();
         }
     }
 
-
-    private void saveDataToServer(JsonObject jsonObject) {
-        final ProgressHUD progressHD = ProgressHUD.show(CustomerConfirmreservationActivity.this, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                // TODO Auto-generated method stub
-            }
-        });
-
-
-        MyApiEndpointInterface apiService = ApiClient.getClient().create(MyApiEndpointInterface.class);
-        Call<JsonObject> call = apiService.get_reservation_confirmation(jsonObject);
-
-        call.enqueue(new Callback<JsonObject>() {
-            @SuppressLint("LongLogTag")
-            @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                Log.d("Save", "Response CONFIRM RESERVATION >> " + response.body().toString());
-                String resp = response.body().toString();
-                try {
-                    JSONObject jsonObject = new JSONObject(resp);
-                    if (jsonObject.getString("status").equalsIgnoreCase("200")) {
-                        jsonObject.getString("message");
-                        showThankYouAlert();
-                    } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
-                        JSONArray jsonArray = jsonObject.getJSONArray("result");
-                        JSONObject jsonObject1 = jsonArray.getJSONObject(0);
-                        String msg = jsonObject1.getString("msg");
-                        Toast.makeText(CustomerConfirmreservationActivity.this, msg, Toast.LENGTH_LONG).show();
-                        finish();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                progressHD.dismiss();
-            }
-
-            @SuppressLint("LongLogTag")
-            @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.e("Save Confirmation", "error :- " + Log.getStackTraceString(t));
-                progressHD.dismiss();
-                Toast.makeText(CustomerConfirmreservationActivity.this, "Server not Responding", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 
     private void showThankYouAlert() {
         android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(CustomerConfirmreservationActivity.this);

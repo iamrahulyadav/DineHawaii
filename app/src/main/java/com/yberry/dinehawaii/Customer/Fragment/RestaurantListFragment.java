@@ -82,11 +82,8 @@ public class RestaurantListFragment extends Fragment {
         setHasOptionsMenu(true);
         gpsTracker = new GPSTracker(getActivity());
         if (gpsTracker.canGetLocation()) {
-
             latitude = gpsTracker.getLatitude();
             longitude = gpsTracker.getLongitude();
-
-
             Log.e(TAG, " Latitude :- " + latitude + " & Longitude:- " + longitude);
         } else {
             gpsTracker.showSettingsAlert();
@@ -94,10 +91,13 @@ public class RestaurantListFragment extends Fragment {
 
         init(view);
         gps();
-        /*Kaka'ako
-        Honolulu, HI, USA*/
-       /* latitude = 21.295575;
+        //Kaka'ako Honolulu, HI, USA
+        /*latitude = 21.295575;
         longitude = -157.850968;*/
+
+        //Bhopal Junction
+       /* latitude = 23.267903;
+        longitude = 77.413966;*/
         new getRestFromServer().execute();
         new getReccRestFromServer().execute();
         return view;
@@ -333,7 +333,7 @@ public class RestaurantListFragment extends Fragment {
             jsonObject.addProperty(AppConstants.KEY_USERID, AppPreferences.getCustomerid(getActivity())); //7
             jsonObject.addProperty(AppConstants.KEY_LATITUDE, latitude);
             jsonObject.addProperty(AppConstants.KEY_LONGITUDE, longitude);
-            jsonObject.addProperty("distance", "0");
+            jsonObject.addProperty("distance", "100");
             jsonObject.addProperty(AppConstants.KEY_PAGE, current_page);
             Log.e(TAG, "Request GET ALL RESTAURANTS" + jsonObject.toString());
 

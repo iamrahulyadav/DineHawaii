@@ -168,20 +168,18 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
             getGETax();
             setLoyalityPoints();
             getFoodPrepTime();
-        } else {
-            Toast.makeText(context, "Please Connect Internet", Toast.LENGTH_LONG).show();
-        }
+        } else Toast.makeText(context, "Please Connect Internet", Toast.LENGTH_LONG).show();
 
         custName.requestFocus();
-
-        setWallet();
+        wallet_amt = AppPreferences.getWalletAmt(context);
+        radio_wallet.setText("Wallet Amount : $" + wallet_amt);
     }
 
     private void setWallet() {
         wallet_amt = AppPreferences.getWalletAmt(context);
+        radio_wallet.setText("Wallet Amount : $" + wallet_amt);
         if (radio_wallet.isChecked()) {
             if (!wallet_amt.equalsIgnoreCase("0") && !wallet_amt.equalsIgnoreCase("")) {
-                radio_wallet.setText("Wallet Amount : $" + wallet_amt);
                 if (totalPaidAmount < Double.parseDouble(wallet_amt)) {
                     double wallet_remaining_amt = Double.parseDouble(wallet_amt) - totalPaidAmount;
                     radio_wallet.setText("Wallet Amount : $" + decimalFormat.format(wallet_remaining_amt));

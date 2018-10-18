@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -25,13 +26,19 @@ import android.widget.CheckBox;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
+import com.paypal.android.sdk.payments.PayPalConfiguration;
+import com.paypal.android.sdk.payments.PayPalPayment;
+import com.paypal.android.sdk.payments.PayPalService;
+import com.paypal.android.sdk.payments.PaymentConfirmation;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
+import com.yberry.dinehawaii.Model.ListItem;
 import com.yberry.dinehawaii.Model.TableData;
 import com.yberry.dinehawaii.R;
 import com.yberry.dinehawaii.RetrofitClasses.ApiClient;
@@ -39,16 +46,20 @@ import com.yberry.dinehawaii.RetrofitClasses.MyApiEndpointInterface;
 import com.yberry.dinehawaii.Util.AppConstants;
 import com.yberry.dinehawaii.Util.AppPreferences;
 import com.yberry.dinehawaii.Util.AppPreferencesBuss;
+import com.yberry.dinehawaii.Util.Function;
 import com.yberry.dinehawaii.Util.ProgressHUD;
 import com.yberry.dinehawaii.Util.Util;
 import com.yberry.dinehawaii.customview.CustomButton;
 import com.yberry.dinehawaii.customview.CustomEditText;
+import com.yberry.dinehawaii.customview.CustomRadioButton;
 import com.yberry.dinehawaii.customview.CustomTextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -61,25 +72,33 @@ import retrofit2.Response;
 
 public class ReservationActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
     private static final String TAG = "ReservationActivity";
-    CustomButton complete, submit;
-    String business_id, business_name, reservation_id, date, time, pre_amonut;
-    CustomEditText partySize, userName, mobileNo, emailId, noOfAdults, noOfChilds;
-    CustomEditText datePicker, timePicker;
+    CustomButton complete, btnPay;
+    CustomEditText partySize, userName, mobileNo, emailId, noOfAdults, noOfChilds, datePicker, timePicker;
     CustomTextView businessName;
     CheckBox child_high_chair, child_booster_chair;
-    String child_booster = "0", child_high = "0";
     LinearLayout llTableBook;
     ImageView back;
+    public static final int PAYPAL_REQUEST_CODE = 123;
+    private static PayPalConfiguration config = new PayPalConfiguration()
+            // Start with mock environment.  When ready, switch to sandbox (ENVIRONMENT_SANDBOX)
+            // or live (ENVIRONMENT_PRODUCTION)
+            .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
+            .clientId(AppConstants.PAYPAL_CLIENT_ID);
     Dialog dialog;
-    CustomTextView btn_BookTable;
-    String selectedTableID = "";
-    String partySizeS, dateString, timeString, userNameString, mobileNoString, emailString, noofadultsString, noofchildString;
-    String name, i, selected_table;
+    CustomTextView btn_BookTable, tvPreChargesText, tvPaymentText;
     ArrayList<TableData> tableDataList;
     private boolean isWaitList = false;
-    private String combinetable = "";
-    private String reserve_lead_time;
-    private String selecteDateToCompare = "";
+    private String combinetable = "", reserve_lead_time, selecteDateToCompare = "",
+            business_id = "0", wallet_amt = "0", reservation_id, pre_amonut,
+            selectedTableID = "", child_booster = "0", child_high = "0", name,
+            partySizeS, dateString, timeString, userNameString, mobileNoString,
+            emailString, noofadultsString, noofchildString;
+    private Context context;
+    private ListItem data;
+    private RadioGroup radioPaymode;
+    private CustomRadioButton radio_wallet, radio_paypal;
+    private double pre_charges = 0.0, pre_charges_base = 0.0;
+    private DecimalFormat decimalFormat;
 
     public static void hideSoftKeyboard(Activity activity) {
         InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
@@ -90,86 +109,72 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_making_reservation);
+        context = this;
         setToolbar();
         initViews();
 
-        if (getIntent().hasExtra("business_id")) {
-            business_id = getIntent().getStringExtra("business_id");
-            Log.v(TAG, "Business Id :- " + business_id);
+        data = (ListItem) getIntent().getParcelableExtra("data");
+        business_id = data.getId();
+        Log.e(TAG, "onCreate: data >> " + data);
+        if (data.getReservationPrice().equalsIgnoreCase("0") || data.getReservationPrice().equalsIgnoreCase("")) {
+            tvPreChargesText.setText("No pre-reservation charges required!");
+            radioPaymode.setVisibility(View.GONE);
+        } else {
+            pre_charges = Double.parseDouble(data.getReservationPrice());
+            pre_charges_base = Double.parseDouble(data.getReservationPrice());
+            tvPreChargesText.setText("Pay $" + pre_charges + " as pre-reservation charges using:");
+            radioPaymode.setVisibility(View.VISIBLE);
+            btnPay.setText("Pay $" + pre_charges);
         }
-
-        if (getIntent().hasExtra("business_name")) {
-            business_name = getIntent().getStringExtra("business_name");
-            businessName.setText(business_name);
-            Log.v(TAG, "Business Name :- " + business_name);
-        }
-
-        Log.e(TAG, "onCreate: business_id >> " + business_id);
-        Log.e(TAG, "onCreate: business_name >> " + business_name);
         checkPackage();
         getFoodPrepTime();
-
-
-        userName.setText(AppPreferences.getCustomername(ReservationActivity.this));
-        mobileNo.setText(AppPreferences.getCustomerMobile(ReservationActivity.this));
-        emailId.setText(AppPreferences.getEmailSetting(ReservationActivity.this));
+        userName.setText(AppPreferences.getCustomername(context));
+        mobileNo.setText(AppPreferences.getCustomerMobile(context));
+        emailId.setText(AppPreferences.getEmailSetting(context));
+//        wallet_amt = AppPreferences.getWalletAmt(context);
+        wallet_amt = "5";
+        radio_wallet.setText("Wallet Amount : $" + wallet_amt);
     }
 
     private void getFoodPrepTime() {
-        if (Util.isNetworkAvailable(ReservationActivity.this)) {
+        if (Util.isNetworkAvailable(context)) {
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.FOOD_PREP_TIME);
-            jsonObject.addProperty("user_id", AppPreferences.getCustomerid(ReservationActivity.this));
-            jsonObject.addProperty("business_id", AppPreferences.getBusiID(ReservationActivity.this));
-            Log.e(TAG, "get food prep time" + jsonObject.toString());
-            getFoodTimeApi(jsonObject);
+            jsonObject.addProperty("user_id", AppPreferences.getCustomerid(context));
+            jsonObject.addProperty("business_id", business_id);
+            Log.e(TAG, "getFoodPrepTime: Request >> " + jsonObject);
+            MyApiEndpointInterface apiService = ApiClient.getClient().create(MyApiEndpointInterface.class);
+            Call<JsonObject> call = apiService.requestGeneral(jsonObject);
+            call.enqueue(new Callback<JsonObject>() {
+                @Override
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                    try {
+                        Log.e(TAG, "getFoodPrepTime: Response >> " + response.body().toString());
+                        JSONObject jsonObject = new JSONObject(response.body().toString());
+                        if (jsonObject.getString("status").equalsIgnoreCase("200")) {
+                            JSONArray resultJsonArray = jsonObject.getJSONArray("result");
+                            JSONObject object = resultJsonArray.getJSONObject(0);
+                            reserve_lead_time = object.getString("reserve_lead_time");
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @SuppressLint("LongLogTag")
+                @Override
+                public void onFailure(Call<JsonObject> call, Throwable t) {
+                    Log.e(TAG, "getFoodPrepTime: onFailure >> " + t.getMessage());
+                }
+            });
         } else {
-            Toast.makeText(ReservationActivity.this, "Please Connect Internet", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "Please Connect Internet", Toast.LENGTH_LONG).show();
         }
     }
 
-    private void getFoodTimeApi(JsonObject jsonObject) {
-        MyApiEndpointInterface apiService =
-                ApiClient.getClient().create(MyApiEndpointInterface.class);
-        Call<JsonObject> call = apiService.requestGeneral(jsonObject);
-
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-
-                String s = response.body().toString();
-                Log.e(TAG, "get food prep time resp" + s);
-                try {
-                    JSONObject jsonObject = new JSONObject(s);
-
-                    if (jsonObject.getString("status").equalsIgnoreCase("200")) {
-
-                        JSONArray resultJsonArray = jsonObject.getJSONArray("result");
-                        JSONObject object = resultJsonArray.getJSONObject(0);
-                        reserve_lead_time = object.getString("reserve_lead_time");
-
-                    } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
-                    } else {
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-            @SuppressLint("LongLogTag")
-            @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.e(TAG, "error" + t.getMessage());
-            }
-        });
-    }
-
     private void checkPackage() {
-        Log.e("Activity", "Making Registration");
-        String package_list = AppPreferences.getBussPackageList(ReservationActivity.this);
-        Log.d("SelActivity", AppPreferences.getBussPackageList(ReservationActivity.this));
+        String package_list = AppPreferences.getBussPackageList(context);
+        Log.e(TAG, "checkPackage: package_list >> " + package_list);
 
         if (package_list.equalsIgnoreCase("1")) llTableBook.setVisibility(View.GONE);
         else if (package_list.equalsIgnoreCase("1, 3")) llTableBook.setVisibility(View.GONE);
@@ -181,10 +186,18 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
 
     private void initViews() {
         tableDataList = new ArrayList<TableData>();
+        decimalFormat = new DecimalFormat("#.##");
+        tvPaymentText = (CustomTextView) findViewById(R.id.tvPaymentText);
+
         btn_BookTable = (CustomTextView) findViewById(R.id.btn_bookTable);
+        radio_wallet = (CustomRadioButton) findViewById(R.id.radio_wallet);
+        radio_paypal = (CustomRadioButton) findViewById(R.id.radio_paypal);
+
+        radioPaymode = (RadioGroup) findViewById(R.id.radioPaymode);
+        tvPreChargesText = (CustomTextView) findViewById(R.id.tvPreChargesText);
         llTableBook = (LinearLayout) findViewById(R.id.llTableBook);
         complete = (CustomButton) findViewById(R.id.complete);
-        submit = (CustomButton) findViewById(R.id.submit1);
+        btnPay = (CustomButton) findViewById(R.id.btnPay);
         businessName = (CustomTextView) findViewById(R.id.businessName);
         partySize = (CustomEditText) findViewById(R.id.partySize);
         datePicker = (CustomEditText) findViewById(R.id.datePicker);
@@ -196,7 +209,13 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
         noOfChilds = (CustomEditText) findViewById(R.id.textViewNoofChilds);
         child_high_chair = (CheckBox) findViewById(R.id.child_high_chair);
         child_booster_chair = (CheckBox) findViewById(R.id.child_booster_chair);
-
+        radioPaymode.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+                Log.e(TAG, "onCheckedChanged: ");
+                setWallet();
+            }
+        });
         //keyboard dismiss on outside touch
         ((RelativeLayout) findViewById(R.id.touch_outside)).setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -210,9 +229,9 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
             @Override
             public void onClick(View view) {
                 if (datePicker.getText().toString().equalsIgnoreCase(""))
-                    Toast.makeText(ReservationActivity.this, "Select booking date", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Select booking date", Toast.LENGTH_SHORT).show();
                 else if (timePicker.getText().toString().equalsIgnoreCase(""))
-                    Toast.makeText(ReservationActivity.this, "Select booking time", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Select booking time", Toast.LENGTH_SHORT).show();
                 else if (userName.getText().toString().equalsIgnoreCase(""))
                     userName.setError("Enter your full name");
                 else if (mobileNo.getText().toString().equalsIgnoreCase(""))
@@ -247,7 +266,7 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
                 dpd.setOkColor(getResources().getColor(R.color.colorPrimary));
                 Calendar c = Calendar.getInstance();
                 c.setTimeInMillis(System.currentTimeMillis() - 1000);
-               // c.add(Calendar.DATE, 1);
+                // c.add(Calendar.DATE, 1);
                 dpd.setMinDate(c);
             }
         });
@@ -331,17 +350,18 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
             }
         });
 
-        submit.setOnClickListener(new View.OnClickListener() {
+        btnPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 isWaitList = false;
+                Log.e(TAG, "onClick: pre_charges >> " + pre_charges);
                 makeReservation();
             }
         });
     }
 
     private void showAlertDialog(String msg) {
-        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(ReservationActivity.this);
+        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(context);
         builder.setTitle("Reservation Time");
         builder.setMessage(msg);
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -353,7 +373,6 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
         builder.show();
     }
 
-
     private void makeReservation() {
         if (child_booster_chair.isChecked()) {
             child_booster = "1";
@@ -363,9 +382,9 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
         }
 
         if (datePicker.getText().toString().equalsIgnoreCase(""))
-            Toast.makeText(ReservationActivity.this, "Select booking date", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Select booking date", Toast.LENGTH_SHORT).show();
         else if (timePicker.getText().toString().equalsIgnoreCase(""))
-            Toast.makeText(ReservationActivity.this, "Select booking time", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Select booking time", Toast.LENGTH_SHORT).show();
         else if (userName.getText().toString().equalsIgnoreCase(""))
             userName.setError("Enter your full name");
         else if (mobileNo.getText().toString().equalsIgnoreCase(""))
@@ -394,10 +413,16 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
     }
 
     private void submitRequest(String partySizeS, String date, String time, String name, String phone_no, String email, String adults, String childs, String table_id) {
+        final ProgressHUD progressHD = ProgressHUD.show(context, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                // TODO Auto-generated method stub
+            }
+        });
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty(AppConstants.KEY_METHOD, AppConstants.CUSTOMER_USER.MAKE_BUSINESS_RESERVATION);
         jsonObject.addProperty("business_id", business_id);
-        jsonObject.addProperty("user_id", AppPreferences.getCustomerid(ReservationActivity.this));
+        jsonObject.addProperty("user_id", AppPreferences.getCustomerid(context));
         jsonObject.addProperty("date", date);
         jsonObject.addProperty("time", time);  //time
         jsonObject.addProperty("party_size", partySizeS);
@@ -411,16 +436,8 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
         jsonObject.addProperty("table_id", table_id);
         jsonObject.addProperty("combine_table", combinetable);//
         Log.e(TAG, "Request MAKING RESERVATION >> " + jsonObject.toString());
-        make_business_reservation(jsonObject);
-    }
 
-    private void make_business_reservation(JsonObject jsonObject) {
-        final ProgressHUD progressHD = ProgressHUD.show(ReservationActivity.this, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                // TODO Auto-generated method stub
-            }
-        });
+        Log.e(TAG, "submitRequest: Request >> " + jsonObject);
 
         MyApiEndpointInterface apiService = ApiClient.getClient().create(MyApiEndpointInterface.class);
         Call<JsonObject> call = apiService.normalUserBusinessApi(jsonObject);
@@ -428,44 +445,29 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
             @SuppressLint("LongLogTag")
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                Log.e(TAG, "Response MAKING RESERVATION >> " + response.body().toString());
-                String s = response.body().toString();
                 try {
+                    String s = response.body().toString();
+                    Log.e(TAG, "submitRequest: Response: >> " + s);
                     JSONObject jsonObject = new JSONObject(s);
                     if (jsonObject.getString("status").equalsIgnoreCase("200")) {
                         reservation_id = "";
-                        date = "";
-                        time = "";
                         JSONArray jsonArray = jsonObject.getJSONArray("result");
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject1 = jsonArray.getJSONObject(i);
                             reservation_id = jsonObject1.getString("reservation_id");
-                            date = jsonObject1.getString("date");
-                            time = jsonObject1.getString("time");
-                            pre_amonut = jsonObject1.getString("reservation_pre_amout");
-                            Log.e(TAG, "onResponse: reservation_id >> " + reservation_id);
-                            Log.e(TAG, "onResponse: reservation_pre_amout >> " + pre_amonut);
-                            AppPreferencesBuss.setReservatId(ReservationActivity.this, reservation_id);
-                            if (pre_amonut.equalsIgnoreCase("0") || isWaitList) {
-                                showThankYouAlert();
+                            AppPreferencesBuss.setReservatId(context, reservation_id);
+                            if (pre_charges == 0.0 || pre_charges == 0 || isWaitList) {
+                                //showThankYouAlert();
+                                confirmReservation("wallet", "TRANSWAL0", "approved");
                             } else {
-                                Intent in = new Intent(ReservationActivity.this, CustomerConfirmreservationActivity.class);
-                                in.putExtra("reservation_id", reservation_id);
-                                in.putExtra("name", userNameString);
-                                in.putExtra("time", timePicker.getText().toString());
-                                in.putExtra("partysize", partySizeS);
-                                in.putExtra("date", date);
-                                in.putExtra("phone", mobileNoString);
-                                in.putExtra("tablename", selected_table);
-                                in.putExtra("business_id", business_id);
-                                in.putExtra("reserve_amt", pre_amonut);
-                                startActivity(in);
-                                finish();
+                                getPayment();
                             }
                         }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    if (progressHD != null && progressHD.isShowing())
+                        progressHD.dismiss();
                 }
                 if (progressHD != null && progressHD.isShowing())
                     progressHD.dismiss();
@@ -479,14 +481,16 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
                     progressHD.dismiss();
             }
         });
+
     }
 
+
     private void showThankYouAlert() {
-        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(ReservationActivity.this);
+        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(context);
         builder.setTitle("Thank You!");
         builder.setCancelable(false);
         builder.setMessage("Your reservation has done successfully.");
-        ImageView img = new ImageView(ReservationActivity.this);
+        ImageView img = new ImageView(context);
         img.setImageResource(R.drawable.thanks);
         builder.setView(img);
         builder.setPositiveButton("GO TO HOME", new DialogInterface.OnClickListener() {
@@ -531,7 +535,7 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
     }
 
     private void customTableDialog(ArrayList<TableData> list, String msg) {
-        dialog = new Dialog(ReservationActivity.this);
+        dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_select_table);
         dialog.setCanceledOnTouchOutside(false);
@@ -553,9 +557,7 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 TableData table = tableDataList.get(i);
-
                 selectedTableID = table.getTable_id();
-                selected_table = table.getTable_name();
                 btn_BookTable.setText("SELECTED TABLE : " + table.getTable_name());
                 Log.d("selectedTableID", selectedTableID);
                 gridView.setSelection(i);
@@ -566,8 +568,8 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
     }
 
     private void getBusinessTables() {
-        if (Util.isNetworkAvailable(ReservationActivity.this)) {
-            final ProgressHUD progressHD = ProgressHUD.show(ReservationActivity.this, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
+        if (Util.isNetworkAvailable(context)) {
+            final ProgressHUD progressHD = ProgressHUD.show(context, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
                 @Override
                 public void onCancel(DialogInterface dialog) {
                     // TODO Auto-generated method stub
@@ -576,9 +578,9 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
 
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("method", AppConstants.CUSTOMER_USER.GET_PARTY_SIZE_TABLE);
-            jsonObject.addProperty("user_id", AppPreferences.getCustomerid(ReservationActivity.this));
+            jsonObject.addProperty("user_id", AppPreferences.getCustomerid(context));
             jsonObject.addProperty("party_size", partySize.getText().toString().trim());
-            jsonObject.addProperty("business_id", AppPreferences.getBusiID(ReservationActivity.this));
+            jsonObject.addProperty("business_id", AppPreferences.getBusiID(context));
             Log.e(TAG, "Request GET TABLES >> " + jsonObject.toString());
             MyApiEndpointInterface apiService = ApiClient.getClient().create(MyApiEndpointInterface.class);
             Call<JsonObject> call = apiService.get_party_size_tables(jsonObject);
@@ -636,12 +638,12 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
                 }
             });
         } else {
-            Toast.makeText(ReservationActivity.this, "Please Connect Your Internet", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "Please Connect Your Internet", Toast.LENGTH_LONG).show();
         }
     }
 
     private void showWaitListDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(ReservationActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Add To Wait-List");
         builder.setMessage("We are sorry, but your request at " + datePicker.getText().toString() + ", " + timePicker.getText().toString() + " for the party size " + partySize.getText().toString() + " is unavailable.\n\nDo you want to add it to wait list?");
         builder.setPositiveButton("ADD TO WAIT-LIST", new DialogInterface.OnClickListener() {
@@ -657,7 +659,7 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
         builder.setNegativeButton("Choose Alternate", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Intent intent = new Intent(ReservationActivity.this, AlternateBusinessActivity.class);
+                Intent intent = new Intent(context, AlternateBusinessActivity.class);
                 intent.putExtra("party_size", partySize.getText().toString());
                 startActivityForResult(intent, 102);
             }
@@ -667,7 +669,7 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
     }
 
     private void showNoTableDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(ReservationActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Tables Not Available");
         builder.setMessage("We are sorry, there are no table available for reservations");
 
@@ -680,7 +682,7 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
         builder.setNegativeButton("Choose Alternate", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Intent intent = new Intent(ReservationActivity.this, AlternateBusinessActivity.class);
+                Intent intent = new Intent(context, AlternateBusinessActivity.class);
                 intent.putExtra("party_size", partySize.getText().toString());
                 startActivityForResult(intent, 102);
             }
@@ -718,12 +720,169 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
         if (requestCode == 102 && resultCode == RESULT_OK) {
             business_id = data.getStringExtra("busi_id");
             selectedTableID = data.getStringExtra("table_id");
-            pre_amonut = data.getStringExtra("reserve_amt").replaceAll("\\$", "").replaceAll("\\s", "");
+            pre_charges = Double.parseDouble(data.getStringExtra("reserve_amt").replaceAll("\\$", "").replaceAll("\\s", ""));
+            pre_charges = pre_charges_base;
             Log.e(TAG, "onActivityResult: business_id >> " + business_id);
             Log.e(TAG, "onActivityResult: selectedTableID >> " + selectedTableID);
-            Log.e(TAG, "onActivityResult: pre_amonut >> " + pre_amonut);
+            Log.e(TAG, "onActivityResult: pre_charges >> " + pre_charges);
+            if (pre_charges == 0 || pre_charges == 0.0) {
+                tvPreChargesText.setText("No pre-reservation charges required!");
+                radioPaymode.setVisibility(View.GONE);
+            } else {
+                tvPreChargesText.setText("Pay $" + pre_charges + " as pre-reservation charges using:");
+                radioPaymode.setVisibility(View.VISIBLE);
+                btnPay.setText("Pay $" + pre_charges);
+            }
             AppPreferences.setBusiID(this, business_id);
-            submit.performClick();
+//            btnPay.performClick();
+        } else if (requestCode == PAYPAL_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                PaymentConfirmation confirm = data.getParcelableExtra(com.paypal.android.sdk.payments.PaymentActivity.EXTRA_RESULT_CONFIRMATION);
+                if (confirm != null) {
+                    try {
+                        String paymentDetails = confirm.toJSONObject().toString(4);
+                        Log.e("paymentExample", paymentDetails);
+                        try {
+                            JSONObject jsonDetails = new JSONObject(paymentDetails);
+                            JSONObject jsonResponse = jsonDetails.getJSONObject("response");
+                            AppPreferences.setTranctionId(context, jsonResponse.getString("id"));
+                            String transaction_ID = jsonResponse.getString("id");
+                            String createTime = jsonResponse.getString("create_time");
+                            String intent = jsonResponse.getString("intent");
+                            String paymentState = jsonResponse.getString("state");
+                            Log.e("paymentExample", "RESPONSE :- \n" + "Transaction_ID :- " + transaction_ID + "\nCreate Time :- " + createTime +
+                                    "\nIntent :- " + intent + "\nPayment State :- " + paymentState);
+
+                            if (paymentState.equalsIgnoreCase("approved")) {
+                                confirmReservation("paypal", transaction_ID, paymentState);
+                            } else {
+                                Toast.makeText(this, "Something went wrong, please try again", Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                        } catch (JSONException e) {
+                            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException e) {
+                        Log.e("paymentExample", "an extremely unlikely failure occurred: ", e);
+                    }
+                }
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+                Log.e("paymentExample", "The user canceled.");
+                Toast.makeText(getApplicationContext(), "Sorry!! Payment cancelled by User", Toast.LENGTH_SHORT).show();
+            } else if (resultCode == com.paypal.android.sdk.payments.PaymentActivity.RESULT_EXTRAS_INVALID) {
+                Log.e("paymentExample", "An invalid Payment or PayPalConfiguration was submitted. Please see the docs.");
+            }
+        }
+    }
+
+    private void setWallet() {
+//        wallet_amt = AppPreferences.getWalletAmt(context);
+        wallet_amt = "5";
+        radio_wallet.setText("Wallet Amount : $" + wallet_amt);
+        if (radio_wallet.isChecked()) {
+            if (!wallet_amt.equalsIgnoreCase("0") && !wallet_amt.equalsIgnoreCase("")) {
+                if (pre_charges < Double.parseDouble(wallet_amt)) {
+                    double wallet_remaining_amt = Double.parseDouble(wallet_amt) - pre_charges;
+                    radio_wallet.setText("Wallet Amount : $" + decimalFormat.format(wallet_remaining_amt));
+                    tvPaymentText.setText("Amount will be deduct from your wallet");
+                    wallet_amt = String.valueOf(pre_charges);
+                    pre_charges = 0;
+                    btnPay.setText("Pay $" + pre_charges + "");
+                } else {
+                    double remaining_amt = pre_charges - Double.parseDouble(wallet_amt);
+                    tvPaymentText.setText("$" + wallet_amt + " will be deduct from your wallet and remaining $" + decimalFormat.format(remaining_amt) + " will be done via paypal.");
+                    pre_charges = remaining_amt;
+                    btnPay.setText("Pay $" + decimalFormat.format(pre_charges));
+                }
+            } else {
+                Toast.makeText(context, "Wallet is empty!", Toast.LENGTH_SHORT).show();
+                radio_paypal.setChecked(true);
+            }
+        } else {
+            pre_charges = pre_charges_base;
+            btnPay.setText("Pay $" + decimalFormat.format(pre_charges));
+            tvPaymentText.setText("Payment will be done via paypal!");
+        }
+    }
+
+    private void getPayment() {
+        Log.e(TAG, "getPayment: pre_charges >> " + pre_charges);
+
+        if (pre_charges == 0.0) {
+            Toast.makeText(this, "Payment amount can't be zero ", Toast.LENGTH_SHORT).show();
+        } else {
+            PayPalPayment payment = new PayPalPayment(new BigDecimal(String.valueOf(pre_charges)), "USD", "Purchase Fee\n",
+                    PayPalPayment.PAYMENT_INTENT_SALE);
+            Intent intent = new Intent(context, com.paypal.android.sdk.payments.PaymentActivity.class);
+            intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
+            intent.putExtra(com.paypal.android.sdk.payments.PaymentActivity.EXTRA_PAYMENT, payment);
+            startActivityForResult(intent, PAYPAL_REQUEST_CODE);
+        }
+    }
+
+    void confirmReservation(String paymentType, String transaction_ID, String paymentState) {
+        if (Util.isNetworkAvailable(context)) {
+            final ProgressHUD progressHD = ProgressHUD.show(context, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    // TODO Auto-generated method stub
+                }
+            });
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("method", AppConstants.CUSTOMER_USER.GET_RESERVATION_CONFIRMATION);
+            jsonObject.addProperty("business_id", AppPreferences.getBusiID(context));
+            jsonObject.addProperty("reservation_id", AppPreferencesBuss.getReservatId(context));
+            jsonObject.addProperty("user_id", AppPreferences.getCustomerid(context));//testing demo code
+            jsonObject.addProperty("reservation_amount", pre_charges);
+            jsonObject.addProperty("wallet_amt", wallet_amt);
+            jsonObject.addProperty("paymentType", paymentType);
+            jsonObject.addProperty("transaction_id", transaction_ID);
+            jsonObject.addProperty("payment_status", paymentState);
+            jsonObject.addProperty("min_hours", "2");
+            jsonObject.addProperty("time", Function.getCurrentDateTime());
+            jsonObject.addProperty("nofity_checkbox", "0");
+            Log.e(TAG, "confirmReservation: Request >> " + jsonObject);
+            Log.d("SaveCon", AppPreferencesBuss.getReservatId(context));
+
+            MyApiEndpointInterface apiService = ApiClient.getClient().create(MyApiEndpointInterface.class);
+            Call<JsonObject> call = apiService.get_reservation_confirmation(jsonObject);
+
+            call.enqueue(new Callback<JsonObject>() {
+                @SuppressLint("LongLogTag")
+                @Override
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                    try {
+                        String resp = response.body().toString();
+                        Log.e(TAG, "confirmReservation: Response >> " + resp);
+                        JSONObject jsonObject = new JSONObject(resp);
+                        if (jsonObject.getString("status").equalsIgnoreCase("200")) {
+                            jsonObject.getString("message");
+                            showThankYouAlert();
+                        } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
+                            JSONArray jsonArray = jsonObject.getJSONArray("result");
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(0);
+                            String msg = jsonObject1.getString("msg");
+                            Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
+                            finish();
+                        }
+                    } catch (JSONException e) {
+                        progressHD.dismiss();
+                        e.printStackTrace();
+                    }
+                    progressHD.dismiss();
+                }
+
+                @SuppressLint("LongLogTag")
+                @Override
+                public void onFailure(Call<JsonObject> call, Throwable t) {
+                    Log.e(TAG, "confirmReservation: onFailure >> " + t.getMessage());
+                    progressHD.dismiss();
+                    Toast.makeText(context, "Server not Responding", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        } else {
+            Toast.makeText(this, "Please Connect Your Internet", Toast.LENGTH_LONG).show();
         }
     }
 }
