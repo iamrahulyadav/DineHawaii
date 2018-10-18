@@ -171,8 +171,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         } else Toast.makeText(context, "Please Connect Internet", Toast.LENGTH_LONG).show();
 
         custName.requestFocus();
-        wallet_amt = AppPreferences.getWalletAmt(context);
-        radio_wallet.setText("Wallet Amount : $" + wallet_amt);
+
     }
 
     private void setWallet() {
@@ -198,7 +197,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                 radio_paypal.setChecked(true);
             }
         } else {
-            wallet_amt = "0";
+//            wallet_amt = "0";
             totalPaidAmount = totalPaidAmountBase;
             tvTotalPaidAmount.setText(decimalFormat.format(totalPaidAmount));
             tvPaymentText.setText("Payment will be done via paypal!");
@@ -434,6 +433,9 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                 }
             }
         });
+
+        wallet_amt = AppPreferences.getWalletAmt(context);
+        radio_wallet.setText("Wallet Amount : $" + wallet_amt);
     }
 
     private void getEgiftBalance() {
