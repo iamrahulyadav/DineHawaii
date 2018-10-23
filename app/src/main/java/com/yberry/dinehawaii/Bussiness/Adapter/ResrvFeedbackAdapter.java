@@ -66,7 +66,7 @@ public class ResrvFeedbackAdapter extends RecyclerView.Adapter<ResrvFeedbackAdap
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final OrderDetails orderDetails = feedbackData.get(position);
-        holder.orderid.setText("#" + orderDetails.getOrder_id());
+        holder.orderid.setText("#" + orderDetails.getOrder_id() + " (" + orderDetails.getDate() + ")");
         holder.name.setText(orderDetails.getUser_name());
         holder.message.setText(orderDetails.getReviewmsg());
         holder.tvSendReply.setOnClickListener(new View.OnClickListener() {

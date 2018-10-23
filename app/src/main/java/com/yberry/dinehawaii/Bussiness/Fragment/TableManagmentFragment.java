@@ -84,7 +84,7 @@ public class TableManagmentFragment extends Fragment {
         SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
         String today = df.format(date);
         Log.v(TAG, "Todays Date :- " + today);
-        tabLayout.getTabAt(0).setText(today + " TODAY");
+        tabLayout.getTabAt(0).setText(today);
         tabLayout.getTabAt(1).setText("FUTURE");
         tabLayout.getTabAt(2).setText("WAIT LIST");
         tabLayout.getTabAt(3).setText("PREVIOUS");

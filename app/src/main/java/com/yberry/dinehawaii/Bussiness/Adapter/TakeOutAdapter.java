@@ -48,6 +48,8 @@ public class TakeOutAdapter extends RecyclerView.Adapter<TakeOutAdapter.ViewHold
         String date = model.getDate();
         String newDate = date.replaceAll("M", "");
         holder.dateTextView.setText(newDate);
+        holder.tvDateTimePickup.setText(model.getDue_time());
+        holder.tvOrderId.setText(model.getOrder_id());
         holder.nameTextView.setText(model.getUser_name());
         holder.totalAmountTextView.setText(model.getTotal_price());
         holder.statusTextView.setText(model.getOrder_status());
@@ -89,12 +91,14 @@ public class TakeOutAdapter extends RecyclerView.Adapter<TakeOutAdapter.ViewHold
 
         CardView cardView;
         LinearLayout recycler_item;
-        CustomTextView tvSource, dateTextView, nameTextView, orderTimeTextView, dueTimeTextView, totalAmountTextView, statusTextView;
+        CustomTextView tvSource, dateTextView, tvDateTimePickup, tvOrderId, nameTextView, orderTimeTextView, dueTimeTextView, totalAmountTextView, statusTextView;
 
         public ViewHolder(View itemView) {
             super(itemView);
             cardView = (CardView) itemView.findViewById(R.id.cardView);
             dateTextView = (CustomTextView) itemView.findViewById(R.id.dateTextView);
+            tvDateTimePickup = (CustomTextView) itemView.findViewById(R.id.tvDateTimePickup);
+            tvOrderId = (CustomTextView) itemView.findViewById(R.id.tvOrderId);
             nameTextView = (CustomTextView) itemView.findViewById(R.id.nameTextView);
             orderTimeTextView = (CustomTextView) itemView.findViewById(R.id.orderTimeTextView);
             dueTimeTextView = (CustomTextView) itemView.findViewById(R.id.dueTimeTextView);

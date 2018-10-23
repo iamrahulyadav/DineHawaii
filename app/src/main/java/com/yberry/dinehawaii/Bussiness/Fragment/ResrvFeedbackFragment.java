@@ -54,7 +54,6 @@ public class ResrvFeedbackFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -101,6 +100,7 @@ public class ResrvFeedbackFragment extends Fragment {
                                 model.setOrder_id(object.getString("id"));
                                 model.setUser_name(object.getString("user"));
                                 model.setReviewmsg(object.getString("review_message"));
+                                model.setDate(object.getString("date"));
                                 list.add(model);
                             }
                         } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {

@@ -37,7 +37,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class PendingCateringOrderFragment extends Fragment {
-    private static final String TAG = "Future orderTakeout";
+    private static final String TAG = "PendingCateringOrder";
     private RecyclerView mRecyclerView;
     Context context;
     public static ArrayList<OrderDetails> list = new ArrayList<OrderDetails>();
@@ -114,14 +114,11 @@ public class PendingCateringOrderFragment extends Fragment {
                         for (int i = 0; i < jsonArray.length(); i++) {
                             OrderDetails orderModel = new OrderDetails();
                             JSONObject object = jsonArray.getJSONObject(i);
-                            String date = object.getString("date");
-                            String duetime = object.getString("due_time");
-                            orderModel.setDate(date);
-                            //orderModel.setOrder_time();
-                            orderModel.setDue_time(duetime);
+                            orderModel.setDate(object.getString("date"));
+                            orderModel.setDue_time(object.getString("due_time"));
                             orderModel.setId(object.getString("id"));
                             orderModel.setUser_name(object.getString("user_name"));
-                            orderModel.setTotal_price("$"+object.getString("total_price"));
+                            orderModel.setTotal_price("$" + object.getString("total_price"));
                             orderModel.setOrder_status(object.getString("order_status"));
                             orderModel.setDelivery_adderess(object.getString("delivery_adderess"));
                             orderModel.setOrder_id(object.getString("order_id"));

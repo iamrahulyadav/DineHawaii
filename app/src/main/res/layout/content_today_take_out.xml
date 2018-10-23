@@ -3,10 +3,10 @@
     android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/_1sdp"
     android:layout_marginLeft="@dimen/_6sdp"
-    android:layout_marginRight="@dimen/_6sdp"
     android:layout_marginTop="@dimen/_5sdp"
+    android:layout_marginRight="@dimen/_6sdp"
+    android:layout_marginBottom="@dimen/_1sdp"
     android:elevation="2dp"
     app:cardElevation="2dp">
 
@@ -15,80 +15,73 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="@dimen/_10sdp">
+        android:padding="@dimen/_5sdp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-           >
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.15"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <com.yberry.dinehawaii.customview.CustomTextView
-                    style="@style/TextAppearance.AppCompat.Subhead"
+                    style="@style/TextAppearance.AppCompat.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
                     android:singleLine="true"
-                    android:text="Date : "
+                    android:text="Date/Time : "
                     app:edittextfont="Raleway-Bold.ttf" />
 
                 <com.yberry.dinehawaii.customview.CustomTextView
                     android:id="@+id/dateTextView"
-                    style="@style/TextAppearance.AppCompat.Subhead"
+                    style="@style/TextAppearance.AppCompat.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:gravity="center"
                     android:singleLine="true"
                     android:text="NA"
                     app:edittextfont="Raleway-Regular.ttf" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.1"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
 
                 <com.yberry.dinehawaii.customview.CustomTextView
-                    style="@style/TextAppearance.AppCompat.Subhead"
+                    style="@style/TextAppearance.AppCompat.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
                     android:singleLine="true"
-                    android:text="Status : "
+                    android:text="Pick-up Date/Time : "
                     app:edittextfont="Raleway-Bold.ttf" />
 
                 <com.yberry.dinehawaii.customview.CustomTextView
-                    android:id="@+id/statusTextView"
-                    style="@style/TextAppearance.AppCompat.Subhead"
+                    android:id="@+id/tvDateTimePickup"
+                    style="@style/TextAppearance.AppCompat.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
                     android:singleLine="true"
                     android:text="NA"
                     app:edittextfont="Raleway-Regular.ttf" />
 
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 android:layout_weight="1"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <com.yberry.dinehawaii.customview.CustomTextView
-                    style="@style/TextAppearance.AppCompat.Subhead"
+                    style="@style/TextAppearance.AppCompat.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
@@ -97,7 +90,7 @@
 
                 <com.yberry.dinehawaii.customview.CustomTextView
                     android:id="@+id/orderTimeTextView"
-                    style="@style/TextAppearance.AppCompat.Subhead"
+                    style="@style/TextAppearance.AppCompat.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
@@ -110,39 +103,32 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:orientation="horizontal"
-           >
+            android:layout_marginTop="@dimen/_4sdp"
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="0.15"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
 
                 <com.yberry.dinehawaii.customview.CustomTextView
                     android:id="@+id/customTextView9"
-                    style="@style/TextAppearance.AppCompat.Subhead"
+                    style="@style/TextAppearance.AppCompat.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:gravity="center"
                     android:singleLine="true"
-                    android:text="Name : "
+                    android:text="Pick-up Name : "
                     app:edittextfont="Raleway-Bold.ttf" />
 
                 <com.yberry.dinehawaii.customview.CustomTextView
                     android:id="@+id/nameTextView"
-                    style="@style/TextAppearance.AppCompat.Subhead"
+                    style="@style/TextAppearance.AppCompat.Small"
                     android:layout_width="wrap_content"
 
                     android:layout_height="match_parent"
-                    android:layout_gravity="center"
-
-
-                    android:gravity="center"
                     android:singleLine="true"
                     android:text="NA"
                     app:edittextfont="Raleway-Regular.ttf" />
@@ -153,10 +139,43 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.1"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <com.yberry.dinehawaii.customview.CustomTextView
-                    style="@style/TextAppearance.AppCompat.Subhead"
+                    style="@style/TextAppearance.AppCompat.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="Order ID : "
+                    app:edittextfont="Raleway-Bold.ttf" />
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    android:id="@+id/tvOrderId"
+                    style="@style/TextAppearance.AppCompat.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="1234"
+                    app:edittextfont="Raleway-Regular.ttf" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="0.15"
+                android:orientation="vertical">
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    style="@style/TextAppearance.AppCompat.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
@@ -165,48 +184,67 @@
 
                 <com.yberry.dinehawaii.customview.CustomTextView
                     android:id="@+id/totalAmountTextView"
-                    style="@style/TextAppearance.AppCompat.Subhead"
+                    style="@style/TextAppearance.AppCompat.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
                     android:text="00.00"
                     app:edittextfont="Raleway-Regular.ttf" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:orientation="vertical">
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    style="@style/TextAppearance.AppCompat.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="Payment Status : "
+                    app:edittextfont="Raleway-Bold.ttf" />
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    android:id="@+id/tvPayStatus"
+                    style="@style/TextAppearance.AppCompat.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="Paid"
+                    app:edittextfont="Raleway-Regular.ttf" />
 
             </LinearLayout>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:orientation="horizontal"
-           >
+            android:layout_marginTop="@dimen/_4sdp"
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="0.15"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
 
                 <com.yberry.dinehawaii.customview.CustomTextView
-                    style="@style/TextAppearance.AppCompat.Subhead"
+                    style="@style/TextAppearance.AppCompat.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:gravity="center"
                     android:singleLine="true"
                     android:text="Source : "
                     app:edittextfont="Raleway-Bold.ttf" />
 
                 <com.yberry.dinehawaii.customview.CustomTextView
                     android:id="@+id/tvSource"
-                    style="@style/TextAppearance.AppCompat.Subhead"
+                    style="@style/TextAppearance.AppCompat.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:singleLine="true"
                     android:text="App"
                     app:edittextfont="Raleway-Regular.ttf" />
 
@@ -216,22 +254,23 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.1"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <com.yberry.dinehawaii.customview.CustomTextView
-                    style="@style/TextAppearance.AppCompat.Subhead"
+                    style="@style/TextAppearance.AppCompat.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
-                    android:text=""
+                    android:text="Status : "
                     app:edittextfont="Raleway-Bold.ttf" />
 
                 <com.yberry.dinehawaii.customview.CustomTextView
-                    style="@style/TextAppearance.AppCompat.Subhead"
+                    android:id="@+id/statusTextView"
+                    style="@style/TextAppearance.AppCompat.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
-                    android:text=""
+                    android:text="NA"
                     app:edittextfont="Raleway-Regular.ttf" />
 
             </LinearLayout>
@@ -240,7 +279,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_4sdp"
             android:orientation="horizontal"
             android:visibility="gone"
             android:weightSum="2">
@@ -253,7 +292,7 @@
 
                 <com.yberry.dinehawaii.customview.CustomTextView
                     android:id="@+id/customTextView8"
-                    style="@style/TextAppearance.AppCompat.Subhead"
+                    style="@style/TextAppearance.AppCompat.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
@@ -263,7 +302,7 @@
 
                 <com.yberry.dinehawaii.customview.CustomTextView
                     android:id="@+id/dueTimeTextView"
-                    style="@style/TextAppearance.AppCompat.Subhead"
+                    style="@style/TextAppearance.AppCompat.Small"
                     android:layout_width="wrap_content"
 
                     android:layout_height="wrap_content"

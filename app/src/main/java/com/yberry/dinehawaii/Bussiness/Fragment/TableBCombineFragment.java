@@ -229,7 +229,7 @@ public class TableBCombineFragment extends Fragment implements View.OnClickListe
 //                @Override
 //                public void onFailure(Call<JsonObject> call, Throwable t) {
 //                    notable.setVisibility(View.VISIBLE);
-//                    Log.e(TAG, "Error on Failue :-" + Log.getStackTraceString(t));
+//                    Log.e(TAG, "Error on FailuFe :-" + Log.getStackTraceString(t));
 //                    progressHD.dismiss();
 //                    Toast.makeText(context, "Failed, try again.", Toast.LENGTH_SHORT).show();
 //                }

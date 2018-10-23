@@ -108,6 +108,7 @@ public class OrderFeedbackFragment extends Fragment {
                             model.setOrder_id(object.getString("id"));
                             model.setUser_name(object.getString("user"));
                             model.setReviewmsg(object.getString("review_message"));
+                            model.setDate(object.getString("date"));
                             list.add(model);
                         }
                     } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
@@ -138,7 +139,7 @@ public class OrderFeedbackFragment extends Fragment {
     }
 
     private void initView(View rootView) {
-        nofeed = (CustomTextView)rootView.findViewById(R.id.noreserv);
+        nofeed = (CustomTextView) rootView.findViewById(R.id.noreserv);
         ((CustomButton) rootView.findViewById(R.id.tvAdd)).setVisibility(View.GONE);
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeCurrentRes);
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerview_feed);

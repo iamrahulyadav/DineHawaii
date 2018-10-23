@@ -46,13 +46,15 @@ public class CateringOrderAdapter extends RecyclerView.Adapter<CateringOrderAdap
     public void onBindViewHolder(ViewHolder holder, final int position) {
         OrderDetails model = orderDetails.get(position);
         String date = model.getDate();
-        String newDate = date.replaceAll("M","");
+        String newDate = date.replaceAll("M", "");
         holder.dateTextView.setText(newDate);
+        holder.tvDateTimePickup.setText(model.getDue_time());
+        holder.tvOrderId.setText(model.getOrder_id());
         holder.nameTextView.setText(model.getUser_name());
         holder.totalAmountTextView.setText(model.getTotal_price());
         holder.statusTextView.setText(model.getOrder_status());
-        holder.orderTimeTextView.setText(model.getOrder_time());
-        holder.dueTimeTextView.setText(model.getDue_time());
+        holder.tvSource.setText(model.getOrder_source());
+
 
         holder.recycler_item.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,7 +79,7 @@ public class CateringOrderAdapter extends RecyclerView.Adapter<CateringOrderAdap
 
         CardView cardView;
         LinearLayout recycler_item;
-        CustomTextView dateTextView, nameTextView, orderTimeTextView, dueTimeTextView, totalAmountTextView, statusTextView;
+        CustomTextView dateTextView, nameTextView, tvSource, tvDateTimePickup, tvOrderId, orderTimeTextView, dueTimeTextView, totalAmountTextView, statusTextView;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -85,9 +87,12 @@ public class CateringOrderAdapter extends RecyclerView.Adapter<CateringOrderAdap
             dateTextView = (CustomTextView) itemView.findViewById(R.id.dateTextView);
             nameTextView = (CustomTextView) itemView.findViewById(R.id.nameTextView);
             orderTimeTextView = (CustomTextView) itemView.findViewById(R.id.orderTimeTextView);
+            tvDateTimePickup = (CustomTextView) itemView.findViewById(R.id.tvDateTimePickup);
+            tvOrderId = (CustomTextView) itemView.findViewById(R.id.tvOrderId);
             dueTimeTextView = (CustomTextView) itemView.findViewById(R.id.dueTimeTextView);
             totalAmountTextView = (CustomTextView) itemView.findViewById(R.id.totalAmountTextView);
             statusTextView = (CustomTextView) itemView.findViewById(R.id.statusTextView);
+            tvSource = (CustomTextView) itemView.findViewById(R.id.tvSource);
             recycler_item = (LinearLayout) itemView.findViewById(R.id.recycler_item);
         }
     }

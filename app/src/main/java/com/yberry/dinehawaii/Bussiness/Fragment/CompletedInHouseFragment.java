@@ -152,7 +152,7 @@ public class CompletedInHouseFragment extends Fragment {
                                 orderModel.setQuantity(object.getString("quantity"));
                                 orderModel.setOrder_type(object.getString("order_type"));
                                 orderModel.setCustomization(object.getString("customization"));
-                                orderModel.setDescription(object.getString("description"));
+                                orderModel.setDescription(object.getString("inhouse_table"));
                                 orderModel.setOrder_source(object.getString("order_added_by"));
                                 list.add(orderModel);
                             }
