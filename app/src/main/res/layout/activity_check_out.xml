@@ -1347,6 +1347,18 @@
                     android:layout_marginBottom="@dimen/_5sdp"
                     android:background="@color/colorDivider" />
 
+                <com.yberry.dinehawaii.customview.CustomEditText
+                    android:id="@+id/etRemark"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_gravity="start"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/edittext_border"
+                    android:gravity="start"
+                    android:hint="Give special instruction.."
+                    android:padding="@dimen/_5sdp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small" />
             </LinearLayout>
         </RelativeLayout>
     </ScrollView>

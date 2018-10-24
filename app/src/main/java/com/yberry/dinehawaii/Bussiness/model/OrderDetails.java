@@ -34,6 +34,15 @@ public class OrderDetails implements Serializable {
     String coupon_amount;
     String order_assign_status;
     String order_source;
+    String remark;
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
 
     public String getVendor_name() {
         return vendor_name;
@@ -322,6 +331,7 @@ public class OrderDetails implements Serializable {
                 ", vendor_contact_no='" + vendor_contact_no + '\'' +
                 ", order_assign_status='" + order_assign_status + '\'' +
                 ", order_source='" + order_source + '\'' +
+                ", remark='" + remark + '\'' +
                 '}';
     }
 }

@@ -9,6 +9,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -50,33 +52,44 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class CompleteFragmentAdapter98 extends RecyclerView.Adapter<CompleteFragmentAdapter98.ViewHolder> {
+public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapter.ViewHolder> {
     public static OrderAdapter adapter;
     Context context;
     List<String> chlidFoodStr = new ArrayList<>();
     ArrayList<OrderHistoryItems> arrayList;
-    String OrderIds = "", TAG = "historyfrag";
+    String OrderIds = "", TAG = "OrderHistoryAdapter";
     private List<CustomerModel> repeatOrderList;
+    String adapter_type = "pending";
 
-    public CompleteFragmentAdapter98(Context context, List<CustomerModel> repeatOrderList) {
+    public OrderHistoryAdapter(Context context, String adapter_type, List<CustomerModel> repeatOrderList) {
         this.context = context;
+        this.adapter_type = adapter_type;
         this.repeatOrderList = repeatOrderList;
     }
 
     @Override
-    public CompleteFragmentAdapter98.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public OrderHistoryAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.repeat_order, parent, false);
         ViewHolder viewHolder = new ViewHolder(v);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(final CompleteFragmentAdapter98.ViewHolder holder, final int position) {
-
-
+    public void onBindViewHolder(final OrderHistoryAdapter.ViewHolder holder, final int position) {
         final CustomerModel model = repeatOrderList.get(position);
         holder.orderid.setText(model.getOrder_id());
         OrderIds = model.getId();
+
+
+        if (model.getOrder_status().equalsIgnoreCase("Pending")) {
+            if (adapter_type.equalsIgnoreCase("pending")) {
+                holder.editOrder.setVisibility(View.VISIBLE);
+            } else {
+                holder.editOrder.setVisibility(View.GONE);
+            }
+        } else
+            holder.editOrder.setVisibility(View.GONE);
+
 
         if (model.getFav_status().equalsIgnoreCase("0")) {
             holder.fav_img.setVisibility(View.GONE);
@@ -125,11 +138,7 @@ public class CompleteFragmentAdapter98 extends RecyclerView.Adapter<CompleteFrag
             @Override
             public void onClick(View view) {
                 new DatabaseHandler(context).deleteCartitem();
-
-
                 ArrayList<OrderItemsDetailsModel> detailsModels = new ArrayList<>();
-
-
                 for (int i = 0; i < chlidFood.length; i++) {
                     OrderItemsDetailsModel detailsModel = new OrderItemsDetailsModel();
                     detailsModel.setItemName(chlidFood[i]);
@@ -154,8 +163,10 @@ public class CompleteFragmentAdapter98 extends RecyclerView.Adapter<CompleteFrag
 
                     String avgPrice = model.getAvgPrice();
                     AppPreferences.setBusiID(context, model.getBusiness_id());
+                    AppPreferences.setSelectedBusiLat(context, "" + model.getBus_lattitude());
+                    AppPreferences.setSelectedBusiLong(context, "" + model.getBus_longitude());
+                    AppPreferences.setBussPackageList(context, "" + model.getBus_package());
                     AppPreferencesBuss.setAveragePrice(context, avgPrice);
-
 
                     detailsModels.add(detailsModel);
                     new DatabaseHandler(context).insertCartlist(detailsModel);
@@ -166,7 +177,69 @@ public class CompleteFragmentAdapter98 extends RecyclerView.Adapter<CompleteFrag
                 context.startActivity(intent);
             }
         });
-        holder.mainlayout.setOnClickListener(new View.OnClickListener() {
+        holder.editOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                new AlertDialog.Builder(context)
+                        .setMessage("Your current order amount will be refund in your wallet")
+                        .setPositiveButton("Edit Order", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int ii) {
+                                Log.e(TAG, "onClick: model.getId() >> " + model.getId());
+                                new DatabaseHandler(context).deleteCartitem();
+                                ArrayList<OrderItemsDetailsModel> detailsModels = new ArrayList<>();
+                                for (int i = 0; i < chlidFood.length; i++) {
+                                    OrderItemsDetailsModel detailsModel = new OrderItemsDetailsModel();
+                                    detailsModel.setItemName(chlidFood[i]);
+                                    detailsModel.setItemQuantity(chlidQuanty[i]);
+                                    detailsModel.setOrderType(model.getOrder());
+                                    detailsModel.setItemCustomiationList(model.getOrder_ItemCustomization());
+                                    detailsModel.setMenu_id(menuI_id[i]);
+                                    detailsModel.setCat_id(cat_id[i]);
+                                    detailsModel.setBuss_id(model.getBusiness_id());
+                                    if (chlidQuanty[i].equalsIgnoreCase("1/2")) {
+                                        detailsModel.setQuantityType("half");
+                                        detailsModel.setItemPrice(String.valueOf(Double.parseDouble(chlidprice[i]) * 2));
+                                        detailsModel.setItemTotalCost(String.valueOf(Double.parseDouble(chlidprice[i])
+                                        ));
+                                    } else {
+                                        detailsModel.setQuantityType("full");
+                                        detailsModel.setItemPrice(chlidprice[i]);
+                                        detailsModel.setItemTotalCost(String.valueOf(Double.parseDouble(chlidprice[i]) * Double.parseDouble(chlidQuanty[i])));
+                                    }
+                                    detailsModel.setMessage(model.getIteam_message());
+                                    detailsModel.setAvgPrice(model.getAvgPrice());
+
+                                    String avgPrice = model.getAvgPrice();
+                                    AppPreferences.setOldOrderId(context, model.getId());
+                                    AppPreferences.setBusiID(context, model.getBusiness_id());
+                                    AppPreferences.setSelectedBusiLat(context, "" + model.getBus_lattitude());
+                                    AppPreferences.setSelectedBusiLong(context, "" + model.getBus_longitude());
+                                    AppPreferences.setBussPackageList(context, "" + model.getBus_package());
+                                    AppPreferencesBuss.setAveragePrice(context, avgPrice);
+
+                                    detailsModels.add(detailsModel);
+                                    new DatabaseHandler(context).insertCartlist(detailsModel);
+
+                                }
+                                notifyDataSetChanged();
+                                Intent intent = new Intent(context, CartActivity.class);
+                                context.startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        })
+                        .show();
+            }
+        });
+        holder.imgArrow.setVisibility(View.GONE);
+
+     /*   holder.mainlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (holder.tabContent.getVisibility() == View.VISIBLE) {
@@ -180,7 +253,7 @@ public class CompleteFragmentAdapter98 extends RecyclerView.Adapter<CompleteFrag
 
                 }
             }
-        });
+        });*/
 
         holder.fav_img.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -214,7 +287,7 @@ public class CompleteFragmentAdapter98 extends RecyclerView.Adapter<CompleteFrag
             }
 
         });
-        holder.viewdetail.setOnClickListener(new View.OnClickListener() {
+        holder.item_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent detail = new Intent(context, CustomerOrderDetailActivity.class);
@@ -344,19 +417,21 @@ public class CompleteFragmentAdapter98 extends RecyclerView.Adapter<CompleteFrag
     public class ViewHolder extends RecyclerView.ViewHolder {
         CustomTextView orderid, orderdate, total_price;
         RecyclerView reycler_customizationOrder;
-        CustomButton btnRepeatOrder, viewdetail, btnRating;
+        CustomButton btnRepeatOrder, editOrder, btnRating;
         LinearLayout tabContent, mainlayout;
         View view1;
         ImageView imgArrow, fav_border_img, fav_img;
+        CardView item_view;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             reycler_customizationOrder = (RecyclerView) itemView.findViewById(R.id.reycler_customizationData);
+            item_view = (CardView) itemView.findViewById(R.id.item_view);
             orderid = (CustomTextView) itemView.findViewById(R.id.orderid);
             orderdate = (CustomTextView) itemView.findViewById(R.id.date);
             total_price = (CustomTextView) itemView.findViewById(R.id.total_price);
-            viewdetail = (CustomButton) itemView.findViewById(R.id.viewOrder);
+            editOrder = (CustomButton) itemView.findViewById(R.id.editOrder);
             btnRepeatOrder = (CustomButton) itemView.findViewById(R.id.repeatOrder);
             mainlayout = (LinearLayout) itemView.findViewById(R.id.tabMain);
             tabContent = (LinearLayout) itemView.findViewById(R.id.tabContent);

@@ -132,6 +132,10 @@ public class FavouriteOrdersFragment extends Fragment {
                             customerModel.setBusiness_id(object.getString("business_id"));
                             customerModel.setAvgPrice(object.getString("avgPrice"));
                             customerModel.setId(object.getString("id"));
+
+                           /* customerModel.setBus_lattitude(object.getString("latitude"));
+                            customerModel.setBus_longitude(object.getString("longitude"));
+                            customerModel.setBus_package(object.getString("business_package"));*/
                             if (i >= 20) {
                                 break;
                             }

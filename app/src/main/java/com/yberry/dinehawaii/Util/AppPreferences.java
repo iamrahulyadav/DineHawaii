@@ -26,6 +26,7 @@ public class AppPreferences {
     public static final String CAT_ID = "cat_id";
     public static final String PRICE = "price_id";
     public static final String CUSTOMER_ORDERTIME = "customer_ordertime";
+    public static final String OLD_ORDER_ID = "old_order_id";
     public static final String BUSNID = "busnid";
     public static final String QTY = "qty";
     public static final String RADIOVALUE = "radio";
@@ -793,6 +794,20 @@ public class AppPreferences {
                 MBPREFERENCES, 0);
         Editor editor = preferences.edit();
         editor.putString(CUSTOMER_ORDERTIME, time);
+        editor.commit();
+    }
+
+
+    public static String getOldOrderId(Context context) {
+        SharedPreferences pereference = context.getSharedPreferences(MBPREFERENCES, 0);
+        return pereference.getString(OLD_ORDER_ID, "0");
+    }
+
+    public static void setOldOrderId(Context context, String value) {
+        SharedPreferences preferences = context.getSharedPreferences(
+                MBPREFERENCES, 0);
+        Editor editor = preferences.edit();
+        editor.putString(OLD_ORDER_ID, value);
         editor.commit();
     }
 

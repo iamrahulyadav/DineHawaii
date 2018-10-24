@@ -70,6 +70,7 @@ public class CustomerOrderDetailActivity extends AppCompatActivity {
     private String order_type = "";
     private String new_status = "";
     private CustomTextView tvFabText;
+    private CustomTextView tvRemark;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +101,7 @@ public class CustomerOrderDetailActivity extends AppCompatActivity {
 
     private void init() {
         tvOrderId = (CustomTextView) findViewById(R.id.tvOrderId);
+        tvRemark = (CustomTextView) findViewById(R.id.tvRemark);
         tvDateTime = (CustomTextView) findViewById(R.id.tvDateTime);
         tvOrderStatus = (CustomTextView) findViewById(R.id.tvOrderStatus);
         tvOrderType = (CustomTextView) findViewById(R.id.tvOrderType);
@@ -260,7 +262,7 @@ public class CustomerOrderDetailActivity extends AppCompatActivity {
                             fabDelPick.setEnabled(false);
                             fabCompleted.setEnabled(false);
                             if (listItem.getOrder_status().equalsIgnoreCase("Pending")) {
-                           } else if (listItem.getOrder_status().equalsIgnoreCase("In-Progress")) {
+                            } else if (listItem.getOrder_status().equalsIgnoreCase("In-Progress")) {
                                 setInProgress();
                             } else if (listItem.getOrder_status().equalsIgnoreCase("Prepared")) {
                                 setPrepared();
@@ -345,6 +347,10 @@ public class CustomerOrderDetailActivity extends AppCompatActivity {
                                 Log.e(TAG, i + ", itemDetail: >> " + model);
                                 itemList.add(model);
                             }
+
+                            if (!listItem.getRemark().equalsIgnoreCase(""))
+                                tvRemark.setText("Special Instructions : " + listItem.getRemark());
+
                             itemAdapter.notifyDataSetChanged();
                         }
                     } else {
@@ -358,7 +364,7 @@ public class CustomerOrderDetailActivity extends AppCompatActivity {
                 public void onFailure(Call<JsonObject> call, Throwable t) {
                     Log.e("Response: request 1", call.request().toString());
                     Log.e("Response: onFailure 1", t.toString());
-                    Toast.makeText(CustomerOrderDetailActivity.this, "Server not responding .... please try later", Toast.LENGTH_SHORT).show();
+                    publishProgress(400, "Server not responding .... please try later");
                 }
             });
             return null;

@@ -17,8 +17,6 @@ import android.view.ViewGroup;
 import com.yberry.dinehawaii.R;
 import com.yberry.dinehawaii.Util.AppPreferencesBuss;
 
-
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,9 +47,10 @@ public class AllCompletedOrderFragment extends Fragment {
         if (packages.contains("3")) {
             adapter.addFragment(new CompletedInHouseFragment(), "In-House");
             adapter.addFragment(new CompletedTakeoutFragment(), "Take-Out");
+            adapter.addFragment(new CompletedDeliveryOrdersFragment(), "Delivery");
             adapter.addFragment(new CompletedCateringFragment(), "Catering");
-        }
-        adapter.addFragment(new CompletedDeliveryOrdersFragment(), "Delivery");
+        } else
+            adapter.addFragment(new CompletedDeliveryOrdersFragment(), "Delivery");
 
 
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewpager);

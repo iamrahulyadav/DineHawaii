@@ -145,6 +145,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
     private String wallet_amt = "0";
     private CustomTextView tvPaymentText;
     private double totalPaidAmountOrig = 0.0;
+    private CustomEditText etRemark;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -260,6 +261,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
 
     private void init() {
         tvTotalPaidAmount = (CustomTextView) findViewById(R.id.tvTotalPaidAmount);
+        etRemark = (CustomEditText) findViewById(R.id.etRemark);
         tvPaymentText = (CustomTextView) findViewById(R.id.tvPaymentText);
         tvTotalAmt = (CustomTextView) findViewById(R.id.totalCost);
         tvTotalPaidAmount2 = (CustomTextView) findViewById(R.id.tvTotalPaidAmount2);
@@ -942,7 +944,12 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         if (order_type.equalsIgnoreCase("0")) {
             Toast.makeText(context, "Select your order type", Toast.LENGTH_SHORT).show();
         } else if (tvTotalPaidAmount.getText().toString().equalsIgnoreCase("00.0") || tvTotalPaidAmount.getText().toString().equalsIgnoreCase("0.0")) {
-            Toast.makeText(this, "Amount can't be zero", Toast.LENGTH_SHORT).show();
+            AppPreferencesBuss.setfinalLoylityPoints(context, loyality_apply.getText().toString());
+            AppPreferences.setDeliveryName(context, custName.getText().toString());
+            AppPreferencesBuss.setGrandTotal(context, tvTotalPaidAmount.getText().toString());
+            AppPreferences.setPrepTime(context, food_prepration_time.getText().toString());
+            setRadioValue(context, radioValue);
+            placeOrder();
         } else {
             AppPreferencesBuss.setfinalLoylityPoints(context, loyality_apply.getText().toString());
             AppPreferences.setDeliveryName(context, custName.getText().toString());
@@ -1834,6 +1841,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         JsonObject object = new JsonObject();
         object.addProperty("business_id", AppPreferences.getBusiID(CheckOutActivity.this));
         object.addProperty("user_id", AppPreferences.getCustomerid(CheckOutActivity.this));
+        object.addProperty("old_order_id", AppPreferences.getOldOrderId(CheckOutActivity.this));
         object.addProperty("delivery_name", AppPreferences.getDeliveryName(CheckOutActivity.this));//, AppPreferencesBuss.getBussiId(getActivity()));
         object.addProperty("delivery_address", daddress.getText().toString());
         object.addProperty("delivery_mobile", AppPreferences.getDeliveryContact(CheckOutActivity.this));
@@ -1858,6 +1866,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         object.addProperty("address_long", String.valueOf(cust_longitude));
         object.addProperty("inhouse_table_no", inhouse_table);
         object.addProperty("set_as_default", setDefault);
+        object.addProperty("remark", etRemark.getText().toString());
         jsonObject.add("contactDetails", object);
         JsonArray jsonArray = new JsonArray();
         for (int i = 0; i < cartItems.size(); i++) {
@@ -1904,7 +1913,6 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                             AppPreferences.setCustAddrLat(context, String.valueOf(cust_latitude));
                             AppPreferences.setCustAddrLong(context, String.valueOf(cust_longitude));
                         }
-
                     } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
                         JSONArray jsonArray = jsonObject.getJSONArray("result");
                         JSONObject object = jsonArray.getJSONObject(0);

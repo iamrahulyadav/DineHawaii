@@ -19,7 +19,7 @@ import com.yberry.dinehawaii.R;
 import com.yberry.dinehawaii.Util.FragmentIntraction;
 
 public class OrderHistory extends Fragment {
-    String TAG = "OrderHistoryOrRese";
+    String TAG = "OrderHistory";
     String to = "";
     FragmentIntraction intraction;
     private Context mContext;
@@ -39,13 +39,13 @@ public class OrderHistory extends Fragment {
         }
         try {
             Bundle bundle = this.getArguments();
-            to = bundle.getString("to");
+            if (bundle.containsKey("to"))
+                to = bundle.getString("to");
             initCommponent();
         } catch (Exception e) {
             initCommponent();
             e.printStackTrace();
         }
-
         return rootView;
     }
 
@@ -79,7 +79,6 @@ public class OrderHistory extends Fragment {
             }
         });
         viewPager = (ViewPager) rootView.findViewById(R.id.viewpager);
-        // PagerAdapter pagerAdapter = new PagerAdapter(getActivity().getSupportFragmentManager(), mContext);
         PagerAdapter pagerAdapter = new PagerAdapter(getChildFragmentManager());
         viewPager.setAdapter(pagerAdapter);
         TabLayout tabLayout = (TabLayout) rootView.findViewById(R.id.tab_layout);

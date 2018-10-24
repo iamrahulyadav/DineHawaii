@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/user_post"
+    android:id="@+id/item_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="3dp"
     android:layout_marginLeft="@dimen/_8sdp"
-    android:layout_marginRight="@dimen/_8sdp"
     android:layout_marginTop="@dimen/_5sdp"
+    android:layout_marginRight="@dimen/_8sdp"
+    android:layout_marginBottom="3dp"
     android:elevation="1dp"
     android:foreground="?android:attr/selectableItemBackground"
     app:cardCornerRadius="3dp"
@@ -30,9 +30,9 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
                 android:layout_weight="0.9"
                 android:orientation="vertical">
 
@@ -190,8 +190,8 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:layout_marginBottom="@dimen/_5sdp"
                 android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
                 android:background="#f3efefef"
                 android:visibility="gone" />
 
@@ -219,28 +219,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:orientation="horizontal"
-                android:weightSum="3">
+                android:orientation="horizontal">
 
                 <com.yberry.dinehawaii.customview.CustomButton
                     android:id="@+id/btnRating"
                     style="@style/TextAppearance.AppCompat.Small"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="@dimen/_25sdp"
+                    android:layout_marginRight="3dp"
                     android:layout_weight="1"
                     android:background="@drawable/planborder"
                     android:text="Rating"
-                    android:layout_marginRight="3dp"
                     android:textAllCaps="false"
                     android:textColor="@color/green"
                     app:edittextfont="Raleway-Regular.ttf" />
 
                 <com.yberry.dinehawaii.customview.CustomButton
                     android:id="@+id/repeatOrder"
-                    android:layout_marginRight="3dp"
                     style="@style/TextAppearance.AppCompat.Small"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="@dimen/_25sdp"
+                    android:layout_marginRight="3dp"
                     android:layout_weight="1"
                     android:background="@drawable/planborder"
                     android:text="Repeat Order"
@@ -249,13 +248,13 @@
                     app:edittextfont="Raleway-Regular.ttf" />
 
                 <com.yberry.dinehawaii.customview.CustomButton
-                    android:id="@+id/viewOrder"
+                    android:id="@+id/editOrder"
                     style="@style/TextAppearance.AppCompat.Small"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="@dimen/_25sdp"
                     android:layout_weight="1"
                     android:background="@drawable/planborder"
-                    android:text="View Details"
+                    android:text="Edit Order"
                     android:textAllCaps="false"
                     android:textColor="@color/green"
                     app:edittextfont="Raleway-Regular.ttf" />

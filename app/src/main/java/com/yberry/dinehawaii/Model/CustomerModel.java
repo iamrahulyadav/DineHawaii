@@ -7,7 +7,7 @@ import android.os.Parcelable;
  * Created by Hp on 15-06-2017.
  */
 
-public class CustomerModel implements Parcelable{
+public class CustomerModel implements Parcelable {
 
     private String gift_id;
     private String coupon_tile;
@@ -51,7 +51,7 @@ public class CustomerModel implements Parcelable{
     private String waitlist_service_type2;
     private String notification_msg;
 
-    private  String id;
+    private String id;
     String fav_status;
     String offer_name;
     String offer_id;
@@ -60,6 +60,53 @@ public class CustomerModel implements Parcelable{
     String offer_decp;
     String minOrderAmt;
     String couponType;
+
+    String bus_lattitude = "0.0";
+    String bus_longitude = "0.0";
+    String bus_package = "";
+    String bus_options = "";
+    String order_status = "";
+
+
+    public String getOrder_status() {
+        return order_status;
+    }
+
+    public void setOrder_status(String order_status) {
+        this.order_status = order_status;
+    }
+
+    public String getBus_package() {
+        return bus_package;
+    }
+
+    public void setBus_package(String bus_package) {
+        this.bus_package = bus_package;
+    }
+
+    public String getBus_options() {
+        return bus_options;
+    }
+
+    public void setBus_options(String bus_options) {
+        this.bus_options = bus_options;
+    }
+
+    public String getBus_lattitude() {
+        return bus_lattitude;
+    }
+
+    public void setBus_lattitude(String bus_lattitude) {
+        this.bus_lattitude = bus_lattitude;
+    }
+
+    public String getBus_longitude() {
+        return bus_longitude;
+    }
+
+    public void setBus_longitude(String bus_longitude) {
+        this.bus_longitude = bus_longitude;
+    }
 
     public String getOffer_name() {
         return offer_name;
@@ -194,6 +241,7 @@ public class CustomerModel implements Parcelable{
     public int describeContents() {
         return 0;
     }
+
     @Override
     public String toString() {
         return "CustomerModel{" +
@@ -323,9 +371,11 @@ public class CustomerModel implements Parcelable{
         parcel.writeString(minOrderAmt);
         parcel.writeString(couponType);
     }
+
     public CustomerModel() {
 
     }
+
     public String getGift_id() {
         return gift_id;
     }
@@ -617,7 +667,6 @@ public class CustomerModel implements Parcelable{
     public void setId(String id) {
         this.id = id;
     }
-
 
 
     public void setWaitlist_service_type1(String waitlist_service_type1) {

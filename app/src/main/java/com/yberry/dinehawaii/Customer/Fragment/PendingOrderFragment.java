@@ -18,7 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
-import com.yberry.dinehawaii.Customer.Adapter.CompleteFragmentAdapter98;
+import com.yberry.dinehawaii.Customer.Adapter.OrderHistoryAdapter;
 import com.yberry.dinehawaii.Model.CustomerModel;
 import com.yberry.dinehawaii.R;
 import com.yberry.dinehawaii.RetrofitClasses.ApiClient;
@@ -42,8 +42,8 @@ import retrofit2.Response;
 
 
 public class PendingOrderFragment extends Fragment {
-    private static final String TAG = "CompletedOrderFragment";
-    public static CompleteFragmentAdapter98 adapter;
+    private static final String TAG = "PendingOrderFragment";
+    public OrderHistoryAdapter adapter;
     private CustomTextView nodata;
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
@@ -54,10 +54,11 @@ public class PendingOrderFragment extends Fragment {
     BroadcastReceiver favReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            repeatOrder();
+            apiCall();
             //Toast.makeText(context, "Marked as Favorite", Toast.LENGTH_SHORT).show();
         }
     };
+
     public PendingOrderFragment() {
         // Required empty public constructor
     }
@@ -69,8 +70,8 @@ public class PendingOrderFragment extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_completed, container, false);
         context = getActivity();
         initComponent();
-        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(favReceiver,new IntentFilter("markedFav"));
-        repeatOrder();
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(favReceiver, new IntentFilter("markedFav"));
+        apiCall();
         return rootView;
     }
 
@@ -80,17 +81,17 @@ public class PendingOrderFragment extends Fragment {
         nodata = (CustomTextView) rootView.findViewById(R.id.noData);
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        adapter = new CompleteFragmentAdapter98(context, list);
+        adapter = new OrderHistoryAdapter(context, "pending", list);
         mRecyclerView.setAdapter(adapter);
     }
 
-    private void repeatOrder() {
+    private void apiCall() {
         if (Util.isNetworkAvailable(getActivity())) {
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("method", AppConstants.CUSTOMER_USER.PENDING_ORDERS);
-            jsonObject.addProperty("user_id",AppPreferences.getCustomerid(getActivity()));//8
-            Log.e(TAG, "Request GET COMPLETED" + jsonObject.toString());
-            getRepeatData(jsonObject);
+            jsonObject.addProperty("user_id", AppPreferences.getCustomerid(getActivity()));//8
+            Log.e(TAG, "Request GET PENDING >> " + jsonObject.toString());
+            apiCallServer(jsonObject);
         } else {
             Toast.makeText(getActivity(), "Please Connect to Internet", Toast.LENGTH_LONG).show();
         }
@@ -102,7 +103,7 @@ public class PendingOrderFragment extends Fragment {
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(favReceiver);
     }
 
-    private void getRepeatData(JsonObject jsonObject) {
+    private void apiCallServer(JsonObject jsonObject) {
         final ProgressHUD progressHD = ProgressHUD.show(getActivity(), "Please wait...", true, false, new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
@@ -117,7 +118,7 @@ public class PendingOrderFragment extends Fragment {
             @SuppressLint("LongLogTag")
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                Log.e(TAG, "Response GET COMPLETED >> " + response.body().toString());
+                Log.e(TAG, "Response GET PENDING >> " + response.body().toString());
                 String resp = response.body().toString();
                 try {
                     JSONObject jsonObject = new JSONObject(resp);
@@ -143,13 +144,16 @@ public class PendingOrderFragment extends Fragment {
                             customerModel.setAvgPrice(object.getString("avgPrice"));
                             customerModel.setId(object.getString("id"));
                             customerModel.setFav_status(object.getString("Favourite"));
-                            if (i>=20){
+                            customerModel.setBus_lattitude(object.getString("latitude"));
+                            customerModel.setBus_longitude(object.getString("longitude"));
+                            customerModel.setBus_package(object.getString("business_package"));
+                            customerModel.setOrder_status(object.getString("order_status"));
+                            if (i >= 20) {
                                 break;
                             }
                             list.add(customerModel);
                         }
-                    }
-                    else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
+                    } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
                         list.clear();
                         nodata.setVisibility(View.VISIBLE);
                     }

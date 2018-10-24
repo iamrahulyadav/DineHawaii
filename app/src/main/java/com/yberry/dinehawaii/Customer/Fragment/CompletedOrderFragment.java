@@ -18,7 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
-import com.yberry.dinehawaii.Customer.Adapter.CompleteFragmentAdapter98;
+import com.yberry.dinehawaii.Customer.Adapter.OrderHistoryAdapter;
 import com.yberry.dinehawaii.Model.CustomerModel;
 import com.yberry.dinehawaii.R;
 import com.yberry.dinehawaii.RetrofitClasses.ApiClient;
@@ -30,7 +30,6 @@ import com.yberry.dinehawaii.Util.Util;
 import com.yberry.dinehawaii.customview.CustomTextView;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -43,7 +42,7 @@ import retrofit2.Response;
 
 public class CompletedOrderFragment extends Fragment {
     private static final String TAG = "CompletedOrderFragment";
-    public static CompleteFragmentAdapter98 adapter;
+    public static OrderHistoryAdapter adapter;
     public static List<CustomerModel> list = new ArrayList<>();
     Context context;
     private CustomTextView nodata;
@@ -80,7 +79,7 @@ public class CompletedOrderFragment extends Fragment {
         nodata = (CustomTextView) rootView.findViewById(R.id.noData);
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        adapter = new CompleteFragmentAdapter98(context, list);
+        adapter = new OrderHistoryAdapter(context, "completed", list);
         mRecyclerView.setAdapter(adapter);
     }
 
@@ -117,9 +116,10 @@ public class CompletedOrderFragment extends Fragment {
             @SuppressLint("LongLogTag")
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                Log.e(TAG, "Response GET COMPLETED >> " + response.body().toString());
-                String resp = response.body().toString();
+
                 try {
+                    Log.e(TAG, "Response GET COMPLETED >> " + response.body().toString());
+                    String resp = response.body().toString();
                     JSONObject jsonObject = new JSONObject(resp);
                     if (jsonObject.getString("status").equalsIgnoreCase("200")) {
                         JSONArray jsonArray = jsonObject.getJSONArray("result");
@@ -143,6 +143,11 @@ public class CompletedOrderFragment extends Fragment {
                             customerModel.setAvgPrice(object.getString("avgPrice"));
                             customerModel.setId(object.getString("id"));
                             customerModel.setFav_status(object.getString("Favourite"));
+
+                            customerModel.setBus_lattitude(object.getString("latitude"));
+                            customerModel.setBus_longitude(object.getString("longitude"));
+                            customerModel.setBus_package(object.getString("business_package"));
+                            customerModel.setOrder_status(object.getString("order_status"));
                             Log.d("BUSINESSID", object.getString("business_id"));
                             if (i >= 20) {
                                 break;
@@ -158,7 +163,7 @@ public class CompletedOrderFragment extends Fragment {
                     }
                     adapter.notifyDataSetChanged();
                     progressHD.dismiss();
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     list.clear();
                     adapter.notifyDataSetChanged();

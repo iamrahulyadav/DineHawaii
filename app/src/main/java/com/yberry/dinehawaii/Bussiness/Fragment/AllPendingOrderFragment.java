@@ -47,10 +47,12 @@ public class AllPendingOrderFragment extends Fragment {
         if (packages.contains("3")) {
             adapter.addFragment(new PendingInhouseOrderFragment(), "In-House");
             adapter.addFragment(new PendingTakeoutOrdersFragment(), "Take-Out");
+            adapter.addFragment(new PendingDeliveryOrdersFragment(), "Delivery");
             adapter.addFragment(new PendingCateringOrderFragment(), "Catering");
+        } else {
+            adapter.addFragment(new PendingDeliveryOrdersFragment(), "Delivery");
         }
 
-        adapter.addFragment(new PendingDeliveryOrdersFragment(), "Delivery");
 
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewpager);
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tab_layout);
