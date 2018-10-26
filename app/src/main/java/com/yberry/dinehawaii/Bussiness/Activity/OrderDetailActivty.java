@@ -76,6 +76,7 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
     private CustomTextView tvFabText, tvVendorContact, tvVendorBusiness, tvVendorName;
     private String selectedVendorId = "", assignDeliveryStatus = "";
     private Context context;
+    private CustomTextView tvWalletAmt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,6 +156,7 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
         tvVendorBusiness = (CustomTextView) findViewById(R.id.tvVendorBusiness);
         tvVendorName = (CustomTextView) findViewById(R.id.tvVendorName);
         tvVendorContact = (CustomTextView) findViewById(R.id.tvVendorContact);
+        tvWalletAmt = (CustomTextView) findViewById(R.id.tvWalletAmt);
 
         llVendor = (LinearLayout) findViewById(R.id.llVendor);
         llBasic = (LinearLayout) findViewById(R.id.llBasic);
@@ -574,6 +576,7 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
                             JsonObject result = jsonArray.get(i).getAsJsonObject();
                             Log.e("listItemresult", String.valueOf(result));
                             OrderDetails listItem = new Gson().fromJson(result, OrderDetails.class);
+
                             status = listItem.getOrder_status();
                             if (listItem.getOrder_status().equalsIgnoreCase("Pending")) {
                                 fabPending.setEnabled(false);
@@ -682,6 +685,7 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
                             //takeout
                             tvPickupName.setText(listItem.getUser_name());
                             tvPickUpTime.setText(listItem.getDue_time());
+                            tvWalletAmt.setText(listItem.getWallet_amt());
 
                             tvTotalAmount.setText("$" + listItem.getTotal_price());
 

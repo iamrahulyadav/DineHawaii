@@ -670,6 +670,60 @@
 
                         </LinearLayout>
 
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="1">
+
+                            <RelativeLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.3">
+
+                                <com.yberry.dinehawaii.customview.CustomTextView
+                                    style="@style/TextAppearance.AppCompat.Subhead"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="@dimen/_5sdp"
+                                    android:text="Wallet Amount"
+                                    app:edittextfont="@string/raleway_regular" />
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.1">
+
+                                <com.yberry.dinehawaii.customview.CustomTextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="@dimen/_5sdp"
+                                    android:text=":"
+                                    android:textStyle="bold"
+                                    app:edittextfont="Raleway-Regular.ttf" />
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="0.6">
+
+                                <com.yberry.dinehawaii.customview.CustomTextView
+                                    android:id="@+id/tvWalletAmt"
+                                    style="@style/TextAppearance.AppCompat.Subhead"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+
+                                    android:layout_margin="@dimen/_5sdp"
+                                    android:text="NA"
+
+                                    app:edittextfont="Raleway-Regular.ttf" />
+                            </RelativeLayout>
+
+
+                        </LinearLayout>
+
 
                     </LinearLayout>
                 </LinearLayout>

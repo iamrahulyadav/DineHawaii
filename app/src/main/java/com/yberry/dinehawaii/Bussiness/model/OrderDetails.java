@@ -35,6 +35,15 @@ public class OrderDetails implements Serializable {
     String order_assign_status;
     String order_source;
     String remark;
+    String wallet_amt;
+
+    public String getWallet_amt() {
+        return wallet_amt;
+    }
+
+    public void setWallet_amt(String wallet_amt) {
+        this.wallet_amt = wallet_amt;
+    }
 
     public String getRemark() {
         return remark;
@@ -332,6 +341,7 @@ public class OrderDetails implements Serializable {
                 ", order_assign_status='" + order_assign_status + '\'' +
                 ", order_source='" + order_source + '\'' +
                 ", remark='" + remark + '\'' +
+                ", wallet_amt='" + wallet_amt + '\'' +
                 '}';
     }
 }
