@@ -105,9 +105,9 @@ public class OrderFeedbackFragment extends Fragment {
                         for (int i = 0; i < jsonArray.length(); i++) {
                             OrderDetails model = new OrderDetails();
                             JSONObject object = jsonArray.getJSONObject(i);
-                            model.setOrder_id(object.getString("id"));
-                            model.setUser_name(object.getString("user"));
-                            model.setReviewmsg(object.getString("review_message"));
+                            model.setOrderId(object.getString("id"));
+                            model.setUserName(object.getString("user"));
+                            model.setRemark(object.getString("review_message"));
                             model.setDate(object.getString("date"));
                             list.add(model);
                         }

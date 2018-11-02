@@ -139,21 +139,21 @@ public class CompletedInHouseFragment extends Fragment {
                                 OrderDetails orderModel = new OrderDetails();
                                 JSONObject object = jsonArray.getJSONObject(i);
                                 orderModel.setId(object.getString("id"));
-                                orderModel.setOrder_id(object.getString("order_id"));
+                                orderModel.setOrderId(object.getString("order_id")) ;
                                 orderModel.setDate(object.getString("date"));
-                                orderModel.setBusiness_name(object.getString("business_name"));
-                                orderModel.setTotal_price("$" + object.getString("total_price"));
-                                orderModel.setDelivery_adderess(object.getString("delivery_adderess"));
-                                orderModel.setDelivery_name(object.getString("delivery_name"));
-                                orderModel.setDelivery_contact_no(object.getString("delivery_contact_no"));
-                                orderModel.setOrder_status(object.getString("order_status"));
-                                orderModel.setUser_name(object.getString("user_name"));
-                                orderModel.setFood_name(object.getString("food_name"));
+                                orderModel.setBusinessName(object.getString("business_name")) ;
+                                orderModel.setTotalPrice("$" + object.getString("total_price"));
+                                orderModel.setDeliveryAdderess(object.getString("delivery_adderess"));
+                                orderModel.setDeliveryName(object.getString("delivery_name"));
+                                orderModel.setDeliveryContactNo(object.getString("delivery_contact_no"));
+                                orderModel.setOrderStatus(object.getString("order_status"));
+                                orderModel.setUserName(object.getString("user_name"));
+                                orderModel.setFoodName(object.getString("food_name"));
                                 orderModel.setQuantity(object.getString("quantity"));
-                                orderModel.setOrder_type(object.getString("order_type"));
+                                orderModel.setOrderType(object.getString("order_type"));
                                 orderModel.setCustomization(object.getString("customization"));
                                 orderModel.setDescription(object.getString("inhouse_table"));
-                                orderModel.setOrder_source(object.getString("order_added_by"));
+                                orderModel.setOrderAddedBy(object.getString("order_added_by"));
                                 list.add(orderModel);
                             }
                         } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {

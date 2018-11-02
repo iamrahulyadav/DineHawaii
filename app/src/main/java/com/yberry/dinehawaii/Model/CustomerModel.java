@@ -464,7 +464,7 @@ public class CustomerModel implements Parcelable {
         this.order_date = order_date;
     }
 
-    public String getOrder_id() {
+    public String getOrderId() {
         return order_id;
     }
 

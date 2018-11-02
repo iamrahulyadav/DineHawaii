@@ -57,7 +57,7 @@ public class FavouriteFragmentAdapter98 extends RecyclerView.Adapter<FavouriteFr
         final CustomerModel model = repeatOrderList.get(position);
         Log.d("model", String.valueOf(repeatOrderList.get(position)));
         Log.d("model", model.getFood_name());
-        holder.orderid.setText(model.getOrder_id());
+        holder.orderid.setText(model.getOrderId());
         OrderIds = model.getId();
 
         final String[] chlidFood = model.getFood_name().split(",");
@@ -87,7 +87,7 @@ public class FavouriteFragmentAdapter98 extends RecyclerView.Adapter<FavouriteFr
         }
         adapter.notifyDataSetChanged();
         Log.d("model", "" + chlidFoodStr.size());
-        holder.orderid.setText(model.getOrder_id());
+        holder.orderid.setText(model.getOrderId());
         holder.orderdate.setText(model.getOrder_date());
         holder.total_price.setText(model.getTotal_price());
 

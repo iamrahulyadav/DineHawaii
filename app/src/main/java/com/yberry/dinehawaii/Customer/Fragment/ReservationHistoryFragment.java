@@ -72,7 +72,7 @@ public class ReservationHistoryFragment extends Fragment {
         model.setService_type1("service 1");
         model.setTime("11.20");
         model.setParty_size("2");
-        model.setBusiness_name("Hawaii");
+        model.setBusinessName("Hawaii");
         model.setDate("12/12/2016");
         list.add(model);
 */

@@ -48,12 +48,12 @@ public class TakeOutAdapter extends RecyclerView.Adapter<TakeOutAdapter.ViewHold
         String date = model.getDate();
         String newDate = date.replaceAll("M", "");
         holder.dateTextView.setText(newDate);
-        holder.tvDateTimePickup.setText(model.getDue_time());
-        holder.tvOrderId.setText(model.getOrder_id());
-        holder.nameTextView.setText(model.getUser_name());
-        holder.totalAmountTextView.setText(model.getTotal_price());
-        holder.statusTextView.setText(model.getOrder_status());
-        holder.tvSource.setText(model.getOrder_source());
+        holder.tvDateTimePickup.setText(model.getDueTime());
+        holder.tvOrderId.setText(model.getOrderId());
+        holder.nameTextView.setText(model.getUserName());
+        holder.totalAmountTextView.setText(model.getTotalPrice());
+        holder.statusTextView.setText(model.getOrderStatus());
+        holder.tvSource.setText(model.getOrderAddedBy());
 
        /* if (model.getOrder_time().contains("AM")) {
             String replace = model.getOrder_time().replace("AM", "a");
@@ -64,9 +64,9 @@ public class TakeOutAdapter extends RecyclerView.Adapter<TakeOutAdapter.ViewHold
             holder.orderTimeTextView.setText(replace1);
         }
         else*/
-        holder.orderTimeTextView.setText(model.getOrder_time());
+        holder.orderTimeTextView.setText(model.getDate());
 
-        holder.dueTimeTextView.setText(model.getDue_time());
+        holder.dueTimeTextView.setText(model.getDueTime());
 
         holder.recycler_item.setOnClickListener(new View.OnClickListener() {
             @Override

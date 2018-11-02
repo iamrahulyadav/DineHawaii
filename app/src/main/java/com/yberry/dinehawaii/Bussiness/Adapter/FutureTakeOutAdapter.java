@@ -48,11 +48,11 @@ public class FutureTakeOutAdapter extends RecyclerView.Adapter<FutureTakeOutAdap
     public void onBindViewHolder(ViewHolder holder, final int position) {
         OrderDetails model = orderDetails.get(position);
         holder.dateTextView.setText(model.getDate());
-        holder.nameTextView.setText(model.getUser_name());
-        holder.totalAmountTextView.setText(model.getTotal_price());
-        holder.statusTextView.setText(model.getOrder_status());
-        holder.pickupNameNoTextView.setText(model.getDelivery_adderess());
-        holder.tvSource.setText(model.getOrder_source());
+        holder.nameTextView.setText(model.getUserName());
+        holder.totalAmountTextView.setText(model.getTotalPrice());
+        holder.statusTextView.setText(model.getTotalPrice());
+        holder.pickupNameNoTextView.setText(model.getDeliveryAdderess());
+        holder.tvSource.setText(model.getOrderAddedBy());
         Log.e("order_data", model.toString());
 
         holder.recycler_item.setOnClickListener(new View.OnClickListener() {

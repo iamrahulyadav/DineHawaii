@@ -77,7 +77,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
     @Override
     public void onBindViewHolder(final OrderHistoryAdapter.ViewHolder holder, final int position) {
         final CustomerModel model = repeatOrderList.get(position);
-        holder.orderid.setText(model.getOrder_id());
+        holder.orderid.setText(model.getOrderId());
         OrderIds = model.getId();
 
 
@@ -129,7 +129,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
         }
         adapter.notifyDataSetChanged();
         Log.d("model", "" + chlidFoodStr.size());
-        holder.orderid.setText(model.getOrder_id());
+        holder.orderid.setText(model.getOrderId());
         holder.orderdate.setText(model.getOrder_date());
         holder.total_price.setText(model.getTotal_price());
 

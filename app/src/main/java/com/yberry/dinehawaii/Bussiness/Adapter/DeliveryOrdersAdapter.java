@@ -47,13 +47,13 @@ public class DeliveryOrdersAdapter extends RecyclerView.Adapter<DeliveryOrdersAd
         String date = model.getDate();
         String newDate = date.replaceAll("M", "");
         holder.dateTextView.setText(newDate);
-        holder.tvOrderId.setText(model.getOrder_id());
+        holder.tvOrderId.setText(model.getOrderId());
         holder.tvTableNo.setText("");
         holder.tvTableNoText.setText("");
-        holder.nameTextView.setText(model.getDelivery_name());
-        holder.totalAmountTextView.setText(model.getTotal_price());
-        holder.statusTextView.setText(model.getOrder_status());
-        holder.tvSource.setText(model.getOrder_source());
+        holder.nameTextView.setText(model.getDeliveryName());
+        holder.totalAmountTextView.setText(model.getTotalPrice());
+        holder.statusTextView.setText(model.getOrderStatus());
+        holder.tvSource.setText(model.getOrderAddedBy());
 
         holder.recycler_item.setOnClickListener(new View.OnClickListener() {
             @Override

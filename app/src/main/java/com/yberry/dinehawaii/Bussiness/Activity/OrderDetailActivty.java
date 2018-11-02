@@ -3,6 +3,7 @@ package com.yberry.dinehawaii.Bussiness.Activity;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -40,6 +41,8 @@ import com.yberry.dinehawaii.Util.AppConstants;
 import com.yberry.dinehawaii.Util.AppPreferencesBuss;
 import com.yberry.dinehawaii.Util.ProgressBarAnimation;
 import com.yberry.dinehawaii.Util.ProgressHUD;
+import com.yberry.dinehawaii.common.activity.OrderMapActivity;
+import com.yberry.dinehawaii.customview.CustomButton;
 import com.yberry.dinehawaii.customview.CustomTextView;
 import com.yberry.dinehawaii.vendor.Model.VendorModel;
 
@@ -73,10 +76,13 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
     private FloatingActionButton fabPending, fabInProgress, fabCompleted, fabDelPick, fabPrepared;
     private ProgressBar orderProgress;
     private String order_id, status = "", order_type = "", new_status = "";
-    private CustomTextView tvFabText, tvVendorContact, tvVendorBusiness, tvVendorName;
-    private String selectedVendorId = "", assignDeliveryStatus = "";
+    private CustomTextView tvFabText, tvVendorContact, tvVendorBusiness, tvVendorName, tvDriverName, tvDriverCall;
+    private String selectedVendorId = "", orderAssignStatus = "", vendorAssignStatus = "", driverAssignStatus = "";
     private Context context;
     private CustomTextView tvWalletAmt;
+    private CustomButton btnTrackOrder;
+    private OrderDetails orderData = null;
+    private CardView cardDriver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,7 +132,6 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
                     .setNegativeButton("No", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-
                         }
                     })
                     .show();
@@ -155,6 +160,8 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
         tvFabText = (CustomTextView) findViewById(R.id.tvFabText);
         tvVendorBusiness = (CustomTextView) findViewById(R.id.tvVendorBusiness);
         tvVendorName = (CustomTextView) findViewById(R.id.tvVendorName);
+        tvDriverName = (CustomTextView) findViewById(R.id.tvDriverName);
+        tvDriverCall = (CustomTextView) findViewById(R.id.tvDriverCall);
         tvVendorContact = (CustomTextView) findViewById(R.id.tvVendorContact);
         tvWalletAmt = (CustomTextView) findViewById(R.id.tvWalletAmt);
 
@@ -171,8 +178,14 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
         cardTakeout = (CardView) findViewById(R.id.cardTakeout);
         cardDelivery = (CardView) findViewById(R.id.cardDelivery);
         cardVendor = (CardView) findViewById(R.id.cardVendor);
+        cardDriver = (CardView) findViewById(R.id.cardDriver);
+        btnTrackOrder = findViewById(R.id.btnTrackOrder);
         cardVendor.setVisibility(View.GONE);
+        cardDriver.setVisibility(View.GONE);
+        btnTrackOrder.setVisibility(View.GONE);
 
+
+        btnTrackOrder.setOnClickListener(this);
         ((CustomTextView) findViewById(R.id.basicinfo)).setOnClickListener(OrderDetailActivty.this);
         ((CustomTextView) findViewById(R.id.items)).setOnClickListener(OrderDetailActivty.this);
         ((CustomTextView) findViewById(R.id.delivery)).setOnClickListener(OrderDetailActivty.this);
@@ -236,7 +249,17 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.basicinfo) {
+        if (view.getId() == R.id.btnTrackOrder) {
+            Intent intent = new Intent(context, OrderMapActivity.class);
+            intent.putExtra("cust_lat", orderData.getCustLat());
+            intent.putExtra("cust_long", orderData.getCustLong());
+            intent.putExtra("cust_address", orderData.getCustAddress());
+            intent.putExtra("busi_lat", orderData.getBusLat());
+            intent.putExtra("busi_long", orderData.getBusLong());
+            intent.putExtra("busi_address", orderData.getBusAddress());
+            intent.putExtra("order_id", orderData.getId());
+            startActivity(intent);
+        } else if (view.getId() == R.id.basicinfo) {
             basicChildInfo();
         } else if (view.getId() == R.id.items) {
             itemChildinfo();
@@ -497,7 +520,7 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
                             VendorModel model = gson.fromJson(String.valueOf(jsonObject1), VendorModel.class);
                             vendorList.add(model);
                         }
-                        if (assignDeliveryStatus.equalsIgnoreCase("1"))
+                        if (orderAssignStatus.equalsIgnoreCase("1"))
                             showDeliveryVendor(vendorList);
                         else {
                             ArrayList<String> items = new ArrayList<>();
@@ -575,36 +598,36 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
                         for (int i = 0; i < jsonArray.size(); i++) {
                             JsonObject result = jsonArray.get(i).getAsJsonObject();
                             Log.e("listItemresult", String.valueOf(result));
-                            OrderDetails listItem = new Gson().fromJson(result, OrderDetails.class);
-
-                            status = listItem.getOrder_status();
-                            if (listItem.getOrder_status().equalsIgnoreCase("Pending")) {
+                            orderData = new Gson().fromJson(result, OrderDetails.class);
+                            Log.e(TAG, "onResponse: orderData >> " + orderData);
+                            status = orderData.getOrderStatus();
+                            if (orderData.getOrderStatus().equalsIgnoreCase("Pending")) {
                                 fabPending.setEnabled(false);
                                 fabInProgress.setEnabled(true);
                                 fabPrepared.setEnabled(false);
                                 fabDelPick.setEnabled(false);
                                 fabCompleted.setEnabled(false);
-                            } else if (listItem.getOrder_status().equalsIgnoreCase("In-Progress")) {
+                            } else if (orderData.getOrderStatus().equalsIgnoreCase("In-Progress")) {
                                 fabPending.setEnabled(false);
                                 fabInProgress.setEnabled(false);
                                 fabPrepared.setEnabled(true);
                                 fabDelPick.setEnabled(true);
                                 fabCompleted.setEnabled(true);
                                 setInProgress();
-                            } else if (listItem.getOrder_status().equalsIgnoreCase("Prepared")) {
+                            } else if (orderData.getOrderStatus().equalsIgnoreCase("Prepared")) {
                                 fabPending.setEnabled(false);
                                 fabInProgress.setEnabled(false);
                                 fabPrepared.setEnabled(true);
                                 fabDelPick.setEnabled(true);
                                 fabCompleted.setEnabled(true);
                                 setPrepared();
-                            } else if (listItem.getOrder_status().equalsIgnoreCase("Delivered") || listItem.getOrder_status().equalsIgnoreCase("Picked-up")) {
+                            } else if (orderData.getOrderStatus().equalsIgnoreCase("Delivered") || orderData.getOrderStatus().equalsIgnoreCase("Picked-up")) {
                                 fabPending.setEnabled(false);
                                 fabInProgress.setEnabled(false);
                                 fabPrepared.setEnabled(false);
                                 fabDelPick.setEnabled(false);
                                 setDeliveredPicked();
-                            } else if (listItem.getOrder_status().equalsIgnoreCase("Completed")) {
+                            } else if (orderData.getOrderStatus().equalsIgnoreCase("Completed")) {
                                 fabPending.setEnabled(false);
                                 fabInProgress.setEnabled(false);
                                 fabPrepared.setEnabled(false);
@@ -612,35 +635,35 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
                                 fabCompleted.setEnabled(false);
                                 setCompleted();
                             }
-                            if (listItem.getLoyalty_points().equalsIgnoreCase("") || listItem.getLoyalty_points().equalsIgnoreCase("0"))
+                            if (orderData.getLoyaltyPoints().equalsIgnoreCase("") || orderData.getLoyaltyPoints().equalsIgnoreCase("0"))
                                 llloyalty.setVisibility(View.GONE);
                             else {
                                 llloyalty.setVisibility(View.VISIBLE);
                                 view.setVisibility(View.VISIBLE);
-                                tvloyaltypt.setText(listItem.getLoyalty_points());
+                                tvloyaltypt.setText(orderData.getLoyaltyPoints());
                             }
-                            if (listItem.getE_gift_code().equalsIgnoreCase("") || listItem.getE_gift_code().equalsIgnoreCase("0")) {
+                            if (orderData.getEGiftCode().equalsIgnoreCase("") || orderData.getEGiftCode().equalsIgnoreCase("0")) {
                                 llecode.setVisibility(View.GONE);
                                 lleamt.setVisibility(View.GONE);
                             } else {
                                 view.setVisibility(View.VISIBLE);
                                 llecode.setVisibility(View.VISIBLE);
                                 lleamt.setVisibility(View.VISIBLE);
-                                tvegiftamt.setText(listItem.getE_gift_amount());
-                                tvegiftcode.setText(listItem.getE_gift_code());
+                                tvegiftamt.setText(orderData.getEGiftAmount());
+                                tvegiftcode.setText(orderData.getEGiftCode());
                             }
-                            if (listItem.getCoupon_code().equalsIgnoreCase("") || listItem.getCoupon_code().equalsIgnoreCase("0")) {
+                            if (orderData.getCouponCode().equalsIgnoreCase("") || orderData.getCouponCode().equalsIgnoreCase("0")) {
                                 llcamt.setVisibility(View.GONE);
                                 llccode.setVisibility(View.GONE);
                             } else {
                                 view.setVisibility(View.VISIBLE);
                                 llcamt.setVisibility(View.VISIBLE);
                                 llccode.setVisibility(View.VISIBLE);
-                                tvcouponcode.setText(listItem.getCoupon_code());
-                                tvcouponamt.setText(listItem.getCoupon_amount());
+                                tvcouponcode.setText(orderData.getCouponCode());
+                                tvcouponamt.setText(orderData.getCouponAmount());
                             }
 
-                            switch (listItem.getOrder_type()) {
+                            switch (orderData.getOrderType()) {
                                 case "In-House":
                                     order_type = "inhouse";
                                     tvFabText.setText("Delivered");
@@ -650,13 +673,34 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
                                     order_type = "delivery";
                                     tvFabText.setText("Delivered");
                                     cardDelivery.setVisibility(View.VISIBLE);
-                                    if (!listItem.getOrder_status().equalsIgnoreCase("In-Progress") && !listItem.getOrder_status().equalsIgnoreCase("Pending") && !listItem.getOrder_status().equalsIgnoreCase("Picked-up")) {
+                                    vendorAssignStatus = orderData.getVenderAssignStatus();
+                                    driverAssignStatus = orderData.getDriverAssignStatus();
+                                    if (!orderData.getOrderStatus().equalsIgnoreCase("In-Progress") && !orderData.getOrderStatus().equalsIgnoreCase("Pending") && !orderData.getOrderStatus().equalsIgnoreCase("Picked-up")) {
                                         cardVendor.setVisibility(View.VISIBLE);
-                                        tvVendorBusiness.setText(listItem.getVendor_business_name());
-                                        tvVendorName.setText(listItem.getVendor_name());
-                                        tvVendorContact.setText(listItem.getVendor_contact_no());
+                                        tvVendorBusiness.setText(orderData.getVendorBusinessName());
+                                        tvVendorName.setText(orderData.getVendorName());
+                                        tvVendorContact.setText(orderData.getVendorContactNo());
                                     } else
                                         cardVendor.setVisibility(View.GONE);
+
+                                    if (vendorAssignStatus.equalsIgnoreCase("0") || vendorAssignStatus.equalsIgnoreCase(""))
+                                        cardVendor.setVisibility(View.GONE);
+                                    else {
+                                        cardVendor.setVisibility(View.VISIBLE);
+                                        tvVendorBusiness.setText(orderData.getVendorBusinessName());
+                                        tvVendorContact.setText(orderData.getVendorContactNo());
+                                        tvVendorName.setText(orderData.getVendorBusinessName());
+                                    }
+                                    if (driverAssignStatus.equalsIgnoreCase("0") || driverAssignStatus.equalsIgnoreCase("")) {
+                                        cardDriver.setVisibility(View.GONE);
+                                        btnTrackOrder.setVisibility(View.GONE);
+                                    } else {
+                                        btnTrackOrder.setVisibility(View.VISIBLE);
+                                        cardDriver.setVisibility(View.VISIBLE);
+                                        tvDriverName.setText(orderData.getDriverName());
+                                        tvDriverCall.setText(orderData.getDriverContactNo());
+                                    }
+
 
                                     break;
                                 case "Take-Out":
@@ -672,22 +716,23 @@ public class OrderDetailActivty extends AppCompatActivity implements View.OnClic
                             }
 
                             //basic info
-                            tvOrderId.setText(listItem.getOrder_id());
-                            tvDateTime.setText(listItem.getDate());
-                            tvCustomerName.setText(listItem.getUser_name());
-                            tvOrderType.setText(listItem.getOrder_type());
-                            tvOrderStatus.setText(listItem.getOrder_status());
+                            tvOrderId.setText(orderData.getOrderId());
+                            tvDateTime.setText(orderData.getDate());
+                            tvCustomerName.setText(orderData.getUserName());
+                            tvOrderType.setText(orderData.getOrderType());
+                            tvOrderStatus.setText(orderData.getOrderStatus());
                             //delivery info
-                            tvDeliveryName.setText(listItem.getDelivery_name());
-                            tvDeliveryAddress.setText(listItem.getDelivery_adderess());
-                            tvContactNo.setText(listItem.getDelivery_contact_no());
-                            assignDeliveryStatus = listItem.getOrder_assign_status();
-                            //takeout
-                            tvPickupName.setText(listItem.getUser_name());
-                            tvPickUpTime.setText(listItem.getDue_time());
-                            tvWalletAmt.setText(listItem.getWallet_amt());
+                            tvDeliveryName.setText(orderData.getDeliveryName());
+                            tvDeliveryAddress.setText(orderData.getDeliveryAdderess());
+                            tvContactNo.setText(orderData.getDeliveryContactNo());
+                            orderAssignStatus = orderData.getOrderAssignStatus();
 
-                            tvTotalAmount.setText("$" + listItem.getTotal_price());
+                            //takeout
+                            tvPickupName.setText(orderData.getUserName());
+                            tvPickUpTime.setText(orderData.getDueTime());
+                            tvWalletAmt.setText(orderData.getWalletAmt());
+
+                            tvTotalAmount.setText("$" + orderData.getTotalPrice());
 
                             try {
                                 JsonArray jsonArrayItem = jsonObject.getAsJsonArray("menu_detail");

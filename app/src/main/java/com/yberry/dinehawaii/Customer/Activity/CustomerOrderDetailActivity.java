@@ -2,6 +2,7 @@ package com.yberry.dinehawaii.Customer.Activity;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -33,6 +34,8 @@ import com.yberry.dinehawaii.Util.AppPreferences;
 import com.yberry.dinehawaii.Util.AppPreferencesBuss;
 import com.yberry.dinehawaii.Util.ProgressBarAnimation;
 import com.yberry.dinehawaii.Util.ProgressHUD;
+import com.yberry.dinehawaii.common.activity.OrderMapActivity;
+import com.yberry.dinehawaii.customview.CustomButton;
 import com.yberry.dinehawaii.customview.CustomTextView;
 
 import org.json.JSONException;
@@ -48,7 +51,6 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.yberry.dinehawaii.Util.Util.context;
 
 public class CustomerOrderDetailActivity extends AppCompatActivity {
     private static final String TAG = "OrderDetailCust";
@@ -61,8 +63,8 @@ public class CustomerOrderDetailActivity extends AppCompatActivity {
     private RecyclerView mrecycler;
     private LinearLayoutManager mLayoutManager;
     private CustomTextView tvOrderId, tvDateTime, tvOrderStatus, tvOrderType, tvCustomerName, tvContactNo, tvDeliveryName, tvDeliveryAddress, tvPickupName, tvPickUpTime, tvTotalAmount,
-            tvloyaltypt, tvegiftamt, tvcouponamt, tvegiftcode, tvcouponcode;
-    private CardView cardTakeout, cardDelivery;
+            tvloyaltypt, tvegiftamt, tvcouponamt, tvegiftcode, tvcouponcode, tvVendorBusiness, tvVendorName, tvDriverName, tvDriverCall, tvVendorContact;
+    private CardView cardTakeout, cardDelivery, cardVendor, cardDriver;
     private FloatingActionButton fabPending, fabInProgress, fabCompleted, fabPrepared;
     private ProgressBar orderProgress;
     private FloatingActionButton fabDelPick;
@@ -71,15 +73,19 @@ public class CustomerOrderDetailActivity extends AppCompatActivity {
     private String new_status = "";
     private CustomTextView tvFabText;
     private CustomTextView tvRemark;
+    private OrderDetails orderData = null;
+    private String vendorAssignStatus = "", driverAssignStatus = "";
+    private CustomButton btnTrackOrder;
+    private CustomerOrderDetailActivity context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_detail_activty);
+        context = this;
         setToolbar();
         init();
         setAdapter();
-
         order_id = getIntent().getStringExtra("order_id");
         Log.e(TAG, "onCreate: order_id >> " + order_id);
         new getOrderDetails().execute();
@@ -132,7 +138,35 @@ public class CustomerOrderDetailActivity extends AppCompatActivity {
         llloyalty = (LinearLayout) findViewById(R.id.llloyaltypt);
 
         cardTakeout = (CardView) findViewById(R.id.cardTakeout);
+        cardVendor = (CardView) findViewById(R.id.cardVendor);
         cardDelivery = (CardView) findViewById(R.id.cardDelivery);
+        cardDriver = (CardView) findViewById(R.id.cardDriver);
+
+
+        tvVendorBusiness = (CustomTextView) findViewById(R.id.tvVendorBusiness);
+        tvVendorName = (CustomTextView) findViewById(R.id.tvVendorName);
+        tvDriverName = (CustomTextView) findViewById(R.id.tvDriverName);
+        tvDriverCall = (CustomTextView) findViewById(R.id.tvDriverCall);
+        tvVendorContact = (CustomTextView) findViewById(R.id.tvVendorContact);
+        btnTrackOrder = findViewById(R.id.btnTrackOrder);
+        cardVendor.setVisibility(View.GONE);
+        cardDriver.setVisibility(View.GONE);
+        btnTrackOrder.setVisibility(View.GONE);
+
+        btnTrackOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, OrderMapActivity.class);
+                intent.putExtra("cust_lat", orderData.getCustLat());
+                intent.putExtra("cust_long", orderData.getCustLong());
+                intent.putExtra("cust_address", orderData.getCustAddress());
+                intent.putExtra("busi_lat", orderData.getBusLat());
+                intent.putExtra("busi_long", orderData.getBusLong());
+                intent.putExtra("busi_address", orderData.getBusAddress());
+                intent.putExtra("order_id", orderData.getId());
+                startActivity(intent);
+            }
+        });
 
       /*  ((CustomTextView) findViewById(R.id.basicinfo)).setOnClickListener(CustomerOrderDetailActivity.this);
         ((CustomTextView) findViewById(R.id.items)).setOnClickListener(CustomerOrderDetailActivity.this);
@@ -255,53 +289,53 @@ public class CustomerOrderDetailActivity extends AppCompatActivity {
                         for (int i = 0; i < jsonArray.size(); i++) {
                             JsonObject result = jsonArray.get(i).getAsJsonObject();
                             Log.e("listItemresult", String.valueOf(result));
-                            OrderDetails listItem = new Gson().fromJson(result, OrderDetails.class);
-                            Log.e("listItemresult1111111", listItem.toString());
+                            orderData = new Gson().fromJson(result, OrderDetails.class);
+                            Log.e("listItemresult1111111", orderData.toString());
                             fabPending.setEnabled(false);
                             fabInProgress.setEnabled(false);
                             fabDelPick.setEnabled(false);
                             fabCompleted.setEnabled(false);
-                            if (listItem.getOrder_status().equalsIgnoreCase("Pending")) {
-                            } else if (listItem.getOrder_status().equalsIgnoreCase("In-Progress")) {
+                            if (orderData.getOrderStatus().equalsIgnoreCase("Pending")) {
+                            } else if (orderData.getOrderStatus().equalsIgnoreCase("In-Progress")) {
                                 setInProgress();
-                            } else if (listItem.getOrder_status().equalsIgnoreCase("Prepared")) {
+                            } else if (orderData.getOrderStatus().equalsIgnoreCase("Prepared")) {
                                 setPrepared();
-                            } else if (listItem.getOrder_status().equalsIgnoreCase("Delivered")) {
+                            } else if (orderData.getOrderStatus().equalsIgnoreCase("Delivered")) {
                                 setDeliveredPicked();
-                            } else if (listItem.getOrder_status().equalsIgnoreCase("Completed")) {
+                            } else if (orderData.getOrderStatus().equalsIgnoreCase("Completed")) {
                                 setCompleted();
                             }
 
 
-                            if (listItem.getLoyalty_points().equalsIgnoreCase(""))
+                            if (orderData.getLoyaltyPoints().equalsIgnoreCase(""))
                                 llloyalty.setVisibility(View.GONE);
                             else {
                                 llloyalty.setVisibility(View.VISIBLE);
                                 view.setVisibility(View.VISIBLE);
-                                tvloyaltypt.setText(listItem.getLoyalty_points());
+                                tvloyaltypt.setText(orderData.getLoyaltyPoints());
                             }
-                            if (listItem.getE_gift_code().equalsIgnoreCase("")) {
+                            if (orderData.getEGiftCode().equalsIgnoreCase("")) {
                                 llecode.setVisibility(View.GONE);
                                 lleamt.setVisibility(View.GONE);
                             } else {
                                 view.setVisibility(View.VISIBLE);
                                 llecode.setVisibility(View.VISIBLE);
                                 lleamt.setVisibility(View.VISIBLE);
-                                tvegiftamt.setText(listItem.getE_gift_amount());
-                                tvegiftcode.setText(listItem.getE_gift_code());
+                                tvegiftamt.setText(orderData.getEGiftAmount());
+                                tvegiftcode.setText(orderData.getEGiftCode());
                             }
-                            if (listItem.getCoupon_code().equalsIgnoreCase("")) {
+                            if (orderData.getCouponCode().equalsIgnoreCase("")) {
                                 llcamt.setVisibility(View.GONE);
                                 llccode.setVisibility(View.GONE);
                             } else {
                                 view.setVisibility(View.VISIBLE);
                                 llcamt.setVisibility(View.VISIBLE);
                                 llccode.setVisibility(View.VISIBLE);
-                                tvcouponcode.setText(listItem.getCoupon_code());
-                                tvcouponamt.setText(listItem.getCoupon_amount());
+                                tvcouponcode.setText(orderData.getCouponCode());
+                                tvcouponamt.setText(orderData.getCouponAmount());
                             }
 
-                            switch (listItem.getOrder_type()) {
+                            switch (orderData.getOrderType()) {
                                 case "In-House":
                                     order_type = "delivery";
                                     tvFabText.setText("Delivered");
@@ -309,6 +343,27 @@ public class CustomerOrderDetailActivity extends AppCompatActivity {
                                     order_type = "delivery";
                                     tvFabText.setText("Delivered");
                                     cardDelivery.setVisibility(View.VISIBLE);
+                                    vendorAssignStatus = orderData.getVenderAssignStatus();
+                                    driverAssignStatus = orderData.getDriverAssignStatus();
+
+                                    if (vendorAssignStatus.equalsIgnoreCase("0") || vendorAssignStatus.equalsIgnoreCase(""))
+                                        cardVendor.setVisibility(View.GONE);
+                                    else {
+                                        cardVendor.setVisibility(View.VISIBLE);
+                                        tvVendorBusiness.setText(orderData.getVendorBusinessName());
+                                        tvVendorContact.setText(orderData.getVendorContactNo());
+                                        tvVendorName.setText(orderData.getVendorBusinessName());
+                                    }
+                                    if (driverAssignStatus.equalsIgnoreCase("0") || driverAssignStatus.equalsIgnoreCase("")) {
+                                        cardDriver.setVisibility(View.GONE);
+                                        btnTrackOrder.setVisibility(View.GONE);
+                                    } else {
+                                        btnTrackOrder.setVisibility(View.VISIBLE);
+                                        cardDriver.setVisibility(View.VISIBLE);
+                                        tvDriverName.setText(orderData.getDriverName());
+                                        tvDriverCall.setText(orderData.getDriverContactNo());
+                                    }
+
                                     break;
                                 case "Take-Out":
                                     tvFabText.setText("Picked-up");
@@ -323,21 +378,21 @@ public class CustomerOrderDetailActivity extends AppCompatActivity {
                             }
 
                             //basic info
-                            tvOrderId.setText(listItem.getOrder_id());
-                            tvDateTime.setText(listItem.getDate());
-                            tvCustomerName.setText(listItem.getUser_name());
-                            tvOrderType.setText(listItem.getOrder_type());
-                            tvOrderStatus.setText(listItem.getOrder_status());
+                            tvOrderId.setText(orderData.getOrderId());
+                            tvDateTime.setText(orderData.getDate());
+                            tvCustomerName.setText(orderData.getUserName());
+                            tvOrderType.setText(orderData.getOrderType());
+                            tvOrderStatus.setText(orderData.getOrderStatus());
                             //delivery info
-                            tvDeliveryName.setText(listItem.getDelivery_name());
-                            tvDeliveryAddress.setText(listItem.getDelivery_adderess());
-                            tvContactNo.setText(listItem.getDelivery_contact_no());
+                            tvDeliveryName.setText(orderData.getDeliveryName());
+                            tvDeliveryAddress.setText(orderData.getDeliveryAdderess());
+                            tvContactNo.setText(orderData.getDeliveryContactNo());
 
                             //takeout
-                            tvPickupName.setText(listItem.getUser_name());
-                            tvPickUpTime.setText(listItem.getDue_time());
+                            tvPickupName.setText(orderData.getUserName());
+                            tvPickUpTime.setText(orderData.getDueTime());
 
-                            tvTotalAmount.setText("$" + listItem.getTotal_price());
+                            tvTotalAmount.setText("$" + orderData.getTotalPrice());
 
                             JsonArray jsonArrayItem = jsonObject.getAsJsonArray("menu_detail");
                             for (int j = 0; j < jsonArrayItem.size(); j++) {
@@ -348,8 +403,8 @@ public class CustomerOrderDetailActivity extends AppCompatActivity {
                                 itemList.add(model);
                             }
 
-                            if (!listItem.getRemark().equalsIgnoreCase(""))
-                                tvRemark.setText("Special Instructions : " + listItem.getRemark());
+                            if (!orderData.getRemark().equalsIgnoreCase(""))
+                                tvRemark.setText("Special Instructions : " + orderData.getRemark());
 
                             itemAdapter.notifyDataSetChanged();
                         }

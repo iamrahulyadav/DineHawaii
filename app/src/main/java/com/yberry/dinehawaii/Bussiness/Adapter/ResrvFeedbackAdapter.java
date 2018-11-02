@@ -66,9 +66,9 @@ public class ResrvFeedbackAdapter extends RecyclerView.Adapter<ResrvFeedbackAdap
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final OrderDetails orderDetails = feedbackData.get(position);
-        holder.orderid.setText("#" + orderDetails.getOrder_id() + " (" + orderDetails.getDate() + ")");
-        holder.name.setText(orderDetails.getUser_name());
-        holder.message.setText(orderDetails.getReviewmsg());
+        holder.orderid.setText("#" + orderDetails.getOrderId() + " (" + orderDetails.getDate() + ")");
+        holder.name.setText(orderDetails.getUserName());
+        holder.message.setText(orderDetails.getRemark());
         holder.tvSendReply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -131,7 +131,7 @@ public class ResrvFeedbackAdapter extends RecyclerView.Adapter<ResrvFeedbackAdap
                         jsonObject.addProperty("method", AppConstants.BUSSINES_USER_BUSINESSAPI.SEND_REPLY_TO_RESERVATION);
                         jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(context));// AppPreferencesBuss.getUserId(context)
                         jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(context));
-                        jsonObject.addProperty("reservation_id", orderDetails.getOrder_id());
+                        jsonObject.addProperty("reservation_id", orderDetails.getOrderId());
                         jsonObject.addProperty("status", status);
                         jsonObject.addProperty("text_reply", etText.getText().toString());
                         Log.e(TAG, "Send Reply: Request >> " + jsonObject.toString());

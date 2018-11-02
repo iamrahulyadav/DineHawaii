@@ -49,11 +49,11 @@ public class InHouseOrdersAdapter extends RecyclerView.Adapter<InHouseOrdersAdap
         String newDate = date.replaceAll("M", "");
         holder.dateTextView.setText(newDate);
         holder.tvTableNo.setText(model.getDescription());
-        holder.tvOrderId.setText(model.getOrder_id());
-        holder.nameTextView.setText(model.getUser_name());
-        holder.totalAmountTextView.setText(model.getTotal_price());
-        holder.statusTextView.setText(model.getOrder_status());
-        holder.tvSource.setText(model.getOrder_source());
+        holder.tvOrderId.setText(model.getOrderId());
+        holder.nameTextView.setText(model.getUserName());
+        holder.totalAmountTextView.setText(model.getTotalPrice());
+        holder.statusTextView.setText(model.getOrderStatus());
+        holder.tvSource.setText(model.getOrderAddedBy());
 
         holder.recycler_item.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -48,12 +48,12 @@ public class CateringOrderAdapter extends RecyclerView.Adapter<CateringOrderAdap
         String date = model.getDate();
         String newDate = date.replaceAll("M", "");
         holder.dateTextView.setText(newDate);
-        holder.tvDateTimePickup.setText(model.getDue_time());
-        holder.tvOrderId.setText(model.getOrder_id());
-        holder.nameTextView.setText(model.getUser_name());
-        holder.totalAmountTextView.setText(model.getTotal_price());
-        holder.statusTextView.setText(model.getOrder_status());
-        holder.tvSource.setText(model.getOrder_source());
+        holder.tvDateTimePickup.setText(model.getDueTime());
+        holder.tvOrderId.setText(model.getOrderId());
+        holder.nameTextView.setText(model.getUserName());
+        holder.totalAmountTextView.setText(model.getTotalPrice());
+        holder.statusTextView.setText(model.getOrderStatus());
+        holder.tvSource.setText(model.getOrderAddedBy());
 
 
         holder.recycler_item.setOnClickListener(new View.OnClickListener() {

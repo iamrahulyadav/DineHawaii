@@ -3,6 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_cancel"
-        android:title="Cancel Order"
-        app:showAsAction="always"/>
+        android:orderInCategory="200"
+        android:title="Cancel"
+        app:showAsAction="always" />
+
+
 </menu>

@@ -218,6 +218,7 @@ public class AppConstants {
         String GET_ALTERNATE_BUSINESS = "get_alternate_business";
         String GETTABLEMATRIX = "getTableMatrix1";
         String CANCELORDER = "cancelOrder";
+        String TRACK_ORDER = "track_order";
     }
 
     public interface BUSINESS_VENDOR_API {

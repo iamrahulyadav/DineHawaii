@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.JsonObject;
+import com.yberry.dinehawaii.Customer.Adapter.PlaceAnOrderAdapter;
 import com.yberry.dinehawaii.Customer.Fragment.ChienesFragment;
 import com.yberry.dinehawaii.Model.ListItem;
 import com.yberry.dinehawaii.Model.MenuDetail;
@@ -25,7 +26,6 @@ import com.yberry.dinehawaii.RetrofitClasses.ApiClient;
 import com.yberry.dinehawaii.RetrofitClasses.MyApiEndpointInterface;
 import com.yberry.dinehawaii.Util.AppConstants;
 import com.yberry.dinehawaii.Util.ProgressHUD;
-import com.yberry.dinehawaii.Customer.Adapter.PlaceAnOrderAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -189,9 +189,6 @@ public class PlaceAnOrder extends AppCompatActivity {
         TabLayout searchTabLayout = (TabLayout) findViewById(R.id.tablayout_search);
         viewPager = (ViewPager) findViewById(R.id.viewpager_search);
         searchTabLayout.setupWithViewPager(viewPager);
-
 //         setupViewPager(viewPager);
     }
-
-
 }

@@ -115,15 +115,15 @@ public class PendingCateringOrderFragment extends Fragment {
                             OrderDetails orderModel = new OrderDetails();
                             JSONObject object = jsonArray.getJSONObject(i);
                             orderModel.setDate(object.getString("date"));
-                            orderModel.setDue_time(object.getString("due_time"));
+                            orderModel.setDueTime(object.getString("due_time"));
                             orderModel.setId(object.getString("id"));
-                            orderModel.setUser_name(object.getString("user_name"));
-                            orderModel.setTotal_price("$" + object.getString("total_price"));
-                            orderModel.setOrder_status(object.getString("order_status"));
-                            orderModel.setDelivery_adderess(object.getString("delivery_adderess"));
-                            orderModel.setOrder_id(object.getString("order_id"));
-                            orderModel.setDelivery_contact_no(object.getString("delivery_contact_no"));
-                            orderModel.setOrder_source(object.getString("order_added_by"));
+                            orderModel.setUserName(object.getString("user_name"));
+                            orderModel.setTotalPrice("$" + object.getString("total_price"));
+                            orderModel.setOrderStatus(object.getString("order_status"));
+                            orderModel.setDeliveryAdderess(object.getString("delivery_adderess"));
+                            orderModel.setOrderId(object.getString("order_id"));
+                            orderModel.setDeliveryContactNo(object.getString("delivery_contact_no"));
+                            orderModel.setOrderAddedBy(object.getString("order_added_by"));
 
                             list.add(orderModel);
                             //Log.d("amt", object.getString("amount"));

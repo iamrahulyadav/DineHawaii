@@ -1,171 +1,136 @@
 package com.yberry.dinehawaii.Bussiness.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
-/**
- * Created by hvantage3 on 6/29/2017.
- */
 
 public class OrderDetails implements Serializable {
 
-
-    String id;
-    String order_id;
-    String date;
-    String business_name;
-    String total_price;
-    String delivery_adderess;
-    String delivery_name;
-    String delivery_contact_no;
-    String order_status;
-    String user_name;
-    String food_name;
-    String quantity;
-    String order_type;
-    String customization;
-    String description;
-    String due_time;
-    String order_time;
-    String reviewmsg;
-    String loyalty_points;
-    String e_gift_code;
-    String e_gift_amount;
-    String coupon_code;
-    String coupon_amount;
-    String order_assign_status;
-    String order_source;
-    String remark;
-    String wallet_amt;
-
-    public String getWallet_amt() {
-        return wallet_amt;
-    }
-
-    public void setWallet_amt(String wallet_amt) {
-        this.wallet_amt = wallet_amt;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    public String getVendor_name() {
-        return vendor_name;
-    }
-
-    public void setVendor_name(String vendor_name) {
-        this.vendor_name = vendor_name;
-    }
-
-    public String getVendor_business_name() {
-        return vendor_business_name;
-    }
-
-    public void setVendor_business_name(String vendor_business_name) {
-        this.vendor_business_name = vendor_business_name;
-    }
-
-    public String getVendor_contact_no() {
-        return vendor_contact_no;
-    }
-
-    public void setVendor_contact_no(String vendor_contact_no) {
-        this.vendor_contact_no = vendor_contact_no;
-    }
-
-    String vendor_name = "";
-    String vendor_business_name = "";
-    String vendor_contact_no = "";
-
-    public OrderDetails() {
-    }
-
-    public OrderDetails(String id, String order_id, String date, String business_name, String total_price, String delivery_adderess, String delivery_name, String delivery_contact_no, String order_status, String user_name,
-                        String food_name, String quantity, String order_type, String customization, String description, String loyalty_points,
-                        String e_gift_code, String e_gift_amount, String coupon_code, String coupon_amount, String order_assign_status) {
-        this.id = id;
-        this.order_id = order_id;
-        this.date = date;
-        this.business_name = business_name;
-        this.total_price = total_price;
-        this.delivery_adderess = delivery_adderess;
-        this.delivery_name = delivery_name;
-        this.delivery_contact_no = delivery_contact_no;
-        this.order_status = order_status;
-        this.user_name = user_name;
-        this.food_name = food_name;
-        this.quantity = quantity;
-        this.order_type = order_type;
-        this.customization = customization;
-        this.description = description;
-        this.loyalty_points = loyalty_points;
-        this.e_gift_code = e_gift_code;
-        this.e_gift_amount = e_gift_amount;
-        this.coupon_code = coupon_code;
-        this.coupon_amount = coupon_amount;
-        this.order_assign_status = order_assign_status;
-
-    }
-
-    public String getOrder_time() {
-        return order_time;
-    }
-
-    public void setOrder_time(String order_time) {
-        this.order_time = order_time;
-    }
-
-    public String getDue_time() {
-        return due_time;
-    }
-
-    public void setDue_time(String due_time) {
-        this.due_time = due_time;
-    }
-
-    public String getLoyalty_points() {
-        return loyalty_points;
-    }
-
-    public void setLoyalty_points(String loyalty_points) {
-        this.loyalty_points = loyalty_points;
-    }
-
-    public String getE_gift_code() {
-        return e_gift_code;
-    }
-
-    public void setE_gift_code(String e_gift_code) {
-        this.e_gift_code = e_gift_code;
-    }
-
-    public String getE_gift_amount() {
-        return e_gift_amount;
-    }
-
-    public void setE_gift_amount(String e_gift_amount) {
-        this.e_gift_amount = e_gift_amount;
-    }
-
-    public String getCoupon_code() {
-        return coupon_code;
-    }
-
-    public void setCoupon_code(String coupon_code) {
-        this.coupon_code = coupon_code;
-    }
-
-    public String getCoupon_amount() {
-        return coupon_amount;
-    }
-
-    public void setCoupon_amount(String coupon_amount) {
-        this.coupon_amount = coupon_amount;
-    }
+    @SerializedName("id")
+    @Expose
+    private String id;
+    @SerializedName("order_id")
+    @Expose
+    private String orderId;
+    @SerializedName("date")
+    @Expose
+    private String date;
+    @SerializedName("order_added_by")
+    @Expose
+    private String orderAddedBy;
+    @SerializedName("business_name")
+    @Expose
+    private String businessName;
+    @SerializedName("total_price")
+    @Expose
+    private String totalPrice;
+    @SerializedName("delivery_adderess")
+    @Expose
+    private String deliveryAdderess;
+    @SerializedName("delivery_name")
+    @Expose
+    private String deliveryName;
+    @SerializedName("delivery_contact_no")
+    @Expose
+    private String deliveryContactNo;
+    @SerializedName("order_status")
+    @Expose
+    private String orderStatus;
+    @SerializedName("wallet_amt")
+    @Expose
+    private String walletAmt;
+    @SerializedName("user_name")
+    @Expose
+    private String userName;
+    @SerializedName("food_name")
+    @Expose
+    private String foodName;
+    @SerializedName("quantity")
+    @Expose
+    private String quantity;
+    @SerializedName("due_time")
+    @Expose
+    private String dueTime;
+    @SerializedName("order_type")
+    @Expose
+    private String orderType;
+    @SerializedName("customization")
+    @Expose
+    private String customization;
+    @SerializedName("description")
+    @Expose
+    private String description;
+    @SerializedName("loyalty_points")
+    @Expose
+    private String loyaltyPoints;
+    @SerializedName("remark")
+    @Expose
+    private String remark;
+    @SerializedName("e_gift_code")
+    @Expose
+    private String EGiftCode;
+    @SerializedName("e_gift_amount")
+    @Expose
+    private String EGiftAmount;
+    @SerializedName("coupon_code")
+    @Expose
+    private String couponCode;
+    @SerializedName("coupon_amount")
+    @Expose
+    private String couponAmount;
+    @SerializedName("vendor_name")
+    @Expose
+    private String vendorName;
+    @SerializedName("vendor_business_name")
+    @Expose
+    private String vendorBusinessName;
+    @SerializedName("vendor_contact_no")
+    @Expose
+    private String vendorContactNo;
+    @SerializedName("order_assign_status")
+    @Expose
+    private String orderAssignStatus;
+    @SerializedName("vender_assign_status")
+    @Expose
+    private String venderAssignStatus;
+    @SerializedName("driver_assign_status")
+    @Expose
+    private String driverAssignStatus;
+    @SerializedName("bus_lat")
+    @Expose
+    private String busLat;
+    @SerializedName("bus_long")
+    @Expose
+    private String busLong;
+    @SerializedName("cust_lat")
+    @Expose
+    private String custLat;
+    @SerializedName("cust_long")
+    @Expose
+    private String custLong;
+    @SerializedName("bus_address")
+    @Expose
+    private String busAddress;
+    @SerializedName("cust_address")
+    @Expose
+    private String custAddress;
+    @SerializedName("driver_lat")
+    @Expose
+    private String driverLat;
+    @SerializedName("driver_long")
+    @Expose
+    private String driverLong;
+    @SerializedName("driver_name")
+    @Expose
+    private String driverName;
+    @SerializedName("driver_contact_no")
+    @Expose
+    private String driverContactNo;
+    @SerializedName("driver_id")
+    @Expose
+    private String driverId;
 
     public String getId() {
         return id;
@@ -175,12 +140,12 @@ public class OrderDetails implements Serializable {
         this.id = id;
     }
 
-    public String getOrder_id() {
-        return order_id;
+    public String getOrderId() {
+        return orderId;
     }
 
-    public void setOrder_id(String order_id) {
-        this.order_id = order_id;
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
     }
 
     public String getDate() {
@@ -191,76 +156,84 @@ public class OrderDetails implements Serializable {
         this.date = date;
     }
 
-    public String getBusiness_name() {
-        return business_name;
+    public String getOrderAddedBy() {
+        return orderAddedBy;
     }
 
-    public void setBusiness_name(String business_name) {
-        this.business_name = business_name;
+    public void setOrderAddedBy(String orderAddedBy) {
+        this.orderAddedBy = orderAddedBy;
     }
 
-    public String getTotal_price() {
-        return total_price;
+    public String getBusinessName() {
+        return businessName;
     }
 
-    public void setTotal_price(String total_price) {
-        this.total_price = total_price;
+    public void setBusinessName(String businessName) {
+        this.businessName = businessName;
     }
 
-    public String getDelivery_adderess() {
-        return delivery_adderess;
+    public String getTotalPrice() {
+        return totalPrice;
     }
 
-    public void setDelivery_adderess(String delivery_adderess) {
-        this.delivery_adderess = delivery_adderess;
+    public void setTotalPrice(String totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
-    public String getDelivery_name() {
-        return delivery_name;
+    public String getDeliveryAdderess() {
+        return deliveryAdderess;
     }
 
-    public void setDelivery_name(String delivery_name) {
-        this.delivery_name = delivery_name;
+    public void setDeliveryAdderess(String deliveryAdderess) {
+        this.deliveryAdderess = deliveryAdderess;
     }
 
-    public String getDelivery_contact_no() {
-        return delivery_contact_no;
+    public String getDeliveryName() {
+        return deliveryName;
     }
 
-    public void setDelivery_contact_no(String delivery_contact_no) {
-        this.delivery_contact_no = delivery_contact_no;
+    public void setDeliveryName(String deliveryName) {
+        this.deliveryName = deliveryName;
     }
 
-    public String getOrder_status() {
-        return order_status;
+    public String getDeliveryContactNo() {
+        return deliveryContactNo;
     }
 
-    public void setOrder_status(String order_status) {
-        this.order_status = order_status;
+    public void setDeliveryContactNo(String deliveryContactNo) {
+        this.deliveryContactNo = deliveryContactNo;
     }
 
-    public String getUser_name() {
-        return user_name;
+    public String getOrderStatus() {
+        return orderStatus;
     }
 
-    public void setUser_name(String user_name) {
-        this.user_name = user_name;
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus;
     }
 
-    public String getFood_name() {
-        return food_name;
+    public String getWalletAmt() {
+        return walletAmt;
     }
 
-    public void setFood_name(String food_name) {
-        this.food_name = food_name;
+    public void setWalletAmt(String walletAmt) {
+        this.walletAmt = walletAmt;
     }
 
-    public String getOrder_assign_status() {
-        return order_assign_status;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setOrder_assign_status(String order_assign_status) {
-        this.order_assign_status = order_assign_status;
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getFoodName() {
+        return foodName;
+    }
+
+    public void setFoodName(String foodName) {
+        this.foodName = foodName;
     }
 
     public String getQuantity() {
@@ -271,12 +244,20 @@ public class OrderDetails implements Serializable {
         this.quantity = quantity;
     }
 
-    public String getOrder_type() {
-        return order_type;
+    public String getDueTime() {
+        return dueTime;
     }
 
-    public void setOrder_type(String order_type) {
-        this.order_type = order_type;
+    public void setDueTime(String dueTime) {
+        this.dueTime = dueTime;
+    }
+
+    public String getOrderType() {
+        return orderType;
+    }
+
+    public void setOrderType(String orderType) {
+        this.orderType = orderType;
     }
 
     public String getCustomization() {
@@ -295,53 +276,234 @@ public class OrderDetails implements Serializable {
         this.description = description;
     }
 
-    public String getReviewmsg() {
-        return reviewmsg;
+    public String getLoyaltyPoints() {
+        return loyaltyPoints;
     }
 
-    public void setReviewmsg(String reviewmsg) {
-        this.reviewmsg = reviewmsg;
+    public void setLoyaltyPoints(String loyaltyPoints) {
+        this.loyaltyPoints = loyaltyPoints;
     }
 
-    public String getOrder_source() {
-        return order_source;
+    public String getRemark() {
+        return remark;
     }
 
-    public void setOrder_source(String order_source) {
-        this.order_source = order_source;
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public String getEGiftCode() {
+        return EGiftCode;
+    }
+
+    public void setEGiftCode(String EGiftCode) {
+        this.EGiftCode = EGiftCode;
+    }
+
+    public String getEGiftAmount() {
+        return EGiftAmount;
+    }
+
+    public void setEGiftAmount(String EGiftAmount) {
+        this.EGiftAmount = EGiftAmount;
+    }
+
+    public String getCouponCode() {
+        return couponCode;
+    }
+
+    public void setCouponCode(String couponCode) {
+        this.couponCode = couponCode;
+    }
+
+    public String getCouponAmount() {
+        return couponAmount;
+    }
+
+    public void setCouponAmount(String couponAmount) {
+        this.couponAmount = couponAmount;
+    }
+
+    public String getVendorName() {
+        return vendorName;
+    }
+
+    public void setVendorName(String vendorName) {
+        this.vendorName = vendorName;
+    }
+
+    public String getVendorBusinessName() {
+        return vendorBusinessName;
+    }
+
+    public void setVendorBusinessName(String vendorBusinessName) {
+        this.vendorBusinessName = vendorBusinessName;
+    }
+
+    public String getVendorContactNo() {
+        return vendorContactNo;
+    }
+
+    public void setVendorContactNo(String vendorContactNo) {
+        this.vendorContactNo = vendorContactNo;
+    }
+
+    public String getVenderAssignStatus() {
+        return venderAssignStatus;
+    }
+
+    public void setVenderAssignStatus(String venderAssignStatus) {
+        this.venderAssignStatus = venderAssignStatus;
+    }
+
+    public String getDriverAssignStatus() {
+        return driverAssignStatus;
+    }
+
+    public void setDriverAssignStatus(String driverAssignStatus) {
+        this.driverAssignStatus = driverAssignStatus;
+    }
+
+    public String getBusLat() {
+        return busLat;
+    }
+
+    public void setBusLat(String busLat) {
+        this.busLat = busLat;
+    }
+
+    public String getBusLong() {
+        return busLong;
+    }
+
+    public void setBusLong(String busLong) {
+        this.busLong = busLong;
+    }
+
+    public String getCustLat() {
+        return custLat;
+    }
+
+    public void setCustLat(String custLat) {
+        this.custLat = custLat;
+    }
+
+    public String getCustLong() {
+        return custLong;
+    }
+
+    public void setCustLong(String custLong) {
+        this.custLong = custLong;
+    }
+
+    public String getBusAddress() {
+        return busAddress;
+    }
+
+    public void setBusAddress(String busAddress) {
+        this.busAddress = busAddress;
+    }
+
+    public String getCustAddress() {
+        return custAddress;
+    }
+
+    public void setCustAddress(String custAddress) {
+        this.custAddress = custAddress;
+    }
+
+    public String getDriverLat() {
+        return driverLat;
+    }
+
+    public void setDriverLat(String driverLat) {
+        this.driverLat = driverLat;
+    }
+
+    public String getDriverLong() {
+        return driverLong;
+    }
+
+    public void setDriverLong(String driverLong) {
+        this.driverLong = driverLong;
+    }
+
+    public String getDriverName() {
+        return driverName;
+    }
+
+    public void setDriverName(String driverName) {
+        this.driverName = driverName;
+    }
+
+    public String getDriverContactNo() {
+        return driverContactNo;
+    }
+
+    public void setDriverContactNo(String driverContactNo) {
+        this.driverContactNo = driverContactNo;
+    }
+
+    public String getDriverId() {
+        return driverId;
+    }
+
+    public void setDriverId(String driverId) {
+        this.driverId = driverId;
+    }
+
+    public String getOrderAssignStatus() {
+        return orderAssignStatus;
+    }
+
+    public void setOrderAssignStatus(String orderAssignStatus) {
+        this.orderAssignStatus = orderAssignStatus;
     }
 
     @Override
     public String toString() {
         return "OrderDetails{" +
                 "id='" + id + '\'' +
-                ", order_id='" + order_id + '\'' +
+                ", orderId='" + orderId + '\'' +
                 ", date='" + date + '\'' +
-                ", business_name='" + business_name + '\'' +
-                ", total_price='" + total_price + '\'' +
-                ", delivery_adderess='" + delivery_adderess + '\'' +
-                ", delivery_name='" + delivery_name + '\'' +
-                ", delivery_contact_no='" + delivery_contact_no + '\'' +
-                ", order_status='" + order_status + '\'' +
-                ", user_name='" + user_name + '\'' +
-                ", food_name='" + food_name + '\'' +
+                ", orderAddedBy='" + orderAddedBy + '\'' +
+                ", businessName='" + businessName + '\'' +
+                ", totalPrice='" + totalPrice + '\'' +
+                ", deliveryAdderess='" + deliveryAdderess + '\'' +
+                ", deliveryName='" + deliveryName + '\'' +
+                ", deliveryContactNo='" + deliveryContactNo + '\'' +
+                ", orderStatus='" + orderStatus + '\'' +
+                ", walletAmt='" + walletAmt + '\'' +
+                ", userName='" + userName + '\'' +
+                ", foodName='" + foodName + '\'' +
                 ", quantity='" + quantity + '\'' +
-                ", order_type='" + order_type + '\'' +
+                ", dueTime='" + dueTime + '\'' +
+                ", orderType='" + orderType + '\'' +
                 ", customization='" + customization + '\'' +
-                ", reviewmsg='" + reviewmsg + '\'' +
                 ", description='" + description + '\'' +
-                ", loyalty_points='" + loyalty_points + '\'' +
-                ", e_gift_code='" + e_gift_code + '\'' +
-                ", e_gift_amount='" + e_gift_amount + '\'' +
-                ", coupon_code='" + coupon_code + '\'' +
-                ", coupon_amount='" + coupon_amount + '\'' +
-                ", vendor_name='" + vendor_name + '\'' +
-                ", vendor_business_name='" + vendor_business_name + '\'' +
-                ", vendor_contact_no='" + vendor_contact_no + '\'' +
-                ", order_assign_status='" + order_assign_status + '\'' +
-                ", order_source='" + order_source + '\'' +
+                ", loyaltyPoints='" + loyaltyPoints + '\'' +
                 ", remark='" + remark + '\'' +
-                ", wallet_amt='" + wallet_amt + '\'' +
+                ", EGiftCode='" + EGiftCode + '\'' +
+                ", EGiftAmount='" + EGiftAmount + '\'' +
+                ", couponCode='" + couponCode + '\'' +
+                ", couponAmount='" + couponAmount + '\'' +
+                ", vendorName='" + vendorName + '\'' +
+                ", vendorBusinessName='" + vendorBusinessName + '\'' +
+                ", vendorContactNo='" + vendorContactNo + '\'' +
+                ", orderAssignStatus='" + orderAssignStatus + '\'' +
+                ", venderAssignStatus='" + venderAssignStatus + '\'' +
+                ", driverAssignStatus='" + driverAssignStatus + '\'' +
+                ", busLat='" + busLat + '\'' +
+                ", busLong='" + busLong + '\'' +
+                ", custLat='" + custLat + '\'' +
+                ", custLong='" + custLong + '\'' +
+                ", busAddress='" + busAddress + '\'' +
+                ", custAddress='" + custAddress + '\'' +
+                ", driverLat='" + driverLat + '\'' +
+                ", driverLong='" + driverLong + '\'' +
+                ", driverName='" + driverName + '\'' +
+                ", driverContactNo='" + driverContactNo + '\'' +
+                ", driverId='" + driverId + '\'' +
                 '}';
     }
 }
