@@ -228,15 +228,17 @@
                 android:background="@null"
                 android:gravity="start"
                 android:hint="Enter usage per person"
-                android:padding="@dimen/_5sdp"
-                android:textAlignment="textStart"
                 android:inputType="number"
-                android:text="1"
                 android:maxLength="3"
+                android:padding="@dimen/_5sdp"
+                android:text="1"
+                android:textAlignment="textStart"
                 android:textColor="@color/edit_text_color"
                 app:edittextfont="Raleway-Regular.ttf">
 
-            </com.yberry.dinehawaii.customview.CustomEditText> <View
+            </com.yberry.dinehawaii.customview.CustomEditText>
+
+            <View
                 android:layout_width="wrap_content"
                 android:layout_height="1dp"
                 android:layout_below="@+id/spinSelectFoodType"
@@ -268,16 +270,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@null"
-                    android:gravity="start"
-                    android:text="$"
-                    android:enabled="false"
                     android:editable="false"
+                    android:enabled="false"
+                    android:gravity="start"
                     android:paddingLeft="@dimen/_5sdp"
                     android:paddingTop="@dimen/_5sdp"
                     android:paddingBottom="@dimen/_5sdp"
+                    android:text="$"
                     android:textAlignment="textStart"
                     android:textColor="@color/edit_text_color"
-                    app:edittextfont="Raleway-Regular.ttf"/>
+                    app:edittextfont="Raleway-Regular.ttf" />
+
                 <com.yberry.dinehawaii.customview.CustomEditText
                     android:id="@+id/etMinOrderAmt"
                     style="@style/TextAppearance.AppCompat.Subhead"
@@ -287,19 +290,19 @@
                     android:gravity="start"
                     android:hint="00"
                     android:inputType="number"
-                    android:text="100"
                     android:maxLength="3"
                     android:paddingLeft="@dimen/_2sdp"
-                    android:paddingRight="@dimen/_5sdp"
                     android:paddingTop="@dimen/_5sdp"
+                    android:paddingRight="@dimen/_5sdp"
                     android:paddingBottom="@dimen/_5sdp"
+                    android:text="100"
                     android:textAlignment="textStart"
                     android:textColor="@color/edit_text_color"
-                    app:edittextfont="Raleway-Regular.ttf"/>
+                    app:edittextfont="Raleway-Regular.ttf" />
             </LinearLayout>
 
 
-                 <View
+            <View
                 android:layout_width="wrap_content"
                 android:layout_height="1dp"
                 android:layout_below="@+id/spinSelectFoodType"
@@ -372,6 +375,57 @@
                 android:textAlignment="textStart"
                 android:textColor="@color/edit_text_color"
                 app:edittextfont="Raleway-Regular.ttf"></com.yberry.dinehawaii.customview.CustomEditText>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_below="@+id/spinSelectFoodType"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:background="@color/colorDivider"></View>
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvSelectService"
+                android:drawableLeft="@drawable/drawable_green_dot"
+                android:drawablePadding="@dimen/_5sdp"
+                android:gravity="center"
+                android:text="Send to"
+                android:textColor="@color/colorGreen"
+                app:edittextfont="Raleway-Bold.ttf" />
+
+            <RadioGroup
+                android:id="@+id/rgSend"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/_5sdp">
+
+                <com.yberry.dinehawaii.customview.CustomRadioButton
+                    android:id="@+id/rbDineCustomer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="All Dine Hawaii Customer"
+                    android:textColor="@color/edit_text_color"
+                    app:edittextfont="Raleway-Regular.ttf" />
+
+
+                <com.yberry.dinehawaii.customview.CustomRadioButton
+                    android:id="@+id/rbMyCustomer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="My Customers Only"
+                    android:textColor="@color/edit_text_color"
+                    app:edittextfont="Raleway-Regular.ttf" />
+
+
+            </RadioGroup>
+
 
             <View
                 android:layout_width="wrap_content"

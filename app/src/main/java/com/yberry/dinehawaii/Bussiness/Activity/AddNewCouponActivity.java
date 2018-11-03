@@ -42,13 +42,14 @@ public class AddNewCouponActivity extends AppCompatActivity {
     private static final String TAG = "AddNewCouponActivity";
     private CustomEditText etCouponTitle, etCouponCode, etCouponDesc, etSDate, etEDate, etAmount, etMinOrderAmt, etUsage, etPercentage;
     private CustomRadioButton rbFlatAmount, rbPercentage;
-    private RadioGroup rbGroup;
+    private RadioGroup rbGroup, rgSend;
     private MenuItem add;
     private MenuItem edit;
     private int coupon_type = 100;
     private TextView tvTitle;
     private CouponModel data;
     private String coupon_id = "";
+    private String send_to = "all_dine_customer";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +101,7 @@ public class AddNewCouponActivity extends AppCompatActivity {
         etAmount = (CustomEditText) findViewById(R.id.etAmount);
         etPercentage = (CustomEditText) findViewById(R.id.etPercentage);
         rbGroup = (RadioGroup) findViewById(R.id.rbGroup);
+        rgSend = (RadioGroup) findViewById(R.id.rgSend);
         rbFlatAmount = (CustomRadioButton) findViewById(R.id.rbFlatAmount);
         rbPercentage = (CustomRadioButton) findViewById(R.id.rbPercentage);
         etUsage = (CustomEditText) findViewById(R.id.etUsage);
@@ -245,6 +247,10 @@ public class AddNewCouponActivity extends AppCompatActivity {
                     coupon_type = 100;
                 else if (rbGroup.getCheckedRadioButtonId() == R.id.rbPercentage)
                     coupon_type = 200;
+                if (rgSend.getCheckedRadioButtonId() == R.id.rbDineCustomer)
+                    send_to = "all_dine_customer";
+                else if (rgSend.getCheckedRadioButtonId() == R.id.rbMyCustomer)
+                    send_to = "my_customer";
                 if (!coupon_id.equalsIgnoreCase("") || !coupon_id.isEmpty()) {
                     editCoupon();
                 } else {
@@ -274,6 +280,7 @@ public class AddNewCouponActivity extends AppCompatActivity {
         jsonObject.addProperty("coupon_e_date", etEDate.getText().toString());
         jsonObject.addProperty("min_order_amt", etMinOrderAmt.getText().toString());
         jsonObject.addProperty("usage_per_user", etUsage.getText().toString());
+        jsonObject.addProperty("send_to", send_to);
         Log.e(TAG, "editCoupon: Request >> " + jsonObject);
 
         callApi(jsonObject);
@@ -296,6 +303,7 @@ public class AddNewCouponActivity extends AppCompatActivity {
         jsonObject.addProperty("coupon_e_date", etEDate.getText().toString());
         jsonObject.addProperty("min_order_amt", etMinOrderAmt.getText().toString());
         jsonObject.addProperty("usage_per_user", etUsage.getText().toString());
+        jsonObject.addProperty("send_to", send_to);
         Log.e(TAG, "addCoupon: Request >> " + jsonObject);
 
         callApi(jsonObject);

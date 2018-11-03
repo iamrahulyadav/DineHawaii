@@ -39,18 +39,63 @@
                         android:numStars="5"
                         android:rating="5" />
 
-                    <com.yberry.dinehawaii.customview.CustomTextView
-                        android:id="@+id/tvSendReply"
-                        style="@style/TextAppearance.AppCompat.Subhead"
+                    <LinearLayout
+
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:drawableLeft="@drawable/ic_reply_green_24dp"
-                        android:drawablePadding="@dimen/_2sdp"
-                        android:text="Reply"
-                        android:textColor="@color/colorPrimary"
-                        android:textStyle="bold"
-                        app:edittextfont="Raleway-Bold.ttf" />
+                        android:orientation="horizontal">
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/tvSendReply"
+                            style="@style/TextAppearance.AppCompat.Subhead"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:drawableLeft="@drawable/ic_reply_green_24dp"
+                            android:drawablePadding="@dimen/_2sdp"
+                            android:text="Reply"
+                            android:textAllCaps="true"
+                            android:textColor="@color/colorPrimary"
+                            android:textStyle="bold"
+                            app:edittextfont="Raleway-Bold.ttf" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:layout_marginRight="@dimen/_5sdp"
+                            android:background="@color/colorDivider" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/tvAccept"
+                            style="@style/TextAppearance.AppCompat.Subhead"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Accept"
+                            android:textAllCaps="true"
+                            android:textColor="@color/colorPrimary"
+                            android:textStyle="bold"
+                            app:edittextfont="Raleway-Bold.ttf" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:layout_marginRight="@dimen/_5sdp"
+                            android:background="@color/colorDivider" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/tvReject"
+                            style="@style/TextAppearance.AppCompat.Subhead"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Reject"
+                            android:textAllCaps="true"
+                            android:textColor="@color/red"
+                            android:textStyle="bold"
+                            app:edittextfont="Raleway-Bold.ttf" />
+                    </LinearLayout>
                 </RelativeLayout>
 
 

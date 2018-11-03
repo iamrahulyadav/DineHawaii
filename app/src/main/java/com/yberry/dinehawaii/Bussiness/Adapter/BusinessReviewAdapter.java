@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
@@ -73,7 +74,7 @@ public class BusinessReviewAdapter extends RecyclerView.Adapter<BusinessReviewAd
     }
 
     @Override
-    public void onBindViewHolder(final BusinessReviewAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(final BusinessReviewAdapter.ViewHolder holder, final int position) {
         final ReviewModel model = reviewlist.get(position);
 
         if (!model.getRating().equalsIgnoreCase(""))
@@ -84,6 +85,12 @@ public class BusinessReviewAdapter extends RecyclerView.Adapter<BusinessReviewAd
             @Override
             public void onClick(View view) {
                 dialogReply(model);
+            }
+        });
+        holder.tvReject.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogReject(model, position);
             }
         });
     }
@@ -145,6 +152,39 @@ public class BusinessReviewAdapter extends RecyclerView.Adapter<BusinessReviewAd
 
     }
 
+    public void dialogReject(ReviewModel model, int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        LayoutInflater _inflater = LayoutInflater.from(context);
+        View view = _inflater.inflate(R.layout.dialog_review_reject, null);
+        builder.setView(view, 50, 50, 50, 50);
+        builder.setCancelable(true);
+        deliveryDialog = builder.create();
+        deliveryDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        deliveryDialog.setCanceledOnTouchOutside(false);
+
+        final RadioGroup rgReason = (RadioGroup) view.findViewById(R.id.rgReason);
+        CustomButton dsubmit = (CustomButton) view.findViewById(R.id.dsubmit);
+
+        ImageView close = (ImageView) view.findViewById(R.id.close);
+
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                deliveryDialog.dismiss();
+            }
+        });
+
+        dsubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deliveryDialog.hide();
+            }
+        });
+
+        deliveryDialog.show();
+
+    }
+
     private void replyApi(JsonObject jsonObject) {
         final ProgressHUD progressHD = ProgressHUD.show(context, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
             @Override
@@ -193,7 +233,7 @@ public class BusinessReviewAdapter extends RecyclerView.Adapter<BusinessReviewAd
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         CardView user_post;
-        CustomTextView title, tvSendReply, customer;
+        CustomTextView title, tvSendReply, tvReject, tvAccept, customer;
         RatingBar ratingBar;
 
         public ViewHolder(View itemView) {
@@ -203,6 +243,8 @@ public class BusinessReviewAdapter extends RecyclerView.Adapter<BusinessReviewAd
             title = (CustomTextView) itemView.findViewById(R.id.title);
             customer = (CustomTextView) itemView.findViewById(R.id.customer);
             tvSendReply = (CustomTextView) itemView.findViewById(R.id.tvSendReply);
+            tvAccept = (CustomTextView) itemView.findViewById(R.id.tvAccept);
+            tvReject = (CustomTextView) itemView.findViewById(R.id.tvReject);
 
         }
     }
