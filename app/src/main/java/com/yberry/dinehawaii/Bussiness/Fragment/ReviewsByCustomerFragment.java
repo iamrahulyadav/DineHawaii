@@ -152,7 +152,6 @@ public class ReviewsByCustomerFragment extends Fragment {
                     e.printStackTrace();
                     progressHD.dismiss();
                     Toast.makeText(context, "Server not Responding", Toast.LENGTH_SHORT).show();
-
                 }
                 progressHD.dismiss();
             }
