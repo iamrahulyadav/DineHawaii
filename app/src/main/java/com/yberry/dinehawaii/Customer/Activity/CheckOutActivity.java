@@ -146,6 +146,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
     private CustomTextView tvPaymentText;
     private double totalPaidAmountOrig = 0.0;
     private CustomEditText etRemark;
+    private CustomTextView tvDeliveryDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -261,6 +262,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
 
     private void init() {
         tvTotalPaidAmount = (CustomTextView) findViewById(R.id.tvTotalPaidAmount);
+        tvDeliveryDate = findViewById(R.id.tvDeliveryDate);
         etRemark = (CustomEditText) findViewById(R.id.etRemark);
         tvPaymentText = (CustomTextView) findViewById(R.id.tvPaymentText);
         tvTotalAmt = (CustomTextView) findViewById(R.id.totalCost);
@@ -330,6 +332,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         removePoints.setOnClickListener(this);
         apply_coupon.setOnClickListener(this);
         remove_coupon.setOnClickListener(this);
+        tvDeliveryDate.setOnClickListener(this);
         mainLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {

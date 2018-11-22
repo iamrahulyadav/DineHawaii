@@ -63,6 +63,7 @@ public class OrderItemListActivity extends AppCompatActivity {
             getCounterData();
         }
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +74,7 @@ public class OrderItemListActivity extends AppCompatActivity {
             vendor_id = getIntent().getStringExtra("vendor_id");
         Log.e(TAG, "onCreate: vendor_id >> " + vendor_id);
         init();
-        LocalBroadcastManager.getInstance(context).registerReceiver(updateCounter,new IntentFilter("update_counter"));
+        LocalBroadcastManager.getInstance(context).registerReceiver(updateCounter, new IntentFilter("update_counter"));
         setAdapter();
         if (Util.isNetworkAvailable(context)) {
             getAllVendorsFood();
@@ -217,7 +218,17 @@ public class OrderItemListActivity extends AppCompatActivity {
 
     private void setAdapter() {
         recycler_view.setLayoutManager(new LinearLayoutManager(context));
-        adapter = new OrderItemListAdapter(context, list, vendor_id);
+        adapter = new OrderItemListAdapter(context, list, vendor_id, new OrderItemListAdapter.MyClickListener() {
+            @Override
+            public void addQuantity(View view, int position, int qty) {
+
+            }
+
+            @Override
+            public void removeQuantity(View view, int position, int qty) {
+
+            }
+        });
         recycler_view.setAdapter(adapter);
     }
 

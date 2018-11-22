@@ -17,8 +17,8 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_2sdp"
             android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_2sdp"
             android:layout_weight="0.6"
             android:orientation="vertical">
 
@@ -77,14 +77,17 @@
                     style="@style/TextAppearance.AppCompat.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/qauntity_box"
+                    android:background="@null"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
                     android:hint="0"
                     android:inputType="number"
                     android:maxLength="4"
-                    android:paddingBottom="@dimen/_3sdp"
                     android:paddingLeft="@dimen/_8sdp"
-                    android:paddingRight="@dimen/_8sdp"
                     android:paddingTop="@dimen/_3sdp"
+                    android:paddingRight="@dimen/_8sdp"
+                    android:paddingBottom="@dimen/_3sdp"
                     android:singleLine="true" />
 
             </LinearLayout>

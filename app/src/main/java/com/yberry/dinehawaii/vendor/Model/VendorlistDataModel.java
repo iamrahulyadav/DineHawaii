@@ -12,6 +12,8 @@ public class VendorlistDataModel {
     String ava_quan;
     String desc;
     String added_on;
+    String minimum_vol;
+    String maximum_vol;
 
     public String getProductId() {
         return productId;
@@ -31,6 +33,8 @@ public class VendorlistDataModel {
                 ", ava_quan='" + ava_quan + '\'' +
                 ", desc='" + desc + '\'' +
                 ", added_on='" + added_on + '\'' +
+                ", minimum_vol='" + minimum_vol + '\'' +
+                ", maximum_vol='" + maximum_vol + '\'' +
                 '}';
     }
 
@@ -80,5 +84,21 @@ public class VendorlistDataModel {
 
     public void setAdded_on(String added_on) {
         this.added_on = added_on;
+    }
+
+    public String getMinimum_vol() {
+        return minimum_vol;
+    }
+
+    public void setMinimum_vol(String minimum_vol) {
+        this.minimum_vol = minimum_vol;
+    }
+
+    public String getMaximum_vol() {
+        return maximum_vol;
+    }
+
+    public void setMaximum_vol(String maximum_vol) {
+        this.maximum_vol = maximum_vol;
     }
 }

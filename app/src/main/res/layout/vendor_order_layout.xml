@@ -8,10 +8,10 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/_2sdp"
         android:layout_marginLeft="@dimen/_5sdp"
-        android:layout_marginRight="@dimen/_5sdp"
         android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginRight="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/_2sdp"
         app:cardCornerRadius="@dimen/_4sdp"
         app:cardElevation="@dimen/_2sdp"
         app:contentPadding="@dimen/_8sdp">
@@ -37,7 +37,7 @@
                     android:background="@drawable/no_image_placholder"
                     android:visibility="gone" />
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -47,27 +47,77 @@
                         style="@style/TextAppearance.AppCompat.Subhead"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_5sdp"
                         android:padding="@dimen/_2sdp"
                         android:text="NA"
                         android:textAllCaps="false"
                         app:edittextfont="@string/raleway_bold" />
 
+                    <LinearLayout
+                        android:id="@+id/incQuanLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvName"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            style="@style/TextAppearance.AppCompat.Subhead"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:gravity="center_vertical"
+                            android:padding="@dimen/_3sdp"
+                            android:text="Qty "
+                            app:edittextfont="Raleway-Bold.ttf" />
+
+                        <ImageView
+                            android:id="@+id/remove_Quantity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/ic_remove_circle_red_24dp"
+                            android:gravity="center_vertical" />
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/item_Quantity"
+                            style="@style/TextAppearance.AppCompat.Subhead"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:gravity="center_vertical"
+                            android:inputType="number"
+                            android:padding="@dimen/_3sdp"
+                            android:text="0"
+                            app:edittextfont="Raleway-Bold.ttf" />
+
+                        <ImageView
+                            android:id="@+id/add_Quantity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/ic_add_circle_green_24dp"
+                            android:gravity="center_vertical" />
+
+                    </LinearLayout>
+
+
                     <com.yberry.dinehawaii.customview.CustomButton
                         android:id="@+id/btnplaceorder"
+                        style="@style/TextAppearance.AppCompat.Notification.Time"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/_25sdp"
-
+                        android:layout_below="@id/tvName"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_toRightOf="@id/incQuanLayout"
                         android:background="@drawable/plain_green_border"
                         android:paddingLeft="@dimen/_6sdp"
                         android:paddingRight="@dimen/_6sdp"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:layout_marginBottom="@dimen/_3sdp"
-                        style="@style/TextAppearance.AppCompat.Notification.Time"
-
                         android:text="add to cart"
                         android:textColor="@color/green" />
 
-                </LinearLayout>
+                </RelativeLayout>
             </LinearLayout>
 
 
@@ -81,8 +131,8 @@
                     android:layout_width="@dimen/_30sdp"
                     android:layout_height="@dimen/_30sdp"
                     android:layout_margin="@dimen/_5sdp"
-                    android:paddingRight="8dp"
                     android:paddingTop="8dp"
+                    android:paddingRight="8dp"
                     app:cardBackgroundColor="@color/green"
                     app:cardCornerRadius="@dimen/_15sdp">
 

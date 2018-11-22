@@ -92,6 +92,8 @@ public class VendorCartActivity extends AppCompatActivity implements View.OnClic
         initViews();
         if (getIntent().hasExtra("vendor_id"))
             vendor_id = getIntent().getStringExtra("vendor_id");
+        else
+            vendor_id = "806";
         LocalBroadcastManager.getInstance(context).registerReceiver(updatePrice, new IntentFilter("updateTotalprice"));
         mainView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -158,117 +160,13 @@ public class VendorCartActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btnPlaceOrder) {
-            showOrderAlert();
+            //showOrderAlert();
+            Intent intent = new Intent(getApplicationContext(), VendorCheckOutActivity.class);
+            intent.putExtra("totalamount", total_amount.getText().toString());
+            intent.putExtra("vendor_id", vendor_id);
+            startActivity(intent);
         }
     }
-
-    private void showOrderAlert() {
-        AlertDialog.Builder order_alert = new AlertDialog.Builder(context);
-        order_alert.setTitle("Place Order");
-        order_alert.setMessage("Are you sure you want to place the order.");
-        order_alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                updatedcartItems = new VendorOrderDBHandler(context).getOrderCartItems(vendor_id);  //database data
-                placeOrderData();
-            }
-        });
-        order_alert.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-        order_alert.show();
-    }
-
-    private void placeOrderData() {
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("method", AppConstants.BUSINESS_VENDOR_API.PlACEVENDORORDER);
-        jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(context));
-        jsonObject.addProperty("total_amount", total_amount.getText().toString());
-        jsonObject.addProperty("vendor_id", vendor_id);
-
-        JsonArray jsonArray = new JsonArray();
-        for (int i = 0; i < updatedcartItems.size(); i++) {
-            VendorOrderItemsDetailsModel model = updatedcartItems.get(i);
-            JsonObject orderDetailsObject = new JsonObject();
-            orderDetailsObject.addProperty("vendor_product_id", model.getProductId());
-            orderDetailsObject.addProperty("item_id", model.getItemId());
-            orderDetailsObject.addProperty("item_quantity", model.getItemQuan());
-            orderDetailsObject.addProperty("item_amount", model.getItemTotalCost());
-            jsonArray.add(orderDetailsObject);
-            Log.e(TAG, orderDetailsObject.toString());
-        }
-
-        jsonObject.add("orderDetails", jsonArray);
-
-        Log.e(TAG, "Request Place Order >>> " + jsonObject.toString());
-
-        placeOrderTask(jsonObject);
-    }
-
-    private void placeOrderTask(JsonObject jsonObject) {
-        final ProgressHUD progressHD = ProgressHUD.show(context, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                // TODO Auto-generated method stub
-            }
-        });
-
-        MyApiEndpointInterface apiService =
-                ApiClient.getClient().create(MyApiEndpointInterface.class);
-        Call<JsonObject> call = apiService.vendorOrderUrl(jsonObject);
-        call.enqueue(new Callback<JsonObject>() {
-            @SuppressLint("LongLogTag")
-            @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-
-                Log.e(TAG, "Response Place Order >>> " + response.body().toString());
-                String s = response.body().toString();
-
-                try {
-                    JSONObject jsonObject = new JSONObject(s);
-                    if (jsonObject.getString("status").equalsIgnoreCase("200")) {
-                        JSONArray jsonArray = jsonObject.getJSONArray("result");
-                        JSONObject object = jsonArray.getJSONObject(0);
-                        mydb = new VendorOrderDBHandler(context);
-                        mydb.deleteVendorCartTtem(vendor_id);
-                        showThankYouAlert("Your order placed successfully and the order id is " + object.getString("order_id"));
-                    } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
-                        JSONArray jsonArray = jsonObject.getJSONArray("result");
-                        JSONObject object = jsonArray.getJSONObject(0);
-                        Log.e("onResponse", object.getString("msg"));
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                progressHD.dismiss();
-            }
-
-            @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.e("ERROR", "Error On failure :- " + Log.getStackTraceString(t));
-                progressHD.dismiss();
-            }
-        });
-    }
-
-    private void showThankYouAlert(String msg) {
-        AlertDialog.Builder th_alert = new AlertDialog.Builder(context);
-        th_alert.setTitle("Thank You!");
-        th_alert.setMessage(msg);
-        th_alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(context, BusinessNaviDrawer.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-            }
-        });
-        th_alert.show();
-    }
-
 
     @Override
     protected void onDestroy() {

@@ -162,7 +162,7 @@ public class VendorOrderDBHandler extends SQLiteOpenHelper {
     public String getOrderCartTotal(String vendor_id) {
         String total = "0";
         SQLiteDatabase myDataBase = this.getReadableDatabase();
-        String queary = "SELECT SUM(item_total_cost) as total_amount FROM " + TABLE_CART_ORDER + " WHERE " + KEY_VENDOR_ID + "=" + vendor_id;
+        String queary = "SELECT SUM(item_price*item_qty) as total_amount FROM " + TABLE_CART_ORDER + " WHERE " + KEY_VENDOR_ID + "=" + vendor_id;
         Cursor cursor = myDataBase.rawQuery(queary, null);
         if (cursor == null) {
             return total;
@@ -174,7 +174,7 @@ public class VendorOrderDBHandler extends SQLiteOpenHelper {
         }
         Log.e(TAG, "getOrderCartTotal: total>>" + total);
         if (total == null) {
-            total="0";
+            total = "0";
             return total;
         } else
             return total;

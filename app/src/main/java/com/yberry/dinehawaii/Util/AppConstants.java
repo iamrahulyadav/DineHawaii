@@ -249,6 +249,7 @@ public class AppConstants {
         String ASSIGN_VENDOR_IN_BUSINESS = "assign_vendor_in_business";
         String REMOVE_VENDOR_IN_BUSINESS = "remove_vendor_in_business";
         String FAVORITE_DELIVERY_VENDOR = "favoriteDeliveryVendor";
+        String GET_VENDOR_DELIVERY_INFO = "getVendorDeliveryInfo";
     }
 
     public interface BUSINESS_TABLE_SYSTEM_API {

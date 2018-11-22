@@ -203,10 +203,19 @@ public class VendorListActivity extends AppCompatActivity implements View.OnClic
                 if (!sublist.isEmpty() && sublist != null) {
                     VendorMasterData model = sublist.get(position);
                     if (!model.getSub_vendor_categ().equalsIgnoreCase("Delivery Vendor")) {
-                        Intent intent = new Intent(context, VendorItemListActivity.class);
+                        /*Intent intent = new Intent(context, VendorItemListActivity.class);
                         intent.putExtra("vendor_id", model.getSub_vendor_id());
                         intent.putExtra("vendor_name", model.getSub_vendor_busname());
-                        context.startActivity(intent);
+                        context.startActivity(intent);*/
+
+                        if (model.getVendor_assign_status().equalsIgnoreCase("1")) {
+                            Intent intent = new Intent(context, OrderItemListActivity.class);
+                            intent.putExtra("vendor_id", model.getSub_vendor_id());
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(context, "This vendor is currently inactive.", Toast.LENGTH_SHORT).show();
+                        }
+
                     }
                 }
             }

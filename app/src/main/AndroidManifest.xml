@@ -299,6 +299,9 @@
         <activity
             android:name=".Customer.Activity.CheckOutActivity"
             android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name=".vendor.Activity.VendorCheckOutActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity android:name=".Bussiness.Activity.ManageServiceTypeActivity" />
 
         <meta-data
@@ -311,12 +314,6 @@
             android:name=".Customer.Activity.DialogActivity"
             android:theme="@style/Theme.AppCompat.Transparent.NoActionBar">
 
-            <!--
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            -->
         </activity>
 
         <receiver
@@ -330,7 +327,9 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".vendor.Activity.VendorLoginWebViewActivity" />
         <activity android:name=".vendor.Activity.AddNewVendorActivity" />
-        <activity android:name=".vendor.Activity.VendorCartActivity" />
+        <activity android:name=".vendor.Activity.VendorCartActivity">
+
+        </activity>
         <activity android:name=".vendor.Activity.BidCartActivity" />
         <activity android:name=".vendor.Activity.OrderItemListActivity" />
         <activity android:name=".vendor.Activity.VendorListActivity" />
