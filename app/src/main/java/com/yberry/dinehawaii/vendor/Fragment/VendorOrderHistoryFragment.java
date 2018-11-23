@@ -4,6 +4,7 @@ package com.yberry.dinehawaii.vendor.Fragment;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.yberry.dinehawaii.R;
 import com.yberry.dinehawaii.RetrofitClasses.ApiClient;
@@ -26,16 +28,15 @@ import com.yberry.dinehawaii.Util.FragmentIntraction;
 import com.yberry.dinehawaii.Util.ProgressHUD;
 import com.yberry.dinehawaii.Util.Util;
 import com.yberry.dinehawaii.customview.CustomTextView;
+import com.yberry.dinehawaii.vendor.Activity.VendorOrderDetailActivity;
 import com.yberry.dinehawaii.vendor.Adapter.VendorOrderHistoryAdapter;
-import com.yberry.dinehawaii.vendor.Model.VendorOrderHistoryModel;
+import com.yberry.dinehawaii.vendor.Model.VendorOrderDetails;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -46,8 +47,8 @@ import retrofit2.Response;
  */
 public class VendorOrderHistoryFragment extends Fragment {
 
-    private static final String TAG = "VendorOrderHistory";
-    public static ArrayList<VendorOrderHistoryModel> list = new ArrayList<VendorOrderHistoryModel>();
+    private static final String TAG = "VendorOrderHistoryFragment";
+    public static ArrayList<VendorOrderDetails> list = new ArrayList<VendorOrderDetails>();
     VendorOrderHistoryAdapter adapter;
     Context context;
     CustomTextView tvNoOrders;
@@ -98,16 +99,21 @@ public class VendorOrderHistoryFragment extends Fragment {
     private void init(View rootView) {
         context = getActivity();
         tvNoOrders = (CustomTextView) rootView.findViewById(R.id.tvNoOrders);
-        adapter = new VendorOrderHistoryAdapter(context, list);
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
+        refreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.refreshLayout);
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setAdapter(adapter);
-        adapter = new VendorOrderHistoryAdapter(context, list);
+        adapter = new VendorOrderHistoryAdapter(context, list, new VendorOrderHistoryAdapter.MyListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(context, VendorOrderDetailActivity.class);
+                intent.putExtra("data", list.get(position));
+                startActivity(intent);
+            }
+        });
         mRecyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
-        refreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.refreshLayout);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -162,7 +168,10 @@ public class VendorOrderHistoryFragment extends Fragment {
                             list.clear();
                             JSONArray jsonArray = jsonObject.getJSONArray("result");
                             for (int i = 0; i < jsonArray.length(); i++) {
-                                VendorOrderHistoryModel orderModel = new VendorOrderHistoryModel();
+                                VendorOrderDetails data = new Gson().fromJson(jsonArray.getJSONObject(i).toString(), VendorOrderDetails.class);
+
+                                Log.e(TAG, "onResponse: data >> " + data);
+                              /*  VendorOrderHistoryModel orderModel = new VendorOrderHistoryModel();
                                 JSONObject object = jsonArray.getJSONObject(i);
                                 orderModel.setOrderId(object.getString("order_id"));
                                 orderModel.setOrderUniqueId(object.getString("order_unique_id"));
@@ -173,8 +182,8 @@ public class VendorOrderHistoryFragment extends Fragment {
                                 orderModel.setDateTime(object.getString("date_time"));
                                 List<String> items = Arrays.asList(object.getString("item_name").split("\\s*,\\s*"));
                                 Log.e(TAG, "onResponse: items" + items.toString());
-
-                                list.add(orderModel);
+*/
+                                list.add(data);
                             }
 
                         } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
@@ -183,7 +192,6 @@ public class VendorOrderHistoryFragment extends Fragment {
                             String msg = jobject.getString("msg");
                             Log.e("msg", msg);
                             publishProgress(400, msg);
-                            list.clear();
                         }
                         adapter.notifyDataSetChanged();
                     } catch (JSONException e) {

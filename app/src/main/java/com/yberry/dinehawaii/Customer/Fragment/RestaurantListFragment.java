@@ -225,19 +225,25 @@ public class RestaurantListFragment extends Fragment {
 
     private void showAlertDialog() {
         new AlertDialog.Builder(getActivity())
-                .setMessage("Something went wrong!")
+                .setMessage("No recond found!")
                 .setPositiveButton("Retry", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         new getRestFromServer().execute();
                     }
-                }).setNegativeButton("Go Back", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                startActivity(new Intent(getActivity(), CustomerNaviDrawer.class));
+                })
+                .setNegativeButton("Go Back", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        startActivity(new Intent(getActivity(), CustomerNaviDrawer.class));
+                    }
+                })
+                .setNeutralButton("Dismiss", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
 
-            }
-        }).show();
+                    }
+                }).show();
     }
 
     @Override

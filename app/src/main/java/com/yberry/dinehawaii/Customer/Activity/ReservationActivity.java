@@ -65,6 +65,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -299,12 +300,15 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
                                 Log.e(TAG, "onTimeSet: currentDate >> " + currentDate);
                             } catch (ParseException e) {
                                 e.printStackTrace();
+
                             }
 
                             if (currentDate.compareTo(selectedDate) == 0) {
+                                Log.e(TAG, "onTimeSet: RK >> " + Locale.ENGLISH);
+
                                 Log.e(TAG, "onTimeSet: currentDate is equal to selectedDate");
-                                SimpleDateFormat displayFormat = new SimpleDateFormat("HH:mm:ss");
-                                SimpleDateFormat parseFormat = new SimpleDateFormat("hh:mm a");
+                                SimpleDateFormat displayFormat = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
+                                SimpleDateFormat parseFormat = new SimpleDateFormat("hh:mm a", Locale.ENGLISH);
                                 String currentTime = parseFormat.format(c.getTime());
 
                                 Log.e(TAG, "onTimeSet: selecteDateToCompare >> " + selecteDateToCompare);
@@ -331,6 +335,7 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
                                         Log.e(TAG, "onTimeSet: current time is equal selected time");
                                     }
                                 } catch (Exception e) {
+
                                     e.printStackTrace();
                                 }
                             } else {

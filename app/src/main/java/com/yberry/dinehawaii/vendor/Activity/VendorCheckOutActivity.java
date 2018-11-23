@@ -13,6 +13,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -94,6 +95,8 @@ public class VendorCheckOutActivity extends AppCompatActivity implements View.On
     private VendorOrderDBHandler mydb;
     private CustomEditText etRemark, etOrderFrequency;
     private String preparation_time = "1";
+    private String minimum_order_cost = "0";
+    private LinearLayout llfrequency;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,6 +149,7 @@ public class VendorCheckOutActivity extends AppCompatActivity implements View.On
         rgOrderType = findViewById(R.id.rgOrderType);
         etRemark = findViewById(R.id.etRemark);
         etOrderFrequency = findViewById(R.id.etOrderFrequency);
+        llfrequency = findViewById(R.id.llfrequency);
 
         proceed.setOnClickListener(this);
         tvDeliveryDate.setOnClickListener(this);
@@ -161,6 +165,15 @@ public class VendorCheckOutActivity extends AppCompatActivity implements View.On
         });
 
 
+        rgOrderType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                if (i == R.id.radioRepeat)
+                    llfrequency.setVisibility(View.VISIBLE);
+                else
+                    llfrequency.setVisibility(View.GONE);
+            }
+        });
         tvDeliveryText = (CustomTextView) findViewById(R.id.tvDeliveryText);
         tvDelChargeAmount = (CustomTextView) findViewById(R.id.tvDelChargeAmount);
     }
@@ -170,6 +183,11 @@ public class VendorCheckOutActivity extends AppCompatActivity implements View.On
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.proceedtopay:
+                if (llfrequency.getVisibility() == View.VISIBLE && TextUtils.isEmpty(etOrderFrequency.getText().toString())) {
+                    etOrderFrequency.setError("Enter days");
+                    return;
+                }
+
                 proceedToPayment();
                 break;
 
@@ -573,7 +591,7 @@ public class VendorCheckOutActivity extends AppCompatActivity implements View.On
         Log.e(TAG, "getDeliveryInfo: Request >> " + jsonObject.toString());
 
         MyApiEndpointInterface apiService = ApiClient.getClient().create(MyApiEndpointInterface.class);
-        Call<JsonObject> call = apiService.n_business_user_api(jsonObject);
+        Call<JsonObject> call = apiService.vendorOrderUrl(jsonObject);
 
         call.enqueue(new Callback<JsonObject>() {
             @Override
@@ -587,12 +605,14 @@ public class VendorCheckOutActivity extends AppCompatActivity implements View.On
                         JSONArray resultJsonArray = jsonObject.getJSONArray("result");
                         JSONObject object = resultJsonArray.getJSONObject(0);
                         preparation_time = object.getString("preparation_time");
+                        minimum_order_cost = object.getString("minimum_order_cost");
                         String schedule_days = object.getString("schedule_days");
                         String cost_flat = object.getString("cost_flat");
                         String cost_range = object.getString("cost_range");
                         String cost_percent = object.getString("cost_percent");
+                        tvDeliveryText.setVisibility(View.VISIBLE);
                         tvDeliveryText.setTextColor(getResources().getColor(R.color.blue));
-                        tvDeliveryDays.setText(schedule_days);
+                        tvDeliveryDays.setText(schedule_days.replace(",", ", "));
 
                         if (cost_flat.equalsIgnoreCase("1")) {
                             tvDeliveryText.setText("Delivery Fee: Flat $" + object.getString("flat_amt") + " on every order.");
