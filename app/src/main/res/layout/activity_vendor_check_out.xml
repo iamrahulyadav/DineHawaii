@@ -1,0 +1,617 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    tools:context="com.yberry.dinehawaii.Customer.Activity.CheckOutActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"></include>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
+        android:layout_marginBottom="@dimen/_40sdp"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/mainCheckout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/linear2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/greendot"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:padding="@dimen/_5sdp"
+                    android:text="Delivery Schedules (in Days)"
+                    android:textColor="@color/green"
+                    app:edittextfont="Raleway-Bold.ttf" />
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    android:id="@+id/tvDeliveryDays"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:hint="Monday, Thursday"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    app:edittextfont="@string/raleway_regular" />
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    android:id="@+id/tvDeliveryText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:lineSpacingExtra="@dimen/_5sdp"
+                    android:text="Delivery Rates:"
+                    android:visibility="gone"
+                    app:edittextfont="@string/raleway_regular" />
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    android:id="@+id/tvDriverTipText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_15sdp"
+                    android:lineSpacingExtra="@dimen/_5sdp"
+                    android:text="0"
+                    android:textColor="@color/red"
+                    android:visibility="gone"
+                    app:edittextfont="@string/raleway_regular" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:background="@color/colorDivider"></View>
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/greendot"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:padding="@dimen/_5sdp"
+                    android:text="Select Order Type"
+                    android:textColor="@color/green"
+                    app:edittextfont="Raleway-Bold.ttf" />
+
+
+                <RadioGroup
+                    android:id="@+id/rgOrderType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_15sdp"
+                    android:orientation="horizontal">
+
+                    <com.yberry.dinehawaii.customview.CustomRadioButton
+                        android:id="@+id/radioSingle"
+                        style="@style/Widget.AppCompat.CompoundButton.CheckBox"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:buttonTint="@color/green"
+                        android:checked="true"
+                        android:text="One Time Order"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        app:edittextfont="@string/raleway_regular" />
+
+
+                    <com.yberry.dinehawaii.customview.CustomRadioButton
+                        android:id="@+id/radioRepeat"
+                        style="@style/Widget.AppCompat.CompoundButton.CheckBox"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:buttonTint="@color/green"
+                        android:text="Repeating Order"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        app:edittextfont="@string/raleway_regular" />
+                </RadioGroup>
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_5sdp"
+                android:background="@color/colorDivider"></View>
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/greendot"
+                android:drawablePadding="@dimen/_5sdp"
+                android:padding="@dimen/_5sdp"
+                android:text="Delivery Date"
+                android:textColor="@color/green"
+                app:edittextfont="Raleway-Bold.ttf" />
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/tvDeliveryDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:buttonTint="@color/green"
+                android:hint="Select Deliver Date "
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                app:edittextfont="@string/raleway_regular" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_5sdp"
+                android:background="@color/colorDivider"></View>
+
+            <LinearLayout
+                android:id="@+id/llfrequency"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <com.yberry.dinehawaii.customview.CustomTextView
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/greendot"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:padding="@dimen/_5sdp"
+                    android:text="Order Frequency (in Days)"
+                    android:textColor="@color/green"
+                    app:edittextfont="Raleway-Bold.ttf" />
+
+                <com.yberry.dinehawaii.customview.CustomEditText
+                    android:id="@+id/etOrderFrequency"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_marginLeft="@dimen/_15sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:buttonTint="@color/green"
+                    android:hint="20 days"
+                    android:inputType="number"
+                    android:text=""
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    app:edittextfont="@string/raleway_regular" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:background="@color/colorDivider"></View>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/linear"
+                android:layout_margin="@dimen/_8sdp"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="1">
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.4">
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            style="@style/TextAppearance.AppCompat.Small"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="3dp"
+                            android:text="Food Orders"
+                            app:edittextfont="@string/raleway_bold" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.2">
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            style="@style/TextAppearance.AppCompat.Small"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="3dp"
+                            android:text="Qty."
+                            android:textAlignment="center"
+                            app:edittextfont="@string/raleway_bold" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.2">
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            style="@style/TextAppearance.AppCompat.Small"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="3dp"
+                            android:text="Unit Price"
+                            android:textAlignment="center"
+                            app:edittextfont="@string/raleway_bold" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.2">
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            style="@style/TextAppearance.AppCompat.Small"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="end"
+                            android:padding="3dp"
+                            android:text="Total"
+                            android:textAlignment="textEnd"
+                            app:edittextfont="@string/raleway_bold" />
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorDivider" />
+
+                <android.support.v4.widget.NestedScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/recycler_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:nestedScrollingEnabled="false" />
+                    </RelativeLayout>
+                </android.support.v4.widget.NestedScrollView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:background="@color/colorDivider" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="1">
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5">
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            style="@style/TextAppearance.AppCompat.Subhead"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="3dp"
+                            android:text=""
+                            app:edittextfont="@string/raleway_bold" />
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.3">
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            style="@style/TextAppearance.AppCompat.Small"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="3dp"
+                            android:text="Sub total"
+                            app:edittextfont="@string/raleway_regular" />
+                    </RelativeLayout>
+
+                    <com.yberry.dinehawaii.customview.CustomTextView
+                        style="@style/TextAppearance.AppCompat.Small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="2dp"
+                        android:text=":"
+                        app:edittextfont="@string/raleway_regular" />
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.2">
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/totalCost"
+                            style="@style/TextAppearance.AppCompat.Small"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="end"
+                            android:text="$0"
+                            android:textAlignment="textEnd"
+                            app:edittextfont="Raleway-Regular.ttf" />
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="1">
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5">
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            style="@style/TextAppearance.AppCompat.Subhead"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="3dp"
+                            android:text=""
+                            app:edittextfont="@string/raleway_bold" />
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.3">
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            style="@style/TextAppearance.AppCompat.Small"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="3dp"
+                            android:text="Delivery Fee"
+                            app:edittextfont="@string/raleway_regular" />
+                    </RelativeLayout>
+
+                    <com.yberry.dinehawaii.customview.CustomTextView
+                        style="@style/TextAppearance.AppCompat.Small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="2dp"
+                        android:text=":"
+                        app:edittextfont="@string/raleway_regular" />
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.2">
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/tvDelChargeAmount"
+                            style="@style/TextAppearance.AppCompat.Small"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="end"
+                            android:text="$0"
+                            android:textAlignment="textEnd"
+                            app:edittextfont="Raleway-Regular.ttf" />
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="1">
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5">
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            style="@style/TextAppearance.AppCompat.Subhead"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="3dp"
+                            android:text=""
+                            app:edittextfont="@string/raleway_bold" />
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.3">
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/tvGETaxValue"
+                            style="@style/TextAppearance.AppCompat.Small"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="3dp"
+                            android:text="GE Tax"
+                            app:edittextfont="@string/raleway_regular" />
+                    </RelativeLayout>
+
+                    <com.yberry.dinehawaii.customview.CustomTextView
+                        style="@style/TextAppearance.AppCompat.Small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="2dp"
+                        android:text=":"
+                        app:edittextfont="@string/raleway_regular" />
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.2">
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/tvGETaxAmount"
+                            style="@style/TextAppearance.AppCompat.Small"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="end"
+                            android:text="$0"
+                            android:textAlignment="textEnd"
+                            app:edittextfont="Raleway-Regular.ttf" />
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+
+                    android:background="@color/colorDivider" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="1">
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5">
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            style="@style/TextAppearance.AppCompat.Subhead"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="3dp"
+                            android:text=""
+                            app:edittextfont="@string/raleway_bold" />
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.3">
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            style="@style/TextAppearance.AppCompat.Small"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="3dp"
+                            android:text="Total Cost"
+                            app:edittextfont="@string/raleway_bold" />
+                    </RelativeLayout>
+
+                    <com.yberry.dinehawaii.customview.CustomTextView
+                        style="@style/TextAppearance.AppCompat.Small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="2dp"
+                        android:text=":"
+                        app:edittextfont="@string/raleway_regular" />
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.2">
+
+                        <com.yberry.dinehawaii.customview.CustomTextView
+                            android:id="@+id/tvTotalPaidAmount2"
+                            style="@style/TextAppearance.AppCompat.Small"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="end"
+                            android:text="$0"
+                            android:textAlignment="textEnd"
+                            app:edittextfont="@string/raleway_bold" />
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:background="@color/colorDivider" />
+
+                <com.yberry.dinehawaii.customview.CustomEditText
+                    android:id="@+id/etRemark"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_gravity="start"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/edittext_border"
+                    android:gravity="start"
+                    android:hint="Give special instruction.."
+                    android:padding="@dimen/_5sdp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/proceedtopay"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:orientation="horizontal">
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/total"
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pay $"
+                android:textColor="@color/white"
+                app:edittextfont="Raleway-Bold.ttf" />
+
+            <com.yberry.dinehawaii.customview.CustomTextView
+                android:id="@+id/tvTotalPaidAmount"
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00"
+                android:textColor="@color/white"
+                app:edittextfont="Raleway-Bold.ttf" />
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>
