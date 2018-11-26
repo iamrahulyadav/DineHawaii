@@ -1,7 +1,6 @@
 package com.yberry.dinehawaii.common.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,32 +43,11 @@ public class OrderFeedbackAdapter extends RecyclerView.Adapter<OrderFeedbackAdap
         holder.orderid.setText("#" + orderDetails.getOrderId() + " (" + orderDetails.getDate() + ")");
         holder.name.setText(orderDetails.getUser());
         holder.message.setText(orderDetails.getTitle());
+        holder.tvRemark.setText(orderDetails.getReviewMessage());
         holder.tvSendReply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 myListener.onReplyClick(view, position);
-            }
-        });
-
-        list = orderDetails.getResponse();
-        if (list != null)
-            if (list.contains(null))
-                list.remove(null);
-
-
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (holder.llHideShow.getVisibility() == View.VISIBLE)
-                    holder.llHideShow.setVisibility(View.GONE);
-                else {
-                    holder.llHideShow.setVisibility(View.VISIBLE);
-                    holder.tvRemark.setText(orderDetails.getTitle());
-                    holder.recycler_view.setLayoutManager(new LinearLayoutManager(context));
-                    OrderFeedbackResponseAdapter adapter = new OrderFeedbackResponseAdapter(context, list);
-                    holder.recycler_view.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
-                }
             }
         });
     }
@@ -93,8 +71,6 @@ public class OrderFeedbackAdapter extends RecyclerView.Adapter<OrderFeedbackAdap
             message = (CustomTextView) itemView.findViewById(R.id.msg);
             tvSendReply = (CustomTextView) itemView.findViewById(R.id.tvSendReply);
             tvRemark = (CustomTextView) itemView.findViewById(R.id.tvRemark);
-            recycler_view = itemView.findViewById(R.id.recycler_view);
-            llHideShow = itemView.findViewById(R.id.llHideShow);
         }
     }
 

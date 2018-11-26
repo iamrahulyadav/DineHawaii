@@ -1,4 +1,4 @@
-package com.yberry.dinehawaii.Bussiness.Fragment;
+package com.yberry.dinehawaii.Customer.Fragment;
 
 
 import android.annotation.SuppressLint;
@@ -28,6 +28,7 @@ import com.yberry.dinehawaii.R;
 import com.yberry.dinehawaii.RetrofitClasses.ApiClient;
 import com.yberry.dinehawaii.RetrofitClasses.MyApiEndpointInterface;
 import com.yberry.dinehawaii.Util.AppConstants;
+import com.yberry.dinehawaii.Util.AppPreferences;
 import com.yberry.dinehawaii.Util.AppPreferencesBuss;
 import com.yberry.dinehawaii.Util.ProgressHUD;
 import com.yberry.dinehawaii.Util.Util;
@@ -55,8 +56,8 @@ import static com.yberry.dinehawaii.Util.Function.fieldRequired;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class OrderFeedbackFragment extends Fragment {
-    private static final String TAG = "OrderFeedback";
+public class CustomerFeedbackFragment extends Fragment {
+    private static final String TAG = "CustomerFeedbackFrag";
     OrderFeedbackAdapter adapter;
     private RecyclerView mRecyclerView;
     public static ArrayList<FeedbackData> list = new ArrayList<FeedbackData>();
@@ -65,7 +66,7 @@ public class OrderFeedbackFragment extends Fragment {
     CustomTextView nofeed;
     private Context context;
 
-    public OrderFeedbackFragment() {
+    public CustomerFeedbackFragment() {
     }
 
     @Override
@@ -80,17 +81,16 @@ public class OrderFeedbackFragment extends Fragment {
     private void getOrderFeedback() {
         if (Util.isNetworkAvailable(getActivity())) {
             JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("method", AppConstants.BUSSINES_USER_BUSINESSAPI.GETORDERFEED);
+            jsonObject.addProperty("method", AppConstants.BUSSINES_USER_BUSINESSAPI.GETCUSTORDERFEED);
             jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(getActivity()));// AppPreferencesBuss.getUserId(getActivity())
-            jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(getActivity()));// AppPreferencesBuss.getUserId(getActivity())
             Log.e(TAG, "getOrderFeedback: Request >> " + jsonObject.toString());
-            getOrderApi(jsonObject);
+            feedbackApi(jsonObject);
         } else {
             Toast.makeText(getActivity(), "Please Connect Your Internet", Toast.LENGTH_LONG).show();
         }
     }
 
-    private void getOrderApi(JsonObject jsonObject) {
+    private void feedbackApi(JsonObject jsonObject) {
         list.clear();
         final ProgressHUD progressHD = ProgressHUD.show(getActivity(), "Please wait...", true, false, new DialogInterface.OnCancelListener() {
             @Override
@@ -145,7 +145,7 @@ public class OrderFeedbackFragment extends Fragment {
 
     private void initView(View rootView) {
         nofeed = (CustomTextView) rootView.findViewById(R.id.noreserv);
-        ((CustomButton) rootView.findViewById(R.id.tvAdd)).setVisibility(View.GONE);
+//        ((CustomButton) rootView.findViewById(R.id.tvAdd)).setVisibility(View.GONE);
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeCurrentRes);
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerview_feed);
         mLayoutManager = new LinearLayoutManager(getActivity());
@@ -174,7 +174,7 @@ public class OrderFeedbackFragment extends Fragment {
         });
     }
 
-    public void dialogReply(int position) {
+    public void dialogReply(final int position) {
         final Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.reply_dialog);
         dialog.setCancelable(true);
@@ -188,7 +188,7 @@ public class OrderFeedbackFragment extends Fragment {
 
 
         final FeedbackData data = list.get(position);
-        List<FeedbackResponseData> list1 = data.getResponse();
+        final List<FeedbackResponseData> list1 = data.getResponse();
 
         close.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -237,13 +237,13 @@ public class OrderFeedbackFragment extends Fragment {
 
                         JsonObject jsonObject = new JsonObject();
                         jsonObject.addProperty("method", AppConstants.BUSSINES_USER_BUSINESSAPI.SEND_REPLY_TO_ORDERS);
-                        jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(context));// AppPreferencesBuss.getUserId(context)
-                        jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(context));
+                        jsonObject.addProperty("business_id", AppPreferences.getCustomerid(context));// AppPreferencesBuss.getUserId(context)
+                        jsonObject.addProperty("user_id", list1.get(position).getBusinessId());
                         jsonObject.addProperty("order_id", data.getOrderId());
                         jsonObject.addProperty("feedback_id", data.getFeedbackId());
                         jsonObject.addProperty("status", status);
                         jsonObject.addProperty("text_reply", etText.getText().toString());
-                        jsonObject.addProperty("reply_by", "b");
+                        jsonObject.addProperty("reply_by", "c");
 
 
                         Log.e(TAG, "replyApi: Request >> " + jsonObject.toString());

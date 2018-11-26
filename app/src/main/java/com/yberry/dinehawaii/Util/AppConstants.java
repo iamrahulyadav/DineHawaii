@@ -185,6 +185,7 @@ public class AppConstants {
         String MYSERVICES = "myAllServices";
         String SOLDMENUITEM = "getMenuSoldOut";
         String GETORDERFEED = "business_feedback_order_list";
+        String GETCUSTORDERFEED = "customer_feedback_order_list";
         String GETRESERVEFEED = "business_feedback_reservation_list";
         String GETRESERVFEED = "getAllReservationFeedBack";
         String SETCHECKEDIN = "setCheckedIn";
@@ -398,5 +399,7 @@ public class AppConstants {
         public static final String NEW_ORDER_FEEDBACK = "new_order_feedback";
         public static final String NEW_RESERVATION_FEEDBACK = "new_reservation_feedback";
         public static final String REPLY_REVIEW = "reply_review";
+        public static final String ORDER_REVIEW = "order_review";
+        public static final String RESERVATION_REVIEW = "reservation_review";
     }
 }

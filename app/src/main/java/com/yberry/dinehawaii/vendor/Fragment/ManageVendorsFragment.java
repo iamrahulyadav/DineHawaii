@@ -26,7 +26,9 @@ import com.yberry.dinehawaii.Util.FragmentIntraction;
 import com.yberry.dinehawaii.Util.ProgressHUD;
 import com.yberry.dinehawaii.Util.RecyclerItemClickListener;
 import com.yberry.dinehawaii.Util.Util;
+import com.yberry.dinehawaii.customview.CustomButton;
 import com.yberry.dinehawaii.customview.CustomTextView;
+import com.yberry.dinehawaii.vendor.Activity.AddNewVendorActivity;
 import com.yberry.dinehawaii.vendor.Activity.VendorListActivity;
 import com.yberry.dinehawaii.vendor.Adapter.ManageVendorAdapter;
 import com.yberry.dinehawaii.vendor.Model.VendorMasterData;
@@ -54,6 +56,7 @@ public class ManageVendorsFragment extends Fragment implements View.OnClickListe
     CustomTextView noData;
     private RecyclerView recycler_view;
     private ManageVendorAdapter adapter;
+    private CustomButton addvendorbtn;
 
     public ManageVendorsFragment() {
         // Required empty public constructor
@@ -78,6 +81,9 @@ public class ManageVendorsFragment extends Fragment implements View.OnClickListe
     private void init(View view) {
         recycler_view = (RecyclerView) view.findViewById(R.id.recycler_view);
         noData = (CustomTextView) view.findViewById(R.id.noData);
+        addvendorbtn = (CustomButton) view.findViewById(R.id.addvendorbtn);
+        addvendorbtn.setOnClickListener(this);
+
     }
 
     private void setAdapter() {
@@ -87,7 +93,7 @@ public class ManageVendorsFragment extends Fragment implements View.OnClickListe
         recycler_view.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), recycler_view, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                if (masterlist!=null &&!masterlist.isEmpty()) {
+                if (masterlist != null && !masterlist.isEmpty()) {
                     Intent intent = new Intent(context, VendorListActivity.class);
                     intent.putExtra("category_id", masterlist.get(position).getMaster_vendor_id());
                     intent.putExtra("category_name", masterlist.get(position).getMaster_vendor_name());
@@ -250,7 +256,13 @@ public class ManageVendorsFragment extends Fragment implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()) {
+            case R.id.addvendorbtn:
+                startActivity(new Intent(context, AddNewVendorActivity.class));
+                break;
+            default:
+                break;
+        }
     }
 
 }

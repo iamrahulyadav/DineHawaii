@@ -28,11 +28,11 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.JsonObject;
 import com.squareup.picasso.Picasso;
 import com.yberry.dinehawaii.Customer.Fragment.CouponOffersFragment;
+import com.yberry.dinehawaii.Customer.Fragment.CustomerFeedbackFragment;
 import com.yberry.dinehawaii.Customer.Fragment.CustomerHomeFragment;
 import com.yberry.dinehawaii.Customer.Fragment.CustomerMyProfile;
 import com.yberry.dinehawaii.Customer.Fragment.EGiftAndCoupons;
 import com.yberry.dinehawaii.Customer.Fragment.LoyaltyPointFragment;
-import com.yberry.dinehawaii.Customer.Fragment.MyFeedbackFragment;
 import com.yberry.dinehawaii.Customer.Fragment.MyReviews;
 import com.yberry.dinehawaii.Customer.Fragment.MyWallet;
 import com.yberry.dinehawaii.Customer.Fragment.NotificationCustomerFragment;
@@ -228,7 +228,7 @@ public class CustomerNaviDrawer extends AppCompatActivity implements NavigationV
             fragment = new MyReviews();
         } else if (id == R.id.navFeedback) {
             headText.setText("My Feedbacks");
-            fragment = new MyFeedbackFragment();
+            fragment = new CustomerFeedbackFragment();
         } else if (id == R.id.nav_neworder) {
             headText.setText("New Order");
             fragment = new RestaurantListFragment();

@@ -1,13 +1,12 @@
 package com.yberry.dinehawaii.common.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import com.yberry.dinehawaii.R;
 import com.yberry.dinehawaii.common.models.FeedbackResponseData;
@@ -38,17 +37,17 @@ public class OrderFeedbackResponseAdapter extends RecyclerView.Adapter<OrderFeed
         final FeedbackResponseData orderDetails = feedbackData.get(position);
         holder.tvTitle.setText(orderDetails.getResponseText());
         holder.tvTitle1.setText(orderDetails.getResponseText());
-        holder.tvUserName.setText("by " + orderDetails.getResponseByUserName());
-        holder.tvUserName1.setText("by " + orderDetails.getResponseByUserName());
-        Log.e(TAG, "onBindViewHolder: rrr " + position % 2);
-        if (position % 2 == 0) {
-            holder.llLeft.setVisibility(View.VISIBLE);
-            holder.llright.setVisibility(View.GONE);
+        holder.tvUserName.setText(orderDetails.getResponseByUserName() + " | " + orderDetails.getDateTime());
+        holder.tvUserName1.setText(orderDetails.getResponseByUserName() + " | " + orderDetails.getDateTime());
+
+        if (orderDetails.getReplyBy().equalsIgnoreCase("c")) {
+            holder.cardLeft.setVisibility(View.VISIBLE);
+            holder.cardRight.setVisibility(View.GONE);
             holder.tvUserName.setGravity(Gravity.RIGHT | Gravity.END);
             holder.tvTitle.setGravity(Gravity.RIGHT | Gravity.END);
         } else {
-            holder.llLeft.setVisibility(View.GONE);
-            holder.llright.setVisibility(View.VISIBLE);
+            holder.cardLeft.setVisibility(View.GONE);
+            holder.cardRight.setVisibility(View.VISIBLE);
             holder.tvUserName1.setGravity(Gravity.RIGHT | Gravity.END);
             holder.tvTitle1.setGravity(Gravity.RIGHT | Gravity.END);
         }
@@ -62,7 +61,7 @@ public class OrderFeedbackResponseAdapter extends RecyclerView.Adapter<OrderFeed
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         CustomTextView tvUserName, tvUserName1, tvTitle, tvTitle1;
-        LinearLayout llLeft, llright;
+        CardView cardLeft, cardRight;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -70,9 +69,8 @@ public class OrderFeedbackResponseAdapter extends RecyclerView.Adapter<OrderFeed
             tvUserName1 = (CustomTextView) itemView.findViewById(R.id.tvUserName1);
             tvTitle = (CustomTextView) itemView.findViewById(R.id.tvTitle);
             tvTitle1 = (CustomTextView) itemView.findViewById(R.id.tvTitle1);
-            llLeft = itemView.findViewById(R.id.llLeft);
-            llright = itemView.findViewById(R.id.llright);
-
+            cardLeft = itemView.findViewById(R.id.cardLeft);
+            cardRight = itemView.findViewById(R.id.cardRight);
         }
     }
 }

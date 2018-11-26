@@ -132,6 +132,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 String REPLY_RESERVATION = "" + remoteMessage.getData().get(AppConstants.NOTIFICATION_KEY.REPLY_RESERVATION);
                 String NEW_ORDER_FEEDBACK = "" + remoteMessage.getData().get(AppConstants.NOTIFICATION_KEY.NEW_ORDER_FEEDBACK);
                 String NEW_RESERVATION_FEEDBACK = "" + remoteMessage.getData().get(AppConstants.NOTIFICATION_KEY.NEW_RESERVATION_FEEDBACK);
+                String ORDER_REVIEW = "" + remoteMessage.getData().get(AppConstants.NOTIFICATION_KEY.ORDER_REVIEW);
+                String RESERVATION_REVIEW = "" + remoteMessage.getData().get(AppConstants.NOTIFICATION_KEY.RESERVATION_REVIEW);
                 if (!BUSINESS_DELIVERY_PICKEDUP.equalsIgnoreCase("null")) {
                     JSONObject jsonObj = null;
                     try {
@@ -228,6 +230,26 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                } else if (!ORDER_REVIEW.equalsIgnoreCase("null")) {
+                    JSONObject jsonObj = null;
+                    try {
+                        jsonObj = new JSONObject(ORDER_REVIEW);
+                        Intent notificationIntent = new Intent(Intent.ACTION_VIEW);
+                        notificationIntent.setData(Uri.parse(jsonObj.getString("msg_body")));
+                        sendNotificationReview(notificationIntent, jsonObj.getString("msg_title"), jsonObj.getString("msg_body"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else if (!RESERVATION_REVIEW.equalsIgnoreCase("null")) {
+                    JSONObject jsonObj = null;
+                    try {
+                        jsonObj = new JSONObject(RESERVATION_REVIEW);
+                        Intent notificationIntent = new Intent(Intent.ACTION_VIEW);
+                        notificationIntent.setData(Uri.parse(jsonObj.getString("msg_body")));
+                        sendNotificationReview(notificationIntent, jsonObj.getString("msg_title"), jsonObj.getString("msg_body"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         } catch (JSONException e) {
@@ -267,6 +289,31 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     .setSmallIcon(R.drawable.not_icon)
                     .setContentTitle(msg_title)
                     .setContentText(msg_body)
+                    .setAutoCancel(true)
+                    .setLargeIcon(BitmapFactory.decodeResource(this.getResources(), R.mipmap.ic_launcher))
+                    .setSound(defaultSoundUri)
+                    .setPriority(Notification.PRIORITY_HIGH)
+                    .setPriority(Notification.PRIORITY_MAX)
+                    .setContentIntent(pendingIntent)
+                    .setStyle(new NotificationCompat.BigTextStyle()
+                            .bigText(msg_body));
+
+            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.notify(0, notificationBuilder.build());
+        } catch (Exception e) {
+            Log.e("Notification Ex", e.getMessage());
+        }
+    }
+
+    private void sendNotificationReview(Intent intent, String msg_title, String msg_body) {
+        try {
+            PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent,
+                    PendingIntent.FLAG_ONE_SHOT);
+            Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
+                    .setSmallIcon(R.drawable.not_icon)
+                    .setContentTitle(msg_title)
+                    .setContentText("Submit your feedback")
                     .setAutoCancel(true)
                     .setLargeIcon(BitmapFactory.decodeResource(this.getResources(), R.mipmap.ic_launcher))
                     .setSound(defaultSoundUri)

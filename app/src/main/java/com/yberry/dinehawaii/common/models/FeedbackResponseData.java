@@ -17,6 +17,15 @@ public class FeedbackResponseData {
     @SerializedName("date_time")
     @Expose
     private String dateTime;
+    @SerializedName("business_name")
+    @Expose
+    private String businessName;
+    @SerializedName("business_id")
+    @Expose
+    private String businessId;
+    @SerializedName("reply_by")
+    @Expose
+    private String replyBy = "";
 
     public String getResponseText() {
         return responseText;
@@ -50,6 +59,30 @@ public class FeedbackResponseData {
         this.dateTime = dateTime;
     }
 
+    public String getBusinessName() {
+        return businessName;
+    }
+
+    public void setBusinessName(String businessName) {
+        this.businessName = businessName;
+    }
+
+    public String getBusinessId() {
+        return businessId;
+    }
+
+    public void setBusinessId(String businessId) {
+        this.businessId = businessId;
+    }
+
+    public String getReplyBy() {
+        return replyBy;
+    }
+
+    public void setReplyBy(String replyBy) {
+        this.replyBy = replyBy;
+    }
+
     @Override
     public String toString() {
         return "FeedbackResponseData{" +
@@ -57,6 +90,9 @@ public class FeedbackResponseData {
                 ", responseByUserId='" + responseByUserId + '\'' +
                 ", responseByUserName='" + responseByUserName + '\'' +
                 ", dateTime='" + dateTime + '\'' +
+                ", businessName='" + businessName + '\'' +
+                ", businessId='" + businessId + '\'' +
+                ", replyBy='" + replyBy + '\'' +
                 '}';
     }
 }

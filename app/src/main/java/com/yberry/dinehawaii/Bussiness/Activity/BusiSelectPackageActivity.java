@@ -64,6 +64,7 @@ public class BusiSelectPackageActivity extends AppCompatActivity {
     private HashMap<String, Double> packageCharge;
     private HashMap<String, Double> optionCharge;
     private double single_option_charge;
+    private ProgressHUD progressHD;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,11 +83,15 @@ public class BusiSelectPackageActivity extends AppCompatActivity {
         pakage_list = new ArrayList<>();
         option_list = new ArrayList<>();
         init();
-        setAdapters();
+
         if (Util.isNetworkAvailable(mContext)) {
+            progressHD = ProgressHUD.show(mContext, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    // TODO Auto-generated method stub
+                }
+            });
             getAmounts();
-            getAllPackage();
-            getOptions();
         } else
             Toast.makeText(mContext, "Please Connect Your Internet", Toast.LENGTH_LONG).show();
     }
@@ -104,12 +109,13 @@ public class BusiSelectPackageActivity extends AppCompatActivity {
     }
 
     private void getAmounts() {
-        final ProgressHUD progressHD = ProgressHUD.show(mContext, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                // TODO Auto-generated method stub
-            }
-        });
+        if (!progressHD.isShowing())
+            progressHD = ProgressHUD.show(mContext, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    // TODO Auto-generated method stub
+                }
+            });
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("method", AppConstants.REGISTRATION.GETALLSELECTIONAMOUNT);
         Log.e(TAG, "Request GET ALL AMOUNTS >> " + jsonObject.toString());
@@ -150,19 +156,24 @@ public class BusiSelectPackageActivity extends AppCompatActivity {
                     Log.e(TAG, "onResponse: packageCharge >> " + packageCharge.toString());
                     Log.e(TAG, "onResponse: optionCharge >> " + optionCharge.toString());
                     Log.e(TAG, "onResponse: single_option_charge >> " + single_option_charge);
-
+                    getAllPackage();
+                    getOptions();
+                    setAdapters();
                 } catch (JSONException e) {
-                    progressHD.dismiss();
+                    if (progressHD.isShowing())
+                        progressHD.dismiss();
                     e.printStackTrace();
                 }
-                progressHD.dismiss();
+                if (progressHD.isShowing())
+                    progressHD.dismiss();
             }
 
             @SuppressLint("LongLogTag")
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Log.e(TAG, "error :- " + Log.getStackTraceString(t));
-                progressHD.dismiss();
+                if (progressHD.isShowing())
+                    progressHD.dismiss();
             }
         });
     }
@@ -235,12 +246,13 @@ public class BusiSelectPackageActivity extends AppCompatActivity {
 
     @SuppressLint("LongLogTag")
     private void getAllPackage() {
-        final ProgressHUD progressHD = ProgressHUD.show(mContext, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                // TODO Auto-generated method stub
-            }
-        });
+        if (!progressHD.isShowing())
+            progressHD = ProgressHUD.show(mContext, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    // TODO Auto-generated method stub
+                }
+            });
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("method", AppConstants.REGISTRATION.GETALLPACKAGE);
         jsonObject.addProperty("user_id", AppPreferencesBuss.getUserId(BusiSelectPackageActivity.this));
@@ -282,29 +294,34 @@ public class BusiSelectPackageActivity extends AppCompatActivity {
 
                     }
                 } catch (JSONException e) {
-                    progressHD.dismiss();
+                    if (progressHD.isShowing())
+                        progressHD.dismiss();
                     e.printStackTrace();
                 }
-                progressHD.dismiss();
+                if (progressHD.isShowing())
+                    progressHD.dismiss();
             }
 
             @SuppressLint("LongLogTag")
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Log.e(TAG, "error :- " + Log.getStackTraceString(t));
-                progressHD.dismiss();
+                if (progressHD.isShowing())
+                    progressHD.dismiss();
+
             }
         });
     }
 
     @SuppressLint("LongLogTag")
     private void getOptions() {
-        final ProgressHUD progressHD = ProgressHUD.show(mContext, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                // TODO Auto-generated method stub
-            }
-        });
+        if (!progressHD.isShowing())
+            progressHD = ProgressHUD.show(mContext, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    // TODO Auto-generated method stub
+                }
+            });
 
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("method", AppConstants.REGISTRATION.GETALLOPTION);
@@ -348,17 +365,21 @@ public class BusiSelectPackageActivity extends AppCompatActivity {
                     optionAdapter.notifyDataSetChanged();
 
                 } catch (JSONException e) {
-                    progressHD.dismiss();
+                    if (progressHD.isShowing())
+                        progressHD.dismiss();
                     e.printStackTrace();
                 }
-                progressHD.dismiss();
+
+                if (progressHD.isShowing())
+                    progressHD.dismiss();
             }
 
             @SuppressLint("LongLogTag")
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Log.e(TAG, "error :- " + Log.getStackTraceString(t));
-                progressHD.dismiss();
+                if (progressHD.isShowing())
+                    progressHD.dismiss();
             }
         });
     }
@@ -386,7 +407,6 @@ public class BusiSelectPackageActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int id) {
                     }
                 });
-
                 AlertDialog dialog = builder.create();
                 dialog.show();
             } else if (packagelist.contains("1") && !packagelist.contains("2")) {

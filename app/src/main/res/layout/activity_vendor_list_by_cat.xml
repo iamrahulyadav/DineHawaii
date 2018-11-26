@@ -1,52 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".vendor.Activity.VendorListActivity">
-    <include layout="@layout/toolbar"
-        android:id="@+id/tool_bar"></include>
+
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/toolbar"></include>
+
     <com.yberry.dinehawaii.customview.CustomTextView
         android:id="@+id/noData"
         android:layout_width="wrap_content"
-        android:layout_margin="@dimen/_20sdp"
         android:layout_height="wrap_content"
-        android:text="No Vendors"
-        android:layout_centerHorizontal="true"
         android:layout_below="@id/tool_bar"
-        android:paddingLeft="@dimen/_10sdp"
-        android:paddingRight="@dimen/_10sdp"
-        android:paddingTop="@dimen/_5sdp"
-        android:paddingBottom="@dimen/_5sdp"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/_20sdp"
         android:background="@drawable/text_background"
+        android:paddingLeft="@dimen/_10sdp"
+        android:paddingTop="@dimen/_5sdp"
+        android:paddingRight="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_5sdp"
+        android:text="No Vendors"
         android:visibility="gone"
-        app:edittextfont="Raleway-Regular.ttf"
-        />
+        app:edittextfont="Raleway-Regular.ttf" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
-        android:layout_marginBottom="?attr/actionBarSize"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_below="@id/tool_bar"
-        android:layout_height="match_parent" />
+        android:layout_marginBottom="?attr/actionBarSize" />
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_alignParentBottom="true"
+        android:layout_height="?attr/actionBarSize"
 
+        android:layout_alignParentBottom="true"
         android:background="@color/green"
-        android:layout_height="?attr/actionBarSize">
+        android:visibility="gone">
+
         <com.yberry.dinehawaii.customview.CustomButton
-            android:layout_width="match_parent"
-            android:background="@null"
             android:id="@+id/addvendorbtn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
             android:text="Add New Vendor"
-            android:textColor="@color/white"
-            android:layout_height="match_parent" />
+            android:textColor="@color/white" />
     </RelativeLayout>
-    <include layout="@layout/layout_home_floating_button"
-        android:layout_marginBottom="?attr/actionBarSize"
+
+    <include
+        layout="@layout/layout_home_floating_button"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 </RelativeLayout>

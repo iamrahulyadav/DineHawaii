@@ -42,6 +42,7 @@ public class PackageAdapter extends RecyclerView.Adapter<PackageAdapter.ViewHold
         this.context = context;
         this.packageCharge = packageCharge;
         inflater = LayoutInflater.from(context);
+        Log.e(TAG, "PackageAdapter: packageCharge >> " + packageCharge);
     }
 
     @Override

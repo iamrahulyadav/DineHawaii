@@ -81,7 +81,7 @@ public class TableLayoutActivity extends AppCompatActivity implements View.OnCli
     @Override
     protected void onResume() {
         super.onResume();
-        refreshLayout.performClick();
+        getTableMetrixData();
         registerReceiver(tickReceiver, new IntentFilter(Intent.ACTION_TIME_TICK));
     }
 
