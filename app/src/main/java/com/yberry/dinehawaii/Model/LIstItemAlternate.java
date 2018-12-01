@@ -204,4 +204,28 @@ public class LIstItemAlternate {
         this.tableId = tableId;
     }
 
+
+    @Override
+    public String toString() {
+        return "LIstItemAlternate{" +
+                "id='" + id + '\'' +
+                ", avgPrice='" + avgPrice + '\'' +
+                ", reservationPrice='" + reservationPrice + '\'' +
+                ", healthCardStstus='" + healthCardStstus + '\'' +
+                ", distance=" + distance +
+                ", coverImage='" + coverImage + '\'' +
+                ", logoImg='" + logoImg + '\'' +
+                ", businessName='" + businessName + '\'' +
+                ", businessPackage='" + businessPackage + '\'' +
+                ", businessOption='" + businessOption + '\'' +
+                ", businessAddress='" + businessAddress + '\'' +
+                ", latitude='" + latitude + '\'' +
+                ", longitude='" + longitude + '\'' +
+                ", businessContactNo='" + businessContactNo + '\'' +
+                ", rating='" + rating + '\'' +
+                ", type='" + type + '\'' +
+                ", tableName='" + tableName + '\'' +
+                ", tableId='" + tableId + '\'' +
+                '}';
+    }
 }

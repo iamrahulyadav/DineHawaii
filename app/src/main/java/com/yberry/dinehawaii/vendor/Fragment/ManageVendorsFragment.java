@@ -62,7 +62,6 @@ public class ManageVendorsFragment extends Fragment implements View.OnClickListe
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_manage_vendors, container, false);
@@ -77,13 +76,11 @@ public class ManageVendorsFragment extends Fragment implements View.OnClickListe
         return view;
     }
 
-
     private void init(View view) {
         recycler_view = (RecyclerView) view.findViewById(R.id.recycler_view);
         noData = (CustomTextView) view.findViewById(R.id.noData);
         addvendorbtn = (CustomButton) view.findViewById(R.id.addvendorbtn);
         addvendorbtn.setOnClickListener(this);
-
     }
 
     private void setAdapter() {

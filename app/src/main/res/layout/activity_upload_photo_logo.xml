@@ -75,7 +75,7 @@
                     android:drawableLeft="@drawable/drawable_green_dot"
                     android:drawablePadding="@dimen/_5sdp"
                     android:gravity="center"
-                    android:text="Business Logo"
+                    android:text="Business Cover"
                     android:textColor="@color/colorGreen"
                     app:edittextfont="Raleway-Bold.ttf" />
 

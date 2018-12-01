@@ -120,6 +120,7 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
         if (data.getReservationPrice().equalsIgnoreCase("0") || data.getReservationPrice().equalsIgnoreCase("")) {
             tvPreChargesText.setText("No pre-reservation charges required!");
             radioPaymode.setVisibility(View.GONE);
+            tvPaymentText.setText("");
         } else {
             pre_charges = Double.parseDouble(data.getReservationPrice());
             pre_charges_base = Double.parseDouble(data.getReservationPrice());
@@ -266,7 +267,7 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
                 dpd.setOkColor(getResources().getColor(R.color.colorPrimary));
                 Calendar c = Calendar.getInstance();
                 c.setTimeInMillis(System.currentTimeMillis() - 1000);
-                // c.add(Calendar.DATE, 1);
+//                c.add(Calendar.DATE, 1);
                 dpd.setMinDate(c);
             }
         });
@@ -318,6 +319,10 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
                                     Date selectedTime24 = parseFormat.parse(selectedTime);
                                     Log.e(TAG, "onCreate: currentTime24 >> " + displayFormat.format(currentTime24));
                                     Log.e(TAG, "onCreate: selectedTime24 >> " + displayFormat.format(selectedTime24));
+                                    Log.e(TAG, "onCreate: reserve_lead_time >> " + reserve_lead_time);
+                                    if (reserve_lead_time == null)
+                                        reserve_lead_time = "60"; //set default to 1 hrs
+
                                     c.add(Calendar.MINUTE, Integer.parseInt(reserve_lead_time));
 
                                     String newTime = parseFormat.format(c.getTime());
@@ -326,7 +331,8 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
 
                                     if (finalCurrentTime.compareTo(selectedTime24) > 0) {
                                         Log.e(TAG, "onTimeSet: selected time is greater than current time");
-                                        showAlertDialog("Reservation requires minimum " + reserve_lead_time + " mins before reservation time");
+                                        timePicker.setText("");
+                                        showAlertDialog("Reservation requires minimum " + reserve_lead_time + " mins before reservation time.");
                                     } else if (finalCurrentTime.compareTo(selectedTime24) < 0) {
                                         timePicker.setText(selectedTime);
                                         Log.e(TAG, "onTimeSet: selected time is less than currect time");
@@ -335,7 +341,6 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
                                         Log.e(TAG, "onTimeSet: current time is equal selected time");
                                     }
                                 } catch (Exception e) {
-
                                     e.printStackTrace();
                                 }
                             } else {
@@ -440,8 +445,6 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
         jsonObject.addProperty("table_id", table_id);
         jsonObject.addProperty("combine_table", combinetable);//
         Log.e(TAG, "Request MAKING RESERVATION >> " + jsonObject.toString());
-
-        Log.e(TAG, "submitRequest: Request >> " + jsonObject);
 
         MyApiEndpointInterface apiService = ApiClient.getClient().create(MyApiEndpointInterface.class);
         Call<JsonObject> call = apiService.normalUserBusinessApi(jsonObject);
@@ -724,19 +727,26 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
         if (requestCode == 102 && resultCode == RESULT_OK) {
             business_id = data.getStringExtra("busi_id");
             selectedTableID = data.getStringExtra("table_id");
+            String table_name = data.getStringExtra("table_name");
+            String busi_name = data.getStringExtra("busi_name");
             pre_charges = Double.parseDouble(data.getStringExtra("reserve_amt").replaceAll("\\$", "").replaceAll("\\s", ""));
-            pre_charges = pre_charges_base;
+//            pre_charges = pre_charges_base;
             Log.e(TAG, "onActivityResult: business_id >> " + business_id);
             Log.e(TAG, "onActivityResult: selectedTableID >> " + selectedTableID);
             Log.e(TAG, "onActivityResult: pre_charges >> " + pre_charges);
+            Log.e(TAG, "onActivityResult: table_name >> " + table_name);
             if (pre_charges == 0 || pre_charges == 0.0) {
                 tvPreChargesText.setText("No pre-reservation charges required!");
                 radioPaymode.setVisibility(View.GONE);
+                tvPaymentText.setText("");
             } else {
                 tvPreChargesText.setText("Pay $" + pre_charges + " as pre-reservation charges using:");
                 radioPaymode.setVisibility(View.VISIBLE);
                 btnPay.setText("Pay $" + pre_charges);
             }
+            btn_BookTable.setText((busi_name + "\n" + "SELECTED TABLE : " + table_name).toUpperCase());
+            btn_BookTable.setEnabled(false);
+            combinetable = "0";
             AppPreferences.setBusiID(this, business_id);
 //            btnPay.performClick();
         } else if (requestCode == PAYPAL_REQUEST_CODE) {

@@ -26,7 +26,7 @@
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:padding="@dimen/_5sdp"
                 android:id="@+id/foodTitle"
-                android:text="Food Category"
+                android:text="Food Type"
                 android:textAllCaps="true"
                 android:textColor="@color/white"
                 style="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle"
@@ -59,7 +59,7 @@
                 android:drawableLeft="@drawable/drawable_green_dot"
                 android:drawablePadding="@dimen/_5sdp"
                 android:gravity="center"
-                android:text="Add Food category"
+                android:text="Add Food Type"
                 android:textColor="@color/colorGreen"
                 style="@style/TextAppearance.AppCompat.Subhead"
                 app:edittextfont="Raleway-Bold.ttf" />
@@ -73,7 +73,7 @@
                 android:singleLine="true"
                 android:padding="@dimen/_8sdp"
                 android:background="@drawable/bgrectangle"
-                android:hint="Enter food category"
+                android:hint="Enter food type"
                 style="@style/TextAppearance.AppCompat.Subhead"
                 app:edittextfont="Raleway-Regular.ttf"/>
 

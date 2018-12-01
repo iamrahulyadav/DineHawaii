@@ -116,9 +116,10 @@ public class ManageLeadTimeFragment extends Fragment implements View.OnClickList
             @SuppressLint("LongLogTag")
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                String resp = response.body().toString();
-                Log.e(TAG, "onResponse: Response >> " + resp);
+
                 try {
+                    String resp = response.body().toString();
+                    Log.e(TAG, "onResponse: Response >> " + resp);
                     JSONObject jsonObject = new JSONObject(resp);
                     if (jsonObject.getString("status").equalsIgnoreCase("200")) {
                         JSONObject jsonObject1 = jsonObject.getJSONArray("result").getJSONObject(0);

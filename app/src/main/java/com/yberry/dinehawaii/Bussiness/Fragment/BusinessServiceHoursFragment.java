@@ -335,10 +335,11 @@ public class BusinessServiceHoursFragment extends Fragment implements View.OnCli
                     jsonObject.addProperty("Loyalty_Program", "1");
                     jsonObject.addProperty("Reservation_Deposit", "1");
                 }*/
-                if (amountEtDay.getText().toString().isEmpty()) {
+                if (llYesNo.getVisibility() == View.VISIBLE && amountEtDay.getText().toString().isEmpty()) {
+                    amountEtDay.setText("0");
                     Toast.makeText(getContext(), "Amount per guest_icon is required", Toast.LENGTH_SHORT).show();
-                } else if (hoursEditTextValue.getText().toString().isEmpty()) {
-                    Toast.makeText(getContext(), "Refund required", Toast.LENGTH_SHORT).show();
+                } else if (llYesNo.getVisibility() == View.VISIBLE && hoursEditTextValue.getText().toString().isEmpty()) {
+                    Toast.makeText(getContext(), "Cancellation lead time is required", Toast.LENGTH_SHORT).show();
                 } else if (etAvgPrice.getText().toString().isEmpty()) {
                     Toast.makeText(getContext(), "Price range per cusomer is required", Toast.LENGTH_SHORT).show();
                 } else {

@@ -205,6 +205,8 @@ public class AlternateBusinessActivity extends AppCompatActivity {
                 returnIntent.putExtra("busi_id", list.get(position).getId());
                 returnIntent.putExtra("table_id", list.get(position).getTableId());
                 returnIntent.putExtra("reserve_amt", list.get(position).getReservationPrice());
+                returnIntent.putExtra("table_name", list.get(position).getTableName());
+                returnIntent.putExtra("busi_name", list.get(position).getBusinessName());
                 setResult(Activity.RESULT_OK, returnIntent);
                 finish();
             }

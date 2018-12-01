@@ -146,6 +146,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
     private CustomTextView tvPaymentText;
     private double totalPaidAmountOrig = 0.0;
     private CustomEditText etRemark;
+    private AlertDialog cateringDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,6 +163,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         updateHomeDeliveryInfo();
         inhouseDialog();
         takeoutDialog();
+        cateringDialog();
         try {
             cust_latitude = Double.parseDouble(AppPreferences.getCustAddrLat(context));
             cust_longitude = Double.parseDouble(AppPreferences.getCustAddrLong(context));
@@ -273,8 +275,10 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         tvTotalPaidAmount2 = (CustomTextView) findViewById(R.id.tvTotalPaidAmount2);
         if (!getIntent().getStringExtra("totalamount").equalsIgnoreCase("")) {
             totalAmount = Double.parseDouble(getIntent().getStringExtra("totalamount"));
-            Log.e(TAG, "init: totalAmount" + totalAmount);
+            Log.e(TAG, "init: totalAmount >> " + totalAmount);
             tvTotalAmt.setText("$" + totalAmount);
+            tvTotalPaidAmount.setText("" + totalAmount);
+            totalPaidAmountBase = totalAmount;
         }
         etCouponCode = (CustomEditText) findViewById(R.id.couponCodeText);
         tvGETaxAmount = (CustomTextView) findViewById(R.id.tvGETaxAmount);
@@ -578,7 +582,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                 inhouse_btn.setChecked(false);
                 homedelivery_btn.setChecked(false);
                 take_way_btn.setChecked(false);
-                cateringOrder();
+                cateringDialog.show();
                 break;
             case R.id.inhouseradio:
                 inhouse_btn.setChecked(true);
@@ -820,6 +824,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                 Log.e(TAG, "finalprice" + finalprice);
                 Log.e(TAG, "total" + total);
                 double total_amount = Double.valueOf(decimalFormat.format(total));
+                Log.e(TAG, "applyPointsMethod: tvTotalPaidAmount >> " + total_amount);
                 tvTotalPaidAmount.setText("" + total_amount);
                 setWallet();
                 loylityBal.setText(balance + "");
@@ -990,9 +995,12 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                             tvGETaxValue.setText("GE Tax");
                             tvTotalAmt.setText("$" + totalAmount);
                             tvTotalPaidAmount.setText("" + totalAmount);
-                            setWallet();
                             tvTotalPaidAmount2.setText("$" + totalAmount);
-                            tvGETaxAmount.setText("00");
+                            tvGETaxAmount.setText("0");
+                            Log.e(TAG, "RRR totalAmount >> " + totalAmount);
+                            totalPaidAmountBase = totalAmount;
+                            setWallet();
+
                         } else {
                             tvGETaxValue.setText("GE Tax : " + object.getString("geTax_Percentage"));
                             double geTaxPer = Double.parseDouble(object.getString("geTax_Percentage").replace("%", ""));
@@ -1496,8 +1504,10 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         takeoutDialog.setCanceledOnTouchOutside(false);
 
         final EditText et_table_no = (CustomEditText) view.findViewById(R.id.et_table_no);
+        final EditText etMobileNo = (CustomEditText) view.findViewById(R.id.etMobileNo);
         ImageView close = (ImageView) view.findViewById(R.id.close);
         et_table_no.setText(AppPreferences.getCustomername(context));
+        etMobileNo.setText(AppPreferences.getCustomerMobile(context));
 
         close.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1518,8 +1528,12 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
             public void onClick(View v) {
                 if (TextUtils.isEmpty(et_table_no.getText().toString())) {
                     et_table_no.setError(fieldRequired);
+                } else if (TextUtils.isEmpty(etMobileNo.getText().toString())) {
+                    etMobileNo.setError(fieldRequired);
                 } else {
                     custName.setText(et_table_no.getText().toString());
+                    AppPreferences.setDeliveryName(context, et_table_no.getText().toString());
+                    AppPreferences.setDeliveryContact(context, etMobileNo.getText().toString());
                     getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
                     takeoutDialog.dismiss();
                     setTimePicker();
@@ -1527,6 +1541,56 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
             }
         });
         takeoutDialog.dismiss();
+    }
+
+    public void cateringDialog() {
+        builder = new AlertDialog.Builder(context);
+        LayoutInflater _inflater = LayoutInflater.from(context);
+        view = _inflater.inflate(R.layout.dialog_catering_order, null);
+        builder.setView(view, 50, 50, 50, 50);
+        cateringDialog = builder.create();
+        cateringDialog.setCancelable(true);
+        cateringDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        cateringDialog.setCanceledOnTouchOutside(false);
+
+        final EditText et_table_no = (CustomEditText) view.findViewById(R.id.et_table_no);
+        final EditText etMobileNo = (CustomEditText) view.findViewById(R.id.etMobileNo);
+        ImageView close = (ImageView) view.findViewById(R.id.close);
+        et_table_no.setText(AppPreferences.getCustomername(context));
+        etMobileNo.setText(AppPreferences.getCustomerMobile(context));
+
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                take_way_btn.setChecked(false);
+                homedelivery_btn.setChecked(false);
+                catering_btn.setChecked(false);
+                inhouse_btn.setChecked(false);
+                cateringDialog.dismiss();
+                order_type = "0";
+            }
+        });
+
+        CustomButton dsubmit = (CustomButton) view.findViewById(R.id.dsubmit);
+        dsubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (TextUtils.isEmpty(et_table_no.getText().toString())) {
+                    et_table_no.setError(fieldRequired);
+                } else if (TextUtils.isEmpty(etMobileNo.getText().toString())) {
+                    etMobileNo.setError(fieldRequired);
+                } else {
+                    custName.setText(et_table_no.getText().toString());
+                    AppPreferences.setDeliveryName(context, et_table_no.getText().toString());
+                    AppPreferences.setDeliveryContact(context, etMobileNo.getText().toString());
+                    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                    cateringDialog.dismiss();
+                    cateringOrder();
+                }
+            }
+        });
+        cateringDialog.dismiss();
     }
 
     private void checkPackage() {
@@ -1724,7 +1788,7 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
     private void getPayment(String amount) {
         Log.d("hellooo", amount);
         //Creating a paypalpayment
-        PayPalPayment payment = new PayPalPayment(new BigDecimal(amount + "0"), "USD", "Purchase Fee\n",
+        PayPalPayment payment = new PayPalPayment(new BigDecimal(amount + ""), "USD", "Purchase Fee\n",
                 PayPalPayment.PAYMENT_INTENT_SALE);
         //Creating Paypal Payment activity intent
         Intent intent = new Intent(CheckOutActivity.this, com.paypal.android.sdk.payments.PaymentActivity.class);
@@ -2107,6 +2171,12 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                             tvDeliveryText.setTextColor(Color.RED);
                             tvDeliveryText.setText("Minimum Order Amount for Delivery is $" + minDeliveryAmt);
                         }
+                    } else {
+                        if (homedelivery_btn.isChecked()) homedelivery_btn.setChecked(false);
+                        order_type = "0";
+                        tvDeliveryText.setVisibility(View.VISIBLE);
+                        tvDeliveryText.setTextColor(Color.RED);
+                        tvDeliveryText.setText("Restaurant can't delivery at this time.");
                     }
                     if (progressHD != null) progressHD.dismiss();
 
@@ -2213,7 +2283,11 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                 getDeliveryInfo();*/
             } catch (IOException e) {
                 e.printStackTrace();
+                distance = 15;//default
+                publishProgress(distance);
             } catch (JSONException e) {
+                distance = 15;//default
+                publishProgress(distance);
                 e.printStackTrace();
             }
             return null;

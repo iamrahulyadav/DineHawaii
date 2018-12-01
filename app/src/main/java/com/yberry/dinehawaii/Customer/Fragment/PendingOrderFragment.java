@@ -165,7 +165,6 @@ public class PendingOrderFragment extends Fragment {
                     adapter.notifyDataSetChanged();
                     progressHD.dismiss();
                 }
-
             }
 
             @SuppressLint("LongLogTag")

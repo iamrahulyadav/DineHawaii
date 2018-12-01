@@ -615,7 +615,7 @@ public class BusinessNaviDrawer extends AppCompatActivity implements NavigationV
                     } catch (JSONException e) {
                         e.printStackTrace();
                         publishProgress(0, "");
-                    }catch (Exception e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                         publishProgress(0, "");
                     }

@@ -354,7 +354,7 @@ public class AddMenuItemActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Log.e(TAG, "error :- " + Log.getStackTraceString(t));
-                getAllAreas();
+                //getAllAreas();
             }
         });
 
