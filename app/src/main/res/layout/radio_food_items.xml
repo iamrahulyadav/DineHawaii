@@ -17,7 +17,7 @@
         android:text="values"
         android:checked="true"
         android:textColor="@color/blue"
-        android:textSize="@dimen/_12sdp" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
     </RadioGroup>
 

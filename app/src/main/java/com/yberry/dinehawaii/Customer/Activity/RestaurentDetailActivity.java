@@ -31,7 +31,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
-import com.yberry.dinehawaii.Customer.Adapter.ChienesAdapter;
+import com.yberry.dinehawaii.Customer.Adapter.MenuFragmentAdapter;
 import com.yberry.dinehawaii.Customer.Adapter.MenuListAdapter;
 import com.yberry.dinehawaii.Model.ListItem;
 import com.yberry.dinehawaii.Model.MenuDetail;
@@ -89,7 +89,7 @@ public class RestaurentDetailActivity extends AppCompatActivity {
     private LinearLayout ll_section_service;
     private ImageView view_food_image, view_hours_image, view_service_image;
     private TextView headet_text;
-    private ChienesAdapter chineseadpater;
+    private MenuFragmentAdapter chineseadpater;
     private ArrayList<MenuDetail> arrayListCart;
     private CustomTextView tvCountBadge;
     private ListItem data;
@@ -122,7 +122,7 @@ public class RestaurentDetailActivity extends AppCompatActivity {
         setListener();
         listItems = new ArrayList<>();
         arrayListCart = new ArrayList<>();
-        chineseadpater = new ChienesAdapter(this, arrayListCart);
+        chineseadpater = new MenuFragmentAdapter(this, arrayListCart);
         data = (ListItem) getIntent().getParcelableExtra("data");
         Log.e(TAG, "onCreate: data >> " + data);
         listItems.add(data);

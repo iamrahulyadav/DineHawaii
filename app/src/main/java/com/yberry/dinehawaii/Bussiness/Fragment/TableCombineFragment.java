@@ -128,12 +128,14 @@ public class TableCombineFragment extends Fragment implements View.OnClickListen
             @SuppressLint("LongLogTag")
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                Log.e(TAG + "onResponseTable", response.body().toString());
-                String s = response.body().toString();
+
 
                 try {
-                    JSONObject jsonObject = new JSONObject(s);
+                    Log.e(TAG + "onResponseTable", response.body().toString());
+                    String s = response.body().toString();
                     Log.d("Res:", s);
+
+                    JSONObject jsonObject = new JSONObject(s);
                     if (jsonObject.getString("status").equalsIgnoreCase("200")) {
                         notable.setVisibility(View.GONE);
                         JSONArray jsonArray1 = jsonObject.getJSONArray("result_combine");
@@ -159,7 +161,7 @@ public class TableCombineFragment extends Fragment implements View.OnClickListen
                     }
                     progressHD.dismiss();
                     tableAdapter.notifyDataSetChanged();
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     progressHD.dismiss();
                 }

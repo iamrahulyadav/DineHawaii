@@ -40,7 +40,7 @@ import java.util.Arrays;
 
 import static com.yberry.dinehawaii.Customer.Activity.PlaceAnOrder.itemsDetailsModels;
 
-public class ChienesAdapter extends RecyclerView.Adapter<ChienesAdapter.MyViewHolder> {
+public class MenuFragmentAdapter extends RecyclerView.Adapter<MenuFragmentAdapter.MyViewHolder> {
 
     private static final String TAG = "Adapter_Chineseee";
     MenuCart menuCart = new MenuCart();
@@ -58,7 +58,7 @@ public class ChienesAdapter extends RecyclerView.Adapter<ChienesAdapter.MyViewHo
     private OrderItemsDetailsModel orderesItem;
     private String stateChbk = "";
 
-    public ChienesAdapter(Context mContext, ArrayList<MenuDetail> arrayList) {
+    public MenuFragmentAdapter(Context mContext, ArrayList<MenuDetail> arrayList) {
         this.mContext = mContext;
         this.arrayList = arrayList;
         appControler = (MyApplication) mContext.getApplicationContext();
@@ -246,7 +246,7 @@ public class ChienesAdapter extends RecyclerView.Adapter<ChienesAdapter.MyViewHo
                 tv_totalCost.setText(" " + totalCost);
             }
         });
-        CustomTextView noCustomizations= (CustomTextView)dialog.findViewById(R.id.noCustomizations);
+        CustomTextView noCustomizations = (CustomTextView) dialog.findViewById(R.id.noCustomizations);
         getCheck.clear();
         if (!menuDetail.getCustomizations().equalsIgnoreCase("") && !menuDetail.getCustomizations().equalsIgnoreCase("null")) {
             noCustomizations.setVisibility(View.GONE);
@@ -268,7 +268,7 @@ public class ChienesAdapter extends RecyclerView.Adapter<ChienesAdapter.MyViewHo
             SelectedCustamizationAdapter selectedCustamizationAdapter = new SelectedCustamizationAdapter(mContext, getCheck, chbkInterface);
             recyler_customization.setAdapter(selectedCustamizationAdapter);
             selectedCustamizationAdapter.notifyDataSetChanged();
-        }else
+        } else
             noCustomizations.setVisibility(View.VISIBLE);
 
         tvdone.setOnClickListener(new View.OnClickListener() {
@@ -278,7 +278,7 @@ public class ChienesAdapter extends RecyclerView.Adapter<ChienesAdapter.MyViewHo
                 AppPreferences.setCustomizationMsg(context, enter_mesage);
                 Log.d(TAG + "Bussiness Id", menuDetail.getItem_bus_id());
                 orderesItem.setItemCustomiationList(stateChbk);
-                Log.e(TAG, "onClick: stateChbk>>>>>>>>"+stateChbk);
+                Log.e(TAG, "onClick: stateChbk>>>>>>>>" + stateChbk);
                 orderesItem.setMenu_id(menuDetail.getItemId());
                 orderesItem.setCat_id(menuDetail.getItem_cat_id());
                 orderesItem.setBuss_id(menuDetail.getItem_bus_id());

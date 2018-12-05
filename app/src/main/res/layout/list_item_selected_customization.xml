@@ -12,6 +12,6 @@
         android:text="Allergies"
         android:textColor="@color/edit_text_color"
         style="@style/TextAppearance.AppCompat.Small"
-        android:textSize="@dimen/_10sdp" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
 </LinearLayout>

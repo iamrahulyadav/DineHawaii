@@ -204,12 +204,16 @@ public class BusinessInformationFragment extends Fragment {
         } catch (GooglePlayServicesNotAvailableException e) {
             Log.e(TAG, "findPlace: Exception >> " + e.getMessage());
             // TODO: Handle the error.
+        } catch (Exception e) {
+            Log.e(TAG, "findPlace: Exception >> " + e.getMessage());
         }
     }
 
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.e(TAG, "onActivityResult: requestCode >> " + requestCode);
+        Log.e(TAG, "onActivityResult: resultCode >> " + resultCode);
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
                 Place place = PlaceAutocomplete.getPlace(getActivity(), data);
@@ -229,6 +233,7 @@ public class BusinessInformationFragment extends Fragment {
                 Status status = PlaceAutocomplete.getStatus(getActivity(), data);
                 Log.e(TAG, "onActivityResult: result_error >> " + status.getStatusMessage());
             } else if (resultCode == RESULT_CANCELED) {
+                Log.e(TAG, "onActivityResult: result_cancelled");
             }
         }
     }
@@ -336,20 +341,20 @@ public class BusinessInformationFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Log.e(TAG, "onItemSelected: Selected Country >> " + mailCountry.getSelectedItem().toString());
                 Log.e(TAG, "onItemSelected: Set Country >> " + mail_country);
-                    try {
-                        JSONObject obj = new JSONObject(Function.loadJSONFromAsset(getActivity(), "state.json"));
-                        JSONObject stateJson = obj.getJSONObject(mailCountry.getSelectedItem().toString());
-                        JSONArray state_jArry = stateJson.getJSONArray("name");
-                        mailstateList.clear();
-                        for (int i = 0; i < state_jArry.length(); i++) {
-                            mailstateList.add(state_jArry.get(i).toString());
-                            stateadapter.notifyDataSetChanged();
-                            if (state_jArry.get(i).toString().equalsIgnoreCase(mail_state))
-                                mailState.setSelection(i);
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                try {
+                    JSONObject obj = new JSONObject(Function.loadJSONFromAsset(getActivity(), "state.json"));
+                    JSONObject stateJson = obj.getJSONObject(mailCountry.getSelectedItem().toString());
+                    JSONArray state_jArry = stateJson.getJSONArray("name");
+                    mailstateList.clear();
+                    for (int i = 0; i < state_jArry.length(); i++) {
+                        mailstateList.add(state_jArry.get(i).toString());
+                        stateadapter.notifyDataSetChanged();
+                        if (state_jArry.get(i).toString().equalsIgnoreCase(mail_state))
+                            mailState.setSelection(i);
                     }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
 
                 mailState.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

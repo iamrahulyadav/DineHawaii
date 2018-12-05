@@ -1,61 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_resarvation_detail"
     android:layout_width="match_parent"
-    android:background="@color/activityBackground"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/activityBackground">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/ivcross"
-        android:padding="@dimen/_10sdp"
-        android:src="@drawable/ic_cancel_black_24dp"
-        android:layout_alignParentRight="true"/>
-    <TextView
-        android:layout_below="@id/ivcross"
         android:layout_width="wrap_content"
-        android:layout_gravity="right"
         android:layout_height="wrap_content"
-        android:background="@color/transparent_full"
-        android:text="Screen No:51 C"
-        android:textSize="@dimen/_10sdp"
         android:layout_alignParentRight="true"
-        android:textColor="@color/screen_no_text"/>
+        android:padding="@dimen/_10sdp"
+        android:src="@drawable/ic_cancel_black_24dp" />
+
 
     <com.yberry.dinehawaii.customview.CustomTextView
+        android:id="@+id/sendmessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Send Message"
-        android:id="@+id/sendmessage"
-        android:layout_marginTop="70dp"
-        android:layout_centerInParent="true"
-
         android:layout_below="@+id/ivcross"
-        android:textSize="@dimen/layout_textsize_20"/>
+        android:layout_centerInParent="true"
+        android:layout_marginTop="70dp"
+        android:text="Send Message"
+        android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title" />
+
     <com.yberry.dinehawaii.customview.CustomEditText
+        android:id="@+id/typemessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/sendmessage"
-        android:textColorHint="@color/gray"
-        android:padding="30dp"
-        android:textColor="@color/gray"
-        android:layout_marginRight="30dp"
         android:layout_marginLeft="30dp"
-        android:id="@+id/typemessage"
+        android:layout_marginRight="30dp"
         android:gravity="center"
-        android:textSize="14sp"
         android:hint="Type your message here"
-        ></com.yberry.dinehawaii.customview.CustomEditText>
+        android:padding="30dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+        android:textColor="@color/gray"
+        android:textColorHint="@color/gray"></com.yberry.dinehawaii.customview.CustomEditText>
+
     <ImageView
+        android:id="@+id/ivSend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="20dp"
-        android:id="@+id/ivSend"
         android:layout_below="@+id/typemessage"
         android:layout_centerHorizontal="true"
+        android:layout_marginRight="20dp"
         android:padding="20dp"
-        android:src="@drawable/send"
-        />
+        android:src="@drawable/send" />
 </RelativeLayout>

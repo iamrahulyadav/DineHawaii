@@ -145,7 +145,7 @@
             android:padding="10dp"
             android:text="@string/SendEgifttxt3"
             android:textColor="@color/edit_text_color"
-            android:textSize="@dimen/_12sdp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             app:edittextfont="@string/raleway_regular" />
 
         <com.yberry.dinehawaii.customview.CustomEditText

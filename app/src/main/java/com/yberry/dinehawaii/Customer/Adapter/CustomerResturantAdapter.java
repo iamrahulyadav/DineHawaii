@@ -52,7 +52,7 @@ public class CustomerResturantAdapter extends RecyclerView.Adapter<CustomerRestu
         holder.title.setText(model.getReview_message());
         if (!model.getBusiness_reply().equalsIgnoreCase("")) {
             holder.tvResponse.setVisibility(View.VISIBLE);
-            holder.tvResponse.setText("(Reply: " + model.getBusiness_reply()+")");
+            holder.tvResponse.setText("(Replied: " + model.getBusiness_reply() + ")");
         }
     }
 

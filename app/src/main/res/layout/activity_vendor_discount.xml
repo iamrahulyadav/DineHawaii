@@ -16,7 +16,7 @@
         android:padding="@dimen/_8sdp"
         android:text="Screen No:54"
         android:textColor="#000"
-        android:textSize="@dimen/_12sdp" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -43,7 +43,7 @@
                     android:drawablePadding="@dimen/_6sdp"
                     android:gravity="fill_vertical"
                     android:text="Delivery Available :"
-                    android:textSize="@dimen/_12sdp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                     app:edittextfont="Raleway-Bold.ttf" />
 
                 <RadioGroup
@@ -60,7 +60,7 @@
                         android:checked="false"
                         android:text="Yes"
                         android:textColor="@color/gray"
-                        android:textSize="@dimen/_10sdp" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
                     <RadioButton
                         android:id="@+id/avail_no"
@@ -69,7 +69,7 @@
                         android:buttonTint="@color/green"
                         android:text="No"
                         android:textColor="@color/gray"
-                        android:textSize="@dimen/_10sdp" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
                 </RadioGroup>
 
                 <com.yberry.dinehawaii.customview.CustomTextView
@@ -94,7 +94,7 @@
                 android:padding="@dimen/_5sdp"
                 android:text="PAYMENT TERMS(SELECT ONE):"
 
-                android:textSize="@dimen/_12sdp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                 android:textStyle="bold"
                 app:edittextfont="Raleway-Bold.ttf" />
 
@@ -107,7 +107,7 @@
                 android:drawableRight="@drawable/help"
                 android:gravity="fill_vertical"
                 android:text="Customer Pre-Payment Required"
-                android:textSize="@dimen/_10sdp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 app:edittextfont="Raleway-Bold.ttf" />
 
             <LinearLayout
@@ -130,7 +130,7 @@
                         android:checked="false"
                         android:text="Yes"
                         android:textColor="@color/gray"
-                        android:textSize="@dimen/_10sdp" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
                     <RadioButton
                         android:id="@+id/pre_payment_no"
@@ -140,7 +140,7 @@
                         android:buttonTint="@color/green"
                         android:text="No"
                         android:textColor="@color/green"
-                        android:textSize="@dimen/_10sdp" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
                 </RadioGroup>
             </LinearLayout>
 
@@ -153,7 +153,7 @@
                 android:drawableRight="@drawable/help"
                 android:gravity="fill_vertical"
                 android:text="COD-Payment Delivery Option:"
-                android:textSize="@dimen/_10sdp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 app:edittextfont="Raleway-Bold.ttf" />
 
             <LinearLayout
@@ -175,7 +175,7 @@
                         android:buttonTint="@color/green"
                         android:text="Yes"
                         android:textColor="@color/gray"
-                        android:textSize="@dimen/_10sdp" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
                     <RadioButton
                         android:id="@+id/delivery_no"
@@ -185,7 +185,7 @@
                         android:checked="false"
                         android:text="No"
                         android:textColor="@color/gray"
-                        android:textSize="@dimen/_10sdp" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
                 </RadioGroup>
             </LinearLayout>
 
@@ -198,7 +198,7 @@
                 android:drawableRight="@drawable/help"
                 android:gravity="fill_vertical"
                 android:text="Generate DINE Invoice for Customer"
-                android:textSize="@dimen/_10sdp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 app:edittextfont="Raleway-Bold.ttf" />
 
             <LinearLayout
@@ -221,7 +221,7 @@
                         android:checked="false"
                         android:text="Yes"
                         android:textColor="@color/gray"
-                        android:textSize="@dimen/_10sdp" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
                     <RadioButton
                         android:id="@+id/invoice_no"
@@ -231,7 +231,7 @@
                         android:buttonTint="@color/green"
                         android:text="No"
                         android:textColor="@color/gray"
-                        android:textSize="@dimen/_10sdp" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
                 </RadioGroup>
             </LinearLayout>
 
@@ -246,7 +246,7 @@
                             android:text="Generate DINE Invoice for Customer"
                             android:drawableRight="@drawable/help"
                             android:layout_marginTop="@dimen/_3sdp"
-                            android:textSize="@dimen/_10sdp" />
+                            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
             -->
             <!--
                         <LinearLayout
@@ -259,14 +259,14 @@
                                 android:layout_marginLeft="@dimen/_10sdp"
                                 android:buttonTint="@color/green"
                                 android:text="Yes"
-                                android:textSize="@dimen/_10sdp"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 android:textColor="@color/gray"/>
                             <RadioButton
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:buttonTint="@color/green"
                                 android:text="No"
-                                android:textSize="@dimen/_10sdp"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 android:textColor="@color/gray"/>
                         </LinearLayout>
             -->
@@ -280,7 +280,7 @@
                 android:drawableRight="@drawable/help"
                 android:gravity="fill_vertical"
                 android:text="Business will mail Invoice to Customer"
-                android:textSize="@dimen/_10sdp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 app:edittextfont="Raleway-Bold.ttf" />
 
             <LinearLayout
@@ -302,7 +302,7 @@
                         android:buttonTint="@color/green"
                         android:text="Yes"
                         android:textColor="@color/gray"
-                        android:textSize="@dimen/_10sdp" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
                     <RadioButton
                         android:id="@+id/mail_invoce_no"
@@ -312,7 +312,7 @@
                         android:checked="false"
                         android:text="No"
                         android:textColor="@color/gray"
-                        android:textSize="@dimen/_10sdp" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
                 </RadioGroup>
             </LinearLayout>
 

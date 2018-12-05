@@ -198,7 +198,8 @@ public class AppConstants {
         String ADDNEWCOUPON = "AddNewCoupon";
         String ALLCOUPONS = "AllCoupons";
         String EDITCOUPON = "EditCoupon";
-        String SETLEADTIME = "setLeadTime";
+//        String SETLEADTIME = "setLeadTime";
+        String SETLEADTIME = "setLeadTime1";
         String GETLEADTIMES = "getLeadTimes";
         String ASSIGN_ORDER_DELIVERY = "Assign_Order_Delivery";
         String ALLBUSAREA = "all_busi_area";

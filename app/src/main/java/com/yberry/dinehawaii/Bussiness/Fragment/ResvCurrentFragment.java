@@ -34,10 +34,8 @@ import com.yberry.dinehawaii.Util.Util;
 import com.yberry.dinehawaii.customview.CustomTextView;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -171,10 +169,11 @@ public class ResvCurrentFragment extends Fragment {
                 @SuppressLint("LongLogTag")
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                    Log.e(TAG, "Response GET CURRENT RESERVATION >> " + response.body().toString());
-                    String s = response.body().toString();
-                    reservList.clear();
+
                     try {
+                        Log.e(TAG, "Response GET CURRENT RESERVATION >> " + response.body().toString());
+                        String s = response.body().toString();
+                        reservList.clear();
                         JSONObject jsonObject = new JSONObject(s);
                         JSONArray resultArray = jsonObject.getJSONArray("result");
                         Log.d("STATUS>>", jsonObject.getString("status"));
@@ -210,10 +209,8 @@ public class ResvCurrentFragment extends Fragment {
                             publishProgress(400, "No Records available");
                         }
                         adapter.notifyDataSetChanged();
-                    } catch (JSONException e) {
+                    } catch (Exception e) {
                         publishProgress(400, "Some error occured");
-                        e.printStackTrace();
-                    } catch (ParseException e) {
                         e.printStackTrace();
                     }
                     publishProgress(0, "");

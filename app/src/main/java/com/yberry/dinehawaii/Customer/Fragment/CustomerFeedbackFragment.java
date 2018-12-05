@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.yberry.dinehawaii.Customer.Activity.FeedbackActivity;
 import com.yberry.dinehawaii.R;
 import com.yberry.dinehawaii.RetrofitClasses.ApiClient;
 import com.yberry.dinehawaii.RetrofitClasses.MyApiEndpointInterface;
@@ -65,6 +67,7 @@ public class CustomerFeedbackFragment extends Fragment {
     private SwipeRefreshLayout swipeRefreshLayout;
     CustomTextView nofeed;
     private Context context;
+    private CustomButton tvAdd;
 
     public CustomerFeedbackFragment() {
     }
@@ -170,6 +173,15 @@ public class CustomerFeedbackFragment extends Fragment {
                 list.clear();
                 getOrderFeedback();
                 adapter.notifyDataSetChanged();
+            }
+        });
+        tvAdd = (CustomButton) rootView.findViewById(R.id.tvAdd);
+
+
+        tvAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), FeedbackActivity.class));
             }
         });
     }

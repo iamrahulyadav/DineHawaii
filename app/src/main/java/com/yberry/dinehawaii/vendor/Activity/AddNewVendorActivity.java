@@ -46,7 +46,7 @@ import retrofit2.Response;
 public class AddNewVendorActivity extends AppCompatActivity implements View.OnClickListener {
     Context context;
     ArrayList<VendorMasterData> masterlist;
-    CustomEditText etname, etcity, etaddress, etcontact, etemail, etbusname, etLastNm, etVendorType;
+    CustomEditText etname, etcity, etaddress, etcontact, etemail, etbusname, etVendorType;
     String TAG = "AddVendorActivity";
     String vendorText;
     LinearLayout mainView;
@@ -124,7 +124,6 @@ public class AddNewVendorActivity extends AppCompatActivity implements View.OnCl
         context = this;
         masterlist = new ArrayList<VendorMasterData>();
         etname = (CustomEditText) findViewById(R.id.etVendorName);
-        etLastNm = (CustomEditText) findViewById(R.id.etLastNm);
         etcity = (CustomEditText) findViewById(R.id.etCity);
         etcontact = (CustomEditText) findViewById(R.id.etVendorphoneno);
         etaddress = (CustomEditText) findViewById(R.id.etAddress);
@@ -212,7 +211,7 @@ public class AddNewVendorActivity extends AppCompatActivity implements View.OnCl
         jsonObject.addProperty("business_id", AppPreferencesBuss.getBussiId(context));
         jsonObject.addProperty("category_id", selectedVendorIds);
         jsonObject.addProperty("vendor_fname", etname.getText().toString());
-        jsonObject.addProperty("vendor_lname", etLastNm.getText().toString());
+        jsonObject.addProperty("vendor_lname", "");
         jsonObject.addProperty("vendor_email", etemail.getText().toString());
         jsonObject.addProperty("vendor_number", etcontact.getText().toString());
         jsonObject.addProperty("vendor_city", etcity.getText().toString());

@@ -18,7 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.yberry.dinehawaii.Customer.Activity.CartActivity;
-import com.yberry.dinehawaii.Customer.Adapter.ChienesAdapter;
+import com.yberry.dinehawaii.Customer.Adapter.MenuFragmentAdapter;
 import com.yberry.dinehawaii.Model.MenuDetail;
 import com.yberry.dinehawaii.Model.OrderItemsDetailsModel;
 import com.yberry.dinehawaii.R;
@@ -28,23 +28,23 @@ import com.yberry.dinehawaii.database.DatabaseHandler;
 
 import java.util.ArrayList;
 
-public class ChienesFragment extends Fragment {
+public class MenuFragment extends Fragment {
     ArrayList<MenuDetail> menuDetails = new ArrayList<>();
     private View rootView;
     private Context mContext;
     private ArrayList<MenuDetail> arrayList;
     private LinearLayoutManager mLayoutManager;
-    private ChienesAdapter adapter;
+    private MenuFragmentAdapter adapter;
     private ArrayList<String> list;
     private CardView floatingActionButton;
     private CustomTextView tvCountBadge;
 
-    public ChienesFragment() {
+    public MenuFragment() {
     }
 
 
     @SuppressLint("ValidFragment")
-    public ChienesFragment(Context mContext, ArrayList<MenuDetail> arrayList) {
+    public MenuFragment(Context mContext, ArrayList<MenuDetail> arrayList) {
         this.mContext = mContext;
         this.arrayList = arrayList;
 
@@ -67,7 +67,7 @@ public class ChienesFragment extends Fragment {
     private void initCompnent() {
         menuDetails.clear();
         //menuDetails.add(arrayList);
-        adapter = new ChienesAdapter(mContext, arrayList);
+        adapter = new MenuFragmentAdapter(mContext, arrayList);
         RecyclerView mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -75,7 +75,7 @@ public class ChienesFragment extends Fragment {
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(adapter);
 
-        adapter.setOnItemClickListener(new ChienesAdapter.OnItemClickListener() {
+        adapter.setOnItemClickListener(new MenuFragmentAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(OrderItemsDetailsModel listItem) {
             }

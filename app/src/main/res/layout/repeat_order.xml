@@ -20,20 +20,12 @@
         android:background="@color/white"
         android:orientation="vertical">
 
-        <com.yberry.dinehawaii.customview.CustomTextView
-            style="@style/TextAppearance.AppCompat.Subhead"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Order-Id"
-            android:textStyle="bold"
-            app:edittextfont="Raleway-Bold.ttf" />
         <LinearLayout
             android:id="@+id/tabMain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:weightSum="2">
-
 
 
             <LinearLayout

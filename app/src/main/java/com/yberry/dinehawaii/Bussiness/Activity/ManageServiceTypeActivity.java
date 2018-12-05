@@ -91,10 +91,11 @@ public class ManageServiceTypeActivity extends AppCompatActivity {
             @SuppressLint("LongLogTag")
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                Log.e(TAG, "Response GET ALL SERVICES >> " + response.body().toString());
-                String s = response.body().toString();
 
                 try {
+                    Log.e(TAG, "Response GET ALL SERVICES >> " + response.body().toString());
+                    String s = response.body().toString();
+
                     serviceList.clear();
                     JSONObject jsonObject = new JSONObject(s);
                     if (jsonObject.getString("status").equalsIgnoreCase("200")) {
@@ -132,8 +133,10 @@ public class ManageServiceTypeActivity extends AppCompatActivity {
                     } else {
                         Toast.makeText(ManageServiceTypeActivity.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
+                    Toast.makeText(ManageServiceTypeActivity.this, "Internal server error", Toast.LENGTH_SHORT).show();
+
                 }
                 progressHD.dismiss();
                 swipeRefreshLayout.setRefreshing(false);

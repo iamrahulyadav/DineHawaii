@@ -42,12 +42,13 @@ public class AvailableCoupon extends Fragment {
 
     private static final String TAG = "Available EGiftAndCoupons";
     Context context;
-    public static List<CustomerModel> list = new ArrayList<>();
+    public static List<CustomerModel> list;
     public static AllEgiftAdapter adapter;
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
     private View rootView;
     CustomTextView nodata;
+
     public AvailableCoupon() {
     }
 
@@ -63,15 +64,13 @@ public class AvailableCoupon extends Fragment {
 
     private void initComponent() {
         context = getActivity();
+        list = new ArrayList<>();
         nodata = (CustomTextView) rootView.findViewById(R.id.nodata);
-
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_coupon);
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
         adapter = new AllEgiftAdapter(context, list);
         mRecyclerView.setAdapter(adapter);
-
-
     }
 
     private void dataAvailableCoupon() {

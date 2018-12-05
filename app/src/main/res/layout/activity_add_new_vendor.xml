@@ -40,7 +40,7 @@
                 android:drawableLeft="@drawable/drawable_green_dot"
                 android:drawablePadding="@dimen/_5sdp"
                 android:gravity="center"
-                android:text="First Name"
+                android:text="Full Name"
                 android:textColor="@color/colorGreen"
                 app:edittextfont="Raleway-Bold.ttf" />
 
@@ -52,45 +52,13 @@
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginRight="@dimen/_10sdp"
                 android:background="@null"
-                android:hint="Enter first name"
+                android:hint="Enter full name"
                 android:padding="@dimen/_5sdp"
                 android:singleLine="true"
                 android:textColor="@color/edit_text_color"
                 app:edittextfont="Raleway-Regular.ttf" />
 
-            <View
-                android:layout_width="wrap_content"
-                android:layout_height="1dp"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginRight="@dimen/_10sdp"
-                android:background="@color/colorDivider" />
 
-            <com.yberry.dinehawaii.customview.CustomTextView
-                style="@style/TextAppearance.AppCompat.Subhead"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tvSelectService"
-                android:layout_marginTop="@dimen/_9sdp"
-                android:drawableLeft="@drawable/drawable_green_dot"
-                android:drawablePadding="@dimen/_5sdp"
-                android:gravity="center"
-                android:text="Last Name"
-                android:textColor="@color/colorGreen"
-                app:edittextfont="Raleway-Bold.ttf" />
-
-            <com.yberry.dinehawaii.customview.CustomEditText
-                android:id="@+id/etLastNm"
-                style="@style/TextAppearance.AppCompat.Subhead"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginRight="@dimen/_10sdp"
-                android:background="@null"
-                android:hint="Enter last name"
-                android:padding="@dimen/_5sdp"
-                android:singleLine="true"
-                android:textColor="@color/edit_text_color"
-                app:edittextfont="Raleway-Regular.ttf" />
 
             <View
                 android:layout_width="wrap_content"

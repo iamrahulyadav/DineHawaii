@@ -12,13 +12,11 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.JsonObject;
 import com.yberry.dinehawaii.Customer.Adapter.PlaceAnOrderAdapter;
-import com.yberry.dinehawaii.Customer.Fragment.ChienesFragment;
-import com.yberry.dinehawaii.Model.ListItem;
+import com.yberry.dinehawaii.Customer.Fragment.MenuFragment;
 import com.yberry.dinehawaii.Model.MenuDetail;
 import com.yberry.dinehawaii.Model.OrderItemsDetailsModel;
 import com.yberry.dinehawaii.R;
@@ -40,12 +38,10 @@ import retrofit2.Response;
 public class PlaceAnOrder extends AppCompatActivity {
     private static final String TAG = "PlaceAnOrder";
     public static ArrayList<OrderItemsDetailsModel> itemsDetailsModels;
-    public ArrayList<ListItem> achiv = new ArrayList<ListItem>();
-    ListView listView;
     ImageView back;
     PlaceAnOrderAdapter adapter;
     ArrayList<ArrayList<MenuDetail>> menuArraylist = new ArrayList<ArrayList<MenuDetail>>();
-    ArrayList<String> arrayListMainMenu = new ArrayList<>();
+    ArrayList<String> menuTypeList = new ArrayList<>();
     ViewPager viewPager;
     private Context mContext;
     private String business_id;
@@ -67,12 +63,7 @@ public class PlaceAnOrder extends AppCompatActivity {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("method", AppConstants.CUSTOMER_USER.GET_RESURANT_MENU_DETAILS);
         jsonObject.addProperty("business_id", business_id);
-        Log.e(TAG, "Request GET ALL MENU >> " + jsonObject.toString());
-        getResurant_menu_details(jsonObject);
-    }
-
-    @SuppressLint("LongLogTag")
-    private void getResurant_menu_details(JsonObject jsonObject) {
+        Log.e(TAG, "getAllMenus: Request >> " + jsonObject);
 
         final ProgressHUD progressHD = ProgressHUD.show(PlaceAnOrder.this, "Please wait...", true, false, new DialogInterface.OnCancelListener() {
             @Override
@@ -86,60 +77,55 @@ public class PlaceAnOrder extends AppCompatActivity {
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                Log.e(TAG, "Response GET ALL MENU >> " + response.body().toString());
-                String s = response.body().toString();
-                MenuDetail menuDetail;
                 try {
+                    Log.e(TAG, "getAllMenus: Response >> " + response.body().toString());
+                    String s = response.body().toString();
                     JSONObject jsonObject = new JSONObject(s);
                     if (jsonObject.getString("status").equalsIgnoreCase("200")) {
-                        JSONArray main_menus = jsonObject.getJSONArray("main_menus");
-                        for (int m = 0; m < main_menus.length(); m++) {
-                            String mainMenuNames = main_menus.getString(m);
-                            Log.e(TAG, "Json Menu :- " + mainMenuNames);
-                            arrayListMainMenu.add(mainMenuNames);
-                            Log.e(TAG + "<<<<ARRAY>>>", "" + arrayListMainMenu.toString());
-                            JSONArray jsonArray_Details = jsonObject.getJSONArray("details");
-                            Log.e(TAG + "<<<< JSON ARRAY DETAILS >>>", "" + jsonArray_Details.length());
-                            for (int i = 0; i < jsonArray_Details.length(); i++) {
-                                JSONObject jsonObject1 = jsonArray_Details.getJSONObject(i);
-                                JSONArray jsonArray_yogurt = jsonObject1.getJSONArray(mainMenuNames);
-                                Log.e(TAG, "of details :- " + jsonArray_yogurt.toString());
-                                ArrayList<MenuDetail> submenuArraylist = new ArrayList<>();
-                                for (int j = 0; j < jsonArray_yogurt.length(); j++) {
-                                    menuDetail = new MenuDetail();
-                                    JSONObject frozenYogurt = jsonArray_yogurt.getJSONObject(j);
-                                    String mainName = arrayListMainMenu.get(m);
-                                    String id = frozenYogurt.getString("id");
-                                    String name = frozenYogurt.getString("name");
-                                    String bus_id = frozenYogurt.getString("bus_id");
-                                    String cat_id = frozenYogurt.getString("cat_id");
-                                    String price = frozenYogurt.getString("price");
-                                    String service_type = frozenYogurt.getString("service_type");
-                                    String half_price = frozenYogurt.getString("half_price");
-                                    String details = frozenYogurt.getString("detail");
-                                    //price = price.replaceAll(".00", " ");
+                        JSONArray arrayMenuTypes = jsonObject.getJSONArray("main_menus");
+                        for (int m = 0; m < arrayMenuTypes.length(); m++) {
+                            menuTypeList.add(arrayMenuTypes.getString(m));
+                            JSONArray arrayDetails = jsonObject.getJSONArray("details");
+                            for (int i = 0; i < arrayDetails.length(); i++) {
+                                JSONObject jsonObject1 = arrayDetails.getJSONObject(i);
+                                JSONArray jsonArray = jsonObject1.getJSONArray(arrayMenuTypes.getString(m));
+                                ArrayList<MenuDetail> menuList = new ArrayList<>();
+                                for (int j = 0; j < jsonArray.length(); j++) {
+                                    MenuDetail data = new MenuDetail();
+                                    JSONObject jsonObject2 = jsonArray.getJSONObject(j);
+                                    String id = jsonObject2.getString("id");
+                                    String name = jsonObject2.getString("name");
+                                    String bus_id = jsonObject2.getString("bus_id");
+                                    String cat_id = jsonObject2.getString("cat_id");
+                                    String price = jsonObject2.getString("price");
+                                    String service_type = jsonObject2.getString("service_type");
+                                    String half_price = jsonObject2.getString("half_price");
+                                    String details = jsonObject2.getString("detail");
+                                    String customization = "";
+                                    if (jsonObject2.has("customization"))
+                                        customization = jsonObject2.getString("customization");
                                     price = price.replaceAll("\\.00", "");
-                                    Log.v(TAG, "Main Menu Name :- " + mainMenuNames + "\n ~~~~~~~~~~ Id:- " + id + " bus id :- " + bus_id + " Name:- " + name + "Item Price :- " + price);
-                                    menuDetail.setItemName(name);
-                                    menuDetail.setItem_bus_id(bus_id);
-                                    menuDetail.setItem_cat_id(cat_id);
-                                    menuDetail.setItemId(id);
-                                    menuDetail.setItem_price(price.trim());
-                                    menuDetail.setService_type(service_type);
-                                    menuDetail.setItem_half_price(half_price);
-                                    menuDetail.setDetails(details);
-                                    menuDetail.setCustomizations(frozenYogurt.getString("customization"));
-                                    submenuArraylist.add(menuDetail);
+                                    Log.v(TAG, "Main Menu Name :- " + arrayMenuTypes.getString(m) + "\n ~~~~~~~~~~ Id:- " + id + " bus id :- " + bus_id + " Name:- " + name + "Item Price :- " + price);
+                                    data.setItemName(name);
+                                    data.setItem_bus_id(bus_id);
+                                    data.setItem_cat_id(cat_id);
+                                    data.setItemId(id);
+                                    data.setItem_price(price.trim());
+                                    data.setService_type(service_type);
+                                    data.setItem_half_price(half_price);
+                                    data.setDetails(details);
+                                    data.setCustomizations(customization);
+                                    menuList.add(data);
                                 }
 
-                                menuArraylist.add(submenuArraylist);
+                                menuArraylist.add(menuList);
                                 Log.e("CART09", menuArraylist.toString());
                             }
                         }
 
                         adapter = new PlaceAnOrderAdapter(getSupportFragmentManager(), mContext);
-                        for (int i = 0; i < arrayListMainMenu.size(); i++) {
-                            adapter.addFragment(new ChienesFragment(PlaceAnOrder.this, menuArraylist.get(i)), arrayListMainMenu.get(i));
+                        for (int i = 0; i < menuTypeList.size(); i++) {
+                            adapter.addFragment(new MenuFragment(PlaceAnOrder.this, menuArraylist.get(i)), menuTypeList.get(i));
                         }
                         viewPager.setAdapter(adapter);
                     } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
@@ -147,7 +133,7 @@ public class PlaceAnOrder extends AppCompatActivity {
                         JSONObject object = resultError.getJSONObject(0);
                         if (object.getString("msg").equalsIgnoreCase("Some Error Occured")) {
                             AlertDialog.Builder alertDialog = new AlertDialog.Builder(PlaceAnOrder.this);
-                            alertDialog.setMessage("NO RECORDS FOUND");
+                            alertDialog.setMessage("Oops! No Records Found");
                             alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     finish();

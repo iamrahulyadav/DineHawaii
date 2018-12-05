@@ -44,11 +44,12 @@ public class SentCoupons extends Fragment {
     public static AllEgiftAdapter adapter;
     private RecyclerView mRecyclerView;
     Context context;
-    public static List<CustomerModel> list = new ArrayList<>();
+    public static List<CustomerModel> list;
     private LinearLayoutManager mLayoutManager;
     private View rootView;
 
     CustomTextView nodata;
+
     public SentCoupons() {
         // Required empty public constructor
     }
@@ -65,12 +66,13 @@ public class SentCoupons extends Fragment {
 
     private void initComponent() {
         context = getActivity();
+        list = new ArrayList<>();
         nodata = (CustomTextView) rootView.findViewById(R.id.nodata);
 
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_coupon);
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        adapter = new AllEgiftAdapter(context,list);
+        adapter = new AllEgiftAdapter(context, list);
         mRecyclerView.setAdapter(adapter);
 
 
@@ -134,8 +136,7 @@ public class SentCoupons extends Fragment {
 
 
                         adapter.notifyDataSetChanged();
-                    }
-                    else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
+                    } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
                         JSONArray jsonArray = jsonObject.getJSONArray("result");
                         JSONObject object = jsonArray.getJSONObject(0);
                         nodata.setVisibility(View.VISIBLE);

@@ -39,7 +39,7 @@
                 android:layout_marginTop="@dimen/_3sdp"
                 android:text="NA"
                 android:textColor="@color/edit_text_hint_color"
-                android:textSize="@dimen/_10sdp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 app:edittextfont="Raleway-Regular.ttf" />
 
 
@@ -82,7 +82,7 @@
                 android:layout_marginTop="@dimen/_3sdp"
                 android:text="NA"
                 android:textColor="@color/edit_text_hint_color"
-                android:textSize="@dimen/_10sdp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 app:edittextfont="Raleway-Regular.ttf" />
 
 

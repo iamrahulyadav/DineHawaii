@@ -133,8 +133,8 @@
                         android:id="@+id/cardMenuList"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
                         android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
                         android:layout_margin="@dimen/_10sdp"
                         android:clickable="true"
                         android:elevation="5dp"
@@ -148,10 +148,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@drawable/bootomline_green_back_trans"
-                            android:paddingBottom="@dimen/_5sdp"
                             android:paddingLeft="@dimen/_10sdp"
-                            android:paddingRight="@dimen/_10sdp"
                             android:paddingTop="@dimen/_5sdp"
+                            android:paddingRight="@dimen/_10sdp"
+                            android:paddingBottom="@dimen/_5sdp"
                             android:text="MENU LIST"
                             android:textColor="@color/white" />
                     </android.support.v7.widget.CardView>
@@ -213,9 +213,9 @@
                             android:id="@+id/recycler_view_menu"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/_8sdp"
                             android:layout_marginLeft="@dimen/_5sdp"
-                            android:layout_marginRight="@dimen/_5sdp" />
+                            android:layout_marginRight="@dimen/_5sdp"
+                            android:layout_marginBottom="@dimen/_8sdp" />
 
                         <TextView
                             android:id="@+id/nmenu"
@@ -289,8 +289,8 @@
                                 android:gravity="center"
                                 android:padding="@dimen/_5sdp"
                                 android:text="Day"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 android:textColor="@color/colorPrimary"
-                                android:textSize="@dimen/_10sdp"
                                 app:edittextfont="Raleway-Bold.ttf" />
 
                             <com.yberry.dinehawaii.customview.CustomTextView
@@ -299,7 +299,7 @@
                                 android:layout_marginTop="@dimen/_5sdp"
                                 android:padding="@dimen/_5sdp"
                                 android:text="@string/sunday"
-                                android:textSize="@dimen/_10sdp"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 app:edittextfont="Raleway-Bold.ttf" />
 
                             <com.yberry.dinehawaii.customview.CustomTextView
@@ -307,7 +307,7 @@
                                 android:layout_height="wrap_content"
                                 android:padding="@dimen/_5sdp"
                                 android:text="@string/monday"
-                                android:textSize="@dimen/_10sdp"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 app:edittextfont="Raleway-Bold.ttf" />
 
                             <com.yberry.dinehawaii.customview.CustomTextView
@@ -315,7 +315,7 @@
                                 android:layout_height="wrap_content"
                                 android:padding="@dimen/_5sdp"
                                 android:text="@string/tuesday"
-                                android:textSize="@dimen/_10sdp"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 app:edittextfont="Raleway-Bold.ttf" />
 
                             <com.yberry.dinehawaii.customview.CustomTextView
@@ -323,7 +323,7 @@
                                 android:layout_height="wrap_content"
                                 android:padding="@dimen/_5sdp"
                                 android:text="@string/wensday"
-                                android:textSize="@dimen/_10sdp"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 app:edittextfont="Raleway-Bold.ttf" />
 
                             <com.yberry.dinehawaii.customview.CustomTextView
@@ -331,7 +331,7 @@
                                 android:layout_height="wrap_content"
                                 android:padding="@dimen/_5sdp"
                                 android:text="@string/thursday"
-                                android:textSize="@dimen/_10sdp"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 app:edittextfont="Raleway-Bold.ttf" />
 
                             <com.yberry.dinehawaii.customview.CustomTextView
@@ -339,7 +339,7 @@
                                 android:layout_height="wrap_content"
                                 android:padding="@dimen/_5sdp"
                                 android:text="@string/friday"
-                                android:textSize="@dimen/_10sdp"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 app:edittextfont="Raleway-Bold.ttf" />
 
                             <com.yberry.dinehawaii.customview.CustomTextView
@@ -347,7 +347,7 @@
                                 android:layout_height="wrap_content"
                                 android:padding="@dimen/_5sdp"
                                 android:text="@string/saturday"
-                                android:textSize="@dimen/_10sdp"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 app:edittextfont="Raleway-Bold.ttf" />
                         </LinearLayout>
 
@@ -364,8 +364,8 @@
                                 android:gravity="center"
                                 android:padding="@dimen/_5sdp"
                                 android:text="All Day"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 android:textColor="@color/colorPrimary"
-                                android:textSize="@dimen/_10sdp"
                                 app:edittextfont="Raleway-Bold.ttf" />
 
                             <com.yberry.dinehawaii.customview.CustomTextView
@@ -376,7 +376,7 @@
                                 android:layout_marginTop="@dimen/_5sdp"
                                 android:hint="@string/to"
                                 android:padding="@dimen/_5sdp"
-                                android:textSize="@dimen/_10sdp"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 app:edittextfont="Raleway-Regular.ttf" />
 
                             <com.yberry.dinehawaii.customview.CustomTextView
@@ -386,7 +386,7 @@
                                 android:layout_gravity="center"
                                 android:hint="@string/to"
                                 android:padding="@dimen/_5sdp"
-                                android:textSize="@dimen/_10sdp"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 app:edittextfont="Raleway-Regular.ttf" />
 
                             <com.yberry.dinehawaii.customview.CustomTextView
@@ -396,7 +396,7 @@
                                 android:layout_gravity="center"
                                 android:hint="@string/to"
                                 android:padding="@dimen/_5sdp"
-                                android:textSize="@dimen/_10sdp"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 app:edittextfont="Raleway-Regular.ttf" />
 
                             <com.yberry.dinehawaii.customview.CustomTextView
@@ -406,7 +406,7 @@
                                 android:layout_gravity="center"
                                 android:hint="@string/to"
                                 android:padding="@dimen/_5sdp"
-                                android:textSize="@dimen/_10sdp"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 app:edittextfont="Raleway-Regular.ttf" />
 
                             <com.yberry.dinehawaii.customview.CustomTextView
@@ -416,7 +416,7 @@
                                 android:layout_gravity="center"
                                 android:hint="@string/to"
                                 android:padding="@dimen/_5sdp"
-                                android:textSize="@dimen/_10sdp"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 app:edittextfont="Raleway-Regular.ttf" />
 
                             <com.yberry.dinehawaii.customview.CustomTextView
@@ -426,7 +426,7 @@
                                 android:layout_gravity="center"
                                 android:hint="@string/to"
                                 android:padding="@dimen/_5sdp"
-                                android:textSize="@dimen/_10sdp"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 app:edittextfont="Raleway-Regular.ttf" />
 
                             <com.yberry.dinehawaii.customview.CustomTextView
@@ -436,7 +436,7 @@
                                 android:layout_gravity="center"
                                 android:hint="@string/to"
                                 android:padding="@dimen/_5sdp"
-                                android:textSize="@dimen/_10sdp"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 app:edittextfont="Raleway-Regular.ttf" />
 
                         </LinearLayout>
@@ -454,8 +454,8 @@
                                 android:gravity="center"
                                 android:padding="@dimen/_5sdp"
                                 android:text="Breakfast"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 android:textColor="@color/colorPrimary"
-                                android:textSize="@dimen/_10sdp"
                                 app:edittextfont="Raleway-Bold.ttf" />
 
                             <com.yberry.dinehawaii.customview.CustomTextView
@@ -466,7 +466,7 @@
                                 android:layout_marginTop="@dimen/_5sdp"
                                 android:hint="@string/to"
                                 android:padding="@dimen/_5sdp"
-                                android:textSize="@dimen/_10sdp"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 app:edittextfont="Raleway-Regular.ttf" />
 
                             <com.yberry.dinehawaii.customview.CustomTextView
@@ -476,7 +476,7 @@
                                 android:layout_gravity="center"
                                 android:hint="@string/to"
                                 android:padding="@dimen/_5sdp"
-                                android:textSize="@dimen/_10sdp"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 app:edittextfont="Raleway-Regular.ttf" />
 
                             <com.yberry.dinehawaii.customview.CustomTextView
@@ -486,7 +486,7 @@
                                 android:layout_gravity="center"
                                 android:hint="@string/to"
                                 android:padding="@dimen/_5sdp"
-                                android:textSize="@dimen/_10sdp"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 app:edittextfont="Raleway-Regular.ttf" />
 
                             <com.yberry.dinehawaii.customview.CustomTextView
@@ -496,7 +496,7 @@
                                 android:layout_gravity="center"
                                 android:hint="@string/to"
                                 android:padding="@dimen/_5sdp"
-                                android:textSize="@dimen/_10sdp"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 app:edittextfont="Raleway-Regular.ttf" />
 
                             <com.yberry.dinehawaii.customview.CustomTextView
@@ -506,7 +506,7 @@
                                 android:layout_gravity="center"
                                 android:hint="@string/to"
                                 android:padding="@dimen/_5sdp"
-                                android:textSize="@dimen/_10sdp"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 app:edittextfont="Raleway-Regular.ttf" />
 
                             <com.yberry.dinehawaii.customview.CustomTextView
@@ -516,7 +516,7 @@
                                 android:layout_gravity="center"
                                 android:hint="@string/to"
                                 android:padding="@dimen/_5sdp"
-                                android:textSize="@dimen/_10sdp"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 app:edittextfont="Raleway-Regular.ttf" />
 
                             <com.yberry.dinehawaii.customview.CustomTextView
@@ -526,7 +526,7 @@
                                 android:layout_gravity="center"
                                 android:hint="@string/to"
                                 android:padding="@dimen/_5sdp"
-                                android:textSize="@dimen/_10sdp"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 app:edittextfont="Raleway-Regular.ttf" />
 
                         </LinearLayout>
@@ -544,8 +544,8 @@
                                 android:gravity="center"
                                 android:padding="@dimen/_5sdp"
                                 android:text="Lunch"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 android:textColor="@color/colorPrimary"
-                                android:textSize="@dimen/_10sdp"
                                 app:edittextfont="Raleway-Bold.ttf" />
 
                             <com.yberry.dinehawaii.customview.CustomTextView
@@ -556,7 +556,7 @@
                                 android:layout_marginTop="@dimen/_5sdp"
                                 android:hint="@string/to"
                                 android:padding="@dimen/_5sdp"
-                                android:textSize="@dimen/_10sdp"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 app:edittextfont="Raleway-Regular.ttf" />
 
                             <com.yberry.dinehawaii.customview.CustomTextView
@@ -566,7 +566,7 @@
                                 android:layout_gravity="center"
                                 android:hint="@string/to"
                                 android:padding="@dimen/_5sdp"
-                                android:textSize="@dimen/_10sdp"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 app:edittextfont="Raleway-Regular.ttf" />
 
                             <com.yberry.dinehawaii.customview.CustomTextView
@@ -576,7 +576,7 @@
                                 android:layout_gravity="center"
                                 android:hint="@string/to"
                                 android:padding="@dimen/_5sdp"
-                                android:textSize="@dimen/_10sdp"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 app:edittextfont="Raleway-Regular.ttf" />
 
                             <com.yberry.dinehawaii.customview.CustomTextView
@@ -586,7 +586,7 @@
                                 android:layout_gravity="center"
                                 android:hint="@string/to"
                                 android:padding="@dimen/_5sdp"
-                                android:textSize="@dimen/_10sdp"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 app:edittextfont="Raleway-Regular.ttf" />
 
                             <com.yberry.dinehawaii.customview.CustomTextView
@@ -596,7 +596,7 @@
                                 android:layout_gravity="center"
                                 android:hint="@string/to"
                                 android:padding="@dimen/_5sdp"
-                                android:textSize="@dimen/_10sdp"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 app:edittextfont="Raleway-Regular.ttf" />
 
                             <com.yberry.dinehawaii.customview.CustomTextView
@@ -606,7 +606,7 @@
                                 android:layout_gravity="center"
                                 android:hint="@string/to"
                                 android:padding="@dimen/_5sdp"
-                                android:textSize="@dimen/_10sdp"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 app:edittextfont="Raleway-Regular.ttf" />
 
                             <com.yberry.dinehawaii.customview.CustomTextView
@@ -616,7 +616,7 @@
                                 android:layout_gravity="center"
                                 android:hint="@string/to"
                                 android:padding="@dimen/_5sdp"
-                                android:textSize="@dimen/_10sdp"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 app:edittextfont="Raleway-Regular.ttf" />
 
                         </LinearLayout>
@@ -634,8 +634,8 @@
                                 android:gravity="center"
                                 android:padding="@dimen/_5sdp"
                                 android:text="Dinner"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 android:textColor="@color/colorPrimary"
-                                android:textSize="@dimen/_10sdp"
                                 app:edittextfont="Raleway-Bold.ttf" />
 
                             <com.yberry.dinehawaii.customview.CustomTextView
@@ -646,7 +646,7 @@
                                 android:layout_marginTop="@dimen/_5sdp"
                                 android:hint="@string/to"
                                 android:padding="@dimen/_5sdp"
-                                android:textSize="@dimen/_10sdp"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 app:edittextfont="Raleway-Regular.ttf" />
 
                             <com.yberry.dinehawaii.customview.CustomTextView
@@ -656,7 +656,7 @@
                                 android:layout_gravity="center"
                                 android:hint="@string/to"
                                 android:padding="@dimen/_5sdp"
-                                android:textSize="@dimen/_10sdp"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 app:edittextfont="Raleway-Regular.ttf" />
 
                             <com.yberry.dinehawaii.customview.CustomTextView
@@ -666,7 +666,7 @@
                                 android:layout_gravity="center"
                                 android:hint="@string/to"
                                 android:padding="@dimen/_5sdp"
-                                android:textSize="@dimen/_10sdp"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 app:edittextfont="Raleway-Regular.ttf" />
 
                             <com.yberry.dinehawaii.customview.CustomTextView
@@ -676,7 +676,7 @@
                                 android:layout_gravity="center"
                                 android:hint="@string/to"
                                 android:padding="@dimen/_5sdp"
-                                android:textSize="@dimen/_10sdp"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 app:edittextfont="Raleway-Regular.ttf" />
 
                             <com.yberry.dinehawaii.customview.CustomTextView
@@ -686,7 +686,7 @@
                                 android:layout_gravity="center"
                                 android:hint="@string/to"
                                 android:padding="@dimen/_5sdp"
-                                android:textSize="@dimen/_10sdp"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 app:edittextfont="Raleway-Regular.ttf" />
 
                             <com.yberry.dinehawaii.customview.CustomTextView
@@ -696,7 +696,7 @@
                                 android:layout_gravity="center"
                                 android:hint="@string/to"
                                 android:padding="@dimen/_5sdp"
-                                android:textSize="@dimen/_10sdp"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 app:edittextfont="Raleway-Regular.ttf" />
 
                             <com.yberry.dinehawaii.customview.CustomTextView
@@ -706,7 +706,7 @@
                                 android:layout_gravity="center"
                                 android:hint="@string/to"
                                 android:padding="@dimen/_5sdp"
-                                android:textSize="@dimen/_10sdp"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 app:edittextfont="Raleway-Regular.ttf" />
 
                         </LinearLayout>
@@ -724,8 +724,8 @@
                                 android:gravity="center"
                                 android:padding="@dimen/_5sdp"
                                 android:text="Other"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 android:textColor="@color/colorPrimary"
-                                android:textSize="@dimen/_10sdp"
                                 app:edittextfont="Raleway-Bold.ttf" />
 
                             <com.yberry.dinehawaii.customview.CustomTextView
@@ -736,7 +736,7 @@
                                 android:layout_marginTop="@dimen/_5sdp"
                                 android:hint="@string/to"
                                 android:padding="@dimen/_5sdp"
-                                android:textSize="@dimen/_10sdp"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 app:edittextfont="Raleway-Regular.ttf" />
 
                             <com.yberry.dinehawaii.customview.CustomTextView
@@ -746,7 +746,7 @@
                                 android:layout_gravity="center"
                                 android:hint="@string/to"
                                 android:padding="@dimen/_5sdp"
-                                android:textSize="@dimen/_10sdp"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 app:edittextfont="Raleway-Regular.ttf" />
 
                             <com.yberry.dinehawaii.customview.CustomTextView
@@ -756,7 +756,7 @@
                                 android:layout_gravity="center"
                                 android:hint="@string/to"
                                 android:padding="@dimen/_5sdp"
-                                android:textSize="@dimen/_10sdp"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 app:edittextfont="Raleway-Regular.ttf" />
 
                             <com.yberry.dinehawaii.customview.CustomTextView
@@ -766,7 +766,7 @@
                                 android:layout_gravity="center"
                                 android:hint="@string/to"
                                 android:padding="@dimen/_5sdp"
-                                android:textSize="@dimen/_10sdp"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 app:edittextfont="Raleway-Regular.ttf" />
 
                             <com.yberry.dinehawaii.customview.CustomTextView
@@ -776,7 +776,7 @@
                                 android:layout_gravity="center"
                                 android:hint="@string/to"
                                 android:padding="@dimen/_5sdp"
-                                android:textSize="@dimen/_10sdp"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 app:edittextfont="Raleway-Regular.ttf" />
 
                             <com.yberry.dinehawaii.customview.CustomTextView
@@ -786,7 +786,7 @@
                                 android:layout_gravity="center"
                                 android:hint="@string/to"
                                 android:padding="@dimen/_5sdp"
-                                android:textSize="@dimen/_10sdp"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 app:edittextfont="Raleway-Regular.ttf" />
 
                             <com.yberry.dinehawaii.customview.CustomTextView
@@ -796,7 +796,7 @@
                                 android:layout_gravity="center"
                                 android:hint="@string/to"
                                 android:padding="@dimen/_5sdp"
-                                android:textSize="@dimen/_10sdp"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                                 app:edittextfont="Raleway-Regular.ttf" />
 
                         </LinearLayout>
@@ -852,9 +852,9 @@
                             android:id="@+id/recycler_view_service"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/_8sdp"
                             android:layout_marginLeft="@dimen/_5sdp"
-                            android:layout_marginRight="@dimen/_5sdp" />
+                            android:layout_marginRight="@dimen/_5sdp"
+                            android:layout_marginBottom="@dimen/_8sdp" />
 
                         <TextView
                             android:id="@+id/nservice"
@@ -944,34 +944,36 @@
             style="@style/TextAppearance.AppCompat.Subhead"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="@dimen/_2sdp"
             android:layout_marginLeft="@dimen/_2sdp"
-            android:layout_marginRight="1dp"
             android:layout_marginTop="@dimen/_2sdp"
+            android:layout_marginRight="1dp"
+            android:layout_marginBottom="@dimen/_2sdp"
             android:layout_weight="1"
             android:background="@color/green"
-            android:text="ORDER NOW"
-            android:textColor="@color/white"
-            app:edittextfont="Raleway-Bold.ttf"
             android:clickable="true"
-            android:foreground="@drawable/custom_ripple_card"/>
+            android:foreground="@drawable/custom_ripple_card"
+            android:text="ORDER NOW"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:textColor="@color/white"
+            app:edittextfont="Raleway-Bold.ttf" />
 
         <com.yberry.dinehawaii.customview.CustomButton
             android:id="@+id/btnmake"
             style="@style/TextAppearance.AppCompat.Subhead"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="@dimen/_2sdp"
             android:layout_marginLeft="1dp"
-            android:layout_marginRight="@dimen/_2sdp"
             android:layout_marginTop="@dimen/_2sdp"
+            android:layout_marginRight="@dimen/_2sdp"
+            android:layout_marginBottom="@dimen/_2sdp"
             android:layout_weight="1"
             android:background="@color/green"
+            android:clickable="true"
+            android:foreground="@drawable/custom_ripple_card"
             android:text="MAKE RESERVATION"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             android:textColor="@color/white"
             android:visibility="gone"
-            app:edittextfont="Raleway-Bold.ttf"
-            android:clickable="true"
-            android:foreground="@drawable/custom_ripple_card" />
+            app:edittextfont="Raleway-Bold.ttf" />
     </LinearLayout>
 </RelativeLayout>

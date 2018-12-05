@@ -11,24 +11,29 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_margin="@dimen/_20sdp"
-        android:background="@drawable/text_background"
-        android:paddingBottom="@dimen/_5sdp"
+        android:drawableTop="@drawable/no_food"
+        android:drawablePadding="@dimen/_10sdp"
         android:paddingLeft="@dimen/_10sdp"
-        android:paddingRight="@dimen/_10sdp"
         android:paddingTop="@dimen/_5sdp"
-        android:text="No menus"
+        android:paddingRight="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_5sdp"
+        android:text="@string/no_menus"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:visibility="gone"
         app:edittextfont="Raleway-Regular.ttf" />
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        app:cardCornerRadius="@dimen/_4sdp"
-        app:cardElevation="@dimen/_2sdp"
-        android:layout_marginRight="@dimen/_5sdp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/_5sdp"
-        android:layout_marginBottom="@dimen/_2sdp"
         android:layout_marginTop="@dimen/_5sdp"
-        android:layout_height="wrap_content">
+        android:layout_marginRight="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/_2sdp"
+        android:elevation="0dp"
+        android:visibility="visible"
+        app:cardCornerRadius="@dimen/_4sdp"
+        app:cardElevation="0dp">
+
         <LinearLayout
             android:id="@+id/llMain"
             android:layout_width="match_parent"
@@ -41,7 +46,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
                 android:orientation="horizontal">
-
 
                 <ImageView
                     android:id="@+id/imgNoodle"
@@ -58,61 +62,63 @@
 
                     <com.yberry.dinehawaii.customview.CustomTextView
                         android:id="@+id/tvPizza"
+                        style="@style/TextAppearance.AppCompat.Subhead"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/_2sdp"
                         android:text="NA"
                         android:textAllCaps="false"
-                        style="@style/TextAppearance.AppCompat.Subhead"
                         app:edittextfont="Raleway-Bold.ttf" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:orientation="horizontal"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content">
 
                             <com.yberry.dinehawaii.customview.CustomTextView
+                                style="@style/TextAppearance.AppCompat.Subhead"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:padding="@dimen/_2sdp"
                                 android:text="Price - $ "
-                                style="@style/TextAppearance.AppCompat.Subhead"
                                 app:edittextfont="Raleway-Regular.ttf" />
 
                             <com.yberry.dinehawaii.customview.CustomTextView
                                 android:id="@+id/tvPizzaPrice"
+                                style="@style/TextAppearance.AppCompat.Subhead"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:padding="@dimen/_2sdp"
                                 android:text="00"
-                                style="@style/TextAppearance.AppCompat.Subhead"
                                 app:edittextfont="Raleway-Regular.ttf" />
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_marginLeft="@dimen/_5sdp"
                             android:id="@+id/halfLinear"
-                            android:visibility="gone"
-                            android:layout_height="wrap_content">
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:visibility="gone">
 
                             <com.yberry.dinehawaii.customview.CustomTextView
+                                style="@style/TextAppearance.AppCompat.Subhead"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:padding="@dimen/_2sdp"
                                 android:text="Half Price - $ "
-                                style="@style/TextAppearance.AppCompat.Subhead"
                                 app:edittextfont="Raleway-Regular.ttf" />
 
                             <com.yberry.dinehawaii.customview.CustomTextView
                                 android:id="@+id/tvhalfprice"
+                                style="@style/TextAppearance.AppCompat.Subhead"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:padding="@dimen/_2sdp"
                                 android:text="00"
-                                style="@style/TextAppearance.AppCompat.Subhead"
                                 app:edittextfont="Raleway-Regular.ttf" />
                         </LinearLayout>
                     </LinearLayout>
@@ -120,11 +126,11 @@
 
                     <com.yberry.dinehawaii.customview.CustomTextView
                         android:id="@+id/tvServiceType"
+                        style="@style/TextAppearance.AppCompat.Subhead"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/_2sdp"
                         android:text="Service not found"
-                        style="@style/TextAppearance.AppCompat.Subhead"
                         app:edittextfont="Raleway-Regular.ttf" />
                 </LinearLayout>
             </LinearLayout>

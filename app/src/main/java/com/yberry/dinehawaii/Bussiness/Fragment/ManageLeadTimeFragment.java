@@ -129,9 +129,11 @@ public class ManageLeadTimeFragment extends Fragment implements View.OnClickList
                     } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
                         Toast.makeText(getActivity(), "no record found", Toast.LENGTH_SHORT).show();
                     }
-                } catch (JSONException e) {
-                    Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    progressHD.dismiss();
+                    Toast.makeText(getActivity(), "Internal server error", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
+
                 }
                 progressHD.dismiss();
             }
@@ -141,7 +143,7 @@ public class ManageLeadTimeFragment extends Fragment implements View.OnClickList
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 Log.e(TAG, "error :- " + Log.getStackTraceString(t));
                 progressHD.dismiss();
-                Toast.makeText(getActivity(), "Server not Responding", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Internal server error", Toast.LENGTH_SHORT).show();
             }
         });
 

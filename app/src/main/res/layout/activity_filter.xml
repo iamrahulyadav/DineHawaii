@@ -8,8 +8,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:overScrollMode="never"
         android:layout_marginBottom="?attr/actionBarSize"
+        android:overScrollMode="never"
         android:scrollbars="none">
 
         <LinearLayout
@@ -58,8 +58,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:hint="Select Location "
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp"
                 android:visibility="gone" />
 
             <com.yberry.dinehawaii.customview.CustomTextView
@@ -92,8 +92,8 @@
                 android:focusableInTouchMode="false"
                 android:hint="Select Service Type"
                 android:padding="@dimen/_5sdp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                 android:textColor="@color/blue"
-                android:textSize="@dimen/_12sdp"
                 app:edittextfont="Raleway-Regular.ttf"></com.yberry.dinehawaii.customview.CustomTextView>
 
             <View
@@ -115,7 +115,7 @@
                 android:layout_height="wrap_content"
                 android:drawableRight="@drawable/ic_keyboard_arrow_down_black_16dp"
                 android:hint="Select Service Type"
-                android:textSize="@dimen/_12sdp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                 android:visibility="gone"
                 app:edittextfont="Raleway-Regular.ttf" />
 
@@ -131,8 +131,8 @@
                 android:focusableInTouchMode="false"
                 android:hint="Select Food Type"
                 android:padding="@dimen/_5sdp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                 android:textColor="@color/blue"
-                android:textSize="@dimen/_12sdp"
                 app:edittextfont="Raleway-Regular.ttf"></com.yberry.dinehawaii.customview.CustomTextView>
 
             <View
@@ -363,8 +363,9 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_height="?attr/actionBarSize">
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentBottom="true">
+
         <com.yberry.dinehawaii.customview.CustomButton
             android:id="@+id/btnSearch"
             style="@style/TextAppearance.AppCompat.Subhead"

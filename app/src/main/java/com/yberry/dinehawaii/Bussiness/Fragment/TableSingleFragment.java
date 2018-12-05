@@ -35,7 +35,6 @@ import com.yberry.dinehawaii.Util.Util;
 import com.yberry.dinehawaii.customview.CustomTextView;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -127,10 +126,11 @@ public class TableSingleFragment extends Fragment implements View.OnClickListene
             @SuppressLint("LongLogTag")
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                Log.e(TAG + "onResponseTable", response.body().toString());
-                String s = response.body().toString();
+
 
                 try {
+                    Log.e(TAG + "onResponseTable", response.body().toString());
+                    String s = response.body().toString();
                     JSONObject jsonObject = new JSONObject(s);
                     Log.d("Res:", s);
                     if (jsonObject.getString("status").equalsIgnoreCase("200")) {
@@ -158,9 +158,10 @@ public class TableSingleFragment extends Fragment implements View.OnClickListene
                     }
                     progressHD.dismiss();
                     tableAdapter.notifyDataSetChanged();
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     progressHD.dismiss();
                     e.printStackTrace();
+                    Toast.makeText(getActivity(), "Internal server error", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -170,6 +171,8 @@ public class TableSingleFragment extends Fragment implements View.OnClickListene
                 notable.setVisibility(View.VISIBLE);
                 Log.e(TAG, "Error on Failue :-" + Log.getStackTraceString(t));
                 progressHD.dismiss();
+                Toast.makeText(getActivity(), "Internal server error", Toast.LENGTH_SHORT).show();
+
             }
         });
     }
@@ -376,10 +379,11 @@ public class TableSingleFragment extends Fragment implements View.OnClickListene
                 @SuppressLint("LongLogTag")
                 @Override
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                    Log.e(TAG, "blockApi: Response >> " + response.body().toString());
-                    String s = response.body().toString();
+
 
                     try {
+                        Log.e(TAG, "blockApi: Response >> " + response.body().toString());
+                        String s = response.body().toString();
                         JSONObject jsonObject = new JSONObject(s);
                         if (jsonObject.getString("status").equalsIgnoreCase("200")) {
                             Toast.makeText(context, "Blocked", Toast.LENGTH_SHORT).show();
@@ -387,10 +391,10 @@ public class TableSingleFragment extends Fragment implements View.OnClickListene
                             Toast.makeText(context, "Failed, try again.", Toast.LENGTH_SHORT).show();
                         }
                         progressHD.dismiss();
-                    } catch (JSONException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                         progressHD.dismiss();
-                        Toast.makeText(context, "Failed, try again.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Internal server error", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -399,7 +403,7 @@ public class TableSingleFragment extends Fragment implements View.OnClickListene
                 public void onFailure(Call<JsonObject> call, Throwable t) {
                     Log.e(TAG, "Error on Failue :-" + Log.getStackTraceString(t));
                     progressHD.dismiss();
-                    Toast.makeText(context, "Failed, try again.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Internal server error", Toast.LENGTH_SHORT).show();
                 }
             });
 
