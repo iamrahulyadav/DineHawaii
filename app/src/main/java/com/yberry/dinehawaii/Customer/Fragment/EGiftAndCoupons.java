@@ -81,8 +81,6 @@ public class EGiftAndCoupons extends Fragment implements View.OnClickListener {
     }
 
     class PagerAdapter extends FragmentPagerAdapter {
-
-
         Context context;
 
         public PagerAdapter(FragmentManager fm) {
@@ -106,9 +104,5 @@ public class EGiftAndCoupons extends Fragment implements View.OnClickListener {
             }
             return null;
         }
-
-
     }
-
-
 }
