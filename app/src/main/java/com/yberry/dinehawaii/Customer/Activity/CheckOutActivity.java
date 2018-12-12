@@ -147,6 +147,8 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
     private double totalPaidAmountOrig = 0.0;
     private CustomEditText etRemark;
     private AlertDialog cateringDialog;
+    private CustomEditText dname;
+    private CustomEditText dcontact;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -953,6 +955,10 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
 
     private void proceedToPayment() {
         if (order_type.equalsIgnoreCase("0")) {
+            catering_btn.setChecked(false);
+            homedelivery_btn.setChecked(false);
+            inhouse_btn.setChecked(false);
+            take_way_btn.setChecked(false);
             Toast.makeText(context, "Select your order type", Toast.LENGTH_SHORT).show();
         } else if (tvTotalPaidAmount.getText().toString().equalsIgnoreCase("00.0") || tvTotalPaidAmount.getText().toString().equalsIgnoreCase("0.0")) {
             AppPreferencesBuss.setfinalLoylityPoints(context, loyality_apply.getText().toString());
@@ -1365,7 +1371,6 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
     }*/
 
 
-    @SuppressLint("RestrictedApi")
     public void updateHomeDeliveryInfo() {
         builder = new AlertDialog.Builder(context);
         LayoutInflater _inflater = LayoutInflater.from(context);
@@ -1376,8 +1381,8 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
         deliveryDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         deliveryDialog.setCanceledOnTouchOutside(false);
 
-        final EditText dname = (CustomEditText) view.findViewById(R.id.dname);
-        final EditText dcontact = (CustomEditText) view.findViewById(R.id.dcontact);
+        dname = (CustomEditText) view.findViewById(R.id.dname);
+        dcontact = (CustomEditText) view.findViewById(R.id.dcontact);
         daddress = (CustomEditText) view.findViewById(R.id.daddress);
         cbDefaultAddr = (CustomCheckBox) view.findViewById(R.id.cbDefaultAddr);
         daddress.setOnClickListener(new View.OnClickListener() {
@@ -1421,16 +1426,21 @@ public class CheckOutActivity extends AppCompatActivity implements View.OnClickL
                     AppPreferences.setDeliveryContact(context, dcontact.getText().toString());
                     custName.setText(dname.getText().toString());
                     CustPhn.setText(dcontact.getText().toString());
-
-                    double busi_latitude = Double.parseDouble(AppPreferences.getSelectedBusiLat(context));
-                    double busi_longitude = Double.parseDouble(AppPreferences.getSelectedBusiLong(context));
-                    Log.e(TAG, "updateHomeDeliveryInfo: cust_latitude >> " + cust_latitude);
-                    Log.e(TAG, "updateHomeDeliveryInfo: cust_longitude >> " + cust_longitude);
-                    Log.e(TAG, "updateHomeDeliveryInfo: busi_latitude >> " + busi_latitude);
-                    Log.e(TAG, "updateHomeDeliveryInfo: busi_longitude >> " + busi_longitude);
-                    AppPreferences.setDeliveryName(context, dname.getText().toString());
-                    AppPreferences.setDeliveryContact(context, dcontact.getText().toString());
-                    new GoogleMatrixRequest(busi_latitude, busi_longitude, cust_latitude, cust_longitude).execute();
+                    try {
+                        double busi_latitude = Double.parseDouble(AppPreferences.getSelectedBusiLat(context));
+                        double busi_longitude = Double.parseDouble(AppPreferences.getSelectedBusiLong(context));
+                        Log.e(TAG, "updateHomeDeliveryInfo: cust_latitude >> " + cust_latitude);
+                        Log.e(TAG, "updateHomeDeliveryInfo: cust_longitude >> " + cust_longitude);
+                        Log.e(TAG, "updateHomeDeliveryInfo: busi_latitude >> " + busi_latitude);
+                        Log.e(TAG, "updateHomeDeliveryInfo: busi_longitude >> " + busi_longitude);
+                        AppPreferences.setDeliveryName(context, dname.getText().toString());
+                        AppPreferences.setDeliveryContact(context, dcontact.getText().toString());
+                        new GoogleMatrixRequest(busi_latitude, busi_longitude, cust_latitude, cust_longitude).execute();
+                    } catch (NumberFormatException e) {
+                        e.printStackTrace();
+                        Toast.makeText(context, "Business location not found please contact to business", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
                 }
             }
         });

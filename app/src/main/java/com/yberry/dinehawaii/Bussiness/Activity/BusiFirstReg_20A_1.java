@@ -260,6 +260,7 @@ public class BusiFirstReg_20A_1 extends AppCompatActivity implements View.OnClic
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), "Internal server error", Toast.LENGTH_SHORT).show();
                 }
 
             }

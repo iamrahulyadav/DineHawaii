@@ -8,7 +8,6 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -222,6 +221,10 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                     intent.putExtra("totalamount", total_amount.getText().toString());
                     startActivity(intent);
                 }
+            } else {
+                Intent intent = new Intent(getApplicationContext(), CheckOutActivity.class);
+                intent.putExtra("totalamount", total_amount.getText().toString());
+                startActivity(intent);
             }
         }
     }

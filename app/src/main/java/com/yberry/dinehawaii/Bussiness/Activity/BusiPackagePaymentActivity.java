@@ -497,7 +497,7 @@ public class BusiPackagePaymentActivity extends AppCompatActivity implements Vie
         object.addProperty("business_id", AppPreferencesBuss.getBussiId(context));
         object.addProperty("pacakges", AppPreferencesBuss.getBussiPackagelist(context));
         object.addProperty("options", AppPreferencesBuss.getBusinessOptionList(context));
-        object.addProperty("total_amount", AppPreferencesBuss.getPackageAmount(context));
+        object.addProperty("total_amount", amountToBePaid);
         object.addProperty("terms_condition", "1");
         object.addProperty("PayPal_TXN_ID", AppPreferencesBuss.getBusinessTranctionId(context));
         object.addProperty("PayPal_TXN_STATUS", AppPreferencesBuss.getBusinessTranctionStatus(context));
