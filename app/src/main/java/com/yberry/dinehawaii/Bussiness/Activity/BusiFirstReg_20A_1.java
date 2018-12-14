@@ -256,7 +256,7 @@ public class BusiFirstReg_20A_1 extends AppCompatActivity implements View.OnClic
 
                     } else if (jsonObject.getString("status").equalsIgnoreCase("400")) {
                         String msg = jsonObject.getString("message");
-                        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BusiFirstReg_20A_1.this, msg, Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

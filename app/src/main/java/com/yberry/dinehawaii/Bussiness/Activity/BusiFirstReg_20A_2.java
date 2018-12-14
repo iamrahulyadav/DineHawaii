@@ -208,7 +208,7 @@ public class BusiFirstReg_20A_2 extends AppCompatActivity implements View.OnClic
                         startActivity(intent);
                     } else {
                         String msg = jsonObject.getString("message");
-                        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                        Toast.makeText(BusiFirstReg_20A_2.this, msg, Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -55,11 +55,19 @@
             android:orientation="vertical">
 
             <com.yberry.dinehawaii.customview.CustomTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_10sdp"
+                android:text="@string/take_out_catering_instruction"
+                android:textAppearance="@style/TextAppearance.Compat.Notification.Time"
+                app:edittextfont="Raleway-Regular.ttf" />
+
+
+            <com.yberry.dinehawaii.customview.CustomTextView
                 style="@style/TextAppearance.AppCompat.Subhead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_9sdp"
                 android:drawablePadding="@dimen/_5sdp"
                 android:gravity="center"
                 android:text="Customer Name"

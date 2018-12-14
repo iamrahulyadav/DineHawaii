@@ -22,7 +22,7 @@
         android:layout_gravity="right"
         android:background="@color/transparent_full"
         android:padding="@dimen/_5sdp"
-        android:text="Screen No:96"
+        android:text=""
         android:textColor="@color/screen_no_text"
         app:edittextfont="Raleway-Bold.ttf" />
 

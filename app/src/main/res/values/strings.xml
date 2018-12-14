@@ -123,4 +123,10 @@
     <string name="disclaimer_text">(Disclaimer: All rates and services for Packages and Options are subject to future changes.)</string>
     <string name="title_activity_maps">Map</string>
     <string name="no_menus">Oops! no menus found.</string>
+    <string name="take_out_catering_instruction">
+        When picking-up Take-out/Catering order what should customer do?
+        \n(i.e. Save Time, don’t wait in line. Go to our Pick-up Counter and Show your ID, and you’ll be on your way’)
+        \n\nInstructions:
+        \nDon’t Wait in Line.
+        \nGo to Pick-up Counter and Show ID’</string>
 </resources>
