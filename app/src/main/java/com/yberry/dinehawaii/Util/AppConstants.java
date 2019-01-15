@@ -46,10 +46,8 @@ public class AppConstants {
 
 
     public interface BASEURL {
-        //        String URL = "https://take007.co.in/Projects-Work/Hawaii/APP/";
-        String URL = "https://neeleshjain.us/Projects_Work/Hawaii/APP/";
-//        String URL = "http://192.168.29.250/Hawaii/APP/";
-        //String URL = "http://take007.co.in/Projects-Work/Hawaii/Beta-Test/APP/";
+        //        String URL = "https://neeleshjain.us/Projects_Work/Hawaii/APP/";
+        String URL = "https://hawaii.neeleshjain.us/APP/";
     }
 
     public interface ENDPOINT {
@@ -198,7 +196,7 @@ public class AppConstants {
         String ADDNEWCOUPON = "AddNewCoupon";
         String ALLCOUPONS = "AllCoupons";
         String EDITCOUPON = "EditCoupon";
-//        String SETLEADTIME = "setLeadTime";
+        //        String SETLEADTIME = "setLeadTime";
         String SETLEADTIME = "setLeadTime1";
         String GETLEADTIMES = "getLeadTimes";
         String ASSIGN_ORDER_DELIVERY = "Assign_Order_Delivery";

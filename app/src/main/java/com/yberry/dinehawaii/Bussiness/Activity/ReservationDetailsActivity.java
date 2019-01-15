@@ -61,7 +61,7 @@ public class ReservationDetailsActivity extends AppCompatActivity implements Vie
     ArrayList<TableData> tableDataList = new ArrayList<TableData>();
     private Context context;
     private ImageView back;
-    private CustomTextView tvReservationID, tvDateTime, tvDateTime2, tvBookingTime, tvCustomerName, tvTableNo, tvPartySize, tvContactNo, tvEmail;
+    private CustomTextView tvReservationID, tvDateTime, tvDateTime2, tvBookingTime, tvCustomerName, tvTableNo, tvPartySize, tvChildHigh, tvChildBooster, tvContactNo, tvEmail;
     private ReservationDetails model;
     private CustomTextView tvCheckin, tvWaitTime, tvTableReady, tvSeatedBy, tvReschedule, tvConfirmed, tvDeposit, tvClose, tvRestore;
     private String reservation_id;
@@ -170,9 +170,10 @@ public class ReservationDetailsActivity extends AppCompatActivity implements Vie
         tvCustomerName = (CustomTextView) findViewById(R.id.tvCustomerName);
         tvTableNo = (CustomTextView) findViewById(R.id.tvTableNo);
         tvPartySize = (CustomTextView) findViewById(R.id.tvPartySize);
+        tvChildBooster = (CustomTextView) findViewById(R.id.tvChildBooster);
+        tvChildHigh = (CustomTextView) findViewById(R.id.tvChildHigh);
         tvContactNo = (CustomTextView) findViewById(R.id.tvContactNo);
         tvEmail = (CustomTextView) findViewById(R.id.tvEmail);
-
 
     }
 
@@ -278,6 +279,8 @@ public class ReservationDetailsActivity extends AppCompatActivity implements Vie
                         tvCustomerName.setText(model.getName());
                         tvTableNo.setText(model.getTableNumber());
                         tvPartySize.setText(model.getPartySize());
+                        tvChildBooster.setText(model.getChildBoosterChairNo());
+                        tvChildHigh.setText(model.getChildHighChairNo());
                         tvContactNo.setText(model.getMobile());
                         tvEmail.setText(model.getEmailId());
                         reservation_status = model.getReservationStatus();

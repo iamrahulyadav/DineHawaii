@@ -13,6 +13,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -27,7 +28,6 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -100,6 +100,8 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
     private CustomRadioButton radio_wallet, radio_paypal;
     private double pre_charges = 0.0, pre_charges_base = 0.0;
     private DecimalFormat decimalFormat;
+    private String child_high_no = "0", child_booster_no = "0";
+    private CustomEditText etChildHigh, etChildBooster;
 
     public static void hideSoftKeyboard(Activity activity) {
         InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
@@ -111,6 +113,8 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_making_reservation);
         context = this;
+
+
         setToolbar();
         initViews();
 
@@ -188,6 +192,8 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
     private void initViews() {
         tableDataList = new ArrayList<TableData>();
         decimalFormat = new DecimalFormat("#.##");
+        etChildHigh = (CustomEditText) findViewById(R.id.etChildHigh);
+        etChildBooster = (CustomEditText) findViewById(R.id.etChildBooster);
         tvPaymentText = (CustomTextView) findViewById(R.id.tvPaymentText);
 
         btn_BookTable = (CustomTextView) findViewById(R.id.btn_bookTable);
@@ -218,7 +224,7 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
             }
         });
         //keyboard dismiss on outside touch
-        ((RelativeLayout) findViewById(R.id.touch_outside)).setOnTouchListener(new View.OnTouchListener() {
+        ((LinearLayout) findViewById(R.id.touch_outside)).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 hideSoftKeyboard(ReservationActivity.this);
@@ -245,8 +251,13 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
                     noOfChilds.setError("Enter no of children");
                 else if (noOfAdults.getText().toString().equalsIgnoreCase(""))
                     noOfAdults.setError("Enter no of adults");
-                else
+                else if (Integer.parseInt(partySize.getText().toString())
+                        == (Integer.parseInt(noOfChilds.getText().toString())
+                        + Integer.parseInt(noOfAdults.getText().toString()))) {
                     getBusinessTables();
+                } else {
+                    Toast.makeText(context, "Invalid party size", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -363,7 +374,7 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
             @Override
             public void onClick(View v) {
                 isWaitList = false;
-                Log.e(TAG, "onClick: pre_charges >> " + pre_charges);
+                Log.e(TAG, "onClick: pre_charges_base >> " + pre_charges_base);
                 makeReservation();
             }
         });
@@ -417,6 +428,14 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
             emailString = emailId.getText().toString().trim();
             noofadultsString = noOfAdults.getText().toString().trim();
             noofchildString = noOfChilds.getText().toString().trim();
+            if (!TextUtils.isEmpty(etChildHigh.getText().toString()))
+                child_high_no = etChildHigh.getText().toString();
+            else
+                child_high_no = "0";
+            if (!TextUtils.isEmpty(etChildBooster.getText().toString()))
+                child_booster_no = etChildBooster.getText().toString();
+            else
+                child_booster_no = "0";
             submitRequest(partySizeS, dateString, timeString, userNameString, mobileNoString, emailString, noofadultsString, noofchildString, selectedTableID);
         }
     }
@@ -437,6 +456,8 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
         jsonObject.addProperty("party_size", partySizeS);
         jsonObject.addProperty("child_high_chair", child_high);
         jsonObject.addProperty("child_booster_chair", child_booster);
+        jsonObject.addProperty("child_high_chair_no", child_high_no);
+        jsonObject.addProperty("child_booster_chair_no", child_booster_no);
         jsonObject.addProperty("name", name);
         jsonObject.addProperty("email", email);
         jsonObject.addProperty("mobile", phone_no);
@@ -463,7 +484,7 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
                             JSONObject jsonObject1 = jsonArray.getJSONObject(i);
                             reservation_id = jsonObject1.getString("reservation_id");
                             AppPreferencesBuss.setReservatId(context, reservation_id);
-                            if (pre_charges == 0.0 || pre_charges == 0 || isWaitList) {
+                            if (pre_charges_base == 0.0 || pre_charges_base == 0 || isWaitList) {
                                 //showThankYouAlert();
                                 confirmReservation("wallet", "TRANSWAL0", "approved");
                             } else {
@@ -471,10 +492,11 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
                             }
                         }
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     if (progressHD != null && progressHD.isShowing())
                         progressHD.dismiss();
+                    Toast.makeText(ReservationActivity.this, "Internal server error", Toast.LENGTH_SHORT).show();
                 }
                 if (progressHD != null && progressHD.isShowing())
                     progressHD.dismiss();
@@ -652,7 +674,9 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
     private void showWaitListDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Add To Wait-List");
-        builder.setMessage("We are sorry, but your request at " + datePicker.getText().toString() + ", " + timePicker.getText().toString() + " for the party size " + partySize.getText().toString() + " is unavailable.\n\nDo you want to add it to wait list?");
+//        builder.setMessage("We are sorry, but your request at " + datePicker.getText().toString() + ", " + timePicker.getText().toString() + " for the party size " + partySize.getText().toString() + " is unavailable.\n\nDo you want to add it to wait list?");
+        builder.setMessage("We are sorry! your request is not available due to the requested party size entered, to confirm " + partySize.getText().toString() + " people in your party, please call the restaurant at " + data.getBusinessContactNo() + " as soon as possible. Or else please consider the following alternatives:");
+
         builder.setPositiveButton("ADD TO WAIT-LIST", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -820,12 +844,12 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
     }
 
     private void getPayment() {
-        Log.e(TAG, "getPayment: pre_charges >> " + pre_charges);
+        Log.e(TAG, "getPayment: pre_charges_base >> " + pre_charges_base);
 
-        if (pre_charges == 0.0) {
+        if (pre_charges_base == 0.0) {
             Toast.makeText(this, "Payment amount can't be zero ", Toast.LENGTH_SHORT).show();
         } else {
-            PayPalPayment payment = new PayPalPayment(new BigDecimal(String.valueOf(pre_charges)), "USD", "Purchase Fee\n",
+            PayPalPayment payment = new PayPalPayment(new BigDecimal(String.valueOf(pre_charges_base)), "USD", "Purchase Fee\n",
                     PayPalPayment.PAYMENT_INTENT_SALE);
             Intent intent = new Intent(context, com.paypal.android.sdk.payments.PaymentActivity.class);
             intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
@@ -847,8 +871,8 @@ public class ReservationActivity extends AppCompatActivity implements TimePicker
             jsonObject.addProperty("business_id", AppPreferences.getBusiID(context));
             jsonObject.addProperty("reservation_id", AppPreferencesBuss.getReservatId(context));
             jsonObject.addProperty("user_id", AppPreferences.getCustomerid(context));//testing demo code
-            jsonObject.addProperty("reservation_amount", pre_charges);
-            jsonObject.addProperty("wallet_amt", wallet_amt);
+            jsonObject.addProperty("reservation_amount", pre_charges_base);
+            jsonObject.addProperty("wallet_amt", "0");
             jsonObject.addProperty("paymentType", paymentType);
             jsonObject.addProperty("transaction_id", transaction_ID);
             jsonObject.addProperty("payment_status", paymentState);

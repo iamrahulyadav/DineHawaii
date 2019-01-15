@@ -73,6 +73,13 @@ public class ReservationDetails {
     @Expose
     private String no_show_time;
 
+    @SerializedName("child_high_chair_no")
+    @Expose
+    private String childHighChairNo = "0";
+    @SerializedName("child_booster_chair_no")
+    @Expose
+    private String childBoosterChairNo = "0";
+
     public String getReservation_amount() {
         return reservation_amount;
     }
@@ -102,9 +109,9 @@ public class ReservationDetails {
         isBlinked = blinked;
     }
 
-    boolean isBlinked=false;
+    boolean isBlinked = false;
 
-    boolean isAlreadyBlinked=false;
+    boolean isAlreadyBlinked = false;
 
     public Integer getSetCheckedIn() {
         return setCheckedIn;
@@ -274,6 +281,22 @@ public class ReservationDetails {
         this.reservationBookedDate = reservationBookedDate;
     }
 
+    public String getChildHighChairNo() {
+        return childHighChairNo;
+    }
+
+    public void setChildHighChairNo(String childHighChairNo) {
+        this.childHighChairNo = childHighChairNo;
+    }
+
+    public String getChildBoosterChairNo() {
+        return childBoosterChairNo;
+    }
+
+    public void setChildBoosterChairNo(String childBoosterChairNo) {
+        this.childBoosterChairNo = childBoosterChairNo;
+    }
+
     @Override
     public String toString() {
         return "ReservationDetails{" +
@@ -298,6 +321,12 @@ public class ReservationDetails {
                 ", cancelationTime='" + cancelationTime + '\'' +
                 ", reservationStatus='" + reservationStatus + '\'' +
                 ", reservationBookedDate='" + reservationBookedDate + '\'' +
+                ", no_show_time='" + no_show_time + '\'' +
+                ", childHighChairNo='" + childHighChairNo + '\'' +
+                ", childBoosterChairNo='" + childBoosterChairNo + '\'' +
+                ", reservation_amount='" + reservation_amount + '\'' +
+                ", isBlinked=" + isBlinked +
+                ", isAlreadyBlinked=" + isAlreadyBlinked +
                 '}';
     }
 }
